@@ -1,0 +1,466 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Amateuratsu — Estudio Alpargatas"
+  description="Amateuratsu: un juego de artesanos amateurs compitiendo por agradar a la diosa del sol con sus ofrendas al amanecer."
+  bodyClass="page-amateuratsu"
+  footerSubtitle="日の出 · Amateuratsu · Prototipo"
+  themeColor="#1a0a05"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════════
+     AMATEURATSU · Estética japonesa · Colores del amanecer
+     ═══════════════════════════════════════════════════════════ */
+
+  body.page-amateuratsu {
+    background-color: #1a0a05;
+    color: #fff8f0;
+    font-family: Georgia, "Times New Roman", serif;
+    background-image: none;
+    --ink:     #1a0a05;
+    --ink-mid: #2d1510;
+    --red:     #dc2626;
+    --orange:  #ea580c;
+    --gold:    #d97706;
+    --pale:    #fff8f0;
+    --mist:    rgba(255, 248, 240, .65);
+    --dim:     rgba(255, 248, 240, .45);
+    --ember:   #7f1d1d;
+    --line:    rgba(255, 248, 240, .12);
+  }
+
+  /* ── Header: tinta oscura con banda bermellón ───────────────────────────── */
+  body.page-amateuratsu .site-header {
+    background: rgba(26, 10, 5, .97);
+    border-bottom: 2px solid rgba(220, 38, 38, .4);
+  }
+  body.page-amateuratsu .brand b      { color: #fff8f0; }
+  body.page-amateuratsu .brand small  { color: rgba(255, 248, 240, .38); }
+  body.page-amateuratsu .nav-links a  { color: rgba(255, 248, 240, .45); }
+  body.page-amateuratsu .nav-links a:hover { color: var(--orange); }
+  body.page-amateuratsu .nav-links .nav-instagram {
+    border-color: rgba(220, 38, 38, .35); color: var(--red);
+  }
+  body.page-amateuratsu .nav-links .nav-instagram:hover {
+    background: var(--red); border-color: var(--red); color: var(--pale);
+  }
+  body.page-amateuratsu .brand-logo {
+    border-color: rgba(234, 88, 12, .5); box-shadow: 2px 2px 0 rgba(220, 38, 38, .4);
+  }
+
+  /* ── Footer ──────────────────────────────────────────────────────────────── */
+  body.page-amateuratsu .site-footer {
+    background: var(--ink);
+    border-top: 2px solid rgba(217, 119, 6, .3);
+    color: var(--dim);
+  }
+  body.page-amateuratsu .site-footer b,
+  body.page-amateuratsu .site-footer a { color: var(--gold); }
+  body.page-amateuratsu .site-footer a:hover { color: var(--orange); }
+
+  /* ── Shell + utilidades ──────────────────────────────────────────────────── */
+  .am-shell { width: min(860px, calc(100% - 3rem)); margin-inline: auto; }
+  .am-center { text-align: center; }
+
+  /* Línea de sección en bermellón */
+  .am-rule {
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    background: var(--red);
+    margin: 0 0 1.2rem;
+  }
+  .am-center .am-rule { margin-inline: auto; }
+
+  /* Número de sección */
+  .am-num {
+    display: block;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .6rem;
+  }
+
+  /* Breadcrumb */
+  .am-breadcrumb {
+    display: flex;
+    gap: .5rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 3.5rem;
+  }
+  .am-breadcrumb a { text-decoration: none; color: inherit; }
+  .am-breadcrumb a:hover { color: var(--orange); }
+
+  /* Badge */
+  .am-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: .35rem .8rem;
+    border: 1px solid;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .am-badge.gold   { border-color: rgba(217, 119, 6, .5);  color: var(--gold); }
+  .am-badge.red    { border-color: rgba(220, 38, 38, .5);   color: var(--red); }
+  .am-badge.orange { border-color: rgba(234, 88, 12, .5);   color: var(--orange); }
+  .am-badge.mist   { border-color: rgba(255, 248, 240, .2); color: var(--dim); }
+
+  /* ── HERO: amanecer ──────────────────────────────────────────────────────── */
+  .am-hero {
+    min-height: calc(100svh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(3.5rem, 6vw, 5rem);
+    background-color: var(--ink);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(220, 38, 38, .2);
+  }
+  /* Corona del amanecer */
+  .am-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 55% at 50% -15%, rgba(220, 38, 38, .55) 0%, rgba(234, 88, 12, .35) 30%, rgba(217, 119, 6, .15) 55%, transparent 75%);
+    pointer-events: none;
+  }
+  /* Banda horizontal bermellón baja */
+  .am-hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--red), var(--orange), var(--gold), transparent);
+  }
+
+  .am-hero-content { position: relative; z-index: 1; }
+
+  /* La línea kana decorativa */
+  .am-hero-kana {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .3em;
+    color: rgba(255, 248, 240, .3);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  /* TÍTULO: grande, con gradiente de amanecer */
+  .am-hero-title {
+    font-weight: 700;
+    font-size: clamp(4rem, 13vw, 10rem);
+    letter-spacing: .04em;
+    line-height: .9;
+    /* Gradiente de amanecer como fill del texto */
+    background: linear-gradient(160deg, #fff8f0 0%, #fef3c7 35%, #d97706 70%, #ea580c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 2rem;
+    display: block;
+  }
+
+  /* Línea separadora gruesa */
+  .am-hero-divider {
+    width: 5rem;
+    height: 3px;
+    background: var(--red);
+    margin: 0 0 2rem;
+  }
+
+  .am-hero-sub {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(.9rem, 1.8vw, 1.1rem);
+    letter-spacing: .06em;
+    color: var(--mist);
+    max-width: 38rem;
+    line-height: 1.75;
+    margin: 0 0 2rem;
+  }
+
+  .am-hero-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+  /* ── SECCIÓN OSCURA: EL AMANECER ─────────────────────────────────────────── */
+  .am-dawn {
+    background: var(--ink-mid);
+    padding: clamp(5rem, 9vw, 9rem) 0;
+    border-bottom: 1px solid rgba(217, 119, 6, .15);
+  }
+  .am-dawn h2 {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: .92;
+    color: var(--pale);
+    margin: .8rem 0 2rem;
+  }
+  .am-dawn h2 em { font-style: italic; color: var(--orange); }
+  .am-dawn p {
+    font-size: clamp(.9rem, 1.5vw, 1rem);
+    line-height: 2;
+    color: var(--mist);
+    max-width: 36rem;
+    margin: 0 0 1.2rem;
+  }
+
+  /* Cita */
+  .am-quote {
+    margin: 3rem 0 0;
+    padding: 2rem 2.5rem;
+    border-left: 3px solid var(--gold);
+    max-width: 34rem;
+  }
+  .am-quote blockquote {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--gold);
+    font-style: italic;
+    margin: 0 0 .8rem;
+  }
+  .am-quote cite {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(217, 119, 6, .5);
+    font-style: normal;
+  }
+
+  /* ── SECCIÓN CLARA: LAS OFRENDAS ─────────────────────────────────────────── */
+  .am-offerings {
+    background: #fff8f0;
+    padding: clamp(5rem, 9vw, 9rem) 0;
+    border-bottom: 1px solid rgba(26, 10, 5, .12);
+    color: var(--ink);
+  }
+  .am-offerings h2 {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: .92;
+    color: var(--ember);
+    margin: .8rem 0 2rem;
+  }
+  .am-offerings h2 em { font-style: italic; color: var(--orange); }
+  .am-offerings p {
+    font-size: clamp(.9rem, 1.5vw, 1rem);
+    line-height: 2;
+    color: rgba(26, 10, 5, .65);
+    max-width: 36rem;
+    margin: 0 0 1.2rem;
+  }
+  .am-offerings .am-num { color: var(--orange); }
+
+  /* Grid de tres habilidades */
+  .am-skills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 2.5rem;
+    background: rgba(26, 10, 5, .15);
+  }
+  .am-skill {
+    background: #fff8f0;
+    padding: 2rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .am-skill-icon { font-size: 2rem; }
+  .am-skill-num  { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+  .am-skill-name { font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; color: var(--ember); }
+  .am-skill-desc { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .8rem; line-height: 1.65; color: rgba(26, 10, 5, .6); margin: 0; }
+  .am-skill:nth-child(1) { border-top: 3px solid var(--red); }
+  .am-skill:nth-child(2) { border-top: 3px solid var(--orange); }
+  .am-skill:nth-child(3) { border-top: 3px solid var(--gold); }
+
+  /* ── SECCIÓN OSCURA: ESTADO ───────────────────────────────────────────────── */
+  .am-status {
+    background: var(--ink);
+    padding: clamp(5rem, 9vw, 9rem) 0;
+    border-top: 1px solid rgba(217, 119, 6, .15);
+    color: var(--mist);
+  }
+  .am-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: start;
+  }
+  .am-status h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: .92;
+    color: var(--pale);
+    margin: .8rem 0 2rem;
+  }
+  .am-status h2 em { font-style: italic; color: var(--orange); }
+  .am-status p { font-size: clamp(.9rem, 1.5vw, 1rem); line-height: 2; color: var(--mist); margin: 0 0 1.2rem; }
+
+  .am-version {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(4.5rem, 13vw, 10rem);
+    font-weight: 900;
+    letter-spacing: -.1em;
+    line-height: .82;
+    background: linear-gradient(160deg, #fff8f0 0%, #d97706 60%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+  }
+  .am-change-list { list-style: none; padding: 0; margin: 0; }
+  .am-change-list li {
+    padding: .9rem 0;
+    border-bottom: 1px solid rgba(255, 248, 240, .08);
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    gap: .8rem;
+    font-size: .88rem;
+    line-height: 1.6;
+    color: var(--mist);
+    align-items: start;
+  }
+  .am-change-list li:first-child { border-top: 1px solid rgba(255, 248, 240, .08); }
+  .am-change-list li::before { content: "·"; color: var(--gold); font-size: 1.2rem; line-height: 1; }
+
+  /* ── Back ───────────────────────────────────────────────────────────────── */
+  .am-back {
+    background: var(--ink);
+    padding: 3rem 0;
+    border-top: 1px solid rgba(220, 38, 38, .2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .am-back span { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .78rem; color: var(--dim); letter-spacing: .08em; }
+  .am-back a {
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    text-decoration: none;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .am-back a:hover { background: linear-gradient(90deg, var(--red), var(--orange)); -webkit-background-clip: text; background-clip: text; }
+
+  @media (max-width: 680px) {
+    .am-skills { grid-template-columns: 1fr; }
+    .am-status-grid { grid-template-columns: 1fr; }
+    .am-back { flex-direction: column; text-align: center; }
+  }
+</style>
+
+<main>
+  <!-- ── HERO ── -->
+  <section class="am-hero">
+    <div class="am-shell am-hero-content">
+      <nav class="am-breadcrumb" aria-label="Navegación">
+        <a href="/">Inicio</a><span>/</span><span>Amateuratsu</span>
+      </nav>
+      <span class="am-hero-kana">Estudio Alpargatas · Proto V0.2 · 日の出</span>
+      <h1 class="am-hero-title">Amateuratsu</h1>
+      <div class="am-hero-divider"></div>
+      <p class="am-hero-sub">La diosa del sol se ha retirado a su cueva. Sus devotos, ninguno profesional, compiten por crear la ofrenda que la haga volver al amanecer.</p>
+      <div class="am-hero-badges">
+        <span class="am-badge gold">2–4 jugadores</span>
+        <span class="am-badge orange">25–35 min</span>
+        <span class="am-badge red">Ofrendas</span>
+        <span class="am-badge mist">Proto V0.2</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: EL AMANECER ── -->
+  <section class="am-dawn">
+    <div class="am-shell">
+      <span class="am-num">01 — La idea</span>
+      <div class="am-rule"></div>
+      <h2>Artes menores.<br /><em>Ambición mayor.</em></h2>
+      <p>Amateuratsu toma el mito de Ōkami-sama, la diosa solar que se encerró en una cueva por una ofensa y dejó al mundo en tinieblas. Para atraerla, los dioses organizaron un gran festival. Ningún artesano era perfecto, pero juntos lograron algo extraordinario.</p>
+      <p>En el juego, los jugadores son esos artesanos. Cada turno compone una parte de su ofrenda eligiendo entre tres habilidades: Técnica, Inspiración y Armonía. La ofrenda más equilibrada no siempre gana — gana la que mejor responde a lo que la diosa busca ese amanecer.</p>
+      <div class="am-quote">
+        <blockquote>"No necesitas ser el mejor. Necesitas ser el más adecuado para este momento exacto."</blockquote>
+        <cite>Nota de diseño · Proto V0.1</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: LAS OFRENDAS ── -->
+  <section class="am-offerings">
+    <div class="am-shell">
+      <span class="am-num">02 — La mecánica</span>
+      <div class="am-rule" style="background: var(--orange)"></div>
+      <h2>Tres habilidades.<br /><em>Un umbral.</em></h2>
+      <p>Cada carta de ofrenda tiene valores de Técnica, Inspiración y Armonía. El jugador decide cuánto "apuesta" en cada habilidad, pero no puede superar el umbral — si se pasa, su ofrenda queda incompleta y pierde la ronda.</p>
+      <p>Al final de cada ronda, se revela qué combinación de habilidades buscaba Amaterasu. Quien más se acerque sin pasarse, gana los puntos de esa ronda. Tres rondas, tres amaneceres, un ganador.</p>
+      <div class="am-skills">
+        {[
+          { icon: '⚙️', num: 'H01', name: 'Técnica', desc: 'La precisión del artesano. Suma puntos estables en todas las rondas, pero nunca da bonus.' },
+          { icon: '✨', num: 'H02', name: 'Inspiración', desc: 'El destello creativo. Puede dar el doble de puntos, pero también queda a cero si la ronda no la favorece.' },
+          { icon: '🌅', num: 'H03', name: 'Armonía', desc: 'El equilibrio entre las otras dos. Multiplica el score final si los otros dos valores están cerca.' },
+        ].map(s => (
+          <div class="am-skill">
+            <span class="am-skill-icon">{s.icon}</span>
+            <div class="am-skill-num">{s.num}</div>
+            <div class="am-skill-name">{s.name}</div>
+            <p class="am-skill-desc">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: ESTADO ACTUAL ── -->
+  <section class="am-status">
+    <div class="am-shell am-status-grid">
+      <div>
+        <span class="am-num">03 — Estado actual</span>
+        <div class="am-rule"></div>
+        <div class="am-version" aria-hidden="true">V0.2</div>
+        <ul class="am-change-list">
+          <li>La mecánica del umbral reemplazó a la puntuación acumulada de V0.1 — más tensión por ronda.</li>
+          <li>Armonía era "Equilibrio" en la primera versión; el nombre cambió por claridad.</li>
+          <li>Se redujo de cuatro habilidades a tres: Belleza se fusionó con Inspiración.</li>
+          <li>Pendiente: definir los efectos de las cartas de festival especiales.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Nació como un<br /><em>ejercicio</em><br />de diseño.</h2>
+        <p>Amateuratsu empezó en un taller de creación de juegos. La restricción era usar exactamente tres tipos de recurso y un mecanismo de "no te pases". La primera versión tardó dos horas en existir y tres meses en dejar de ser un accidente.</p>
+        <p>El tema japonés vino después: la mecánica del umbral pedía a gritos una narrativa sobre no excederse. Y qué más fiel a ese concepto que la historia de una diosa a la que solo los artesanos imperfectos pudieron convencer.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="am-back am-shell" aria-label="Volver a proyectos">
+    <span>Seguimos mirando</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

@@ -1,0 +1,641 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="HUBRIS — Estudio Alpargatas"
+  description="HUBRIS: cooperar para alcanzar grandes hazañas y competir por reclamar su gloria. Un juego de dados sobre ambición, exceso y las consecuencias que Némesis trae."
+  bodyClass="page-hubris"
+  footerSubtitle="HUBRIS // NEMESIS.EXE // EN REDISEÑO"
+  themeColor="#060010"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════════
+     HUBRIS · Cyberpunk · Neon Overdrive
+     ═══════════════════════════════════════════════════════════ */
+
+  body.page-hubris {
+    background-color: #060010;
+    color: rgba(200, 240, 255, .85);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    /* Grid de circuito impreso */
+    background-image:
+      linear-gradient(rgba(0, 229, 255, .04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, .04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    /* Variables */
+    --void:   #060010;
+    --panel:  #0f0020;
+    --panel2: #0a0018;
+    --pink:   #ff0066;
+    --cyan:   #00e5ff;
+    --green:  #c8ff00;
+    --purple: #9d00ff;
+    --dim:    rgba(200, 240, 255, .65);
+    /* Compatibilidad con HTML existente */
+    --gold:   #00e5ff;
+    --crimson: #ff0066;
+    --ink:    rgba(200, 240, 255, .7);
+    --dark:   #0f0020;
+    --parch:  #0f0020;
+    --parch2: #0a0018;
+  }
+
+  /* Overlay de scanlines: efecto CRT */
+  body.page-hubris::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, .15) 3px,
+      rgba(0, 0, 0, .15) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── Header: barra de datos neon ───────────────────────────────────────── */
+  body.page-hubris .site-header {
+    background: rgba(6, 0, 16, .96);
+    border-bottom: 1px solid rgba(0, 229, 255, .35);
+  }
+  body.page-hubris .brand b      { color: #00e5ff; }
+  body.page-hubris .brand small  { color: rgba(0, 229, 255, .45); }
+  body.page-hubris .nav-links a  { color: rgba(200, 240, 255, .5); }
+  body.page-hubris .nav-links a:hover { color: #ff0066; }
+  body.page-hubris .nav-links .nav-instagram {
+    border-color: rgba(255, 0, 102, .4);
+    color: #ff0066;
+  }
+  body.page-hubris .nav-links .nav-instagram:hover {
+    background: #ff0066; border-color: #ff0066; color: #060010;
+  }
+  body.page-hubris .brand-logo {
+    border-color: rgba(0, 229, 255, .5);
+    box-shadow: 2px 2px 0 rgba(0, 229, 255, .4);
+  }
+
+  /* ── Footer ─────────────────────────────────────────────────────────────── */
+  body.page-hubris .site-footer {
+    background: #060010;
+    border-top: 1px solid rgba(255, 0, 102, .35);
+    color: rgba(200, 240, 255, .45);
+  }
+  body.page-hubris .site-footer b,
+  body.page-hubris .site-footer a { color: rgba(0, 229, 255, .75); }
+  body.page-hubris .site-footer a:hover { color: #ff0066; }
+
+  /* ── Utiles ──────────────────────────────────────────────────────────────── */
+  .hb-shell  { width: min(960px, calc(100% - 3rem)); margin-inline: auto; }
+  .hb-center { text-align: center; max-width: 44rem; margin-inline: auto; }
+
+  /* Número de sección: monospace neon */
+  .hb-num {
+    display: block;
+    font-family: "Courier New", Courier, monospace;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: .8rem;
+  }
+
+  /* Divisor: línea neon horizontal */
+  .hb-rule {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .hb-rule::before,
+  .hb-rule::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  }
+  .hb-rule-symbol {
+    font-family: "Courier New", monospace;
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 8px var(--cyan);
+    letter-spacing: .05em;
+  }
+
+  /* Breadcrumb ────────────────────────────────────────────────────────────── */
+  .hb-breadcrumb {
+    display: flex;
+    justify-content: center;
+    gap: .6rem;
+    font-family: "Courier New", monospace;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(200, 240, 255, .3);
+    margin-bottom: 2rem;
+  }
+  .hb-breadcrumb a { text-decoration: none; color: inherit; }
+  .hb-breadcrumb a:hover { color: var(--cyan); text-shadow: 0 0 8px var(--cyan); }
+
+  /* ── GLITCH ANIMATION ────────────────────────────────────────────────────── */
+  @keyframes hb-glitch {
+    0%, 92%, 100% { clip-path: none; transform: none; }
+    93%  { clip-path: polygon(0 18%, 100% 18%, 100% 38%, 0 38%); transform: translate(-5px, 0); color: var(--cyan); }
+    94%  { clip-path: polygon(0 62%, 100% 62%, 100% 82%, 0 82%); transform: translate(5px, 0); color: var(--pink); }
+    95%  { clip-path: none; transform: none; }
+    96%  { clip-path: polygon(0 30%, 100% 30%, 100% 55%, 0 55%); transform: translate(-3px, 0); color: var(--cyan); }
+    97%  { clip-path: none; transform: none; }
+  }
+
+  /* ── HERO: pantalla de arranque ──────────────────────────────────────────── */
+  .hb-hero {
+    min-height: calc(100svh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background-color: var(--void);
+    border-bottom: 1px solid rgba(255, 0, 102, .3);
+  }
+
+  /* Línea de arranque pre-título */
+  .hb-tagline-pre {
+    display: block;
+    font-family: "Courier New", monospace;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(0, 229, 255, .5);
+    margin-bottom: 1.5rem;
+  }
+
+  /* HUBRIS en neon sangrante con glitch */
+  .hb-hero-title {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(5.5rem, 18vw, 14rem);
+    letter-spacing: -.07em;
+    line-height: .82;
+    color: var(--pink);
+    text-transform: uppercase;
+    text-shadow:
+      0 0 8px var(--pink),
+      0 0 25px rgba(255, 0, 102, .7),
+      0 0 55px rgba(255, 0, 102, .35);
+    margin: 0 0 1.5rem;
+    animation: hb-glitch 6s infinite;
+    display: inline-block;
+  }
+
+  /* Subtítulo */
+  .hb-hero-sub {
+    font-family: "Courier New", monospace;
+    font-size: clamp(.9rem, 2vw, 1.2rem);
+    color: var(--cyan);
+    text-shadow: 0 0 12px rgba(0, 229, 255, .6);
+    letter-spacing: .06em;
+    margin-bottom: 2rem;
+  }
+
+  /* Badges: status pills neon */
+  .hb-hero-badges {
+    display: flex;
+    gap: .6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .hb-badge {
+    display: inline-flex;
+    padding: .35rem .7rem;
+    border: 1px solid rgba(200, 240, 255, .2);
+    font-family: "Courier New", monospace;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .hb-badge.gold  {
+    border-color: rgba(0, 229, 255, .5);
+    color: var(--cyan);
+    text-shadow: 0 0 8px rgba(0, 229, 255, .5);
+  }
+  .hb-badge.blood {
+    border-color: rgba(255, 0, 102, .5);
+    color: var(--pink);
+    text-shadow: 0 0 8px rgba(255, 0, 102, .5);
+  }
+
+  /* Intro text */
+  .hb-hero p { font-size: .9rem; line-height: 1.85; color: var(--ink); max-width: 36rem; margin-inline: auto; }
+
+  /* ── SECCIÓN OSCURA: LA HYBRIS ───────────────────────────────────────────── */
+  .hb-dark {
+    background: var(--panel);
+    color: var(--dim);
+    padding: clamp(4rem, 8vw, 8rem) 0;
+    border-bottom: 1px solid rgba(0, 229, 255, .12);
+    border-top: 1px solid rgba(0, 229, 255, .12);
+  }
+  .hb-dark h2 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    letter-spacing: -.06em;
+    line-height: .9;
+    color: #e0f8ff;
+    text-shadow: 0 0 20px rgba(0, 229, 255, .3);
+    margin: 0 0 1.5rem;
+  }
+  .hb-dark p {
+    font-size: .95rem;
+    line-height: 1.85;
+    color: var(--dim);
+    max-width: 38rem;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
+
+  /* Cita: terminal output */
+  .hb-quote {
+    border-left: 3px solid var(--cyan);
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+    max-width: 36rem;
+    margin-inline: auto;
+    margin-top: 2rem;
+    background: rgba(0, 229, 255, .04);
+  }
+  .hb-quote::before {
+    content: "> OUTPUT:";
+    display: block;
+    font-family: "Courier New", monospace;
+    font-size: .55rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    color: rgba(0, 229, 255, .45);
+    margin-bottom: .6rem;
+  }
+  .hb-quote blockquote {
+    font-family: "Courier New", monospace;
+    font-size: .92rem;
+    line-height: 1.7;
+    color: var(--cyan);
+    text-shadow: 0 0 8px rgba(0, 229, 255, .35);
+    margin: 0 0 .6rem;
+  }
+  .hb-quote cite {
+    font-family: "Courier New", monospace;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(0, 229, 255, .4);
+    font-style: normal;
+  }
+
+  /* ── SECCIÓN: LOS DADOS ──────────────────────────────────────────────────── */
+  .hb-dice {
+    padding: clamp(4rem, 8vw, 8rem) 0;
+    background: var(--void);
+    border-bottom: 1px solid rgba(200, 255, 0, .12);
+  }
+  .hb-dice h2 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -.06em;
+    line-height: .9;
+    color: #e0f8ff;
+    text-shadow: 0 0 20px rgba(0, 229, 255, .2);
+    margin: 0 0 1.5rem;
+  }
+  .hb-dice p {
+    font-size: .95rem;
+    line-height: 1.85;
+    color: var(--dim);
+    max-width: 38rem;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
+  .hb-dice-set {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 36rem;
+    margin: 2.5rem auto 0;
+  }
+  .hb-die {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .8rem;
+  }
+  .hb-die-face {
+    width: 4.5rem;
+    height: 4.5rem;
+    border: 1.5px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Courier New", monospace;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+  .hb-die:nth-child(1) .hb-die-face {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    text-shadow: 0 0 12px var(--cyan);
+    box-shadow: 0 0 10px rgba(0, 229, 255, .25), inset 0 0 10px rgba(0, 229, 255, .08);
+    background: rgba(0, 229, 255, .04);
+  }
+  .hb-die:nth-child(2) .hb-die-face {
+    border-color: var(--pink);
+    color: var(--pink);
+    text-shadow: 0 0 12px var(--pink);
+    box-shadow: 0 0 10px rgba(255, 0, 102, .25), inset 0 0 10px rgba(255, 0, 102, .08);
+    background: rgba(255, 0, 102, .04);
+  }
+  .hb-die:nth-child(3) .hb-die-face {
+    border-color: var(--green);
+    color: var(--green);
+    text-shadow: 0 0 12px var(--green);
+    box-shadow: 0 0 10px rgba(200, 255, 0, .25), inset 0 0 10px rgba(200, 255, 0, .08);
+    background: rgba(200, 255, 0, .04);
+    font-size: 1rem;
+    letter-spacing: .04em;
+  }
+  .hb-die-label {
+    font-family: "Courier New", monospace;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-align: center;
+  }
+  .hb-die:nth-child(1) .hb-die-label { color: var(--cyan); text-shadow: 0 0 6px rgba(0,229,255,.4); }
+  .hb-die:nth-child(2) .hb-die-label { color: var(--pink); text-shadow: 0 0 6px rgba(255,0,102,.4); }
+  .hb-die:nth-child(3) .hb-die-label { color: var(--green); text-shadow: 0 0 6px rgba(200,255,0,.4); }
+  .hb-die-desc {
+    font-size: .72rem;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--dim);
+  }
+
+  /* ── SECCIÓN PELIGRO: NEMESIS ────────────────────────────────────────────── */
+  .hb-nemesis {
+    background: var(--panel);
+    color: var(--dim);
+    padding: clamp(4rem, 8vw, 8rem) 0;
+    border-top: 1px solid rgba(255, 0, 102, .3);
+  }
+  .hb-nemesis h2 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    letter-spacing: -.06em;
+    line-height: .9;
+    color: var(--pink);
+    text-shadow: 0 0 20px rgba(255, 0, 102, .6);
+    margin: 0 0 1.5rem;
+  }
+  .hb-nemesis p {
+    font-size: .95rem;
+    line-height: 1.85;
+    color: var(--dim);
+    max-width: 38rem;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+  }
+  /* Medidor de Némesis: barra de vida neon */
+  .hb-meter-wrap { max-width: 28rem; margin: 2.5rem auto; }
+  .hb-meter-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Courier New", monospace;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255, 0, 102, .45);
+    margin-bottom: .5rem;
+  }
+  .hb-meter {
+    height: .8rem;
+    background: rgba(255, 0, 102, .05);
+    border: 1px solid rgba(255, 0, 102, .25);
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+  }
+  .hb-meter-seg { flex: 1; background: rgba(255, 0, 102, .08); }
+  .hb-meter-seg.lit  {
+    background: #ff0066;
+    box-shadow: 0 0 6px #ff0066, 0 0 12px rgba(255, 0, 102, .5);
+  }
+  .hb-meter-seg.crit {
+    background: #ff0000;
+    box-shadow: 0 0 10px #ff0000, 0 0 22px rgba(255, 0, 0, .7);
+    animation: hb-pulse 0.8s infinite alternate;
+  }
+  @keyframes hb-pulse {
+    from { opacity: .7; }
+    to   { opacity: 1; }
+  }
+  .hb-meter-caption {
+    font-family: "Courier New", monospace;
+    font-size: .68rem;
+    color: rgba(255, 0, 102, .65);
+    text-align: center;
+    margin-top: .6rem;
+  }
+  .hb-status-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem auto 0;
+    max-width: 36rem;
+    border-top: 1px solid rgba(0, 229, 255, .12);
+  }
+  .hb-status-list li {
+    padding: .85rem 0;
+    border-bottom: 1px solid rgba(0, 229, 255, .08);
+    font-family: "Courier New", monospace;
+    font-size: .82rem;
+    color: var(--dim);
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    gap: .8rem;
+    align-items: start;
+  }
+  .hb-status-list li::before {
+    content: ">";
+    color: var(--cyan);
+    text-shadow: 0 0 6px rgba(0, 229, 255, .6);
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  /* ── Back ───────────────────────────────────────────────────────────────── */
+  .hb-back {
+    background: var(--void);
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(255, 0, 102, .25);
+  }
+  .hb-back-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .hb-back span {
+    font-family: "Courier New", monospace;
+    font-size: .72rem;
+    color: rgba(200, 240, 255, .3);
+    letter-spacing: .08em;
+  }
+  .hb-back a {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.3rem, 3vw, 2.3rem);
+    letter-spacing: -.04em;
+    text-decoration: none;
+    color: var(--pink);
+    text-shadow: 0 0 12px rgba(255, 0, 102, .6);
+  }
+  .hb-back a:hover { color: var(--cyan); text-shadow: 0 0 15px rgba(0, 229, 255, .6); }
+
+  @media (max-width: 680px) {
+    .hb-hero-title { letter-spacing: -.06em; }
+    .hb-dice-set   { grid-template-columns: 1fr; max-width: 18rem; }
+    .hb-back-inner { flex-direction: column; text-align: center; }
+  }
+</style>
+
+<main>
+  <!-- ── HERO ── -->
+  <section class="hb-hero">
+    <div class="hb-shell hb-center hb-hero-inner">
+      <nav class="hb-breadcrumb" aria-label="Navegación">
+        <a href="/">Inicio</a><span>/</span><span>HUBRIS</span>
+      </nav>
+      <span class="hb-tagline-pre">// ESTUDIO_ALPARGATAS · PROTOTYPE · BUILD 0.2</span>
+      <h1 class="hb-hero-title">HUBRIS</h1>
+      <p class="hb-hero-sub">> La gloria es el primer paso hacia la caída.</p>
+      <div class="hb-hero-badges">
+        <span class="hb-badge gold">2–5 jugadores</span>
+        <span class="hb-badge blood">45–60 min</span>
+        <span class="hb-badge">Dados</span>
+        <span class="hb-badge">En rediseño</span>
+      </div>
+      <div class="hb-rule"><span class="hb-rule-symbol">//</span></div>
+      <p style="font-size:.9rem;line-height:1.8;color:var(--ink);max-width:36rem;margin-inline:auto">
+        Un juego en el que los jugadores cooperan para completar grandes hazañas, pero cada uno compite por reclamar su parte de la gloria. El exceso tiene consecuencias: Némesis no perdona.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: LA HYBRIS ── -->
+  <section class="hb-dark">
+    <div class="hb-shell hb-center">
+      <span class="hb-num">// 01 — La idea</span>
+      <h2>Todos necesitan al otro.<br />Nadie cede la gloria.</h2>
+      <p>HUBRIS parte de la hybris griega: la desmesura, el exceso de ambición que los dioses castigaban a través de Némesis. En el juego, esa tensión es mecánica: sin cooperación no hay hazañas; sin competencia no hay motivo para esforzarse.</p>
+      <p>Cada ronda, el grupo enfrenta un desafío que requiere el aporte de varios jugadores. Quien más aporta a una hazaña tiene más derecho a reclamar su gloria al final. Pero apostar demasiado activa a Némesis, y lo que Némesis arruina afecta a todos.</p>
+      <div class="hb-rule"><span class="hb-rule-symbol">//</span></div>
+      <div class="hb-quote">
+        <blockquote>
+          "La tragedia de los griegos no era fracasar. Era alcanzar exactamente lo que querían."
+        </blockquote>
+        <cite>Nota de diseño · V0.1</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: LOS DADOS ── -->
+  <section class="hb-dice">
+    <div class="hb-shell hb-center">
+      <span class="hb-num">// 02 — La mecánica</span>
+      <h2>Tres dados.<br />Tres fuerzas.</h2>
+      <p>El corazón de HUBRIS son tres tipos de dados que representan diferentes aspectos de la ambición griega. Cada hazaña exige una combinación distinta; cada jugador decide cuánto arriesga en cada tiro.</p>
+      <p>Declarar demasiados dados de Exceso aumenta la recompensa pero avanza el medidor de Némesis. Y cuando Némesis alcanza el umbral, actúa sobre el jugador con más gloria acumulada. El más exitoso es el más vulnerable.</p>
+      <div class="hb-dice-set">
+        <div class="hb-die">
+          <div class="hb-die-face">01</div>
+          <div class="hb-die-label">Areté</div>
+          <p class="hb-die-desc">Virtud y capacidad. Dados base para completar hazañas.</p>
+        </div>
+        <div class="hb-die">
+          <div class="hb-die-face">!!</div>
+          <div class="hb-die-label">Hybris</div>
+          <p class="hb-die-desc">Exceso. Potencian el efecto pero activan a Némesis.</p>
+        </div>
+        <div class="hb-die">
+          <div class="hb-die-face" style="font-size:1rem;">ΝΕΜΕ<br/>ΣΙΣ</div>
+          <div class="hb-die-label">Némesis</div>
+          <p class="hb-die-desc">Castigo. Solo aparece cuando el medidor se llena.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: NÉMESIS + ESTADO ── -->
+  <section class="hb-nemesis">
+    <div class="hb-shell hb-center">
+      <span class="hb-num" style="color:var(--pink);text-shadow:0 0 8px rgba(255,0,102,.5)">// 03 — Estado actual</span>
+      <h2>En rediseño de dados.</h2>
+      <p>La estructura cooperativa-competitiva está validada: funciona. Lo que está cambiando es el sistema de dados para que el riesgo sea más legible en mesa y las consecuencias de Némesis resulten más dramáticas sin volverse azarosas.</p>
+
+      <div class="hb-meter-wrap" aria-label="Medidor de Némesis: 4 de 7 casillas llenas">
+        <div class="hb-meter-label">
+          <span>NEMESIS_DORMIDA</span>
+          <span>NEMESIS_ACTIVA</span>
+        </div>
+        <div class="hb-meter">
+          <div class="hb-meter-seg lit"></div>
+          <div class="hb-meter-seg lit"></div>
+          <div class="hb-meter-seg lit"></div>
+          <div class="hb-meter-seg lit"></div>
+          <div class="hb-meter-seg crit"></div>
+          <div class="hb-meter-seg"></div>
+          <div class="hb-meter-seg"></div>
+        </div>
+        <p class="hb-meter-caption">> AVISO: 4 dados Hybris declarados esta ronda. Umbral = 5.</p>
+      </div>
+
+      <div class="hb-rule"><span class="hb-rule-symbol">//</span></div>
+      <ul class="hb-status-list">
+        <li>V0.1: estructura cooperativa-competitiva, tres tipos de hazaña.</li>
+        <li>V0.2: medidor de Némesis implementado, ajuste de escala de gloria.</li>
+        <li>Actual: rediseño del sistema de dados para mayor legibilidad.</li>
+        <li>Pendiente: cierre del set final de hazañas y arte de dados.</li>
+      </ul>
+
+      <div class="hb-rule"><span class="hb-rule-symbol">//</span></div>
+
+      <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.04em;line-height:.95;color:var(--pink);text-shadow:0 0 18px rgba(255,0,238,.4);margin:0 0 1.2rem;">// BUILD_0.1 //<br />ASÍ_EMPEZÓ_LA_CAÍDA.</h2>
+      <p style="font-size:.88rem;line-height:1.85;color:rgba(148,210,189,.6);max-width:36rem;margin:0 auto 1rem;">HUBRIS empezó como un cooperativo puro: todos los jugadores trabajaban juntos para completar hazañas sin tensión interna. El problema era que sin incentivo para el exceso, nadie quería ser el que rompía el equilibrio.</p>
+      <p style="font-size:.88rem;line-height:1.85;color:rgba(148,210,189,.6);max-width:36rem;margin:0 auto;">La Hybris llegó como solución: si excederse potencia el efecto pero activa a Némesis, cada lanzamiento de dado tiene peso real. Y si la gloria al final es individual, la cooperación se convierte en cálculo, no en altruismo. Ahí apareció el juego.</p>
+    </div>
+  </section>
+
+  <nav class="hb-back" aria-label="Volver a proyectos">
+    <div class="hb-shell hb-back-inner">
+      <span>// SEGUIMOS_MIRANDO</span>
+      <a href="/#juegos">Volver a todos los juegos →</a>
+    </div>
+  </nav>
+</main>
+
+</BaseLayout>

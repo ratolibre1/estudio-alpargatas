@@ -1,0 +1,244 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Pavoneo — Estudio Alpargatas"
+  description="Pavoneo: un duelo de información asimétrica. Mostrar un poco más puede dar puntos o hacer que todo se venga abajo."
+  bodyClass="page-pavoneo"
+  footerSubtitle="Pavoneo · Duelo · Información asimétrica"
+  themeColor="#0a1a24"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════
+     PAVONEO · Plumas de pavo real · Azul profundo + Dorado
+     ═══════════════════════════════════════════════════════ */
+  body.page-pavoneo {
+    background-color: #0a1a24;
+    color: #94d2bd;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-image: none;
+    --deep:    #0a1a24;
+    --panel:   #0d2233;
+    --teal:    #0a9396;
+    --teal-cl: #94d2bd;
+    --gold:    #e9c46a;
+    --danger:  #9b2226;
+    --dim:     rgba(148, 210, 189, .55);
+    --line:    rgba(10, 147, 150, .2);
+  }
+
+  body.page-pavoneo .site-header { background: rgba(10, 26, 36, .97); border-bottom: 1px solid rgba(10, 147, 150, .35); }
+  body.page-pavoneo .brand b     { color: var(--gold); }
+  body.page-pavoneo .brand small { color: rgba(233,196,106,.4); }
+  body.page-pavoneo .nav-links a { color: var(--dim); }
+  body.page-pavoneo .nav-links a:hover { color: var(--teal); }
+  body.page-pavoneo .nav-links .nav-instagram { border-color: rgba(10,147,150,.35); color: var(--teal); }
+  body.page-pavoneo .nav-links .nav-instagram:hover { background: var(--teal); border-color: var(--teal); color: var(--deep); }
+  body.page-pavoneo .brand-logo { border-color: var(--teal); box-shadow: 2px 2px 0 rgba(10,147,150,.4); }
+
+  body.page-pavoneo .site-footer { background: var(--deep); border-top: 1px solid var(--line); color: var(--dim); }
+  body.page-pavoneo .site-footer b, body.page-pavoneo .site-footer a { color: var(--gold); }
+  body.page-pavoneo .site-footer a:hover { color: var(--teal); }
+
+  .pv-shell { width: min(1100px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .pv-label {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1.2rem;
+  }
+  .pv-label::before { content: ""; display: block; width: 2rem; height: 1px; background: var(--teal); }
+
+  .pv-breadcrumb {
+    display: flex; gap: .5rem;
+    font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 2rem;
+  }
+  .pv-breadcrumb a { text-decoration: none; color: inherit; }
+  .pv-breadcrumb a:hover { color: var(--teal); }
+
+  /* HERO */
+  .pv-hero {
+    min-height: calc(100svh - 5rem);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--deep);
+    border-bottom: 1px solid var(--line);
+    position: relative; overflow: hidden;
+  }
+  /* Plumas decorativas: círculos concéntricos en esquina */
+  .pv-hero::before {
+    content: "";
+    position: absolute;
+    right: -10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60vw; height: 60vw;
+    border-radius: 50%;
+    border: 1px solid rgba(10, 147, 150, .12);
+    pointer-events: none;
+  }
+  .pv-hero::after {
+    content: "";
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40vw; height: 40vw;
+    border-radius: 50%;
+    border: 1px solid rgba(10, 147, 150, .18);
+    pointer-events: none;
+  }
+  .pv-hero-content { position: relative; z-index: 1; max-width: 42rem; }
+  .pv-hero-title {
+    font-size: clamp(5rem, 16vw, 13rem); font-weight: 900; letter-spacing: -.06em; line-height: .85;
+    color: var(--gold);
+    text-shadow: 2px 2px 0 rgba(10,147,150,.3), 4px 4px 0 rgba(10,147,150,.15);
+    text-transform: uppercase; display: block; margin: 0 0 1.5rem;
+  }
+  .pv-hero-sub {
+    font-size: clamp(.9rem, 1.8vw, 1.1rem); color: var(--teal-cl); line-height: 1.7;
+    max-width: 35rem; margin: 0 0 2rem;
+  }
+  .pv-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .pv-badge {
+    display: inline-flex; padding: .3rem .7rem; border: 1px solid;
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .pv-badge.gold   { border-color: rgba(233,196,106,.5); color: var(--gold); }
+  .pv-badge.teal   { border-color: rgba(10,147,150,.5);  color: var(--teal); }
+  .pv-badge.danger { border-color: rgba(155,34,38,.5);    color: #e88080; }
+
+  /* SECCIÓN 01 */
+  .pv-concept {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .pv-concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .pv-concept h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: -.05em; line-height: .88; color: #e0f4f0; margin: 1rem 0 1.5rem; }
+  .pv-concept h2 em { color: var(--gold); font-style: normal; }
+  .pv-concept p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
+
+  /* Medidor de riesgo */
+  .pv-risk-meter { margin-top: 1rem; }
+  .pv-risk-row {
+    display: grid; grid-template-columns: 6rem 1fr auto; gap: 1rem; align-items: center;
+    padding: .7rem 0; border-bottom: 1px solid rgba(10, 147, 150, .1);
+  }
+  .pv-risk-row:first-child { border-top: 1px solid rgba(10, 147, 150, .1); }
+  .pv-risk-label { font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+  .pv-risk-bar { height: 4px; border-radius: 2px; background: rgba(10, 147, 150, .15); overflow: hidden; }
+  .pv-risk-fill { height: 100%; border-radius: 2px; }
+  .pv-risk-val { font-size: .75rem; font-weight: 700; color: var(--teal-cl); text-align: right; white-space: nowrap; }
+
+  /* SECCIÓN 03: Estado */
+  .pv-status {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--deep);
+    border-top: 1px solid var(--line);
+  }
+  .pv-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .pv-status h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: -.05em; line-height: .88; color: #e0f4f0; margin: 1rem 0 1.5rem; }
+  .pv-status h2 em { color: var(--gold); font-style: normal; }
+  .pv-status p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
+  .pv-version {
+    font-size: clamp(5rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.1em; line-height: .8;
+    color: var(--teal); margin-bottom: 1.5rem;
+  }
+  .pv-change-list { list-style: none; padding: 0; margin: 0; }
+  .pv-change-list li {
+    padding: .8rem 0; border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 1rem 1fr; gap: .7rem;
+    font-size: .88rem; color: var(--dim); align-items: start;
+  }
+  .pv-change-list li:first-child { border-top: 1px solid var(--line); }
+  .pv-change-list li::before { content: "·"; color: var(--gold); font-size: 1.2rem; line-height: 1; }
+
+  .pv-back {
+    padding: 2.5rem 0; display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    border-top: 1px solid var(--line); background: var(--deep);
+  }
+  .pv-back span { font-size: .78rem; color: var(--dim); }
+  .pv-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 900; letter-spacing: -.05em; text-decoration: none; color: var(--gold); }
+  .pv-back a:hover { color: var(--teal); }
+
+  @media (max-width: 720px) {
+    .pv-concept-grid, .pv-status-grid { grid-template-columns: 1fr; }
+    .pv-hero::before, .pv-hero::after { display: none; }
+  }
+</style>
+
+<main>
+  <section class="pv-hero">
+    <div class="pv-shell pv-hero-content">
+      <nav class="pv-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Pavoneo</span></nav>
+      <h1 class="pv-hero-title">Pavoneo</h1>
+      <p class="pv-hero-sub">Un duelo de dos jugadores donde mostrar más puede darte la victoria o hundirte completamente. La información no es poder: es riesgo.</p>
+      <div class="pv-badges">
+        <span class="pv-badge gold">Proto</span>
+        <span class="pv-badge teal">2 jugadores</span>
+        <span class="pv-badge danger">10–15 min</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="pv-concept">
+    <div class="pv-shell pv-concept-grid">
+      <div>
+        <span class="pv-label">01 — La idea</span>
+        <h2>Mostrar más.<br /><em>Ganar más.</em><br />Perder todo.</h2>
+        <p>En Pavoneo, cada jugador tiene una mano secreta de cartas. En cada turno puede elegir cuántas cartas revelar del total: revelar más da más puntos al final de la ronda, pero exponer demasiado le da al rival información que puede usar en tu contra.</p>
+        <p>La mecánica de información asimétrica: los dos jugadores nunca saben exactamente qué tiene el otro — solo lo que el otro ha decidido mostrar. Y a veces mostrar una carta falsa vale más que mostrar tres verdaderas.</p>
+      </div>
+      <div>
+        <div class="pv-risk-meter" aria-label="Medidor de riesgo según cartas reveladas">
+          {[
+            { label: '1 carta', fill: 15, color: '#0a9396', pts: '+2 pts · riesgo mínimo' },
+            { label: '2 cartas', fill: 35, color: '#5f9ea0', pts: '+5 pts · riesgo bajo' },
+            { label: '3 cartas', fill: 58, color: '#e9c46a', pts: '+9 pts · riesgo medio' },
+            { label: '4 cartas', fill: 80, color: '#e07a5f', pts: '+14 pts · riesgo alto' },
+            { label: 'Mano completa', fill: 100, color: '#9b2226', pts: '+20 pts · todo o nada' },
+          ].map(r => (
+            <div class="pv-risk-row">
+              <div class="pv-risk-label">{r.label}</div>
+              <div class="pv-risk-bar">
+                <div class="pv-risk-fill" style={`width: ${r.fill}%; background: ${r.color};`}></div>
+              </div>
+              <div class="pv-risk-val" style={`color: ${r.color}`}>{r.pts}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pv-status">
+    <div class="pv-shell pv-status-grid">
+      <div>
+        <span class="pv-label">03 — Estado actual</span>
+        <div class="pv-version" aria-hidden="true">Proto</div>
+        <ul class="pv-change-list">
+          <li>Las cartas de "señuelo" hacen el juego más interesante pero más difícil de balancear.</li>
+          <li>Con manos de 5 cartas el tiempo por partida baja a 10 min — posiblemente demasiado corto.</li>
+          <li>Pendiente: definir cuándo y cómo se resuelven los empates de puntuación al revelar.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Nació de un<br />juego de<br /><em>poker sin cartas.</em></h2>
+        <p>Pavoneo empezó pensando en qué parte del poker era más interesante sin el azar del reparto. La respuesta fue: el momento en que decides cuánto mostrar.</p>
+        <p>El pavo real como metáfora llegó solo: un animal que muestra todo lo que tiene para intimidar, y que a veces eso es exactamente lo que lo delata.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pv-back pv-shell">
+    <span>¿Seguimos mirando?</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

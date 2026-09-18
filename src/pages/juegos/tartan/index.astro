@@ -1,0 +1,256 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const hilos = [
+  { label: 'Hilo A', dir: 'Horizontal', color: '#9b2226' },
+  { label: 'Hilo B', dir: 'Horizontal', color: '#2d6a4f' },
+  { label: 'Hilo C', dir: 'Vertical',   color: '#1d3557' },
+  { label: 'Hilo D', dir: 'Vertical',   color: '#9b2226' },
+  { label: 'Hilo E', dir: 'Diagonal',   color: '#2d6a4f' },
+];
+---
+
+<BaseLayout
+  title="Tartán — Estudio Alpargatas"
+  description="Tartán: un juego abstracto de patrones. Cruces, tramas y conexiones en un tablero tejido."
+  bodyClass="page-tartan"
+  footerSubtitle="Tartán · Abstracto · Patrones"
+  themeColor="#f8f4e8"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════
+     TARTÁN · Tramas y cruces · Crema + Rojo escocés + Verde
+     ═══════════════════════════════════════════════════════ */
+  body.page-tartan {
+    background-color: #f8f4e8;
+    color: #1d1d1d;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-image: none;
+    --crema:  #f8f4e8;
+    --blanco: #fdfcf8;
+    --rojo:   #9b2226;
+    --verde:  #2d6a4f;
+    --azul:   #1d3557;
+    --tinta:  #1d1d1d;
+    --dim:    rgba(29, 29, 29, .55);
+    --line:   rgba(29, 29, 29, .1);
+  }
+
+  body.page-tartan .site-header { background: #1d1d1d; border-bottom: 3px solid #9b2226; }
+  body.page-tartan .brand b     { color: #f8f4e8; }
+  body.page-tartan .brand small { color: rgba(248,244,232,.4); }
+  body.page-tartan .nav-links a { color: rgba(248,244,232,.5); }
+  body.page-tartan .nav-links a:hover { color: #9b2226; }
+  body.page-tartan .nav-links .nav-instagram { border-color: rgba(155,34,38,.4); color: #9b2226; }
+  body.page-tartan .nav-links .nav-instagram:hover { background: #9b2226; border-color: #9b2226; color: #f8f4e8; }
+  body.page-tartan .brand-logo { border-color: #9b2226; box-shadow: 2px 2px 0 rgba(155,34,38,.4); }
+
+  body.page-tartan .site-footer { background: #1d1d1d; border-top: 3px solid #2d6a4f; color: rgba(248,244,232,.45); }
+  body.page-tartan .site-footer b, body.page-tartan .site-footer a { color: #9b2226; }
+  body.page-tartan .site-footer a:hover { color: #f8f4e8; }
+
+  .tt-shell { width: min(1100px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .tt-label {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--rojo); margin-bottom: 1.2rem;
+  }
+  .tt-label::before { content: ""; display: block; width: 2rem; height: 1px; background: var(--rojo); }
+
+  .tt-breadcrumb {
+    display: flex; gap: .5rem;
+    font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 2rem;
+  }
+  .tt-breadcrumb a { text-decoration: none; color: inherit; }
+  .tt-breadcrumb a:hover { color: var(--rojo); }
+
+  /* HERO — Trama de tartán como fondo */
+  .tt-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background-color: var(--crema);
+    /* Trama CSS: líneas horizontales + verticales */
+    background-image:
+      repeating-linear-gradient(0deg,   transparent,   transparent 30px, rgba(155,34,38,.12) 30px, rgba(155,34,38,.12) 31px),
+      repeating-linear-gradient(90deg,  transparent,   transparent 30px, rgba(45,106,79,.10) 30px, rgba(45,106,79,.10) 31px),
+      repeating-linear-gradient(0deg,   transparent,   transparent 90px, rgba(29,53,87,.07) 90px, rgba(29,53,87,.07) 93px),
+      repeating-linear-gradient(90deg,  transparent,   transparent 90px, rgba(155,34,38,.09) 90px, rgba(155,34,38,.09) 93px);
+    border-bottom: 3px solid var(--rojo);
+    position: relative; overflow: hidden;
+  }
+  .tt-hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .tt-hero-title {
+    font-size: clamp(5rem, 16vw, 13rem); font-weight: 900; letter-spacing: -.06em; line-height: .85;
+    color: var(--tinta); text-transform: uppercase; display: block;
+  }
+  .tt-hero-accent { color: var(--rojo); }
+  .tt-hero-sub { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 1.5rem 0; max-width: 30rem; }
+  .tt-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .tt-badge {
+    display: inline-flex; padding: .3rem .7rem; border: 2px solid;
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .tt-badge.rojo  { border-color: var(--rojo); color: var(--rojo); }
+  .tt-badge.verde { border-color: var(--verde); color: var(--verde); }
+  .tt-badge.dark  { background: var(--tinta); border-color: var(--tinta); color: var(--crema); }
+
+  /* Miniatura de trama */
+  .tt-swatch {
+    width: clamp(140px, 25vw, 220px);
+    aspect-ratio: 1;
+    margin-inline: auto;
+    position: relative;
+    border: 3px solid var(--tinta);
+    box-shadow: 4px 4px 0 var(--rojo);
+    background-color: var(--blanco);
+    background-image:
+      repeating-linear-gradient(0deg,   rgba(155,34,38,.25), rgba(155,34,38,.25) 8px, transparent 8px, transparent 30px),
+      repeating-linear-gradient(0deg,   rgba(45,106,79,.20), rgba(45,106,79,.20) 4px, transparent 4px, transparent 30px),
+      repeating-linear-gradient(90deg,  rgba(155,34,38,.25), rgba(155,34,38,.25) 8px, transparent 8px, transparent 30px),
+      repeating-linear-gradient(90deg,  rgba(29,53,87,.25), rgba(29,53,87,.25)   4px, transparent 4px, transparent 30px);
+    overflow: hidden;
+  }
+  .tt-swatch-label {
+    position: absolute; inset: 0; display: flex; align-items: flex-end;
+    padding: 8px 10px;
+  }
+  .tt-swatch-label span {
+    font-size: .55rem; font-weight: 900; letter-spacing: .15em; text-transform: uppercase;
+    color: white; background: rgba(29,29,29,.6); padding: 2px 6px;
+  }
+
+  /* SECCIÓN 01 */
+  .tt-concept {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--tinta);
+    border-bottom: 3px solid var(--verde);
+  }
+  .tt-concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .tt-concept h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: -.05em; line-height: .88; color: var(--crema); margin: 1rem 0 1.5rem; }
+  .tt-concept h2 em { color: var(--rojo); font-style: normal; }
+  .tt-concept p { font-size: .93rem; line-height: 1.85; color: rgba(248,244,232,.6); margin: 0 0 1rem; }
+
+  /* Tabla de hilos */
+  .tt-thread-table { width: 100%; border-collapse: collapse; }
+  .tt-thread-table th {
+    text-align: left; font-size: .55rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+    color: rgba(248,244,232,.4); padding: .5rem 0; border-bottom: 1px solid rgba(248,244,232,.1);
+  }
+  .tt-thread-table td { padding: .65rem 0; border-bottom: 1px solid rgba(248,244,232,.06); vertical-align: middle; }
+  .tt-thread-swatch { width: 20px; height: 8px; border-radius: 1px; display: inline-block; }
+  .tt-thread-label { font-size: .8rem; font-weight: 700; color: var(--crema); padding-left: .7rem; }
+  .tt-thread-dir { font-size: .7rem; color: rgba(248,244,232,.4); }
+
+  /* SECCIÓN 03: Estado */
+  .tt-status { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--crema); border-top: 3px solid var(--rojo); }
+  .tt-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .tt-status h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: -.05em; line-height: .88; color: var(--tinta); margin: 1rem 0 1.5rem; }
+  .tt-status h2 em { color: var(--verde); font-style: normal; }
+  .tt-status p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
+  .tt-version { font-size: clamp(5rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.1em; line-height: .8; color: var(--verde); margin-bottom: 1.5rem; }
+  .tt-change-list { list-style: none; padding: 0; margin: 0; }
+  .tt-change-list li {
+    padding: .8rem 0; border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 1rem 1fr; gap: .7rem;
+    font-size: .88rem; color: var(--dim); align-items: start;
+  }
+  .tt-change-list li:first-child { border-top: 1px solid var(--line); }
+  .tt-change-list li::before { content: "✕"; color: var(--rojo); font-size: .7rem; margin-top: .15rem; }
+
+  .tt-back {
+    padding: 2.5rem 0; display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    border-top: 3px solid var(--verde); background: var(--crema);
+  }
+  .tt-back span { font-size: .78rem; color: var(--dim); }
+  .tt-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 900; letter-spacing: -.05em; text-decoration: none; color: var(--tinta); }
+  .tt-back a:hover { color: var(--rojo); }
+
+  @media (max-width: 720px) {
+    .tt-hero-grid, .tt-concept-grid, .tt-status-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main>
+  <section class="tt-hero">
+    <div class="tt-shell">
+      <div class="tt-hero-grid">
+        <div>
+          <nav class="tt-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Tartán</span></nav>
+          <h1 class="tt-hero-title">Tar<span class="tt-hero-accent">tán</span></h1>
+          <p class="tt-hero-sub">Una exploración abierta alrededor de tramas, cruces y conexiones. Cada hilo que añades cambia lo que ya está, lo que puede venir y lo que ahora es imposible.</p>
+          <div class="tt-badges">
+            <span class="tt-badge dark">Proto</span>
+            <span class="tt-badge rojo">2 jugadores</span>
+            <span class="tt-badge verde">20–30 min</span>
+          </div>
+        </div>
+        <div>
+          <div class="tt-swatch" aria-hidden="true">
+            <div class="tt-swatch-label"><span>Muestra · TT</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tt-concept">
+    <div class="tt-shell tt-concept-grid">
+      <div>
+        <span class="tt-label" style="color: rgba(248,244,232,.6)">01 — La idea</span>
+        <h2>Hilos que<br />se <em>cruzan.</em><br />Tramas que cambian.</h2>
+        <p>Tartán es un juego abstracto sobre construir un tejido compartido. En cada turno, el jugador activo añade un "hilo" al tablero — una ficha que corre en una dirección y que puede cruzar (o no) los hilos existentes.</p>
+        <p>Los cruces crean puntos de control: quien domine más cruces al final gana. Pero cada hilo nuevo cambia el valor de los que ya estaban ahí. La clave está en ver el tablero no como fichas sueltas, sino como una trama entera.</p>
+      </div>
+      <div>
+        <table class="tt-thread-table" aria-label="Tipos de hilo en Tartán">
+          <thead>
+            <tr>
+              <th>Color</th>
+              <th>Hilo</th>
+              <th>Dirección</th>
+            </tr>
+          </thead>
+          <tbody>
+            {hilos.map(h => (
+              <tr>
+                <td><span class="tt-thread-swatch" style={`background: ${h.color}`}></span></td>
+                <td><span class="tt-thread-label">{h.label}</span></td>
+                <td><span class="tt-thread-dir">{h.dir}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="tt-status">
+    <div class="tt-shell tt-status-grid">
+      <div>
+        <span class="tt-label">03 — Estado actual</span>
+        <div class="tt-version" aria-hidden="true">Proto</div>
+        <ul class="tt-change-list">
+          <li>Con 5 tipos de hilo (3 dir.) la complejidad estratégica es buena, pero el setup tarda.</li>
+          <li>Los cruces diagonales añaden demasiada variabilidad — en pruebas solo horizontales y verticales.</li>
+          <li>Pendiente: probar si funciona como abstracto puro o necesita objetivos de misión.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Un tablero que<br />se construye<br /><em>dos veces.</em></h2>
+        <p>Tartán empezó de un problema de tejido real: ¿cómo ves todos los colores de un tartán a la vez, si cada uno pasa por encima y por debajo del otro? La respuesta en el tablero fue: no puedes verlos todos, y eso es exactamente el juego.</p>
+        <p>Es el proyecto más abierto del taller. Todavía no sé bien qué quiere ser, y eso es lo que lo hace interesante de probar.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tt-back tt-shell">
+    <span>¿Seguimos mirando?</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

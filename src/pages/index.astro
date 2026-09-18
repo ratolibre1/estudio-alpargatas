@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { archiveGames, featuredGames, prototypes } from '../data/games';
+---
+
+<BaseLayout
+  title="Estudio Alpargatas — Juegos de mesa"
+  description="Juegos publicados, prototipos y procesos de diseño de Estudio Alpargatas."
+  footerSubtitle="Creación y diseño de juegos de mesa."
+>
+  <main>
+    <section class="home-hero shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="overline">Creación y diseño de juegos de mesa</p>
+        <h1 id="hero-title">Ideas, cartón y muchas partidas.</h1>
+        <p class="hero-lede">Este es el lugar donde guardo los juegos terminados, los que todavía estoy rompiendo y todo lo que pasa entre medio.</p>
+        <div class="hero-links">
+          <a class="button red" href="#juegos">Ver los juegos</a>
+          <a class="underlined-link" href="#cuaderno">Abrir el cuaderno ↓</a>
+        </div>
+      </div>
+
+      <div class="table-collage" aria-label="Proyectos de Estudio Alpargatas">
+        <a class="photo-card photo-ninive" href="/juegos/ninive/">
+          <img src="/assets/ninive-palacio.webp" alt="Cartas de Nínive formando un palacio" />
+          <span>Nínive · publicado</span>
+        </a>
+        <article class="photo-card photo-llama sample-cover sample-blue"><small>VERSIÓN 0.3</small><h3>Chispas</h3><p>Cartas · riesgo</p><span>En pruebas</span></article>
+        <article class="photo-card photo-reloj sample-cover sample-yellow"><small>26 CARTAS</small><h3>Letrados</h3><p>Duelo · 2 jugadores</p><span>15 minutos</span></article>
+        <span class="tape tape-one" aria-hidden="true"></span>
+        <span class="tape tape-two" aria-hidden="true"></span>
+        <span class="doodle-arrow" aria-hidden="true">↙</span>
+        <p class="margin-note">Cada juego empieza<br />un poco chueco.</p>
+      </div>
+    </section>
+
+    <section class="games-section" id="juegos" aria-labelledby="games-title">
+      <div class="shell">
+        <header class="section-title-row">
+          <div><span class="section-number">01</span><p class="overline">Catálogo del estudio</p></div>
+          <h2 id="games-title">Juegos con<br />recorrido</h2>
+          <p>Un título publicado y tres proyectos que ya tienen reglas, versiones y muchas partidas encima.</p>
+        </header>
+
+        <div class="published-grid">
+          {featuredGames.map((game) => game.kind === 'ninive' ? (
+            <a class="published-card published-ninive" href={game.href}>
+              <div class="published-image"><img src={game.image} alt={game.imageAlt} loading="lazy" /><span class="sticker blue">Publicado</span></div>
+              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.description}</p><ul>{game.facts.map((fact) => <li>{fact}</li>)}</ul><span class="feed-link">Abrir ficha completa →</span></div>
+            </a>
+          ) : (
+            <article class={`published-card sample-game sample-game-${game.theme}`}>
+              <div class="sample-game-cover"><span>{game.coverNumber}</span><strong>{game.coverTitle.split('\n').map((line, index) => <>{index > 0 && <br />}{line}</>)}</strong><small>{game.coverStatus}</small></div>
+              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.description}</p><ul>{game.facts.map((fact) => <li>{fact}</li>)}</ul></div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="prototype-section shell" aria-labelledby="prototype-title">
+      <header class="prototype-heading"><div><span class="section-number">02</span><p class="overline">Taller abierto</p></div><h2 id="prototype-title">Más prototipos</h2><p>Proyectos activos, rediseños mecánicos y sistemas que todavía están buscando su mejor forma.</p></header>
+      <div class="prototype-mini-grid">
+        {prototypes.map((game) => (
+          <a href={game.href} class="proto-link">
+            {'image' in game ? <img src={game.image} alt={game.imageAlt} loading="lazy" /> : <div class={`prototype-cover ${game.coverClass}`} aria-hidden="true"><b>{game.initials}</b></div>}
+            <div><span>{game.meta}</span><h3>{game.name}</h3><p>{game.description}</p></div>
+          </a>
+        ))}
+      </div>
+      <div class="idea-archive" aria-labelledby="archive-title">
+        <div><p class="overline">Iteraciones y conceptos</p><h3 id="archive-title">También están en el cuaderno</h3></div>
+        <ul>{archiveGames.map((game) => <li>{game}</li>)}</ul>
+      </div>
+    </section>
+
+    <section class="now-section" aria-labelledby="now-title">
+      <div class="shell now-grid">
+        <div class="now-heading"><span class="section-number">03</span><p class="overline">Ahora mismo</p><h2 id="now-title">Tres cosas que estoy cambiando</h2></div>
+        <div class="change-list">
+          <article><span>CHISPAS · V0.3</span><h3>Probar las doce familias de acción.</h3><p>El próximo hito es decidir cuáles forman el set definitivo antes de cerrar una nueva versión.</p></article>
+          <article><span>HUBRIS</span><h3>Llevar el rediseño de dados a la mesa.</h3><p>Las metas, el exceso y el castigo de Némesis ya tienen forma; ahora necesitan playtests.</p></article>
+          <article><span>FESTIVAL DE CANES</span><h3>Afinar configuraciones.</h3><p>Comparando combinaciones en el simulador para que las cinco disciplinas tengan espacio propio.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="notebook-section shell" id="cuaderno" aria-labelledby="notebook-title">
+      <header class="notebook-heading">
+        <div><span class="section-number">04</span><p class="overline">Cuaderno de pruebas</p></div>
+        <h2 id="notebook-title">No todo avance<br />parece avance.</h2>
+        <p>También quiero guardar las dudas, las cartas descartadas y esas pequeñas decisiones que hacen que un prototipo finalmente empiece a respirar.</p>
+      </header>
+      <div class="note-cards">
+        <article class="paper-note note-yellow"><span>Versión vigente</span><h3>Una carpeta actual vale más que veinte archivos “final final”.</h3><p>Chispas separa claramente sus reglas vigentes de todo el camino recorrido por Última Llama.</p></article>
+        <article class="paper-note note-blue"><span>Riesgo</span><h3>El dado más grande también puede ser la peor decisión.</h3><p>En HUBRIS, progresar aumenta el poder y la posibilidad de excederse.</p></article>
+        <article class="paper-note note-pink"><span>Memoria del taller</span><h3>Los juegos que cambian de piel no desaparecen.</h3><p>Versiones anteriores, nombres descartados y conceptos incompletos también forman parte del proceso.</p></article>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="shell about-grid">
+        <div class="about-word">ALPARGATAS</div>
+        <div class="about-copy">
+          <p class="overline">Hola, soy Arturo</p>
+          <h2>Diseño juegos para ver qué hacen las personas con una regla simple y una mesa llena de posibilidades.</h2>
+          <p>Estudio Alpargatas es mi rincón para crear, probar y compartir juegos de mesa desde Chile. Hay proyectos terminados, ideas muy tempranas y bastante cartón cortado a mano.</p>
+          <a class="button blue" href="https://www.instagram.com/estudioalpargatas/">Seguir el proceso en Instagram ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

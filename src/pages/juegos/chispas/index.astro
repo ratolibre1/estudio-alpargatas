@@ -1,0 +1,542 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Chispas — Estudio Alpargatas"
+  description="Chispas: un mazo único, tres acciones visibles y una mecha que obliga a medir cuánto consume cada jugada."
+  bodyClass="page-chispas"
+  footerSubtitle="¡BEEP BEEP! · CHISPAS · V0.3 · Estudio Alpargatas"
+  themeColor="#5b9fd5"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════════
+     CHISPAS · Road Runner & Coyote · Looney Tunes WB 1960s
+     ═══════════════════════════════════════════════════════════ */
+
+  body.page-chispas {
+    background-color: #5b9fd5;
+    color: #1a1212;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-image: none;
+    --sky:    #5b9fd5;
+    --desert: #d4a020;
+    --sand:   #e8c840;
+    --red:    #cc2010;
+    --yellow: #f5d020;
+    --black:  #1a1212;
+    --white:  #fffbe8;
+    --smoke:  rgba(26, 18, 18, .5);
+    --fire:   #cc2010;
+    --line:   rgba(26, 18, 18, .25);
+  }
+
+  /* ── Header: cartel oscuro borde amarillo ───────────────────────────────── */
+  body.page-chispas .site-header {
+    background: #1a1212;
+    border-bottom: 5px solid #f5d020;
+  }
+  body.page-chispas .brand b      { color: #f5d020; }
+  body.page-chispas .brand small  { color: rgba(245, 208, 32, .5); }
+  body.page-chispas .nav-links a  { color: rgba(245, 208, 32, .65); }
+  body.page-chispas .nav-links a:hover { color: #f5d020; }
+  body.page-chispas .nav-links .nav-instagram {
+    border-color: rgba(245, 208, 32, .4);
+    color: #f5d020;
+  }
+  body.page-chispas .nav-links .nav-instagram:hover {
+    background: #f5d020; border-color: #f5d020; color: #1a1212;
+  }
+  body.page-chispas .brand-logo {
+    border-color: #f5d020;
+    box-shadow: 2px 2px 0 #f5d020;
+  }
+
+  /* ── Footer: placa ACME ──────────────────────────────────────────────────── */
+  body.page-chispas .site-footer {
+    background: #1a1212;
+    border-top: 5px solid #cc2010;
+    color: rgba(245, 208, 32, .65);
+  }
+  body.page-chispas .site-footer b,
+  body.page-chispas .site-footer a { color: #f5d020; }
+  body.page-chispas .site-footer a:hover { color: #cc2010; }
+
+  /* ── Shell ───────────────────────────────────────────────────────────────── */
+  .ch-shell { width: min(1140px, calc(100% - 3rem)); margin-inline: auto; }
+
+  /* Etiqueta estilo ACME */
+  .ch-label {
+    display: inline-block;
+    padding: .28rem .75rem;
+    background: var(--red);
+    color: var(--yellow);
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: .63rem;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    border: 3px solid var(--black);
+    box-shadow: 3px 3px 0 var(--black);
+    transform: rotate(-2deg);
+    margin-bottom: 1.4rem;
+  }
+
+  /* Breadcrumb ────────────────────────────────────────────────────────────── */
+  .ch-breadcrumb {
+    display: flex;
+    gap: .5rem;
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .65);
+    margin-bottom: 2.5rem;
+  }
+  .ch-breadcrumb a { text-decoration: none; color: inherit; }
+  .ch-breadcrumb a:hover { color: var(--yellow); }
+
+  /* ── HERO ────────────────────────────────────────────────────────────────── */
+  .ch-hero {
+    min-height: calc(100svh - 5rem);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: clamp(3rem, 6vw, 5rem) 0 0;
+    background-color: var(--sky);
+    /* Speed lines: el correcaminos acaba de pasar */
+    background-image: repeating-linear-gradient(
+      -16deg,
+      transparent 0,
+      transparent 34px,
+      rgba(255, 255, 255, .2) 34px,
+      rgba(255, 255, 255, .2) 36px
+    );
+    border-bottom: 5px solid var(--black);
+  }
+  .ch-hero-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: end;
+    padding: 0 0 2.5rem;
+  }
+
+  /* CHISPAS en letras de caricatura con outline negro */
+  .ch-hero-title {
+    font-family: "Arial Black", Impact, "Helvetica Neue", sans-serif;
+    font-weight: 900;
+    font-size: clamp(5rem, 18vw, 14rem);
+    letter-spacing: -.06em;
+    line-height: .85;
+    color: var(--yellow);
+    -webkit-text-stroke: clamp(3px, .4vw, 5px) var(--black);
+    paint-order: stroke fill;
+    text-shadow:
+      clamp(4px, .6vw, 7px) clamp(4px, .6vw, 7px) 0 var(--red),
+      clamp(7px, 1.1vw, 11px) clamp(7px, 1.1vw, 11px) 0 var(--black);
+    text-transform: uppercase;
+    transform: rotate(-2.5deg);
+    transform-origin: left bottom;
+    display: block;
+  }
+  .ch-hero-title em { color: inherit; font-style: normal; }
+
+  .ch-hero-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .8rem;
+    padding-bottom: .5rem;
+    flex-shrink: 0;
+  }
+
+  /* Badge: etiqueta producto ACME */
+  .ch-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: .35rem .8rem;
+    background: var(--red);
+    color: var(--yellow);
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: .7rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border: 3px solid var(--black);
+    box-shadow: 3px 3px 0 var(--black);
+    transform: rotate(1deg);
+  }
+  .ch-badge.active {
+    background: var(--yellow);
+    color: var(--black);
+    transform: rotate(-1.5deg);
+  }
+  .ch-hero-desc {
+    max-width: 20rem;
+    text-align: right;
+    font-size: .88rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, .9);
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, .4);
+  }
+  .ch-chips { display: flex; gap: .4rem; justify-content: flex-end; flex-wrap: wrap; }
+
+  /* Chips: burbujas de diálogo cartoon */
+  .ch-chip {
+    padding: .3rem .65rem;
+    background: rgba(255, 255, 255, .9);
+    border: 3px solid var(--black);
+    border-radius: 999px;
+    font-size: .6rem;
+    font-weight: 900;
+    letter-spacing: .06em;
+    color: var(--black);
+    box-shadow: 2px 2px 0 var(--black);
+  }
+
+  /* Barra de mecha: dinamita de caricatura */
+  .ch-fuse-bar {
+    height: .6rem;
+    background: var(--black);
+    display: flex;
+    gap: 3px;
+    padding: 3px;
+  }
+  .ch-fuse-bar span { flex: 1; background: rgba(255, 255, 255, .18); }
+  .ch-fuse-bar span:nth-child(1) { background: var(--red); }
+  .ch-fuse-bar span:nth-child(2) { background: #d45020; }
+  .ch-fuse-bar span:nth-child(3) { background: var(--desert); }
+
+  /* ── SECCIÓN 01: EL RIESGO — desierto ───────────────────────────────────── */
+  .ch-risk {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--sand);
+    border-top: 5px solid var(--black);
+    border-bottom: 5px solid var(--black);
+  }
+  .ch-risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: start;
+  }
+  .ch-risk h2 {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    letter-spacing: -.065em;
+    line-height: .88;
+    text-transform: uppercase;
+    color: var(--black);
+    margin: 1.2rem 0 1.2rem;
+  }
+  .ch-risk h2 em { color: var(--red); font-style: normal; }
+  .ch-risk p { font-size: .92rem; line-height: 1.7; color: rgba(26, 18, 18, .8); margin: 0 0 1rem; }
+
+  /* Cuadrícula de potencias: tarjetas ACME */
+  .ch-power-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 4px solid var(--black);
+  }
+  .ch-power-cell {
+    background: #fff5a0;
+    border-right: 4px solid var(--black);
+    padding: 1.2rem .8rem;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+  .ch-power-cell:nth-child(2) { background: #ffd870; }
+  .ch-power-cell:nth-child(3) {
+    background: var(--red);
+    border-right: none;
+    transform: scale(1.04);
+    z-index: 1;
+    position: relative;
+    border: 4px solid var(--black);
+  }
+  .ch-power-num {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -.1em;
+    line-height: 1;
+    color: var(--black);
+  }
+  .ch-power-cell:nth-child(3) .ch-power-num {
+    color: var(--yellow);
+    text-shadow: 2px 2px 0 var(--black);
+  }
+  .ch-power-label { font-size: .58rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--black); }
+  .ch-power-cell:nth-child(3) .ch-power-label { color: rgba(245, 208, 32, .8); }
+  .ch-power-desc { font-size: .72rem; line-height: 1.5; margin: 0; color: rgba(26, 18, 18, .7); }
+  .ch-power-cell:nth-child(3) .ch-power-desc { color: rgba(245, 208, 32, .75); }
+
+  /* ── SECCIÓN 02: LAS ACCIONES — oscuro ──────────────────────────────────── */
+  .ch-actions {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--black);
+    border-bottom: 5px solid var(--yellow);
+    --smoke: rgba(232, 200, 64, .55);
+  }
+  .ch-actions-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: end;
+    margin-bottom: 2.5rem;
+  }
+  .ch-actions h2 {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    letter-spacing: -.065em;
+    line-height: .88;
+    text-transform: uppercase;
+    margin: 1rem 0 0;
+    color: var(--yellow);
+    -webkit-text-stroke: 1px rgba(0,0,0,.3);
+    text-shadow: 3px 3px 0 var(--red), 5px 5px 0 rgba(0, 0, 0, .5);
+  }
+  .ch-actions-note { font-size: .82rem; color: rgba(232, 200, 64, .6); max-width: 22rem; text-align: right; line-height: 1.6; }
+
+  /* 12 familias: tarjetas coloridas con outline de cel */
+  .ch-families { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-bottom: 2rem; }
+  .ch-family {
+    background: var(--sand);
+    border: 3px solid var(--black);
+    padding: .8rem .6rem;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    cursor: default;
+    transition: transform .12s;
+  }
+  .ch-family:nth-child(2n)   { background: var(--sky); }
+  .ch-family:nth-child(3n)   { background: #fff5a0; }
+  .ch-family:nth-child(5n)   { background: #ffd870; }
+  .ch-family:hover           { transform: scale(1.08) rotate(-1.5deg); z-index: 1; }
+  .ch-family-num  { font-size: .56rem; font-weight: 900; letter-spacing: .1em; color: var(--red); }
+  .ch-family-name { font-size: .75rem; font-weight: 900; color: var(--black); }
+  .ch-family-status { font-size: .56rem; color: rgba(26, 18, 18, .5); letter-spacing: .06em; }
+
+  /* Acciones visibles: panel ACME */
+  .ch-visible { display: grid; grid-template-columns: repeat(3, 1fr); border: 4px solid var(--yellow); }
+  .ch-visible-card { background: var(--white); padding: 1.2rem; border-right: 3px solid var(--black); }
+  .ch-visible-card:last-child { border-right: none; }
+  .ch-visible-tag { font-size: .56rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--red); margin-bottom: .5rem; }
+  .ch-visible-title { font-family: "Arial Black", Arial, sans-serif; font-size: 1.3rem; font-weight: 900; letter-spacing: -.04em; line-height: .92; margin-bottom: .4rem; color: var(--black); }
+  .ch-visible-desc { font-size: .78rem; line-height: 1.5; color: rgba(26, 18, 18, .7); }
+
+  /* ── SECCIÓN 03: ESTADO — blanco cálido ─────────────────────────────────── */
+  .ch-status {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--white);
+    border-top: 5px solid var(--black);
+    border-bottom: 5px solid var(--black);
+  }
+  .ch-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 8vw, 7rem); align-items: start; }
+  .ch-status h2 {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -.065em;
+    line-height: .9;
+    text-transform: uppercase;
+    margin: 1rem 0 1.5rem;
+    color: var(--black);
+  }
+  .ch-status h2 em { color: var(--red); font-style: normal; }
+  .ch-status p { font-size: .92rem; line-height: 1.7; color: rgba(26, 18, 18, .75); margin: 0 0 1rem; }
+
+  /* Número de versión con efecto cartoon */
+  .ch-version {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: clamp(5rem, 14vw, 11rem);
+    font-weight: 900;
+    letter-spacing: -.1em;
+    line-height: .8;
+    color: var(--yellow);
+    -webkit-text-stroke: clamp(2px, .4vw, 4px) var(--black);
+    paint-order: stroke fill;
+    text-shadow: 4px 4px 0 var(--red), 7px 7px 0 var(--black);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Lista de cambios: boletín cartoon */
+  .ch-change-list { list-style: none; padding: 0; margin: 0; }
+  .ch-change-list li {
+    padding: .85rem 0;
+    border-bottom: 3px solid var(--black);
+    display: grid;
+    grid-template-columns: 1.2rem 1fr;
+    gap: .7rem;
+    font-size: .88rem;
+    color: rgba(26, 18, 18, .8);
+  }
+  .ch-change-list li:first-child { border-top: 3px solid var(--black); }
+  .ch-change-list li::before { content: "!"; color: var(--red); font-weight: 900; font-size: 1rem; line-height: 1.5; }
+
+  /* ── Back ───────────────────────────────────────────────────────────────── */
+  .ch-back {
+    padding: 2.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    border-top: 5px solid var(--black);
+  }
+  .ch-back span { font-size: .78rem; color: rgba(255, 255, 255, .65); font-weight: 700; }
+  .ch-back a {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: clamp(1.4rem, 3vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: -.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--yellow);
+    -webkit-text-stroke: 1px var(--black);
+    text-shadow: 2px 2px 0 var(--red), 4px 4px 0 var(--black);
+  }
+  .ch-back a:hover { color: var(--white); }
+
+  @media (max-width: 760px) {
+    .ch-hero-content { grid-template-columns: 1fr; }
+    .ch-hero-meta { align-items: flex-start; }
+    .ch-hero-desc, .ch-chips { text-align: left; justify-content: flex-start; }
+    .ch-risk-grid, .ch-status-grid { grid-template-columns: 1fr; }
+    .ch-families { grid-template-columns: repeat(3, 1fr); }
+    .ch-actions-header { grid-template-columns: 1fr; }
+    .ch-actions-note { text-align: left; }
+    .ch-visible { grid-template-columns: 1fr; }
+    .ch-visible-card { border-right: none; border-bottom: 3px solid var(--black); }
+  }
+</style>
+
+<main>
+  <!-- ── HERO ── -->
+  <section class="ch-hero ch-shell">
+    <div class="ch-hero-content">
+      <div>
+        <nav class="ch-breadcrumb" aria-label="Navegación">
+          <a href="/">Inicio</a><span>/</span><span>Chispas</span>
+        </nav>
+        <h1 class="ch-hero-title">CHIS<em>PAS</em></h1>
+      </div>
+      <div class="ch-hero-meta">
+        <span class="ch-badge active">V0.3</span>
+        <span class="ch-badge">En playtest</span>
+        <p class="ch-hero-desc">Un mazo único, tres acciones visibles y una mecha que obliga a medir cuánto consume cada jugada.</p>
+        <div class="ch-chips">
+          <span class="ch-chip">2–6 jugadores</span>
+          <span class="ch-chip">20–30 min</span>
+          <span class="ch-chip">12 acciones</span>
+        </div>
+      </div>
+    </div>
+    <div class="ch-fuse-bar" aria-label="La mecha: 3 de 10 consumidas">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN 01: EL RIESGO ── -->
+  <section class="ch-risk">
+    <div class="ch-shell ch-risk-grid">
+      <div>
+        <span class="ch-label">01 — El riesgo</span>
+        <h2>Una mecha.<br /><em>Todos</em> la consumen.</h2>
+        <p>Chispas tiene un mazo único para todos los jugadores. Cada turno, uno de ellos elige una de las tres acciones visibles y la ejecuta con potencia 1, 2 o 3.</p>
+        <p>Más potencia equivale a más efecto, pero también a más avance de la mecha. Cuando la mecha llega al final, todos pierden. La tensión no es entre jugadores: es contra el propio juego.</p>
+      </div>
+      <div>
+        <p style="font-size:.72rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; color:var(--smoke); margin:0 0 .8rem;">Potencia de acción</p>
+        <div class="ch-power-grid">
+          <div class="ch-power-cell">
+            <div class="ch-power-num">1</div>
+            <div class="ch-power-label">Controlada</div>
+            <p class="ch-power-desc">Efecto bajo, mecha avanza poco. La jugada segura.</p>
+          </div>
+          <div class="ch-power-cell">
+            <div class="ch-power-num">2</div>
+            <div class="ch-power-label">Arriesgada</div>
+            <p class="ch-power-desc">Efecto medio, mecha avanza más. La jugada de presión.</p>
+          </div>
+          <div class="ch-power-cell">
+            <div class="ch-power-num">3</div>
+            <div class="ch-power-label">MÁXIMA</div>
+            <p class="ch-power-desc">Efecto máximo. La mecha avanza fuerte. Solo si vale la pena.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN 02: LAS ACCIONES ── -->
+  <section class="ch-actions">
+    <div class="ch-shell">
+      <div class="ch-actions-header">
+        <div>
+          <span class="ch-label">02 — Las acciones</span>
+          <h2>Doce familias.<br />Tres visibles.</h2>
+        </div>
+        <p class="ch-actions-note">El mazo tiene doce familias de acción. En cualquier momento solo tres están disponibles. El próximo hito es decidir cuáles forman el set definitivo.</p>
+      </div>
+
+      <div class="ch-families" aria-label="Las doce familias de acción">
+        {['Acumular', 'Lanzar', 'Bloquear', 'Transferir', 'Duplicar', 'Reducir', 'Invertir', 'Explorar', 'Proteger', 'Activar', 'Cancelar', 'Detonar'].map((name, i) => (
+          <div class="ch-family">
+            <div class="ch-family-num">F{String(i + 1).padStart(2, '0')}</div>
+            <div class="ch-family-name">{name}</div>
+            <div class="ch-family-status">{i < 9 ? 'En prueba' : 'Por definir'}</div>
+          </div>
+        ))}
+      </div>
+
+      <p style="font-size:.72rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; color:var(--smoke); margin:0 0 .8rem;">Acciones actualmente visibles en la mesa</p>
+      <div class="ch-visible">
+        {[
+          { tag: 'ACCIÓN A', title: 'Acumular', desc: 'Suma fichas a tu reserva personal. A mayor potencia, más fichas.' },
+          { tag: 'ACCIÓN B', title: 'Lanzar', desc: 'Mueve recursos de tu reserva al centro. Libera presión del mazo.' },
+          { tag: 'ACCIÓN C', title: 'Detonar', desc: 'Potencia máxima: consecuencias para todos, incluido el que la ejecuta.' },
+        ].map(a => (
+          <div class="ch-visible-card">
+            <div class="ch-visible-tag">{a.tag}</div>
+            <div class="ch-visible-title">{a.title}</div>
+            <p class="ch-visible-desc">{a.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN 03: ESTADO ACTUAL ── -->
+  <section class="ch-status">
+    <div class="ch-shell ch-status-grid">
+      <div>
+        <span class="ch-label">03 — Estado actual</span>
+        <div class="ch-version" aria-hidden="true">V0.3</div>
+        <ul class="ch-change-list">
+          <li>Se eliminaron las mecánicas de puntuación individual de Última Llama.</li>
+          <li>La mecha pasó de ser un contador invisible a un elemento físico en mesa.</li>
+          <li>Las doce familias reemplazan el set fijo de seis acciones de V0.2.</li>
+          <li>Próximo hito: cerrar qué familias forman el set definitivo.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Nació como<br /><em>Última</em><br />Llama.</h2>
+        <p>Chispas es la tercera iteración de un juego que empezó con un mazo y una pregunta: ¿qué pasa cuando el riesgo no le pertenece a nadie en particular?</p>
+        <p>Última Llama tenía puntuación individual y un set fijo de acciones. Con el tiempo quedó claro que la tensión más interesante no era entre jugadores sino entre todos y la mecha. Ese cambio fue Chispas.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="ch-back ch-shell" aria-label="Volver a proyectos">
+    <span>¿Seguimos mirando?</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

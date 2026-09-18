@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Mapa del sitio — Estudio Alpargatas"
+  description="Mapa visual de la estructura propuesta para el portafolio de juegos de mesa de Arturo."
+  current="mapa"
+  footerSubtitle="Estructura del sitio."
+  footerVariant="mapa"
+>
+  <main class="shell">
+    <header class="page-hero">
+      <p class="eyebrow">Arquitectura propuesta</p>
+      <h1 class="page-title">Un sitio para mirar juegos y seguir su evolución.</h1>
+      <p class="lede">El catálogo es el centro. Desde él se llega a fichas vivas, y las bitácoras conectan cada decisión con el proyecto al que pertenece.</p>
+    </header>
+
+    <section class="map-wrap" aria-label="Mapa visual del sitio">
+      <div class="map-intro">
+        <article class="map-node primary">
+          <span class="node-id">Entrada principal</span>
+          <h2>Inicio · Juegos en la mesa</h2>
+          <p>Proyectos destacados, estado actual y última actualización. Sin una portada publicitaria que esconda el contenido.</p>
+          <span class="route">/</span>
+        </article>
+        <article class="map-node">
+          <span class="node-id">Vista global</span>
+          <h2>Catálogo de juegos</h2>
+          <p>Todos los proyectos, filtrables por publicado, activo, temprano o pausado.</p>
+          <span class="route">/juegos</span>
+        </article>
+      </div>
+
+      <div class="map-branch">
+        <article class="map-node">
+          <span class="node-id">Rama 01 · El corazón</span>
+          <h3>Ficha de juego</h3>
+          <p>Experiencia, estado, galería, evolución, reglas resumidas y siguiente hito.</p>
+          <span class="route">/juegos/ninive</span>
+        </article>
+        <article class="map-node">
+          <span class="node-id">Rama 02 · El proceso</span>
+          <h3>Bitácora</h3>
+          <p>Entradas breves: problema, prueba, resultado y decisión siguiente.</p>
+          <span class="route">/bitacora</span>
+        </article>
+        <article class="map-node">
+          <span class="node-id">Rama 03 · El autor</span>
+          <h3>Sobre mí y contacto</h3>
+          <p>Trayectoria, enfoque de diseño y una vía directa para editoriales o jugadores.</p>
+          <span class="route">/sobre-mi</span>
+        </article>
+      </div>
+
+      <p class="flow-note"><strong>Flujo prioritario:</strong> alguien descubre un juego en la portada, entiende su propuesta en menos de un minuto y después puede profundizar en su proceso o material disponible.</p>
+    </section>
+  </main>
+</BaseLayout>

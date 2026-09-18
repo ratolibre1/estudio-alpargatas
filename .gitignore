@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverrideIcon
+
+# Editor
+.vscode/settings.json
+.cursor/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Keystatic (CMS) - datos de sesión local
+keystatic.config.*

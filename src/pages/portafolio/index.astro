@@ -1,0 +1,317 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+/* ─── Datos de todos los juegos desde Content Collections ────────────── */
+const allEntries = await getCollection('games');
+
+/* Aplanamos entry.data en el objeto que usa el template */
+const games = allEntries
+  .map(entry => ({ id: entry.id, ...entry.data }))
+  .sort((a, b) => a.stateOrder - b.stateOrder || b.date.localeCompare(a.date));
+
+/* Badge color per state */
+const stateBadge: Record<string, { bg: string; color: string }> = {
+  publicado: { bg: '#22c55e', color: '#fff' },
+  avanzado:  { bg: '#3b82f6', color: '#fff' },
+  playtest:  { bg: '#f97316', color: '#fff' },
+  rediseno:  { bg: '#d946ef', color: '#fff' },
+  proto:     { bg: 'rgba(0,0,0,.18)', color: 'rgba(255,255,255,.75)' },
+};
+---
+
+<BaseLayout
+  title="Portafolio — Estudio Alpargatas"
+  description="Todos los juegos de Estudio Alpargatas: publicados, en playtest y prototipos."
+  bodyClass="page-portafolio"
+  current="portafolio"
+  footerSubtitle="Portafolio completo del estudio."
+  themeColor="#f8f5ef"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════
+     PORTAFOLIO — página neutra con cards de color
+     ═══════════════════════════════════════════════════════ */
+  body.page-portafolio {
+    background: #f8f5ef;
+    color: #1a1a1a;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Header heredado: neutral */
+  body.page-portafolio .site-header  { background: #1a1a1a; border-bottom: 2px solid #333; }
+  body.page-portafolio .brand b      { color: #f8f5ef; }
+  body.page-portafolio .brand small  { color: rgba(248,245,239,.4); }
+  body.page-portafolio .nav-links a  { color: rgba(248,245,239,.5); }
+  body.page-portafolio .nav-links a:hover { color: #f8f5ef; }
+  body.page-portafolio .nav-links .nav-instagram { border-color: rgba(248,245,239,.3); color: rgba(248,245,239,.6); }
+  body.page-portafolio .nav-links .nav-instagram:hover { background: #f8f5ef; color: #1a1a1a; border-color: #f8f5ef; }
+  body.page-portafolio .brand-logo   { border-color: rgba(248,245,239,.35); box-shadow: 2px 2px 0 rgba(248,245,239,.15); }
+  body.page-portafolio .site-footer  { background: #1a1a1a; border-top: 2px solid #333; color: rgba(248,245,239,.45); }
+  body.page-portafolio .site-footer b, body.page-portafolio .site-footer a { color: rgba(248,245,239,.7); }
+  body.page-portafolio .site-footer a:hover { color: #f8f5ef; }
+</style>
+
+<style>
+  /* ─── Shell ─────────────────────────────────── */
+  .pf-shell { width: min(1200px, calc(100% - 3rem)); margin-inline: auto; }
+
+  /* ─── Cabecera de página ─────────────────────── */
+  .pf-header {
+    padding: clamp(3rem, 7vw, 5rem) 0 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: end;
+    border-bottom: 1px solid rgba(26, 26, 26, .1);
+    margin-bottom: 2rem;
+  }
+  .pf-header-left { max-width: 32rem; }
+  .pf-breadcrumb {
+    display: flex; gap: .4rem;
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(26,26,26,.45); margin-bottom: 1rem;
+  }
+  .pf-breadcrumb a { text-decoration: none; color: inherit; }
+  .pf-breadcrumb a:hover { color: #1a1a1a; }
+  .pf-title {
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 900; letter-spacing: -.05em; line-height: .88;
+    color: #1a1a1a; margin: 0 0 .75rem;
+  }
+  .pf-sub { font-size: .9rem; color: rgba(26,26,26,.6); line-height: 1.7; margin: 0; }
+
+  /* ─── Contador ───────────────────────────────── */
+  .pf-count {
+    font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(26,26,26,.4);
+  }
+  .pf-count strong { font-size: 2rem; font-weight: 900; letter-spacing: -.05em; color: #1a1a1a; display: block; line-height: 1; }
+
+  /* ─── Sort controls ──────────────────────────── */
+  .pf-controls {
+    display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+    padding: 0 0 2rem;
+    border-bottom: 1px solid rgba(26,26,26,.08);
+    margin-bottom: 2rem;
+  }
+  .pf-controls-label {
+    font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(26,26,26,.4); margin-right: .25rem;
+  }
+  .pf-sort-btn {
+    padding: .4rem .85rem;
+    border: 1.5px solid rgba(26,26,26,.2);
+    background: transparent; cursor: pointer;
+    font-family: inherit; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    color: rgba(26,26,26,.55); border-radius: 0;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .pf-sort-btn:hover { border-color: #1a1a1a; color: #1a1a1a; }
+  .pf-sort-btn.active { background: #1a1a1a; border-color: #1a1a1a; color: #f8f5ef; }
+
+  /* ─── Grid de cards ──────────────────────────── */
+  .pf-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+  }
+
+  /* ─── Card individual ────────────────────────── */
+  .pf-card {
+    position: relative;
+    min-height: 170px;
+    padding: 1.1rem 1.1rem .9rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    text-decoration: none; color: inherit;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    /* Borde sutil interno */
+    outline: 1px solid rgba(255,255,255,.06);
+  }
+  .pf-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.18); }
+  .pf-card.no-link { cursor: default; }
+  .pf-card.no-link:hover { transform: none; box-shadow: none; }
+
+  /* Flecha hover */
+  .pf-card:not(.no-link)::after {
+    content: "→";
+    position: absolute; top: .85rem; right: .9rem;
+    font-size: .85rem; opacity: 0;
+    transition: opacity .15s, transform .15s;
+    color: inherit; filter: brightness(2);
+  }
+  .pf-card:not(.no-link):hover::after { opacity: .7; transform: translateX(3px); }
+
+  /* Área de texto */
+  .pf-card-body { flex: 1; padding-right: 3rem; }
+  .pf-card-emoji {
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .3);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    line-height: 1;
+    /* evita que tape la flecha hover */
+    z-index: 0;
+  }
+  .pf-card-title {
+    display: block;
+    font-size: clamp(.9rem, 1.6vw, 1.1rem);
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.1;
+    margin: 0 0 .4rem;
+  }
+  .pf-card-tagline {
+    display: block;
+    font-size: .72rem; font-style: italic; line-height: 1.45;
+    opacity: .85;
+  }
+
+  /* Pie de card: paleta + badge */
+  .pf-card-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+    margin-top: .9rem;
+  }
+  .pf-swatches { display: flex; gap: 4px; }
+  .pf-swatch {
+    width: 14px; height: 14px;
+    border-radius: 1px;
+    outline: 1px solid rgba(255,255,255,.15);
+  }
+  .pf-state-badge {
+    font-size: .52rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase;
+    padding: .22rem .55rem;
+  }
+
+  /* ─── Estado vacío (sin resultados) ─────────────── */
+  .pf-empty {
+    display: none; grid-column: 1 / -1;
+    text-align: center; padding: 4rem 0; color: rgba(26,26,26,.35);
+    font-size: .9rem;
+  }
+  .pf-empty.visible { display: block; }
+
+  /* ─── Responsive ─────────────────────────────── */
+  @media (max-width: 1100px) { .pf-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px)  {
+    .pf-grid { grid-template-columns: repeat(2, 1fr); }
+    .pf-header { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px)  { .pf-grid { grid-template-columns: 1fr; } }
+</style>
+
+<main>
+  <div class="pf-shell">
+
+    <header class="pf-header">
+      <div class="pf-header-left">
+        <nav class="pf-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Portafolio</span></nav>
+        <h1 class="pf-title">Portafolio</h1>
+        <p class="pf-sub">Todos los juegos del taller, en cualquier estado. Desde publicados hasta ideas que todavía están buscando su forma.</p>
+      </div>
+      <div class="pf-count" aria-live="polite">
+        <strong id="pf-visible-count">{games.length}</strong>
+        juegos
+      </div>
+    </header>
+
+    <div class="pf-controls" role="group" aria-label="Ordenar juegos">
+      <span class="pf-controls-label">Ordenar por</span>
+      <button class="pf-sort-btn active" data-sort="estado" aria-pressed="true">Estado</button>
+      <button class="pf-sort-btn" data-sort="nombre" aria-pressed="false">Nombre A–Z</button>
+      <button class="pf-sort-btn" data-sort="reciente" aria-pressed="false">Más reciente</button>
+    </div>
+
+    <div class="pf-grid" id="pf-grid" role="list">
+      {games.map((g) => {
+        const badge = stateBadge[g.state] ?? stateBadge.proto;
+        const Tag = g.href ? 'a' : 'div';
+        return (
+          <Tag
+            class={`pf-card${!g.href ? ' no-link' : ''}`}
+            href={g.href ?? undefined}
+            role="listitem"
+            style={`background: ${g.bg};`}
+            data-name={g.name.toLowerCase()}
+            data-state-order={g.stateOrder}
+            data-date={g.date}
+          >
+            <span class="pf-card-emoji" aria-hidden="true">{g.emoji}</span>
+            <div class="pf-card-body">
+              <span class="pf-card-title" style={`color: ${g.titleColor}; font-family: ${g.titleFont};`}>
+                {g.name}
+              </span>
+              <span class="pf-card-tagline" style={`color: ${g.taglineColor};`}>
+                {g.tagline}
+              </span>
+            </div>
+            <div class="pf-card-foot">
+              <div class="pf-swatches" aria-hidden="true">
+                {g.palette.map(c => <span class="pf-swatch" style={`background: ${c};`} />)}
+              </div>
+              <span class="pf-state-badge" style={`background: ${badge.bg}; color: ${badge.color};`}>
+                {g.stateLabel}
+              </span>
+            </div>
+          </Tag>
+        );
+      })}
+      <div class="pf-empty" id="pf-empty">Sin resultados.</div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  const grid      = document.getElementById('pf-grid')!;
+  const countEl   = document.getElementById('pf-visible-count')!;
+  const sortBtns  = document.querySelectorAll<HTMLButtonElement>('.pf-sort-btn');
+
+  function getCards() {
+    return Array.from(grid.querySelectorAll<HTMLElement>('.pf-card'));
+  }
+
+  function sortCards(by: string) {
+    const cards = getCards();
+    cards.sort((a, b) => {
+      if (by === 'nombre') {
+        return (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '', 'es');
+      }
+      if (by === 'reciente') {
+        return (b.dataset.date ?? '').localeCompare(a.dataset.date ?? '');
+      }
+      // por estado: stateOrder ASC, luego fecha DESC
+      const so = Number(a.dataset.stateOrder) - Number(b.dataset.stateOrder);
+      if (so !== 0) return so;
+      return (b.dataset.date ?? '').localeCompare(a.dataset.date ?? '');
+    });
+    // Reinsertar en nuevo orden
+    cards.forEach(c => grid.appendChild(c));
+    countEl.textContent = String(cards.length);
+  }
+
+  sortBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      sortBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      sortCards(btn.dataset.sort ?? 'estado');
+    });
+  });
+
+  // Orden inicial por estado
+  sortCards('estado');
+</script>
+
+</BaseLayout>

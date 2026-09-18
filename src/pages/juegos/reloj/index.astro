@@ -1,0 +1,326 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Hasta un Reloj Roto... — Estudio Alpargatas"
+  description="Hasta un Reloj Roto...: un juego de velocidad con 48 cartas. Construye horas válidas antes que los demás."
+  bodyClass="page-reloj"
+  footerSubtitle="Hasta un Reloj Roto... · Rapidez · 48 cartas"
+  themeColor="#f5f0e8"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════
+     RELOJ · Reloj vintage · Crema + Bronce + Rojo
+     ═══════════════════════════════════════════════════════ */
+  body.page-reloj {
+    background-color: #f5f0e8;
+    color: #1a0f0a;
+    font-family: Georgia, "Times New Roman", serif;
+    background-image: none;
+    --crema:  #f5f0e8;
+    --bronce: #8b6914;
+    --rojo:   #cc2010;
+    --tinta:  #1a0f0a;
+    --marfil: #fdfaf4;
+    --dim:    rgba(26, 15, 10, .55);
+    --line:   rgba(139, 105, 20, .2);
+  }
+
+  body.page-reloj .site-header {
+    background: #1a0f0a;
+    border-bottom: 2px solid #8b6914;
+  }
+  body.page-reloj .brand b      { color: #f5f0e8; }
+  body.page-reloj .brand small  { color: rgba(245, 240, 232, .4); }
+  body.page-reloj .nav-links a  { color: rgba(245, 240, 232, .5); }
+  body.page-reloj .nav-links a:hover { color: #8b6914; }
+  body.page-reloj .nav-links .nav-instagram { border-color: rgba(139,105,20,.4); color: #8b6914; }
+  body.page-reloj .nav-links .nav-instagram:hover { background: #8b6914; border-color: #8b6914; color: #1a0f0a; }
+  body.page-reloj .brand-logo { border-color: #8b6914; box-shadow: 2px 2px 0 #8b6914; }
+
+  body.page-reloj .site-footer {
+    background: #1a0f0a;
+    border-top: 2px solid #cc2010;
+    color: rgba(245, 240, 232, .45);
+  }
+  body.page-reloj .site-footer b,
+  body.page-reloj .site-footer a { color: #8b6914; }
+  body.page-reloj .site-footer a:hover { color: #f5f0e8; }
+
+  .rl-shell { width: min(1100px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .rl-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--bronce);
+    margin-bottom: 1.2rem;
+  }
+  .rl-label::before { content: ""; display: block; width: 2rem; height: 1px; background: var(--bronce); }
+
+  .rl-breadcrumb {
+    display: flex; gap: .5rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 2rem;
+  }
+  .rl-breadcrumb a { text-decoration: none; color: inherit; }
+  .rl-breadcrumb a:hover { color: var(--bronce); }
+
+  /* HERO: esfera de reloj */
+  .rl-hero {
+    min-height: calc(100svh - 5rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--crema);
+    border-bottom: 2px solid var(--line);
+    position: relative;
+  }
+  .rl-hero-title {
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -.04em;
+    line-height: .85;
+    color: var(--tinta);
+    display: block;
+  }
+  .rl-hero-badges { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .rl-badge {
+    display: inline-flex; align-items: center; padding: .3rem .7rem;
+    border: 1.5px solid var(--bronce);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--bronce);
+  }
+  .rl-badge.active { background: var(--rojo); border-color: var(--rojo); color: var(--crema); }
+  .rl-hero-desc { font-size: .95rem; line-height: 1.85; color: var(--dim); max-width: 30rem; margin: 0 0 1.5rem; }
+  .rl-chips { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .rl-chip {
+    padding: .28rem .65rem;
+    border: 1px solid var(--line);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* Esfera de reloj decorativa */
+  .rl-clock-face {
+    width: clamp(180px, 30vw, 280px);
+    aspect-ratio: 1;
+    border: 4px solid var(--tinta);
+    border-radius: 50%;
+    margin-inline: auto;
+    position: relative;
+    background: var(--marfil);
+    box-shadow: inset 0 0 30px rgba(26, 15, 10, .06);
+  }
+  .rl-clock-face::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  }
+  /* Números romanos de la esfera */
+  .rl-clock-nums {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+    padding: 0; margin: 0;
+  }
+  .rl-clock-nums li {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    color: var(--tinta);
+    transform-origin: center 50%;
+    padding-top: 10%;
+  }
+  /* Manecillas (CSS puro) */
+  .rl-hand-h, .rl-hand-m {
+    position: absolute;
+    bottom: 50%; left: 50%;
+    transform-origin: bottom center;
+    background: var(--tinta);
+    border-radius: 2px;
+  }
+  .rl-hand-h { width: 3px; height: 32%; margin-left: -1.5px; transform: rotate(-60deg); }
+  .rl-hand-m { width: 2px; height: 42%; margin-left: -1px; transform: rotate(120deg); background: var(--rojo); }
+  .rl-clock-center {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  }
+  .rl-clock-center::after { content: ""; width: 8px; height: 8px; background: var(--tinta); border-radius: 50%; }
+
+  /* SECCIÓN 01 */
+  .rl-concept {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--tinta);
+    border-bottom: 2px solid var(--bronce);
+  }
+  .rl-concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .rl-concept h2 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: -.04em;
+    line-height: .9; color: var(--crema); margin: 1rem 0 1.5rem;
+  }
+  .rl-concept h2 em { color: var(--rojo); font-style: italic; }
+  .rl-concept p { font-size: .93rem; line-height: 1.85; color: rgba(245,240,232,.6); margin: 0 0 1rem; }
+
+  /* Tarjetas de modos */
+  .rl-modes { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .rl-mode {
+    padding: 1rem 1.2rem; border: 1px solid;
+    display: grid; grid-template-columns: 2.5rem 1fr; gap: .8rem; align-items: start;
+  }
+  .rl-mode:nth-child(1) { border-color: rgba(245,240,232,.15); }
+  .rl-mode:nth-child(2) { border-color: rgba(139,105,20,.4); }
+  .rl-mode:nth-child(3) { border-color: rgba(204,32,16,.4); }
+  .rl-mode-icon {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.8rem; font-weight: 900; line-height: 1; letter-spacing: -.08em;
+    color: var(--crema);
+  }
+  .rl-mode:nth-child(2) .rl-mode-icon { color: var(--bronce); }
+  .rl-mode:nth-child(3) .rl-mode-icon { color: var(--rojo); }
+  .rl-mode-name { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .6rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: rgba(245,240,232,.4); margin-bottom: .2rem; }
+  .rl-mode:nth-child(2) .rl-mode-name { color: var(--bronce); }
+  .rl-mode:nth-child(3) .rl-mode-name { color: var(--rojo); }
+  .rl-mode-desc { font-size: .8rem; line-height: 1.6; color: rgba(245,240,232,.55); margin: 0; }
+
+  /* SECCIÓN 03: Estado */
+  .rl-status {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--crema);
+    border-top: 2px solid var(--line);
+  }
+  .rl-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .rl-status h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -.04em; line-height: .9; color: var(--tinta); margin: 1rem 0 1.5rem; }
+  .rl-status h2 em { color: var(--rojo); font-style: italic; }
+  .rl-status p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
+  .rl-version {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(5rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.1em; line-height: .8;
+    color: var(--rojo); margin-bottom: 1.5rem;
+  }
+  .rl-change-list { list-style: none; padding: 0; margin: 0; }
+  .rl-change-list li {
+    padding: .8rem 0; border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 1rem 1fr; gap: .7rem;
+    font-size: .88rem; color: var(--dim); align-items: start;
+  }
+  .rl-change-list li:first-child { border-top: 1px solid var(--line); }
+  .rl-change-list li::before { content: "◷"; color: var(--bronce); font-size: .9rem; line-height: 1.4; }
+
+  .rl-back {
+    padding: 2.5rem 0; display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    border-top: 2px solid var(--line);
+  }
+  .rl-back span { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .78rem; color: var(--dim); }
+  .rl-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -.04em; text-decoration: none; color: var(--tinta); }
+  .rl-back a:hover { color: var(--rojo); }
+
+  @media (max-width: 720px) {
+    .rl-hero, .rl-concept-grid, .rl-status-grid { grid-template-columns: 1fr; }
+    .rl-clock-face { width: 160px; }
+  }
+</style>
+
+<main>
+  <section class="rl-hero">
+    <div class="rl-shell" style="grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+      <div>
+        <nav class="rl-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Hasta un Reloj Roto...</span></nav>
+        <h1 class="rl-hero-title">Hasta un<br />Reloj Roto...</h1>
+        <div class="rl-hero-badges">
+          <span class="rl-badge active">Proto</span>
+          <span class="rl-badge">48 cartas</span>
+        </div>
+        <p class="rl-hero-desc">Un juego de velocidad en el que los jugadores construyen horas válidas antes que los demás. Horas, medias horas y modos que ponen los nervios a prueba.</p>
+        <div class="rl-chips">
+          <span class="rl-chip">2–5 jugadores</span>
+          <span class="rl-chip">15–20 min</span>
+          <span class="rl-chip">Rapidez</span>
+        </div>
+      </div>
+      <div>
+        <div class="rl-clock-face" aria-hidden="true">
+          <ol class="rl-clock-nums">
+            {['XII','I','II','III','IV','V','VI','VII','VIII','IX','X','XI'].map((n, i) => (
+              <li style={`transform: rotate(${i * 30}deg)`}>{n}</li>
+            ))}
+          </ol>
+          <div class="rl-hand-h"></div>
+          <div class="rl-hand-m"></div>
+          <div class="rl-clock-center"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rl-concept">
+    <div class="rl-shell rl-concept-grid">
+      <div>
+        <span class="rl-label" style="color: rgba(245,240,232,.6)">01 — La idea</span>
+        <h2>Cuarenta y ocho cartas.<br /><em>Ninguna hora de sobra.</em></h2>
+        <p>RELOJ parte de una pregunta: ¿cómo se puede meter tensión en un juego de apenas dos dígitos? La respuesta fue hacer que esos dígitos sean horas de reloj, con todo lo que eso implica.</p>
+        <p>El mazo tiene las 48 "horas válidas" de un reloj de 12 horas — cada cuarto de hora, cada media hora. Los jugadores compiten por ser los primeros en armar una hora completa con sus cartas, pero hay modos que cambian las reglas de validez a mitad de la partida.</p>
+      </div>
+      <div>
+        <div class="rl-modes">
+          {[
+            { icon: '12', name: 'Modo Normal', desc: 'Armar cualquier hora completa (H:MM). El primero en lograrlo gana la ronda.' },
+            { icon: ':30', name: 'Modo Medias', desc: 'Solo valen medias horas. Los minutos deben ser exactamente 30.' },
+            { icon: '!!', name: 'Modo Nervioso', desc: 'El mazo avanza sólo, una carta por segundo. Hay que decidir rápido.' },
+          ].map(m => (
+            <div class="rl-mode">
+              <div class="rl-mode-icon">{m.icon}</div>
+              <div>
+                <div class="rl-mode-name">{m.name}</div>
+                <p class="rl-mode-desc">{m.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rl-status">
+    <div class="rl-shell rl-status-grid">
+      <div>
+        <span class="rl-label">03 — Estado actual</span>
+        <div class="rl-version" aria-hidden="true">Proto</div>
+        <ul class="rl-change-list">
+          <li>El Modo Nervioso se probó con temporizador físico — funciona mejor con un app.</li>
+          <li>Las cartas de "hora inválida" se eliminaron: añadían confusión, no tensión.</li>
+          <li>Pendiente: definir si el mazo es de 48 o se reducen a horas en punto y medias (24 cartas).</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Un juego que<br />nació de un<br /><em>colage.</em></h2>
+        <p>RELOJ empezó como parte de un ejercicio visual: pegar fotos de relojes distintos y ver qué tenían en común. Lo que tenían en común era que todos marcaban una hora diferente, y eso fue suficiente para un prototipo.</p>
+        <p>Es el juego más corto del taller. Eso no lo hace simple — hace que cada decisión cuente más.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="rl-back rl-shell">
+    <span>¿Seguimos mirando?</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

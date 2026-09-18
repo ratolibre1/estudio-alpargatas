@@ -1,0 +1,30 @@
+---
+interface Props {
+  current?: 'home' | 'ninive' | 'mapa' | 'portafolio';
+}
+
+const { current = 'home' } = Astro.props;
+const isMap = current === 'mapa';
+---
+
+<header class="site-header">
+  <nav class="nav shell" aria-label="Navegación principal">
+    <a class="brand" href="/" aria-label="Estudio Alpargatas, inicio">
+      <img class="brand-logo" src="/assets/estudio-alpargatas-logo.webp" alt="" />
+      <span><b>Estudio Alpargatas</b><small>juegos de mesa · Chile</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="/#juegos">Juegos</a>
+      <a href="/#cuaderno">Cuaderno</a>
+      <a href="/juegos/ninive/" aria-current={current === 'ninive' ? 'page' : undefined}>Nínive</a>
+      <a href="/portafolio/" aria-current={current === 'portafolio' ? 'page' : undefined}>Portafolio</a>
+      {
+        isMap ? (
+          <a class="nav-instagram" href="/" aria-current="page">Portada ↗</a>
+        ) : (
+          <a class="nav-instagram" href="https://www.instagram.com/estudioalpargatas/">Instagram ↗</a>
+        )
+      }
+    </div>
+  </nav>
+</header>

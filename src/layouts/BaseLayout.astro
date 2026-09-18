@@ -1,0 +1,54 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: 'home' | 'ninive' | 'mapa';
+  bodyClass?: string;
+  footerSubtitle: string;
+  footerVariant?: 'default' | 'mapa' | 'ninive';
+  /** CSS custom properties inyectadas en <html>. Clave sin --, valor completo. */
+  theme?: Record<string, string>;
+  /** URL de una hoja de estilos extra (fuentes, etc.) */
+  fontUrl?: string;
+  /** Color para <meta name="theme-color"> */
+  themeColor?: string;
+}
+
+const {
+  title,
+  description,
+  current = 'home',
+  bodyClass,
+  footerSubtitle,
+  footerVariant = 'default',
+  theme,
+  fontUrl,
+  themeColor = '#f4f0df',
+} = Astro.props;
+
+const cssVars = theme
+  ? Object.entries(theme).map(([k, v]) => `--${k}: ${v}`).join('; ')
+  : undefined;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={themeColor} />
+    <link rel="icon" type="image/webp" href="/assets/estudio-alpargatas-logo.webp" />
+    {fontUrl && <link rel="stylesheet" href={fontUrl} />}
+  </head>
+  <body class={bodyClass} style={cssVars}>
+    <Header current={current} />
+    <slot />
+    <Footer subtitle={footerSubtitle} variant={footerVariant} />
+  </body>
+</html>

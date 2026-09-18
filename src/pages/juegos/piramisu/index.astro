@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const capas = [
+  { num: 'C5', label: 'Cima', slots: 1, color: '#d4956f', bg: 'rgba(212,149,111,.15)' },
+  { num: 'C4', label: 'Cuarta',  slots: 2, color: '#c47a3a', bg: 'rgba(196,122,58,.12)' },
+  { num: 'C3', label: 'Tercera', slots: 3, color: '#a05828', bg: 'rgba(160,88,40,.12)' },
+  { num: 'C2', label: 'Segunda', slots: 4, color: '#7c3d0a', bg: 'rgba(124,61,10,.12)' },
+  { num: 'C1', label: 'Base',    slots: 5, color: '#3d1f0a', bg: 'rgba(61,31,10,.1)' },
+];
+---
+
+<BaseLayout
+  title="Piramisú — Estudio Alpargatas"
+  description="Piramisú: un juego cooperativo donde los jugadores construyen juntos una pirámide de ingredientes sin repetir adyacencias."
+  bodyClass="page-piramisu"
+  footerSubtitle="Piramisú · Cooperativo · En pruebas"
+  themeColor="#fef9f0"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════
+     PIRAMISÚ · Tiramisú en capas · Crema + Café + Cacao
+     ═══════════════════════════════════════════════════════ */
+  body.page-piramisu {
+    background-color: #fef9f0;
+    color: #2c1a10;
+    font-family: Georgia, "Times New Roman", serif;
+    background-image: none;
+    --vainilla: #fef9f0;
+    --crema:    #f5ead0;
+    --cacao:    #d4956f;
+    --cafe:     #7c3d0a;
+    --espresso: #2c1a10;
+    --dim:      rgba(44, 26, 16, .55);
+    --line:     rgba(124, 61, 10, .15);
+  }
+
+  body.page-piramisu .site-header { background: #2c1a10; border-bottom: 2px solid #d4956f; }
+  body.page-piramisu .brand b     { color: #fef9f0; }
+  body.page-piramisu .brand small { color: rgba(254,249,240,.4); }
+  body.page-piramisu .nav-links a { color: rgba(254,249,240,.5); }
+  body.page-piramisu .nav-links a:hover { color: #d4956f; }
+  body.page-piramisu .nav-links .nav-instagram { border-color: rgba(212,149,111,.4); color: #d4956f; }
+  body.page-piramisu .nav-links .nav-instagram:hover { background: #d4956f; border-color: #d4956f; color: #2c1a10; }
+  body.page-piramisu .brand-logo { border-color: #d4956f; box-shadow: 2px 2px 0 #d4956f; }
+
+  body.page-piramisu .site-footer { background: #2c1a10; border-top: 2px solid #7c3d0a; color: rgba(254,249,240,.45); }
+  body.page-piramisu .site-footer b, body.page-piramisu .site-footer a { color: #d4956f; }
+  body.page-piramisu .site-footer a:hover { color: #fef9f0; }
+
+  .pi-shell { width: min(1100px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .pi-label {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--cafe); margin-bottom: 1.2rem;
+  }
+  .pi-label::before { content: ""; display: block; width: 2rem; height: 1px; background: var(--cacao); }
+
+  .pi-breadcrumb {
+    display: flex; gap: .5rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 2rem;
+  }
+  .pi-breadcrumb a { text-decoration: none; color: inherit; }
+  .pi-breadcrumb a:hover { color: var(--cafe); }
+
+  /* HERO */
+  .pi-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--vainilla);
+    border-bottom: 2px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .pi-hero-title {
+    font-size: clamp(4.5rem, 14vw, 11rem); font-weight: 700;
+    letter-spacing: -.04em; line-height: .85; color: var(--espresso);
+    display: block;
+  }
+  .pi-hero-title em { color: var(--cafe); font-style: italic; }
+  .pi-hero-desc { font-size: .95rem; line-height: 1.85; color: var(--dim); margin: 1.5rem 0; max-width: 30rem; }
+  .pi-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .pi-badge {
+    display: inline-flex; padding: .3rem .7rem; border: 1.5px solid var(--cacao);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cafe);
+  }
+  .pi-badge.active { background: var(--cafe); border-color: var(--cafe); color: var(--vainilla); }
+
+  /* Visualización pirámide */
+  .pi-pyramid {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .pi-capa {
+    display: flex; gap: 4px; justify-content: center;
+  }
+  .pi-slot {
+    width: clamp(36px, 5vw, 52px);
+    aspect-ratio: 1;
+    border: 2px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .55rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+  }
+
+  /* SECCIÓN 01 */
+  .pi-concept {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--crema);
+    border-bottom: 2px solid var(--line);
+    border-top: 2px solid var(--line);
+  }
+  .pi-concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .pi-concept h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: -.04em; line-height: .9; color: var(--espresso); margin: 1rem 0 1.5rem; }
+  .pi-concept h2 em { color: var(--cafe); font-style: italic; }
+  .pi-concept p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
+
+  /* Reglas de adyacencia */
+  .pi-rules { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .pi-rule {
+    display: grid; grid-template-columns: 1.8rem 1fr; gap: .8rem; align-items: start;
+    padding: .9rem 1rem; border: 1px solid var(--line); background: var(--vainilla);
+  }
+  .pi-rule-num { font-size: 1.4rem; font-weight: 700; color: var(--cacao); line-height: 1; text-align: center; }
+  .pi-rule-name { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--cafe); margin-bottom: .2rem; }
+  .pi-rule-desc { font-size: .8rem; line-height: 1.6; color: var(--dim); margin: 0; }
+
+  /* SECCIÓN 03: Estado */
+  .pi-status { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--vainilla); }
+  .pi-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
+  .pi-status h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -.04em; line-height: .9; color: var(--espresso); margin: 1rem 0 1.5rem; }
+  .pi-status h2 em { color: var(--cafe); font-style: italic; }
+  .pi-status p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
+  .pi-version { font-family: "Helvetica Neue", Arial, sans-serif; font-size: clamp(5rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.1em; line-height: .8; color: var(--cacao); margin-bottom: 1.5rem; }
+  .pi-change-list { list-style: none; padding: 0; margin: 0; }
+  .pi-change-list li {
+    padding: .8rem 0; border-bottom: 1px solid var(--line);
+    display: grid; grid-template-columns: 1rem 1fr; gap: .7rem;
+    font-size: .88rem; color: var(--dim); align-items: start;
+  }
+  .pi-change-list li:first-child { border-top: 1px solid var(--line); }
+  .pi-change-list li::before { content: "▲"; color: var(--cacao); font-size: .55rem; margin-top: .35rem; }
+
+  .pi-back {
+    padding: 2.5rem 0; display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    border-top: 2px solid var(--line);
+  }
+  .pi-back span { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .78rem; color: var(--dim); }
+  .pi-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -.04em; text-decoration: none; color: var(--espresso); }
+  .pi-back a:hover { color: var(--cafe); }
+
+  @media (max-width: 720px) {
+    .pi-hero, .pi-concept-grid, .pi-status-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main>
+  <section class="pi-hero">
+    <div class="pi-shell" style="grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+      <div>
+        <nav class="pi-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Piramisú</span></nav>
+        <h1 class="pi-hero-title">Pira<em>misú</em></h1>
+        <p class="pi-hero-desc">Un juego cooperativo donde todos construyen juntos una pirámide de ingredientes. La regla: ningún ingrediente puede tocar otro del mismo tipo.</p>
+        <div class="pi-badges">
+          <span class="pi-badge active">Proto</span>
+          <span class="pi-badge">2–5 jugadores</span>
+          <span class="pi-badge">~30 min</span>
+          <span class="pi-badge">Cooperativo</span>
+        </div>
+      </div>
+      <div>
+        <div class="pi-pyramid" aria-label="Pirámide de cinco capas">
+          {capas.map((capa) => (
+            <div class="pi-capa">
+              {Array(capa.slots).fill(null).map((_, i) => (
+                <div class="pi-slot" style={`border-color: ${capa.color}; background: ${capa.bg}; color: ${capa.color};`}>
+                  {capa.num}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pi-concept">
+    <div class="pi-shell pi-concept-grid">
+      <div>
+        <span class="pi-label">01 — La idea</span>
+        <h2>Construir juntos.<br /><em>Sin repetir.</em></h2>
+        <p>Piramisú es un juego cooperativo de patrones: todos los jugadores trabajan hacia un objetivo común — levantar una pirámide de cinco capas — pero con una restricción de adyacencia que complica cada jugada.</p>
+        <p>Las cartas representan ingredientes. Para colocar un ingrediente en la pirámide, no puede tocar directamente ninguna otra carta del mismo tipo. A mayor altura, menos espacio y más difícil la restricción.</p>
+      </div>
+      <div>
+        <div class="pi-rules">
+          {[
+            { num: '1', name: 'Coloca sin repetir', desc: 'Ningún ingrediente puede ser adyacente a otro del mismo tipo. Ni horizontal ni verticalmente.' },
+            { num: '2', name: 'Apoya hacia arriba', desc: 'Solo se puede colocar en la siguiente capa si la de abajo está completa.' },
+            { num: '3', name: 'Ganan o caen juntos', desc: 'Si un turno no tiene jugada válida posible, todos pierden la partida.' },
+          ].map(r => (
+            <div class="pi-rule">
+              <div class="pi-rule-num">{r.num}</div>
+              <div>
+                <div class="pi-rule-name">{r.name}</div>
+                <p class="pi-rule-desc">{r.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pi-status">
+    <div class="pi-shell pi-status-grid">
+      <div>
+        <span class="pi-label">03 — Estado actual</span>
+        <div class="pi-version" aria-hidden="true">Proto</div>
+        <ul class="pi-change-list">
+          <li>Con 5 tipos de ingrediente la restricción funciona. Con 6 se vuelve imposible en la cima.</li>
+          <li>Se probó una variante con comodines: facilita demasiado las capas superiores.</li>
+          <li>Pendiente: diseñar las cartas de "Némesis del pastelero" que añaden restricciones extra.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Empezó como<br />un acertijo<br /><em>de Sudoku.</em></h2>
+        <p>Piramisú empezó intentando hacer un juego cooperativo donde el tablero fuera el propio reto. La restricción de adyacencia vino de los Sudokus: simple de explicar, difícil de ver con anticipación.</p>
+        <p>El nombre fue lo primero: una pirámide de tiramisú. El juego tardó más en llegar, pero el nombre nunca cambió.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pi-back pi-shell">
+    <span>¿Seguimos mirando?</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

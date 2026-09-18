@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Nínive — Estudio Alpargatas"
+  description="Nínive, juego de cartas para dos jugadores diseñado por Estudio Alpargatas y publicado por Ludoísmo."
+  current="ninive"
+  bodyClass="ninive-page"
+  footerSubtitle="Nínive · diseño de Arturo · Ludoísmo"
+  footerVariant="ninive"
+  themeColor="#1a2818"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════════
+     NÍNIVE · Arquitectura mesopotámica · Verde + Celeste
+     ═══════════════════════════════════════════════════════════ */
+
+  body.ninive-page {
+    background-color: #0f1e14;
+    color: #e8dcc8;
+    font-family: Georgia, "Times New Roman", serif;
+    /* Patrón de ladrillo de ziggurat */
+    background-image:
+      linear-gradient(rgba(45, 120, 90, .06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45, 120, 90, .04) 1px, transparent 1px);
+    background-size: 48px 24px;
+    --verde:    #2d7a5a;
+    --verde-cl: #4aab80;
+    --lapis:    #3b82a0;
+    --lapis-cl: #5fafc8;
+    --tierra:   #c47a3a;
+    --piedra:   #e8dcc8;
+    --piedra-bg: #f2ead8;
+    --noche:    #0f1e14;
+    --noche2:   #162010;
+    --dim:      rgba(232, 220, 200, .55);
+    --line:     rgba(45, 120, 90, .25);
+  }
+
+  /* ── Header: piedra oscura con banda de lapislázuli ────────────────────── */
+  body.ninive-page .site-header {
+    background: rgba(15, 30, 20, .97);
+    border-bottom: 2px solid var(--lapis);
+  }
+  body.ninive-page .brand b     { color: var(--verde-cl); }
+  body.ninive-page .brand small { color: rgba(74, 171, 128, .45); }
+  body.ninive-page .nav-links a { color: rgba(232, 220, 200, .5); }
+  body.ninive-page .nav-links a:hover,
+  body.ninive-page .nav-links .active { color: var(--lapis-cl); }
+  body.ninive-page .nav-links .nav-instagram {
+    border-color: rgba(91, 175, 200, .35); color: var(--lapis-cl);
+  }
+  body.ninive-page .nav-links .nav-instagram:hover {
+    background: var(--lapis); border-color: var(--lapis); color: var(--piedra);
+  }
+  body.ninive-page .brand-logo {
+    border-color: var(--verde);
+    box-shadow: 2px 2px 0 var(--verde);
+  }
+
+  /* ── Footer ─────────────────────────────────────────────────────────────── */
+  body.ninive-page .site-footer {
+    background: var(--noche);
+    border-top: 2px solid var(--verde);
+    color: var(--dim);
+  }
+  body.ninive-page .site-footer b,
+  body.ninive-page .site-footer a { color: var(--verde-cl); }
+  body.ninive-page .site-footer a:hover { color: var(--lapis-cl); }
+
+  /* ── HERO ─────────────────────────────────────────────────────────────────── */
+  body.ninive-page .ninive-hero {
+    background: linear-gradient(175deg, #162010 60%, #0f1e20 100%);
+    border-bottom: 2px solid var(--verde);
+  }
+  body.ninive-page .ninive-hero h1 {
+    font-family: Georgia, serif;
+    color: var(--piedra);
+    /* Trazo dorado-terracota */
+    text-shadow: 1px 1px 0 rgba(196, 122, 58, .4);
+  }
+  body.ninive-page .ninive-hero p {
+    color: var(--lapis-cl);
+    font-style: italic;
+  }
+  body.ninive-page .breadcrumbs a,
+  body.ninive-page .breadcrumbs span { color: rgba(232, 220, 200, .38); }
+  body.ninive-page .breadcrumbs a:hover { color: var(--verde-cl); }
+
+  /* Sticker / etiqueta */
+  body.ninive-page .sticker.yellow {
+    background: var(--tierra);
+    color: var(--piedra);
+    border: 1.5px solid rgba(232, 220, 200, .2);
+  }
+
+  /* Fichas técnicas */
+  body.ninive-page .fact-chips span {
+    border-color: var(--line);
+    color: var(--verde-cl);
+  }
+  body.ninive-page .fact-chips b { color: var(--piedra); }
+
+  /* Foto del hero: borde lapislázuli */
+  body.ninive-page .ninive-hero-photo img {
+    border: 2px solid var(--lapis);
+    box-shadow: 4px 4px 0 var(--verde);
+  }
+  body.ninive-page figcaption { color: var(--dim); }
+
+  /* ── Secciones ───────────────────────────────────────────────────────────── */
+  body.ninive-page .ninive-intro { background: var(--noche2); }
+  body.ninive-page .ninive-intro h2 { color: var(--piedra); }
+  body.ninive-page .ninive-intro h2 em { color: var(--lapis-cl); }
+  body.ninive-page .ninive-intro p { color: var(--dim); }
+
+  body.ninive-page .section-label span {
+    color: var(--tierra);
+    border-color: rgba(196, 122, 58, .3);
+  }
+  body.ninive-page .section-label b { color: var(--verde-cl); }
+
+  /* Sección "Cómo se juega" */
+  body.ninive-page .how-section {
+    background: #162010;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  body.ninive-page .how-section h2 { color: var(--piedra); }
+  body.ninive-page .how-section p  { color: var(--dim); }
+  body.ninive-page .rules-stack article span {
+    color: var(--verde-cl);
+    border-color: var(--line);
+  }
+  body.ninive-page .rules-stack h3 { color: var(--piedra-bg); }
+
+  /* Sección "La tensión" */
+  body.ninive-page .decision-section {
+    background: #0d1a10;
+    border-top: 2px solid var(--verde);
+    border-bottom: 2px solid var(--verde);
+  }
+  body.ninive-page .decision-section .big-number {
+    color: var(--verde-cl);
+    opacity: .25;
+  }
+  body.ninive-page .decision-section h2 { color: var(--lapis-cl); }
+  body.ninive-page .decision-section p  { color: var(--dim); }
+
+  /* Sección "El recorrido" */
+  body.ninive-page .journey-section {
+    background: #162010;
+    border-top: 1px solid var(--line);
+  }
+  body.ninive-page .journey-section h2 { color: var(--piedra); }
+  body.ninive-page .journey-cards article {
+    border-color: var(--line);
+    background: rgba(45, 120, 90, .05);
+  }
+  body.ninive-page .journey-cards span { color: var(--tierra); }
+  body.ninive-page .journey-cards h3   { color: var(--piedra-bg); }
+  body.ninive-page .journey-cards p    { color: var(--dim); }
+
+  /* Galería */
+  body.ninive-page .ninive-gallery { background: var(--noche); }
+  body.ninive-page .ninive-gallery h2 { color: var(--piedra); }
+  body.ninive-page .ninive-gallery p  { color: var(--dim); }
+  body.ninive-page .gallery-pair figure img {
+    border: 2px solid var(--verde);
+    box-shadow: 3px 3px 0 var(--lapis);
+  }
+
+  /* Volver */
+  body.ninive-page .back-to-table {
+    background: var(--noche);
+    border-top: 2px solid var(--verde);
+  }
+  body.ninive-page .back-to-table span { color: var(--dim); }
+  body.ninive-page .back-to-table a {
+    color: var(--lapis-cl);
+    font-style: italic;
+  }
+  body.ninive-page .back-to-table a:hover { color: var(--verde-cl); }
+</style>
+  <main>
+    <article>
+      <header class="ninive-hero">
+        <div class="shell ninive-hero-grid">
+          <div class="ninive-hero-copy">
+            <nav class="breadcrumbs" aria-label="Migas de pan"><a href="/">Juegos</a><span>/</span><span>Nínive</span></nav>
+            <span class="sticker yellow">Publicado por Ludoísmo</span>
+            <h1>Nínive</h1>
+            <p>Construir juntos.<br />Ganar por separado.</p>
+            <div class="fact-chips" aria-label="Ficha técnica"><span><b>2</b> jugadores</span><span><b>15′</b> duración</span><span><b>26</b> cartas</span></div>
+          </div>
+          <figure class="ninive-hero-photo">
+            <img src="/assets/ninive-palacio.webp" alt="Partida de Nínive con cartas formando un palacio" />
+            <figcaption>Una partida, un palacio distinto.</figcaption>
+            <i class="tape" aria-hidden="true"></i>
+          </figure>
+        </div>
+      </header>
+
+      <section class="ninive-intro shell">
+        <div class="section-label"><span>01</span><b>La idea</b></div>
+        <div>
+          <h2>Un mismo palacio.<br /><em>Dos paisajes.</em></h2>
+          <div class="two-columns"><p>En Nínive, dos jugadores levantan una estructura compartida inspirada en los jardines de la antigua ciudad asiria. Uno puntúa el lado verde —hojas y flores— y el otro el azul —agua y rocas—.</p><p>La tensión está en construir algo común mientras cada carta altera lo que ambos podrán puntuar. A veces la mejor jugada para el palacio es una pésima jugada para ti.</p></div>
+        </div>
+      </section>
+
+      <section class="how-section">
+        <div class="shell how-grid">
+          <div class="how-copy">
+            <div class="section-label"><span>02</span><b>Cómo se juega</b></div>
+            <h2>Dos reglas para hacer crecer una ciudad.</h2>
+            <div class="rules-stack">
+              <article><span>1</span><div><h3>Extiende la primera fila</h3><p>Juega una carta en cualquiera de los extremos. El valor que toca la fila debe ser menor o igual al valor de la carta adyacente.</p></div></article>
+              <article><span>2</span><div><h3>Construye hacia arriba</h3><p>Apoya una carta sobre dos cartas vecinas. Sus valores deben alcanzar o superar la suma que van a cubrir.</p></div></article>
+              <article><span>3</span><div><h3>Cuenta lo que quedó visible</h3><p>Al terminar, cada jugador suma todos los números visibles de su color.</p></div></article>
+            </div>
+          </div>
+          <figure class="rule-photo">
+            <img src="/assets/ninive-regla-superior.webp" alt="Ejemplo de una carta construida sobre dos cartas de Nínive" loading="lazy" />
+            <figcaption>Lo que tapas importa tanto como lo que construyes.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="decision-section shell">
+        <div class="big-number">25</div>
+        <div><div class="section-label"><span>03</span><b>La tensión</b></div><h2>Veinticinco combinaciones. Ninguna jugada es solamente tuya.</h2><p>Cubrir un número favorable puede abrir una gran oportunidad posterior, pero también elimina puntos propios. Conservarlo puede dejarle al rival el soporte que estaba esperando. La estructura pertenece a ambos; la victoria, no.</p></div>
+      </section>
+
+      <section class="journey-section">
+        <div class="shell">
+          <div class="section-label"><span>04</span><b>El recorrido</b></div>
+          <h2>Del cartón a otras mesas</h2>
+          <div class="journey-cards">
+            <article><span>PRIMERO</span><h3>La estructura fue el juego.</h3><p>Las cartas dejaron de ser solo una mano y empezaron a construir el espacio de la partida.</p></article>
+            <article><span>DESPUÉS</span><h3>Las reglas se hicieron visibles.</h3><p>Valores, restricciones y ejemplos se ajustaron hasta poder entenderse mirando la mesa.</p></article>
+            <article><span>AHORA</span><h3>Nínive está publicado.</h3><p>Ludoísmo llevó el prototipo hasta una edición terminada para dos jugadores.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="ninive-gallery shell">
+        <div class="section-label"><span>05</span><b>Galería</b></div>
+        <div class="gallery-heading"><h2>Así se ve<br />una partida.</h2><p>El resultado final no es solo un puntaje: es una pequeña construcción que registra cada decisión tomada.</p></div>
+        <div class="gallery-pair"><figure><img src="/assets/ninive-palacio.webp" alt="Palacio completo de Nínive" loading="lazy" /><figcaption>Vista general · estructura compartida</figcaption></figure><figure><img src="/assets/ninive-regla-superior.webp" alt="Detalle de construcción de Nínive" loading="lazy" /><figcaption>Detalle · nivel superior</figcaption></figure></div>
+      </section>
+
+      <nav class="back-to-table shell" aria-label="Volver a proyectos"><span>¿Seguimos mirando?</span><a href="/#juegos">Volver a todos los juegos →</a></nav>
+    </article>
+  </main>
+</BaseLayout>

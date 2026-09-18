@@ -1,0 +1,367 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+/* Demostración visual: par de letras con distancia calculada */
+const ejemplos = [
+  { a: 'A', b: 'M', dist: 12 },
+  { a: 'C', b: 'Z', dist: 23 },
+  { a: 'F', b: 'H', dist: 2  },
+  { a: 'B', b: 'R', dist: 16 },
+];
+
+const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+---
+
+<BaseLayout
+  title="Letrados — Estudio Alpargatas"
+  description="Letrados: duelo abstracto para dos jugadores. Construye una torre de letras y puntúa según la distancia que las separa en el abecedario."
+  bodyClass="page-letrados"
+  footerSubtitle="Letrados · Duelo · Avanzado"
+  themeColor="#f2ede4"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════
+     LETRADOS · Tipografía modernista · Papel + Tinta + Rojo
+     ═══════════════════════════════════════════════════════ */
+  body.page-letrados {
+    background: #f2ede4;
+    color: #1a1a1a;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    --papel:  #f2ede4;
+    --hoja:   #e8e2d8;
+    --tinta:  #1a1a1a;
+    --rojo:   #d62828;
+    --dim:    rgba(26, 26, 26, .5);
+    --line:   rgba(26, 26, 26, .1);
+  }
+
+  body.page-letrados .site-header   { background: #1a1a1a; border-bottom: 2px solid #d62828; }
+  body.page-letrados .brand b       { color: #f2ede4; }
+  body.page-letrados .brand small   { color: rgba(242,237,228,.4); }
+  body.page-letrados .nav-links a   { color: rgba(242,237,228,.5); }
+  body.page-letrados .nav-links a:hover { color: #f2ede4; }
+  body.page-letrados .nav-links .nav-instagram { border-color: rgba(214,40,40,.4); color: #d62828; }
+  body.page-letrados .nav-links .nav-instagram:hover { background: #d62828; border-color: #d62828; color: #f2ede4; }
+  body.page-letrados .brand-logo    { border-color: rgba(242,237,228,.3); box-shadow: 2px 2px 0 rgba(214,40,40,.3); }
+
+  body.page-letrados .site-footer   { background: #1a1a1a; border-top: 2px solid rgba(214,40,40,.4); color: rgba(242,237,228,.4); }
+  body.page-letrados .site-footer b,
+  body.page-letrados .site-footer a { color: rgba(242,237,228,.65); }
+  body.page-letrados .site-footer a:hover { color: #f2ede4; }
+</style>
+
+<style>
+  /* ─── Shell ───────────────────────────────────── */
+  .lt-shell { width: min(1050px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .lt-label {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 1.2rem;
+  }
+  .lt-label::before { content: ""; display: block; width: 1.5rem; height: 1px; background: var(--rojo); }
+
+  .lt-breadcrumb {
+    display: flex; gap: .4rem;
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 2rem;
+  }
+  .lt-breadcrumb a { text-decoration: none; color: inherit; }
+  .lt-breadcrumb a:hover { color: var(--tinta); }
+
+  .lt-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,7vw,5rem); align-items: start; }
+
+  /* ─── HÉROE ──────────────────────────────────── */
+  .lt-hero {
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--papel);
+  }
+  .lt-hero-title {
+    font-size: clamp(5rem, 15vw, 12rem);
+    font-weight: 900;
+    letter-spacing: -.06em;
+    line-height: .85;
+    color: var(--tinta);
+    font-family: Georgia, serif;
+    display: block;
+    margin: .5rem 0 1.2rem;
+  }
+  .lt-hero-title em { color: var(--rojo); font-style: italic; }
+  .lt-hero-sub { font-size: .95rem; line-height: 1.8; color: var(--dim); max-width: 28rem; margin: 0 0 1.5rem; }
+  .lt-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .lt-badge {
+    display: inline-flex; padding: .3rem .7rem;
+    border: 1.5px solid rgba(26,26,26,.25);
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
+  }
+  .lt-badge.active { background: var(--tinta); border-color: var(--tinta); color: var(--papel); }
+  .lt-badge.red    { border-color: rgba(214,40,40,.4); color: var(--rojo); }
+
+  /* Tira del abecedario */
+  .lt-alphabet-strip {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--hoja);
+  }
+  .lt-alphabet-row {
+    display: grid;
+    grid-template-columns: repeat(26, 1fr);
+  }
+  .lt-letter-cell {
+    aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-size: clamp(.5rem, 1.5vw, .85rem);
+    font-weight: 700;
+    color: var(--dim);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .lt-letter-cell:last-child { border-right: none; }
+  .lt-letter-cell.highlight { background: var(--tinta); color: var(--papel); }
+  .lt-letter-cell.span-range { background: rgba(214,40,40,.08); }
+  .lt-dist-label {
+    display: flex; align-items: center; justify-content: center; gap: .3rem;
+    padding: .5rem;
+    font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dim);
+    border-top: 1px solid var(--line);
+  }
+  .lt-dist-num { font-size: 1.1rem; font-weight: 900; color: var(--rojo); letter-spacing: -.04em; }
+
+  /* ─── CONCEPTO (01) ─────────────────────────── */
+  .lt-concept {
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    background: var(--hoja);
+    border-bottom: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+  }
+  .lt-concept h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700; letter-spacing: -.04em; line-height: .9;
+    color: var(--tinta); margin: .8rem 0 1.2rem;
+  }
+  .lt-concept h2 em { color: var(--rojo); font-style: italic; }
+  .lt-concept p { font-size: .9rem; line-height: 1.85; color: var(--dim); margin: 0 0 .9rem; }
+
+  /* Cuadro de pares de ejemplo */
+  .lt-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .lt-pair {
+    display: grid; grid-template-columns: auto 1fr auto; gap: .6rem; align-items: center;
+    padding: .7rem .9rem;
+    border: 1px solid var(--line); background: var(--papel);
+  }
+  .lt-pair-letter {
+    width: 2.2rem; height: 2.2rem;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--tinta); color: var(--papel);
+    font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700;
+  }
+  .lt-pair-arrow { font-size: .7rem; color: var(--dim); text-align: center; }
+  .lt-pair-score { text-align: right; }
+  .lt-pair-score strong { font-size: 1.5rem; font-weight: 900; color: var(--rojo); display: block; line-height: 1; }
+  .lt-pair-score span { font-size: .55rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+
+  /* ─── MECÁNICA (02) ─────────────────────────── */
+  .lt-mechanic {
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    background: var(--papel);
+    border-bottom: 1px solid var(--line);
+  }
+  .lt-mechanic h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 700; letter-spacing: -.04em; line-height: .9;
+    color: var(--tinta); margin: .8rem 0 1.2rem;
+  }
+  .lt-mechanic h2 em { color: var(--rojo); font-style: italic; }
+  .lt-mechanic p { font-size: .9rem; line-height: 1.85; color: var(--dim); margin: 0 0 .9rem; }
+
+  /* Reglas numeradas */
+  .lt-rules { list-style: none; padding: 0; margin: 0; }
+  .lt-rule {
+    display: grid; grid-template-columns: 2.5rem 1fr; gap: .8rem; align-items: start;
+    padding: .9rem 0; border-bottom: 1px solid var(--line);
+  }
+  .lt-rule:first-child { border-top: 1px solid var(--line); }
+  .lt-rule-num {
+    font-family: Georgia, serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--rojo); line-height: 1.1; text-align: center;
+  }
+  .lt-rule-title { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta); margin-bottom: .2rem; }
+  .lt-rule-desc { font-size: .82rem; line-height: 1.65; color: var(--dim); margin: 0; }
+
+  /* ─── ESTADO (03) ────────────────────────────── */
+  .lt-status {
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    background: var(--hoja);
+    border-bottom: 1px solid var(--line);
+    border-top: 1px solid var(--line);
+  }
+  .lt-version {
+    font-size: clamp(5rem, 13vw, 10rem); font-weight: 900;
+    letter-spacing: -.1em; line-height: .82;
+    color: var(--rojo); margin-bottom: 1.4rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  .lt-status h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700; letter-spacing: -.04em; line-height: .9;
+    color: var(--tinta); margin: .8rem 0 1.2rem;
+  }
+  .lt-status h2 em { color: var(--rojo); font-style: italic; }
+  .lt-status p { font-size: .9rem; line-height: 1.85; color: var(--dim); margin: 0 0 .9rem; }
+  .lt-change-list { list-style: none; padding: 0; margin: 0; }
+  .lt-change-list li {
+    display: grid; grid-template-columns: .8rem 1fr; gap: .6rem; align-items: start;
+    padding: .7rem 0; border-bottom: 1px solid var(--line);
+    font-size: .85rem; color: var(--dim);
+  }
+  .lt-change-list li:first-child { border-top: 1px solid var(--line); }
+  .lt-change-list li::before { content: "—"; color: var(--rojo); font-weight: 700; }
+
+  /* ─── Nav de vuelta ──────────────────────────── */
+  .lt-back {
+    padding: 2.5rem 0;
+    display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .lt-back span { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+  .lt-back a { font-family: Georgia, serif; font-size: clamp(1.3rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -.03em; text-decoration: none; color: var(--tinta); }
+  .lt-back a:hover { color: var(--rojo); }
+
+  @media (max-width: 700px) {
+    .lt-cols { grid-template-columns: 1fr; }
+    .lt-pairs { grid-template-columns: 1fr; }
+  }
+</style>
+
+<main>
+
+  <!-- ════ HÉROE ════════════════════════════════════════════ -->
+  <section class="lt-hero">
+    <div class="lt-shell lt-cols">
+      <div>
+        <nav class="lt-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Letrados</span></nav>
+        <h1 class="lt-hero-title">Le<em>tra</em>dos</h1>
+        <p class="lt-hero-sub">Un duelo de dos jugadores donde construyes una torre de letras. Cada par que queda visible puntúa según la distancia que los separa en el abecedario.</p>
+        <div class="lt-badges">
+          <span class="lt-badge active">Avanzado</span>
+          <span class="lt-badge red">2 jugadores</span>
+          <span class="lt-badge">15 min</span>
+          <span class="lt-badge">26 cartas</span>
+        </div>
+      </div>
+      <div>
+        <!-- Tira del abecedario con las dos letras de un ejemplo -->
+        <div class="lt-alphabet-strip" aria-label="Abecedario: A a Z, distancia entre pares">
+          <div class="lt-alphabet-row">
+            {alfabeto.map((l, i) => (
+              <div class={`lt-letter-cell${l === 'C' || l === 'Z' ? ' highlight' : (i > 2 && i < 25 ? ' span-range' : '')}`}>
+                {l}
+              </div>
+            ))}
+          </div>
+          <div class="lt-dist-label">
+            <span>C → Z</span>
+            <span class="lt-dist-num">23</span>
+            <span>puntos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ 01 — CONCEPTO ════════════════════════════════════ -->
+  <section class="lt-concept">
+    <div class="lt-shell lt-cols">
+      <div>
+        <span class="lt-label">01 — La idea</span>
+        <h2>Las letras<br />lejanas<br /><em>valen más.</em></h2>
+        <p>En Letrados, cada jugador tiene una mano de cartas con letras del abecedario. En su turno juega una carta sobre la pila compartida, que va construyendo una torre visible para ambos.</p>
+        <p>Al final, cada par de letras que queda expuesto en la torre suma tantos puntos como posiciones las separan en el alfabeto: A y Z valen 25, A y B valen 1. El resultado es una tensión constante entre jugar pronto —para ocupar los extremos— o esperar para cubrir al rival.</p>
+      </div>
+      <div>
+        <div class="lt-pairs" aria-label="Ejemplos de pares y su puntuación">
+          {ejemplos.map(e => (
+            <div class="lt-pair">
+              <div class="lt-pair-letter">{e.a}</div>
+              <div class="lt-pair-arrow">↔</div>
+              <div class="lt-pair-score">
+                <strong>{e.dist}</strong>
+                <span>{e.b} · {e.dist} pts</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ 02 — MECÁNICA ════════════════════════════════════ -->
+  <section class="lt-mechanic">
+    <div class="lt-shell lt-cols">
+      <div>
+        <span class="lt-label">02 — La mecánica</span>
+        <h2>Una torre.<br /><em>Dos</em><br />puntuaciones.</h2>
+        <p>Cada turno es una sola decisión: qué carta jugar y dónde colocarla en la torre. Pero esa decisión afecta tanto tu puntuación como la del rival, porque la torre es compartida.</p>
+        <p>El final de partida llega cuando se acaba el mazo o cuando ningún jugador puede o quiere jugar más cartas. Entonces se revelan todos los pares visibles y se suman distancias.</p>
+      </div>
+      <div>
+        <ul class="lt-rules">
+          {[
+            { num: '1', title: 'Juega una carta', desc: 'Colócala en cualquier extremo de la torre o sobre una carta ya colocada, si el valor es compatible.' },
+            { num: '2', title: 'La torre crece', desc: 'Cada carta apoyada cubre parcialmente las dos de abajo. Lo que queda visible forma los pares que se puntuarán.' },
+            { num: '3', title: 'Distancia = puntos', desc: 'Al final, cada par de letras adyacentes y visibles suma su distancia en el abecedario. A–Z = 25 pts. A–B = 1 pt.' },
+            { num: '4', title: 'Gana la distancia total', desc: 'El jugador con mayor suma de distancias visibles en su color gana la partida.' },
+          ].map(r => (
+            <li class="lt-rule">
+              <div class="lt-rule-num">{r.num}</div>
+              <div>
+                <div class="lt-rule-title">{r.title}</div>
+                <p class="lt-rule-desc">{r.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ 03 — ESTADO ══════════════════════════════════════ -->
+  <section class="lt-status">
+    <div class="lt-shell lt-cols">
+      <div>
+        <span class="lt-label">03 — Estado actual</span>
+        <div class="lt-version" aria-hidden="true">Av.</div>
+        <ul class="lt-change-list">
+          <li>La regla de apoyo cambió tres veces: la versión actual es la más fluida.</li>
+          <li>Se probaron manos de 5, 7 y 9 cartas. Con 7 la partida respira mejor.</li>
+          <li>Las cartas de "comodín de posición" se descartaron: simplificaban demasiado.</li>
+          <li>Pendiente: testing con turno simultáneo en lugar de alternado.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Nació de un<br />problema de<br /><em>Scrabble.</em></h2>
+        <p>Letrados empezó pensando en qué parte del Scrabble es más interesante sin el vocabulario. La respuesta fue la colocación: decidir dónde poner una pieza y cómo eso afecta al tablero compartido.</p>
+        <p>Quitar el vocabulario obligó a inventar una métrica nueva para que las letras valieran algo. La distancia en el abecedario llegó en una tarde de lluvia y nunca se fue: es simple de entender y produce partidas donde siempre hay un par que duele no haber visto antes.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ Nav de vuelta ════════════════════════════════════ -->
+  <nav class="lt-back lt-shell">
+    <span>¿Seguimos mirando?</span>
+    <a href="/portafolio/">Ver el portafolio completo →</a>
+  </nav>
+
+</main>
+
+</BaseLayout>
