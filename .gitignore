@@ -25,5 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Keystatic (CMS) - datos de sesión local
-keystatic.config.*
+# Netlify build output
+.netlify/
+
+# Local Netlify folder
+.netlify
