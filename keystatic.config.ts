@@ -1,11 +1,11 @@
 import { config, collection, fields } from '@keystatic/core';
 
 /**
- * En desarrollo (sin env vars de GitHub) usa modo local:
- * escribe directo al disco. En producción (Netlify) usa GitHub:
- * los cambios se convierten en commits automáticamente.
+ * Netlify inyecta automáticamente NETLIFY=true en su entorno de build/runtime.
+ * - En Netlify (producción): modo GitHub → los cambios crean commits en el repo.
+ * - Localmente: modo local → escribe directo al disco sin OAuth.
  */
-const storage = process.env.KEYSTATIC_GITHUB_CLIENT_ID
+const storage = process.env.NETLIFY
   ? ({
       kind: 'github',
       repo: 'ratolibre1/estudio-alpargatas',
