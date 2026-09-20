@@ -1,11 +1,14 @@
-# Decap CMS — editor de juegos.
-# Local: corre `npm run cms` en otra terminal y entra a /admin/
-# Producción: Netlify Identity + Git Gateway (sin SSR).
-
-local_backend: true
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+#
+# Sveltia CMS — editor de juegos.
+# Local (Chrome): npm run dev → /admin/ → "Work with Local Repository"
+#   y elige la raíz del repo. No usa decap-server.
+# Producción: backend GitHub. Login con PAT o con OAuth (Worker).
+#   base_url se agrega cuando esté el authenticator.
 
 backend:
-  name: git-gateway
+  name: github
+  repo: ratolibre1/estudio-alpargatas
   branch: main
 
 media_folder: public/assets
