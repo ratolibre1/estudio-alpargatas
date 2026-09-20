@@ -28,6 +28,10 @@ const games = defineCollection({
     date: z.string(),
     /** URL de la página individual del juego (opcional) */
     href: z.string().optional(),
+    /** Ej: "2–4" */
+    players: z.string().optional(),
+    /** Ej: "20–30 min" */
+    duration: z.string().optional(),
     /** Color de fondo de la card */
     bg: z.string(),
     /** Color del título en la card */

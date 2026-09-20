@@ -6,8 +6,17 @@ import { getCollection } from 'astro:content';
 const allEntries = await getCollection('games');
 
 /* Aplanamos entry.data en el objeto que usa el template */
+function gameHref(id: string, href?: string) {
+  const raw = href?.trim() || `/juegos/${id}`;
+  return raw.endsWith('/') ? raw : `${raw}/`;
+}
+
 const games = allEntries
-  .map(entry => ({ id: entry.id, ...entry.data }))
+  .map(entry => ({
+    id: entry.id,
+    ...entry.data,
+    href: gameHref(entry.id, entry.data.href),
+  }))
   .sort((a, b) => a.stateOrder - b.stateOrder || b.date.localeCompare(a.date));
 
 /* Badge color per state */

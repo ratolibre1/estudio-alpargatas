@@ -5,20 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "cms": "npx decap-server",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdoc": "^1.0.6",
-    "@astrojs/netlify": "^7.0.13",
-    "@astrojs/react": "^6.0.6",
-    "@keystatic/astro": "^6.0.0",
-    "@keystatic/core": "^0.6.9",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "astro": "^6.0.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "astro": "^6.0.0"
   }
 }

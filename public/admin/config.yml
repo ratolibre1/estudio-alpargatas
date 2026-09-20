@@ -1,0 +1,56 @@
+# Decap CMS — editor de juegos.
+# Local: corre `npm run cms` en otra terminal y entra a /admin/
+# Producción: Netlify Identity + Git Gateway (sin SSR).
+
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/assets
+public_folder: /assets
+
+collections:
+  - name: games
+    label: Juegos
+    label_singular: Juego
+    folder: src/content/games
+    create: true
+    delete: false
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    identifier_field: name
+    summary: '{{emoji}} {{name}} — {{stateLabel}}'
+    fields:
+      - { label: Nombre, name: name, widget: string }
+      - { label: Emoji, name: emoji, widget: string }
+      - { label: Tagline, name: tagline, widget: string }
+      - { label: Meta (género · versión), name: meta, widget: string }
+      - label: Estado
+        name: state
+        widget: select
+        options:
+          - { label: Publicado, value: publicado }
+          - { label: Avanzado, value: avanzado }
+          - { label: En playtest, value: playtest }
+          - { label: En rediseño, value: rediseno }
+          - { label: Proto, value: proto }
+      - { label: Etiqueta del estado, name: stateLabel, widget: string, hint: 'Texto visible en la card, ej: En playtest' }
+      - { label: Orden, name: stateOrder, widget: number, value_type: int, min: 1, max: 5, hint: '1=publicado … 5=proto' }
+      - { label: Fecha (YYYY-MM), name: date, widget: string, pattern: ['^\d{4}-\d{2}$', 'Usa formato YYYY-MM'] }
+      - { label: URL de la página, name: href, widget: string, required: false, hint: 'Opcional. Si lo dejas vacío, se usa /juegos/<slug>/. El slash final se agrega solo.' }
+      - { label: Jugadores, name: players, widget: string, required: false, hint: 'Ej: 2–4' }
+      - { label: Duración, name: duration, widget: string, required: false, hint: 'Ej: 20–30 min' }
+      - { label: Color de fondo, name: bg, widget: string }
+      - { label: Color del título, name: titleColor, widget: string }
+      - { label: Color del tagline, name: taglineColor, widget: string }
+      - label: Paleta (4 colores)
+        name: palette
+        widget: list
+        min: 4
+        max: 4
+        field: { label: Color, name: color, widget: string }
+      - { label: Fuente CSS del título, name: titleFont, widget: string }
+      - { label: Concepto / notas, name: body, widget: markdown, required: false, hint: 'Texto largo bajo el héroe. Codex también puede editarlo en el .md' }

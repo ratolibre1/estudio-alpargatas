@@ -1,0 +1,19 @@
+---
+/**
+ * Editor Decap. Vive como página Astro para que /admin/ exista
+ * con trailingSlash: 'always'. El config sigue en /admin/config.yml.
+ */
+export const prerender = true;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Editor — Estudio Alpargatas</title>
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <script is:inline src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </body>
+</html>
