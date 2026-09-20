@@ -1,11 +1,12 @@
 import { config, collection, fields } from '@keystatic/core';
 
 /**
- * Netlify inyecta automáticamente NETLIFY=true en su entorno de build/runtime.
- * - En Netlify (producción): modo GitHub → los cambios crean commits en el repo.
- * - Localmente: modo local → escribe directo al disco sin OAuth.
+ * import.meta.env.PROD es false en `npm run dev` y true en `npm run build`.
+ * Vite lo reemplaza estáticamente en el bundle, funciona en browser y servidor.
+ * - dev local: modo local → escribe directo al disco sin OAuth.
+ * - build (Netlify): modo GitHub → los cambios crean commits en el repo.
  */
-const storage = process.env.NETLIFY
+const storage = import.meta.env.PROD
   ? ({
       kind: 'github',
       repo: 'ratolibre1/estudio-alpargatas',
