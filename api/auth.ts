@@ -1,3 +1,7 @@
 import { handleAuth } from './_lib/sveltia-oauth';
 
-export const GET = (request: Request) => handleAuth(request);
+export const config = { runtime: 'edge' };
+
+export default function handler(request: Request) {
+  return handleAuth(request);
+}
