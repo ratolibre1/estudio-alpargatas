@@ -1,13 +1,17 @@
 ---
+keyword: tartan
 name: Tartán
 emoji: 🏴󠁧󠁢󠁳󠁣󠁴󠁿
 tagline: Un tejido de alianzas que alguien siempre rompe.
+description: Una exploración abierta alrededor de tramas, cruces y conexiones.
 meta: Alianzas · Traición
 state: proto
 stateLabel: Proto
 stateOrder: 5
 date: '2025-01'
-href: /juegos/tartan/
+home: proto
+homeOrder: 7
+coverInitials: TT
 bg: '#f5f0e8'
 titleColor: '#8b1c1c'
 taglineColor: '#2d5a27'

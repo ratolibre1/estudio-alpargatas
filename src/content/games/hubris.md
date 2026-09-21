@@ -1,13 +1,18 @@
 ---
+keyword: hubris
 name: Hubris
 emoji: ⚡
 tagline: Construyes para dominar. O para caer en gloria.
+description: Coopera para completar hazañas, pero compite por reclamar su gloria.
 meta: Dominio · V0.5
 state: rediseno
 stateLabel: En rediseño
 stateOrder: 4
-date: 2025-04
-href: /juegos/hubris/
+date: '2025-04'
+home: proto
+homeOrder: 2
+image: /assets/hubris-estelas.webp
+imageAlt: Hubris
 bg: "#2c1c3c"
 titleColor: "#d4af37"
 taglineColor: rgba(212,175,55,.65)

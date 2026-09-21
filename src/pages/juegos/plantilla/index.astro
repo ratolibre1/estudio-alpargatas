@@ -2,13 +2,14 @@
 /**
  * PLANTILLA DE JUEGO — Estudio Alpargatas
  * ────────────────────────────────────────
- * Copia este archivo a /src/pages/juegos/<slug>/index.astro
+ * Copia este archivo a /src/pages/juegos/<keyword>/index.astro
+ * (keyword = una palabra, igual al .md del CMS, ej: reloj, canes, mantas)
  * y reemplaza cada marcador [ ... ] con contenido real.
  *
  * Props de BaseLayout que debes completar:
  *   title         → "Nombre del Juego — Estudio Alpargatas"
  *   description   → Párrafo SEO (~155 caracteres)
- *   bodyClass     → "page-<slug>" (define el tema de colores)
+ *   bodyClass     → "page-<keyword>" (define el tema de colores)
  *   footerSubtitle → "Nombre · Estado · Versión"
  *   themeColor    → Color hex del tema (meta tag móvil)
  */
@@ -220,12 +221,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <nav style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pt-dim);margin-bottom:.5rem;display:flex;gap:.4rem;">
           <a href="/" style="color:inherit;text-decoration:none;">Inicio</a>
           <span>/</span>
-          <span>[slug]</span>
+          <span>[keyword]</span>
         </nav>
         <h1 class="pt-page-title">Plantilla de juego</h1>
       </div>
       <div class="pt-page-meta">
-        Copiar a /src/pages/juegos/<strong>[slug]</strong>/index.astro<br />
+        Copiar a /src/pages/juegos/<strong>[keyword]</strong>/index.astro<br />
         Completar todos los campos marcados con [ ]
       </div>
     </header>
@@ -241,7 +242,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <div>
         <div class="pt-field"><span class="pt-field-key">title</span>         <span class="pt-field-val">"[Nombre del juego] — Estudio Alpargatas"</span></div>
         <div class="pt-field"><span class="pt-field-key">description</span>   <span class="pt-field-val">"[Descripción SEO, ~155 caracteres.]"</span></div>
-        <div class="pt-field"><span class="pt-field-key">bodyClass</span>     <span class="pt-field-val">"page-[slug]"  ← define el tema de colores via CSS</span></div>
+        <div class="pt-field"><span class="pt-field-key">bodyClass</span>     <span class="pt-field-val">"page-[keyword]"  ← define el tema de colores via CSS</span></div>
         <div class="pt-field"><span class="pt-field-key">footerSubtitle</span><span class="pt-field-val">"[Nombre] · [Género] · [Estado]"</span></div>
         <div class="pt-field"><span class="pt-field-key">themeColor</span>    <span class="pt-field-val">"#xxxxxx"  ← color de fondo del tema (meta móvil)</span></div>
       </div>
@@ -433,7 +434,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <ul class="pt-todo-list">
             <li>Props de BaseLayout completos (title, description, bodyClass, themeColor)</li>
             <li>CSS de header y footer ajustado a la paleta del juego</li>
-            <li>Breadcrumb con slug real</li>
+            <li>Breadcrumb con keyword real</li>
             <li>Título y tagline definitivos en el héroe</li>
             <li>Badges con estado, jugadores y duración reales</li>
             <li>Elemento visual del héroe (imagen o widget CSS)</li>
@@ -446,7 +447,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <li>Sección de mecánica con lista o tabla de reglas</li>
             <li>Versión actual + log de cambios recientes (3 ítems)</li>
             <li>Párrafo de origen del juego</li>
-            <li>Href en games.ts actualizado con la ruta real</li>
+            <li>keyword del CMS = nombre de archivo = /juegos/&lt;keyword&gt;/</li>
           </ul>
         </div>
       </div>

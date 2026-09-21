@@ -5,6 +5,7 @@
  * esa gana: no se incluye en getStaticPaths para evitar colisión.
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GameExtras from '../../../components/GameExtras.astro';
 import { getCollection, render } from 'astro:content';
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -130,6 +131,7 @@ const hasBody = Boolean(entry.body?.trim());
         {g.duration && <span class="pa-badge">{g.duration}</span>}
         <span class="pa-badge">{g.meta}</span>
       </div>
+      <GameExtras bggId={g.bggId} awards={g.awards} />
     </div>
   </header>
 

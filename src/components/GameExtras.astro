@@ -1,0 +1,114 @@
+---
+import { bggHref } from '../lib/games';
+
+interface Award {
+  title: string;
+  image?: string;
+  href?: string;
+}
+
+interface Props {
+  bggId?: number;
+  awards?: Award[];
+  tone?: 'light' | 'dark';
+}
+
+const { bggId, awards = [], tone = 'light' } = Astro.props;
+const hasAwards = awards.length > 0;
+const show = Boolean(bggId) || hasAwards;
+---
+
+{show && (
+  <div class:list={['game-extras', tone === 'dark' && 'is-dark']}>
+    {bggId && (
+      <a class="game-bgg" href={bggHref(bggId)} target="_blank" rel="noopener noreferrer">
+        BoardGameGeek ↗
+      </a>
+    )}
+    {hasAwards && (
+      <ul class="game-awards">
+        {awards.map((award) => {
+          const Tag = award.href ? 'a' : 'div';
+          return (
+            <li>
+              <Tag
+                class="game-award"
+                href={award.href}
+                target={award.href ? '_blank' : undefined}
+                rel={award.href ? 'noopener noreferrer' : undefined}
+              >
+                {award.image && (
+                  <img src={award.image} alt={award.title} />
+                )}
+                <span>
+                  {award.title}
+                  {award.href && ' ↗'}
+                </span>
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </div>
+)}
+
+<style>
+  .game-extras {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.1rem 1.5rem;
+    margin-top: 1.6rem;
+    color: #1a1a1a;
+  }
+  .game-extras.is-dark { color: inherit; }
+  .game-bgg {
+    display: inline-flex;
+    align-items: center;
+    padding: .45rem .75rem;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    color: inherit;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .game-bgg:hover { opacity: .75; }
+  .game-awards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .game-award {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    max-width: 9.5rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .game-award img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    background: rgba(255,255,255,.08);
+    border: 1px solid currentColor;
+  }
+  .game-award span {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 1.35;
+  }
+  .is-dark .game-bgg { color: var(--lapis-cl, #5fafc8); border-color: rgba(91, 175, 200, .45); }
+  .is-dark .game-award { color: var(--piedra, #e8dcc8); }
+  .is-dark .game-award img { border-color: rgba(232, 220, 200, .28); background: rgba(15, 30, 20, .5); }
+</style>

@@ -1,0 +1,555 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const disciplinas = [
+  {
+    key: 'caza',
+    name: 'Caza',
+    color: '#b83020',
+    simple: 'Roba tres cartas al azar de la mano de otro jugador.',
+    avanzada: 'Pon un snack en el último espacio libre de una carta rival. Ese hueco queda bloqueado hasta el fin de ronda.',
+  },
+  {
+    key: 'agilidad',
+    name: 'Agilidad',
+    color: '#b88010',
+    simple: 'Intercambia tu mano completa con la de otro jugador.',
+    avanzada: 'Secuestras la acción que acaba de pagar otro: el efecto lo haces tú.',
+  },
+  {
+    key: 'rastreo',
+    name: 'Rastreo',
+    color: '#3a7a3a',
+    simple: 'Mira las cinco cartas más recientes del descarte, elige tres y llévalas a tu mano.',
+    avanzada: 'Recuperas todos tus snacks gastados, menos los que usaste para bloquear.',
+  },
+  {
+    key: 'estilo',
+    name: 'Estilo',
+    color: '#1a3a7a',
+    simple: 'Cambia esa ficha por dos fichas de otras disciplinas, si tienes espacio en tus cartas.',
+    avanzada: 'Descarta hasta cinco cartas de la mano y roba el doble.',
+  },
+  {
+    key: 'obediencia',
+    name: 'Obediencia',
+    color: '#6b3fa0',
+    simple: 'Anula una acción de otro jugador. También se puede anular de vuelta.',
+    avanzada: 'Anula un set que esté bajando otro jugador. Esas cartas van al descarte.',
+  },
+];
+---
+
+<BaseLayout
+  title="El Gran Festival de Canes — Estudio Alpargatas"
+  description="El Gran Festival de Canes: sets de disciplinas, fichas de Acción y snacks. 2 a 5 jugadores, 30 minutos."
+  bodyClass="page-canes"
+  footerSubtitle="El Gran Festival de Canes · Arturo Vial · Proto V0.2"
+  themeColor="#e8f2e0"
+>
+
+<style is:global>
+  body.page-canes {
+    background-color: #e8f2e0;
+    color: #2d4a1a;
+    font-family: Nunito, "Helvetica Neue", Arial, sans-serif;
+    background-image: radial-gradient(circle at 2px 2px, rgba(74, 32, 112, .08) 1.5px, transparent 0);
+    background-size: 28px 28px;
+    --cream:   #e8f2e0;
+    --purple:  #4a2070;
+    --gold:    #d4a017;
+    --brown:   #2d4a1a;
+    --muted:   rgba(45, 74, 26, .62);
+    --line:    rgba(74, 32, 112, .16);
+    --white:   #fffdf6;
+  }
+
+  body.page-canes .site-header {
+    background: #2d1545;
+    border-bottom: 4px solid #d4a017;
+  }
+  body.page-canes .brand b      { color: #d4a017; }
+  body.page-canes .brand small  { color: rgba(212, 160, 23, .55); }
+  body.page-canes .nav-links a  { color: rgba(253, 245, 220, .7); }
+  body.page-canes .nav-links a:hover { color: #d4a017; }
+  body.page-canes .nav-links .nav-instagram {
+    border-color: rgba(212, 160, 23, .45); color: #d4a017;
+  }
+  body.page-canes .nav-links .nav-instagram:hover {
+    background: #d4a017; border-color: #d4a017; color: #2d1545;
+  }
+  body.page-canes .brand-logo {
+    border-color: #d4a017; box-shadow: 2px 2px 0 #d4a017;
+  }
+
+  body.page-canes .site-footer {
+    background: #2d1545;
+    border-top: 4px solid #d4a017;
+    color: rgba(253, 245, 220, .6);
+  }
+  body.page-canes .site-footer b,
+  body.page-canes .site-footer a { color: #d4a017; }
+  body.page-canes .site-footer a:hover { color: #fdf5dc; }
+
+  .ca-shell { width: min(1140px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .ca-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .3rem .9rem;
+    background: var(--purple);
+    color: #fff;
+    border-radius: 999px;
+    font-size: .63rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .ca-breadcrumb {
+    display: flex;
+    gap: .5rem;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.6rem;
+  }
+  .ca-breadcrumb a { text-decoration: none; color: inherit; }
+  .ca-breadcrumb a:hover { color: var(--purple); }
+
+  .ca-hero {
+    padding: clamp(3.5rem, 8vw, 6.5rem) 0 4rem;
+  }
+  .ca-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .ca-hero-logo {
+    display: block;
+    width: min(22rem, 100%);
+    margin: 0 0 1.2rem;
+  }
+  .ca-hero h1 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .ca-hero-tag {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+    color: var(--purple);
+    margin: 0 0 1rem;
+  }
+  .ca-hero p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 34rem;
+    margin: 0 0 1.4rem;
+  }
+  .ca-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .ca-chip {
+    padding: .35rem .7rem;
+    border: 1.5px solid var(--purple);
+    border-radius: 999px;
+    font-size: .65rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    color: var(--purple);
+    background: var(--white);
+  }
+  .ca-chip.gold {
+    border-color: var(--gold);
+    color: #8a6a0c;
+  }
+  .ca-hero-ill {
+    margin: 0;
+  }
+  .ca-hero-ill img {
+    width: 100%;
+    border-radius: 18px;
+    background: #f4eefc;
+    border: 3px solid var(--purple);
+    box-shadow: 6px 6px 0 var(--gold);
+  }
+
+  .ca-section { padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
+  .ca-section.alt { background: #dcecc8; }
+  .ca-section h2 {
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.1rem, 5vw, 3.6rem);
+    letter-spacing: -.03em;
+    line-height: 1.05;
+    color: var(--purple);
+    margin: 0 0 1.2rem;
+  }
+  .ca-section h2 em { font-style: italic; color: #2d1545; }
+  .ca-section p {
+    font-size: .95rem;
+    line-height: 1.75;
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+
+  .ca-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .ca-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem 1.2rem;
+    margin-top: 2rem;
+    align-items: start;
+  }
+  .ca-cards figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .ca-cards-art {
+    width: 100%;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+  }
+  .ca-cards-art img {
+    max-width: 92%;
+    max-height: 86%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    background: transparent;
+  }
+  .ca-cards figcaption {
+    margin-top: .65rem;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .ca-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+  }
+  .ca-steps li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: .9rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .ca-steps b { color: var(--purple); font-size: 1.05rem; }
+  .ca-n {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--gold);
+  }
+
+  .ca-set {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: var(--white);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+  }
+  .ca-set img { width: 100%; object-fit: contain; }
+  .ca-set p { margin: 0; font-size: .85rem; }
+  .ca-tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem 1rem;
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--brown);
+  }
+  .ca-tokens span { display: inline-flex; align-items: center; gap: .35rem; }
+  .ca-tokens img { width: 1.5rem; height: 1.5rem; }
+
+  .ca-disc {
+    display: grid;
+    gap: 1rem;
+  }
+  .ca-disc article {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr;
+    gap: 1.1rem;
+    padding: 1rem 1.1rem;
+    background: var(--white);
+    border-radius: 10px;
+    border-left: 6px solid var(--disc);
+    align-items: center;
+  }
+  .ca-disc-icon {
+    display: grid;
+    place-items: center;
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+  .ca-disc-icon img {
+    width: 72%;
+    height: 72%;
+    object-fit: contain;
+    border-radius: 22%;
+    transform: rotate(45deg);
+  }
+  .ca-disc h3 {
+    margin: 0 0 .35rem;
+    font-size: 1.05rem;
+    color: var(--disc);
+  }
+  .ca-disc p { margin: 0 0 .4rem; font-size: .86rem; }
+  .ca-disc p:last-child { margin-bottom: 0; }
+
+  .ca-score {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .8rem;
+  }
+  .ca-score article {
+    padding: 1.15rem 1.2rem;
+    background: var(--white);
+    border: 2px solid var(--line);
+    border-radius: 12px;
+  }
+  .ca-score span {
+    display: block;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .45rem;
+  }
+  .ca-score b {
+    display: block;
+    color: var(--purple);
+    margin-bottom: .45rem;
+  }
+  .ca-score p { margin: 0; font-size: .82rem; }
+
+  .ca-rounds {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ca-rounds th,
+  .ca-rounds td {
+    padding: .7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    font-size: .88rem;
+  }
+  .ca-rounds th {
+    background: var(--purple);
+    color: #fff;
+    font-size: .62rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .ca-back {
+    padding: 2.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    border-top: 3px solid var(--gold);
+  }
+  .ca-back span { font-size: .78rem; color: var(--muted); font-weight: 700; }
+  .ca-back a {
+    font-weight: 900;
+    font-size: clamp(1.3rem, 3vw, 2.3rem);
+    letter-spacing: -.04em;
+    text-decoration: none;
+    color: var(--purple);
+  }
+  .ca-back a:hover { color: #2d1545; }
+
+  @media (max-width: 800px) {
+    .ca-hero-grid,
+    .ca-split,
+    .ca-score { grid-template-columns: 1fr; }
+    .ca-cards { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+
+<main>
+  <section class="ca-hero">
+    <div class="ca-shell ca-hero-grid">
+      <div>
+        <nav class="ca-breadcrumb" aria-label="Navegación">
+          <a href="/">Inicio</a><span>/</span><span>El Gran Festival de Canes</span>
+        </nav>
+        <img class="ca-hero-logo" src="/assets/canes-logo.webp" alt="El Gran Festival de Canes" />
+        <h1>El Gran Festival de Canes</h1>
+        <p class="ca-hero-tag">Completa las cinco disciplinas. El festival se gana por puntos.</p>
+        <p>Cada año llegan perros de todas las razas a demostrar qué los hace especiales. Tú eres el entrenador: robas cartas, bajas sets y gastas fichas de Acción. El primero en tener las cinco disciplinas frente a sí cierra la ronda.</p>
+        <div class="ca-chips">
+          <span class="ca-chip">2–5 jugadores</span>
+          <span class="ca-chip">30 min</span>
+          <span class="ca-chip">8+</span>
+          <span class="ca-chip">5 disciplinas</span>
+          <span class="ca-chip gold">Proto V0.2</span>
+        </div>
+      </div>
+      <figure class="ca-hero-ill">
+        <img src="/assets/canes-hero.webp" alt="Perros en el podio del Gran Festival de Canes" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="ca-section alt">
+    <div class="ca-shell">
+      <span class="ca-label">01 — La idea</span>
+      <h2>Cinco disciplinas.<br /><em>Una mesa.</em></h2>
+      <p>Hay 100 cartas —20 de cada tipo— y 75 fichas de Acción. Los snacks sirven para robar de más y, al cierre, también suman. Cada jugador arranca con 5 cartas, 9 snacks y una carta de ayuda.</p>
+      <p>El primer set de cada disciplina queda boca arriba frente a ti. Encima van las fichas: 1 si bajaste 3 cartas, 2 si fueron 4, 3 si fueron 5. Esas fichas se gastan para frenar al rival o armarte el siguiente set.</p>
+      <div class="ca-cards">
+        {disciplinas.map((d) => (
+          <figure>
+            <span class="ca-cards-art">
+              <img src={`/assets/canes-perro-${d.key}.webp`} alt={d.name} />
+            </span>
+            <figcaption style={`color:${d.color}`}>{d.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ca-section">
+    <div class="ca-shell ca-split">
+      <div>
+        <span class="ca-label">02 — El turno</span>
+        <h2>Roba, juega,<br /><em>deja cinco.</em></h2>
+        <ol class="ca-steps">
+          <li>
+            <span class="ca-n">1</span>
+            <div>
+              <b>Fase de robo</b>
+              <p>Robas una carta gratis. Puedes gastar hasta 4 snacks para robar más, una por snack. También puedes canjear una ficha de Acción de tus cartas por 2 snacks.</p>
+            </div>
+          </li>
+          <li>
+            <span class="ca-n">2</span>
+            <div>
+              <b>Fase de acciones</b>
+              <p>Bajas sets de 3, 4 o 5 cartas iguales, en el orden que quieras, las veces que puedas. Gastas 1 ficha para una acción simple o 2 para una avanzada.</p>
+            </div>
+          </li>
+          <li>
+            <span class="ca-n">3</span>
+            <div>
+              <b>Fin de turno</b>
+              <p>Quedas con exactamente 5 cartas: si te pasaste, descartas; si te faltan, robas. Si el mazo se acaba, se baraja el descarte.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="ca-set">
+        <img src="/assets/canes-set.webp" alt="Carta de Estilo con dos fichas de Acción encima" />
+        <p>El primer set de esa disciplina se queda. El resto va al descarte. Las fichas se apilan en los tres huecos de la carta.</p>
+        <div class="ca-tokens">
+          <span><img src="/assets/canes-abanico.webp" alt="" /> 3 cartas → 1 ficha</span>
+          <span>4 cartas → 2 fichas</span>
+          <span>5 cartas → 3 fichas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ca-section alt">
+    <div class="ca-shell">
+      <span class="ca-label">03 — Las acciones</span>
+      <h2>Una ficha, efecto simple.<br /><em>Dos, la versión dura.</em></h2>
+      <p>Devuelves las fichas a la reserva. Las puedes encadenar en el mismo turno si te alcanzan.</p>
+      <div class="ca-disc">
+        {disciplinas.map((d) => (
+          <article style={`--disc:${d.color}`}>
+            <span class="ca-disc-icon">
+              <img src={`/assets/canes-ficha-${d.key}.webp`} alt="" />
+            </span>
+            <div>
+              <h3>{d.name}</h3>
+              <p><strong>1 ficha.</strong> {d.simple}</p>
+              <p><strong>2 fichas.</strong> {d.avanzada}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="ca-section">
+    <div class="ca-shell ca-split">
+      <div>
+        <span class="ca-label">04 — El cierre</span>
+        <h2>La ronda se corta<br /><em>en cinco.</em></h2>
+        <p>Cuando un jugador tiene una carta de cada disciplina, la ronda termina ahí. Todos suman: 5 puntos por cerrarla, snacks que te queden, y las fichas que siguen sobre tus cartas (1 / 3 / 5 puntos si tienes 1, 2 o 3 del mismo tipo).</p>
+        <p>Después se baraja todo, vuelven las fichas a la reserva, cada uno recibe 5 cartas y 9 snacks, y el ganador de la ronda abre la siguiente.</p>
+        <p>Gana el festival quien acumule más puntos. Empate: más rondas ganadas. Proto V0.2, según el manual impreso.</p>
+      </div>
+      <div>
+        <div class="ca-score">
+          <article>
+            <span>01</span>
+            <b>Cerrar la ronda</b>
+            <p>5 puntos para quien complete las cinco disciplinas.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <b>Snacks</b>
+            <p>9+ → 5 pts. 6+ → 3 pts. 3+ → 1 pt.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <b>Fichas en cartas</b>
+            <p>Por disciplina: 1 ficha = 1, 2 = 3, 3 = 5.</p>
+          </article>
+        </div>
+        <table class="ca-rounds" style="margin-top:1.2rem;">
+          <thead>
+            <tr><th>Jugadores</th><th>Rondas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2</td><td>5</td></tr>
+            <tr><td>3</td><td>4</td></tr>
+            <tr><td>4 o 5</td><td>3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <nav class="ca-back ca-shell" aria-label="Volver a proyectos">
+    <span>¿Seguimos mirando?</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

@@ -115,7 +115,7 @@ h1, h2, h3, p, figure { margin-top: 0; }
 .feed-card { grid-column: span 4; display: block; color: var(--ink); text-decoration: none; }
 .feed-ninive { grid-column: span 7; }
 .feed-llama { grid-column: span 5; }
-.feed-amateuratsu { grid-column: span 5; }
+.feed-amateurasu { grid-column: span 5; }
 .feed-hubris { grid-column: span 7; }
 .feed-reloj { grid-column: 5 / span 4; }
 .feed-image { position: relative; overflow: hidden; aspect-ratio: 1 / 1; border: 1px solid var(--line); background: var(--paper-deep); }
@@ -329,7 +329,7 @@ h1, h2, h3, p, figure { margin-top: 0; }
   .section-title-row,.notebook-heading { grid-template-columns: .25fr 1fr; }
   .section-title-row > p,.notebook-heading > p { grid-column: 2; }
   .game-feed { grid-template-columns: repeat(2,1fr); }
-  .feed-card,.feed-ninive,.feed-llama,.feed-amateuratsu,.feed-hubris,.feed-reloj { grid-column: auto; }
+  .feed-card,.feed-ninive,.feed-llama,.feed-amateurasu,.feed-hubris,.feed-reloj { grid-column: auto; }
   .feed-ninive .feed-image,.feed-hubris .feed-image { aspect-ratio: 1/1; }
   .published-ninive { grid-column: 1 / span 12; grid-row: auto; }
   .sample-game,.sample-game-blue { grid-column: span 6; grid-row: auto; grid-template-columns: 1fr; }

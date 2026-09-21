@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GameExtras from '../../../components/GameExtras.astro';
+import { getEntry } from 'astro:content';
+
+const cms = await getEntry('games', 'letrados');
 
 /* Demostración visual: par de letras con distancia calculada */
 const ejemplos = [
@@ -254,6 +258,7 @@ const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
           <span class="lt-badge">15 min</span>
           <span class="lt-badge">26 cartas</span>
         </div>
+        {cms && <GameExtras bggId={cms.data.bggId} awards={cms.data.awards} />}
       </div>
       <div>
         <!-- Tira del abecedario con las dos letras de un ejemplo -->
