@@ -1,13 +1,18 @@
 ---
-name: Amateuratsu
+keyword: amateurasu
+name: Amateurasu
 emoji: ☀️
 tagline: Una procesión que va construyendo el tablero.
+description: Una procesión que va construyendo el tablero.
 meta: Estrategia · Saikū
 state: proto
 stateLabel: Proto
 stateOrder: 5
 date: '2025-05'
-href: /juegos/amateuratsu/
+home: proto
+homeOrder: 1
+image: /assets/amateuratsu-procesion.webp
+imageAlt: Amateurasu
 bg: '#f5e6c8'
 titleColor: '#8b2500'
 taglineColor: '#5c3d1e'

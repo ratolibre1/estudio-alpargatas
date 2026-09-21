@@ -1,23 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getGames } from '../../lib/games';
 
-/* ─── Datos de todos los juegos desde Content Collections ────────────── */
-const allEntries = await getCollection('games');
-
-/* Aplanamos entry.data en el objeto que usa el template */
-function gameHref(id: string, href?: string) {
-  const raw = href?.trim() || `/juegos/${id}`;
-  return raw.endsWith('/') ? raw : `${raw}/`;
-}
-
-const games = allEntries
-  .map(entry => ({
-    id: entry.id,
-    ...entry.data,
-    href: gameHref(entry.id, entry.data.href),
-  }))
-  .sort((a, b) => a.stateOrder - b.stateOrder || b.date.localeCompare(a.date));
+const games = await getGames();
 
 /* Badge color per state */
 const stateBadge: Record<string, { bg: string; color: string }> = {
@@ -245,11 +230,10 @@ const stateBadge: Record<string, { bg: string; color: string }> = {
     <div class="pf-grid" id="pf-grid" role="list">
       {games.map((g) => {
         const badge = stateBadge[g.state] ?? stateBadge.proto;
-        const Tag = g.href ? 'a' : 'div';
         return (
-          <Tag
-            class={`pf-card${!g.href ? ' no-link' : ''}`}
-            href={g.href ?? undefined}
+          <a
+            class="pf-card"
+            href={g.href}
             role="listitem"
             style={`background: ${g.bg};`}
             data-name={g.name.toLowerCase()}
@@ -273,7 +257,7 @@ const stateBadge: Record<string, { bg: string; color: string }> = {
                 {g.stateLabel}
               </span>
             </div>
-          </Tag>
+          </a>
         );
       })}
       <div class="pf-empty" id="pf-empty">Sin resultados.</div>

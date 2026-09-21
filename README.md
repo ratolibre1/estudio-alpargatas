@@ -20,14 +20,16 @@ npm run preview
 
 ## Estructura
 
-- `src/pages/`: portada, mapa y ficha de Nínive.
+- `src/pages/`: portada, mapa, portafolio y fichas en `/juegos/<keyword>/`.
 - `src/layouts/BaseLayout.astro`: estructura HTML común y metadatos.
 - `src/components/`: encabezado y pie reutilizables.
-- `src/data/games.ts`: contenido de tarjetas y prototipos de la portada.
+- `src/content/games/`: CMS — única fuente de verdad. El **keyword** (una palabra) es el id del archivo y el slug (`/juegos/reloj/`, `/juegos/canes/`).
+- `src/lib/games.ts`: helper que deriva el href del keyword.
+- `src/data/archive.ts`: ideas del cuaderno (no son juegos del CMS).
 - `src/styles/global.css`: diseño completo de la versión actual.
 - `public/assets/`: logo y fotografías.
 
-Para añadir una nueva ficha, crea una carpeta en `src/pages/juegos/` siguiendo el ejemplo de `ninive/index.astro`, y convierte la tarjeta correspondiente en un enlace.
+Para añadir un juego: crea `src/content/games/<keyword>.md` (o desde `/admin/`) y, si necesita ficha diseñada, `src/pages/juegos/<keyword>/index.astro`.
 
 ## GitHub y Netlify
 
@@ -35,4 +37,4 @@ El archivo `netlify.toml` ya incluye la configuración necesaria. Al importar el
 
 ## Trabajarlo con Claude
 
-Puedes subir el ZIP completo o, de preferencia, abrir esta carpeta como proyecto. Los mejores puntos de entrada son `README.md`, `src/pages/index.astro`, `src/data/games.ts` y `src/styles/global.css`.
+Puedes subir el ZIP completo o, de preferencia, abrir esta carpeta como proyecto. Los mejores puntos de entrada son `README.md`, `src/pages/index.astro`, `src/content/games/` y `src/styles/global.css`.

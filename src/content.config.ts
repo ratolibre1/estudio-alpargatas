@@ -1,46 +1,59 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const keyword = z
+  .string()
+  .regex(
+    /^[a-z][a-z0-9]*$/,
+    'Una sola palabra ASCII en minúsculas (ej: reloj, canes, mantas).'
+  );
+
 /**
- * Colección de juegos — fuente de verdad para el portafolio.
- * Cada juego es un archivo .md en src/content/games/.
- * El frontmatter define los metadatos; el body (opcional) puede ser
- * una descripción larga para uso futuro.
+ * Colección de juegos — única fuente de verdad.
+ * keyword = id del archivo = slug de URL (/juegos/<keyword>/).
+ * El href no se guarda: se deriva siempre del keyword.
  */
 const games = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/games' }),
   schema: z.object({
-    /** Nombre visible del juego */
+    keyword,
     name: z.string(),
-    /** Emoji identificador */
     emoji: z.string(),
-    /** Frase corta para la card del portafolio */
     tagline: z.string(),
-    /** Género · Estado (ej: "Riesgo compartido · V0.3") */
+    /** Copy más largo para la home; si falta, se usa tagline. */
+    description: z.string().optional(),
     meta: z.string(),
-    /** Estado interno del juego */
     state: z.enum(['publicado', 'avanzado', 'playtest', 'rediseno', 'proto']),
-    /** Etiqueta legible del estado */
     stateLabel: z.string(),
-    /** Orden de clasificación (1=publicado … 4=proto) */
     stateOrder: z.number().int(),
-    /** Fecha de última actualización en formato YYYY-MM */
     date: z.string(),
-    /** URL de la página individual del juego (opcional) */
-    href: z.string().optional(),
-    /** Ej: "2–4" */
+    home: z.enum(['featured', 'proto', 'none']).default('none'),
+    homeOrder: z.number().int().default(0),
     players: z.string().optional(),
-    /** Ej: "20–30 min" */
     duration: z.string().optional(),
-    /** Color de fondo de la card */
+    facts: z.array(z.string()).optional(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    coverNumber: z.string().optional(),
+    coverTitle: z.string().optional(),
+    coverStatus: z.string().optional(),
+    coverTheme: z.enum(['red', 'green', 'blue']).optional(),
+    coverInitials: z.string().optional(),
+    /** ID numérico de BoardGameGeek. La URL se deriva. */
+    bggId: z.number().int().positive().optional(),
+    awards: z
+      .array(
+        z.object({
+          title: z.string(),
+          image: z.string().optional(),
+          href: z.string().optional(),
+        })
+      )
+      .optional(),
     bg: z.string(),
-    /** Color del título en la card */
     titleColor: z.string(),
-    /** Color del tagline en la card */
     taglineColor: z.string(),
-    /** Paleta de 4 colores para los swatches */
     palette: z.array(z.string()).length(4),
-    /** Fuente CSS del título en la card */
     titleFont: z.string(),
   }),
 });

@@ -1,0 +1,618 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Mantas a Raya — Estudio Alpargatas"
+  description="Mantas a Raya: dos acuaristas mueven su meeple por una grilla 5×5, giran o voltean losetas y completan 5 misiones."
+  bodyClass="page-mantas"
+  footerSubtitle="Mantas a Raya · Arturo Vial y Estefanía Lynch · Playtest V0.4"
+  themeColor="#051820"
+>
+
+<style is:global>
+  body.page-mantas {
+    background-color: #051820;
+    color: #d8eef4;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-image: none;
+    --water:   #5ab8c8;
+    --foam:    #88d4e0;
+    --deep:    #0a2a3a;
+    --sand:    #d4b890;
+    --abyssal: #020e14;
+    --text:    #d8eef4;
+    --soft:    rgba(216, 238, 244, .6);
+    --line:    rgba(90, 184, 200, .15);
+  }
+
+  body.page-mantas .site-header {
+    background: rgba(5, 24, 32, .92);
+    border-bottom-color: rgba(90, 184, 200, .2);
+  }
+  body.page-mantas .brand b      { color: #d8eef4; }
+  body.page-mantas .brand small  { color: rgba(216, 238, 244, .45); }
+  body.page-mantas .nav-links a  { color: rgba(216, 238, 244, .55); }
+  body.page-mantas .nav-links a:hover { color: #5ab8c8; }
+  body.page-mantas .nav-links .nav-instagram {
+    border-color: rgba(216, 238, 244, .25);
+    color: #d8eef4;
+  }
+  body.page-mantas .nav-links .nav-instagram:hover {
+    background: #5ab8c8;
+    border-color: #5ab8c8;
+    color: #051820;
+  }
+  body.page-mantas .brand-logo {
+    border-color: rgba(90, 184, 200, .45);
+    box-shadow: 2px 2px 0 #5ab8c8;
+  }
+
+  body.page-mantas .site-footer {
+    background: #020e14;
+    border-top-color: rgba(90, 184, 200, .15);
+  }
+
+  .mr-shell { width: min(1100px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .mr-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin-bottom: 1rem;
+  }
+  .mr-label::before {
+    content: "";
+    display: block;
+    width: .4rem;
+    height: .4rem;
+    border-radius: 50%;
+    background: var(--water);
+  }
+
+  .mr-breadcrumb {
+    display: flex;
+    gap: .5rem;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: rgba(216, 238, 244, .38);
+    margin-bottom: 2.5rem;
+  }
+  .mr-breadcrumb a { text-decoration: none; color: inherit; }
+  .mr-breadcrumb a:hover { color: var(--water); }
+
+  .mr-hero {
+    position: relative;
+    min-height: calc(100svh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(4rem, 8vw, 7rem) 0 6rem;
+    overflow: hidden;
+  }
+  .mr-hero::before {
+    content: "";
+    position: absolute;
+    right: -10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 65vw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(90, 184, 200, .08);
+    box-shadow:
+      0 0 0 5vw  rgba(90, 184, 200, .04),
+      0 0 0 12vw rgba(90, 184, 200, .03),
+      0 0 0 20vw rgba(90, 184, 200, .02);
+  }
+  .mr-hero-inner { position: relative; z-index: 2; }
+  .mr-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: center;
+  }
+  .mr-hero-logo {
+    display: block;
+    width: min(22rem, 100%);
+    margin: 0 0 1.4rem;
+  }
+  .mr-hero h1 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .mr-hero-tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--water);
+    font-family: Georgia, serif;
+    font-style: italic;
+    letter-spacing: .02em;
+    margin: 0 0 1.4rem;
+  }
+  .mr-hero p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--soft);
+    max-width: 34rem;
+    margin: 0 0 1.6rem;
+  }
+  .mr-chips {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .mr-chip {
+    padding: .35rem .7rem;
+    border: 1px solid rgba(90, 184, 200, .3);
+    border-radius: 999px;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: var(--water);
+  }
+  .mr-chip.sand {
+    border-color: rgba(212, 184, 144, .35);
+    color: var(--sand);
+  }
+  .mr-hero-board {
+    margin: 0;
+  }
+  .mr-hero-board img {
+    width: 100%;
+    max-width: 28rem;
+    border-radius: 8px;
+    border: 1px solid rgba(90, 184, 200, .25);
+    box-shadow: 6px 6px 0 rgba(90, 184, 200, .18);
+  }
+  .mr-hero-board figcaption {
+    margin-top: .7rem;
+    font-size: .72rem;
+    color: var(--soft);
+  }
+
+  .mr-idea,
+  .mr-turn,
+  .mr-missions,
+  .mr-end {
+    padding: clamp(5rem, 10vw, 8rem) 0;
+  }
+  .mr-idea,
+  .mr-missions { background: var(--deep); }
+  .mr-turn,
+  .mr-end { background: #051820; }
+
+  .mr-idea h2,
+  .mr-turn h2,
+  .mr-missions h2,
+  .mr-end h2 {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    letter-spacing: -.035em;
+    line-height: 1.05;
+    color: #d8eef4;
+    margin: 0 0 1.4rem;
+  }
+  .mr-idea p,
+  .mr-turn p,
+  .mr-missions p,
+  .mr-end p {
+    font-size: .95rem;
+    line-height: 1.8;
+    color: var(--soft);
+    margin: 0 0 1rem;
+  }
+
+  .mr-idea-grid,
+  .mr-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .mr-components {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.2rem;
+  }
+  .mr-component {
+    padding: 1rem 1rem 1.15rem;
+    border: 1px solid var(--line);
+    background: rgba(5, 24, 32, .35);
+    text-align: center;
+  }
+  .mr-component img {
+    width: 100%;
+    max-height: 5.5rem;
+    object-fit: contain;
+    margin-bottom: .7rem;
+  }
+  .mr-component span {
+    display: block;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin-bottom: .35rem;
+  }
+  .mr-component p {
+    margin: 0;
+    font-size: .78rem;
+    line-height: 1.45;
+    color: var(--soft);
+  }
+
+  .mr-steps {
+    display: grid;
+    gap: 1.1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mr-steps li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .mr-steps b {
+    color: var(--foam);
+    font-size: 1.05rem;
+  }
+  .mr-step-n {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--water);
+  }
+  .mr-nope {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-top: 1.2rem;
+  }
+  .mr-nope span {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .35rem .6rem;
+    border: 1px solid rgba(212, 184, 144, .3);
+    color: var(--sand);
+    font-size: .68rem;
+    font-weight: 700;
+  }
+  .mr-nope img { width: 1.4rem; height: 1.4rem; object-fit: contain; }
+
+  .mr-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.6rem;
+  }
+  .mr-action {
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    background: rgba(10, 42, 58, .5);
+  }
+  .mr-action span {
+    display: block;
+    font-size: .58rem;
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--water);
+    margin-bottom: .5rem;
+  }
+  .mr-action p { margin: 0 0 .9rem; font-size: .85rem; }
+  .mr-flip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .7rem;
+  }
+  .mr-flip img {
+    width: 4.6rem;
+    height: 4.6rem;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+  .mr-flip em {
+    font-style: normal;
+    color: var(--water);
+    font-weight: 800;
+  }
+
+  .mr-conditions {
+    margin: 1.6rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .mr-conditions li {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: .75rem;
+    padding: .75rem 0;
+    border-top: 1px solid var(--line);
+    color: var(--soft);
+    font-size: .92rem;
+  }
+  .mr-conditions i {
+    font-style: normal;
+    color: var(--water);
+    font-weight: 800;
+  }
+
+  .mr-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .8rem;
+    margin: 0;
+  }
+  .mr-cards figure { margin: 0; }
+  .mr-cards img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid rgba(90, 184, 200, .25);
+  }
+  .mr-cards figcaption {
+    margin-top: .45rem;
+    font-size: .68rem;
+    color: var(--soft);
+  }
+
+  .mr-winner {
+    padding: 1.6rem 1.7rem;
+    border: 1px solid rgba(90, 184, 200, .25);
+    background: rgba(10, 42, 58, .55);
+  }
+  .mr-winner span {
+    display: block;
+    font-size: .6rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: .5rem;
+  }
+  .mr-winner strong {
+    display: block;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: #d8eef4;
+    margin-bottom: .6rem;
+  }
+  .mr-winner p { margin: 0; }
+
+  .mr-back {
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .mr-back span { font-size: .78rem; color: var(--soft); font-family: Georgia, serif; font-style: italic; }
+  .mr-back a {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3vw, 2.5rem);
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--water);
+  }
+  .mr-back a:hover { color: #d8eef4; }
+
+  @media (max-width: 780px) {
+    .mr-hero-grid,
+    .mr-idea-grid,
+    .mr-split,
+    .mr-actions { grid-template-columns: 1fr; }
+    .mr-components,
+    .mr-cards { grid-template-columns: 1fr 1fr; }
+    .mr-hero::before { display: none; }
+    .mr-hero-logo { width: min(16rem, 80%); }
+  }
+</style>
+
+<main>
+  <section class="mr-hero">
+    <div class="mr-shell mr-hero-inner">
+      <nav class="mr-breadcrumb" aria-label="Navegación">
+        <a href="/">Inicio</a><span>/</span><span>Mantas a Raya</span>
+      </nav>
+      <div class="mr-hero-grid">
+        <div>
+          <p class="mr-label">Gran Acuario Oceánico</p>
+          <img class="mr-hero-logo" src="/assets/mantas-logo.webp" alt="Mantas a Raya" />
+          <h1>Mantas a Raya</h1>
+          <p class="mr-hero-tagline">Sé el primero en completar 5 misiones.</p>
+          <p>Dos acuaristas compiten por demostrar quién conoce mejor a las mantarrayas. Cada uno mueve su meeple por una grilla de 5×5, gira o voltea una loseta vecina, y busca una línea de tres que coincida con una carta.</p>
+          <div class="mr-chips">
+            <span class="mr-chip">2 jugadores</span>
+            <span class="mr-chip">20–30 min</span>
+            <span class="mr-chip">8+</span>
+            <span class="mr-chip">5 misiones</span>
+            <span class="mr-chip sand">Playtest V0.4</span>
+          </div>
+        </div>
+        <figure class="mr-hero-board">
+          <img src="/assets/mantas-tablero.webp" alt="Grilla 5×5 de losetas de mantarraya con el bote en el centro" />
+          <figcaption>24 losetas + el bote al centro. Ahí empiezan los dos meeples.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="mr-idea">
+    <div class="mr-shell">
+      <p class="mr-label">01 — La idea</p>
+      <div class="mr-idea-grid">
+        <div>
+          <h2>Un acuario<br />compartido.</h2>
+          <p>En el Gran Acuario Oceánico las mantarrayas nadan siguiendo las corrientes. Hoy, dos acuaristas se disputan el título de Acuarista Principal.</p>
+          <p>El tablero es de ambos: una grilla 5×5 de losetas cuadradas. Cada loseta tiene dos caras de distinto color y una dirección. En el centro va el bote. Los meeples salen de ahí. Tres cartas de misión quedan a la vista.</p>
+          <p>No hay puntaje escondido. Gana quien completa cinco cartas.</p>
+        </div>
+        <div>
+          <div class="mr-components">
+            <article class="mr-component">
+              <img src="/assets/mantas-loseta-a.webp" alt="Loseta de mantarraya verde" />
+              <span>24 losetas</span>
+              <p>6 rojas, 6 azules, 6 amarillas, 6 verdes. Cada una tiene dorso de otro color.</p>
+            </article>
+            <article class="mr-component">
+              <img src="/assets/mantas-bote.webp" alt="Loseta del bote" />
+              <span>1 bote</span>
+              <p>Va al centro. Nadie puede moverse ahí.</p>
+            </article>
+            <article class="mr-component">
+              <img src="/assets/mantas-mision-2.webp" alt="Carta de misión con tres mantarrayas" />
+              <span>12 cartas</span>
+              <p>Patrones de 3 colores. Siempre hay 3 boca arriba.</p>
+            </article>
+            <article class="mr-component">
+              <img src="/assets/mantas-meeple-naranja.webp" alt="Meeple naranja de buzo" />
+              <span>2 meeples</span>
+              <p>Uno naranja, uno morado. El más joven empieza.</p>
+            </article>
+            <article class="mr-component">
+              <img src="/assets/mantas-salvavidas.webp" alt="Ficha de salvavidas" />
+              <span>1 salvavidas</span>
+              <p>Marca la última loseta usada. Esa no se toca otra vez hasta que se mueva.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mr-turn">
+    <div class="mr-shell mr-split">
+      <div>
+        <p class="mr-label">02 — Tu turno</p>
+        <h2>Moverse,<br />después elegir.</h2>
+        <ol class="mr-steps">
+          <li>
+            <span class="mr-step-n">1</span>
+            <div>
+              <b>Muévete</b>
+              <p>Lleva tu meeple a una loseta adyacente: horizontal, vertical o diagonal.</p>
+            </div>
+          </li>
+          <li>
+            <span class="mr-step-n">2</span>
+            <div>
+              <b>Interactúa o completa</b>
+              <p>Elige una loseta vecina y haz una sola cosa: girar o voltear. O, si el patrón ya está armado, toma una misión en vez de tocar losetas.</p>
+            </div>
+          </li>
+          <li>
+            <span class="mr-step-n">3</span>
+            <div>
+              <b>Deja el salvavidas</b>
+              <p>Si interactuaste, ponlo sobre esa loseta. Si completaste una misión, ponlo en el bote.</p>
+            </div>
+          </li>
+        </ol>
+        <div class="mr-nope" aria-label="Casillas prohibidas">
+          <span><img src="/assets/mantas-bote.webp" alt="" /> No al bote</span>
+          <span><img src="/assets/mantas-meeple-morado.webp" alt="" /> No al otro meeple</span>
+          <span><img src="/assets/mantas-salvavidas.webp" alt="" /> No al salvavidas</span>
+        </div>
+      </div>
+      <div>
+        <div class="mr-actions">
+          <article class="mr-action">
+            <span>Girar</span>
+            <p>90° horario o antihorario. Cambia la dirección, no el color. El 180° no vale.</p>
+            <div class="mr-flip">
+              <img src="/assets/mantas-loseta-a.webp" alt="Mantarraya verde hacia arriba" />
+              <em>90°</em>
+              <img src="/assets/mantas-loseta-a.webp" alt="Mantarraya verde girada" style="transform: rotate(90deg)" />
+            </div>
+          </article>
+          <article class="mr-action">
+            <span>Voltear</span>
+            <p>Revela el otro color. La dirección se queda igual.</p>
+            <div class="mr-flip">
+              <img src="/assets/mantas-loseta-a.webp" alt="Cara verde" />
+              <em>⇔</em>
+              <img src="/assets/mantas-loseta-b.webp" alt="Cara azul de la misma loseta" />
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mr-missions">
+    <div class="mr-shell mr-split">
+      <div>
+        <p class="mr-label">03 — Las misiones</p>
+        <h2>Tres en línea,<br />mismos colores.</h2>
+        <p>Puedes completar una carta cuando hay tres mantarrayas en línea recta —horizontal, vertical o diagonal— y se cumplen las cuatro condiciones. Una sola misión por turno, aunque armes más de un patrón.</p>
+        <ol class="mr-conditions">
+          <li><i>1</i> Forman una línea recta.</li>
+          <li><i>2</i> Todas apuntan al mismo lado.</li>
+          <li><i>3</i> Los colores coinciden con la carta, en orden.</li>
+          <li><i>4</i> Tu meeple está en la primera loseta de esa secuencia.</li>
+        </ol>
+        <p>Tomas la carta, volteas las tres losetas (el color cambia, la dirección no), la dejas frente a ti y revelas una nueva del mazo.</p>
+      </div>
+      <div class="mr-cards">
+        <figure>
+          <img src="/assets/mantas-mision-1.webp" alt="Carta de misión" />
+          <figcaption>Siempre hay tres a la vista.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/mantas-mision-2.webp" alt="Carta de misión amarillo, azul y rojo" />
+          <figcaption>El patrón se lee en orden.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/mantas-mision-3.webp" alt="Carta de misión" />
+          <figcaption>Al tomarla, entra otra.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="mr-end">
+    <div class="mr-shell mr-split">
+      <div>
+        <p class="mr-label">04 — El cierre</p>
+        <h2>Cinco cartas<br />y se acaba.</h2>
+        <p>La partida termina en el momento en que un jugador completa su quinta misión. Ese jugador es el Acuarista Principal del Gran Acuario Oceánico.</p>
+        <p>Si ambos llegaran a la quinta en el mismo turno, gana quien tenía menos misiones justo antes. Si el empate sigue, comparten la victoria.</p>
+        <p>Diseño de Arturo Vial Arqueros y Estefanía Lynch Pearcy. Playtest V0.4, según el manual impreso.</p>
+      </div>
+      <div class="mr-winner">
+        <span>Ganador</span>
+        <strong>Acuarista Principal</strong>
+        <p>No se suman puntos al final. Las cartas que no alcanzaste no restan. Lo que importa es llegar a cinco antes que el otro.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="mr-back mr-shell" aria-label="Volver a proyectos">
+    <span>Seguimos mirando</span>
+    <a href="/#juegos">Volver a todos los juegos →</a>
+  </nav>
+</main>
+
+</BaseLayout>

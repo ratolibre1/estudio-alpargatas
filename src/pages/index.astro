@@ -1,6 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { archiveGames, featuredGames, prototypes } from '../data/games';
+import { archiveGames } from '../data/archive';
+import { getHomeGames } from '../lib/games';
+
+const featuredGames = await getHomeGames('featured');
+const prototypes = await getHomeGames('proto');
 ---
 
 <BaseLayout
@@ -43,16 +47,16 @@ import { archiveGames, featuredGames, prototypes } from '../data/games';
         </header>
 
         <div class="published-grid">
-          {featuredGames.map((game) => game.kind === 'ninive' ? (
+          {featuredGames.map((game) => game.image && !game.coverTheme ? (
             <a class="published-card published-ninive" href={game.href}>
-              <div class="published-image"><img src={game.image} alt={game.imageAlt} loading="lazy" /><span class="sticker blue">Publicado</span></div>
-              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.description}</p><ul>{game.facts.map((fact) => <li>{fact}</li>)}</ul><span class="feed-link">Abrir ficha completa →</span></div>
+              <div class="published-image"><img src={game.image} alt={game.imageAlt ?? game.name} loading="lazy" /><span class="sticker blue">Publicado</span></div>
+              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.blurb}</p><ul>{game.facts?.map((fact) => <li>{fact}</li>)}</ul><span class="feed-link">Abrir ficha completa →</span></div>
             </a>
           ) : (
-            <article class={`published-card sample-game sample-game-${game.theme}`}>
-              <div class="sample-game-cover"><span>{game.coverNumber}</span><strong>{game.coverTitle.split('\n').map((line, index) => <>{index > 0 && <br />}{line}</>)}</strong><small>{game.coverStatus}</small></div>
-              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.description}</p><ul>{game.facts.map((fact) => <li>{fact}</li>)}</ul></div>
-            </article>
+            <a class={`published-card sample-game sample-game-${game.coverTheme}`} href={game.href}>
+              <div class="sample-game-cover"><span>{game.coverNumber}</span><strong>{(game.coverTitle ?? game.name).split('\n').map((line, index) => <>{index > 0 && <br />}{line}</>)}</strong><small>{game.coverStatus}</small></div>
+              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.blurb}</p><ul>{game.facts?.map((fact) => <li>{fact}</li>)}</ul></div>
+            </a>
           ))}
         </div>
       </div>
@@ -63,8 +67,10 @@ import { archiveGames, featuredGames, prototypes } from '../data/games';
       <div class="prototype-mini-grid">
         {prototypes.map((game) => (
           <a href={game.href} class="proto-link">
-            {'image' in game ? <img src={game.image} alt={game.imageAlt} loading="lazy" /> : <div class={`prototype-cover ${game.coverClass}`} aria-hidden="true"><b>{game.initials}</b></div>}
-            <div><span>{game.meta}</span><h3>{game.name}</h3><p>{game.description}</p></div>
+            {game.image
+              ? <img src={game.image} alt={game.imageAlt ?? game.name} loading="lazy" />
+              : <div class={`prototype-cover cover-${game.keyword}`} aria-hidden="true"><b>{game.coverInitials}</b></div>}
+            <div><span>{game.meta}</span><h3>{game.name}</h3><p>{game.blurb}</p></div>
           </a>
         ))}
       </div>

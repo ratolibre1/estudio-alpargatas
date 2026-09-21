@@ -2,5 +2,37 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/juegos/amateuratsu",
+      "destination": "/juegos/amateurasu/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos/amateuratsu/",
+      "destination": "/juegos/amateurasu/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos/el-gran-festival-de-canes",
+      "destination": "/juegos/canes/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos/el-gran-festival-de-canes/",
+      "destination": "/juegos/canes/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos/mantas-a-raya",
+      "destination": "/juegos/mantas/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos/mantas-a-raya/",
+      "destination": "/juegos/mantas/",
+      "permanent": true
+    }
+  ]
 }

@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GameExtras from '../../../components/GameExtras.astro';
+import { getEntry } from 'astro:content';
+
+const cms = await getEntry('games', 'ninive');
 ---
 
 <BaseLayout
@@ -183,6 +187,139 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     font-style: italic;
   }
   body.ninive-page .back-to-table a:hover { color: var(--verde-cl); }
+
+  /* Roles */
+  body.ninive-page .ninive-roles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  body.ninive-page .ninive-role {
+    padding: 1.2rem 1.3rem 1.3rem;
+    border: 1px solid var(--line);
+    background: rgba(45, 120, 90, .06);
+  }
+  body.ninive-page .ninive-role span {
+    display: block;
+    margin-bottom: .45rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  body.ninive-page .ninive-role.flowers span { color: var(--tierra); }
+  body.ninive-page .ninive-role.fountains span { color: var(--lapis-cl); }
+  body.ninive-page .ninive-role h3 {
+    margin: 0 0 .4rem;
+    color: var(--piedra-bg);
+    font-size: 1.35rem;
+  }
+  body.ninive-page .ninive-role p {
+    margin: 0;
+    color: var(--dim);
+    font-size: .95rem;
+  }
+
+  /* Ejemplos */
+  body.ninive-page .ninive-examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-top: 2.2rem;
+  }
+  body.ninive-page .ninive-ex {
+    padding: 1.3rem 1.4rem 1.45rem;
+    border-top: 2px solid var(--tierra);
+    background: rgba(15, 30, 20, .45);
+  }
+  body.ninive-page .ninive-ex span {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--tierra);
+  }
+  body.ninive-page .ninive-ex h3 {
+    margin: .55rem 0 .5rem;
+    color: var(--piedra-bg);
+    font-size: 1.15rem;
+  }
+  body.ninive-page .ninive-ex p {
+    margin: 0;
+    color: var(--dim);
+    font-size: .95rem;
+  }
+
+  /* Dos modos */
+  body.ninive-page .ninive-modes-section {
+    background: var(--noche2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(5rem, 10vw, 8rem);
+  }
+  body.ninive-page .ninive-modes-section .shell-modes {
+    width: min(1100px, calc(100% - 3rem));
+    margin-inline: auto;
+  }
+  body.ninive-page .ninive-modes-section h2 { color: var(--piedra); }
+  body.ninive-page .ninive-modes-section > .shell-modes > p.lede {
+    max-width: 40rem;
+    margin: 1.2rem 0 2.5rem;
+    color: var(--dim);
+    font-size: 1.05rem;
+  }
+  body.ninive-page .ninive-modes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  body.ninive-page .ninive-mode {
+    padding: 1.6rem 1.6rem 1.8rem;
+    border: 1px solid var(--line);
+    background: rgba(45, 120, 90, .05);
+  }
+  body.ninive-page .ninive-mode span {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--tierra);
+  }
+  body.ninive-page .ninive-mode h3 {
+    margin: .7rem 0 1rem;
+    color: var(--piedra-bg);
+    font-family: Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+  }
+  body.ninive-page .ninive-mode ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--dim);
+    font-size: .95rem;
+  }
+  body.ninive-page .ninive-mode li + li { margin-top: .55rem; }
+  body.ninive-page .ninive-mode li::before {
+    content: "— ";
+    color: var(--verde-cl);
+  }
+
+  body.ninive-page .ninive-buy {
+    margin-top: 2rem;
+    color: var(--dim);
+    font-size: .95rem;
+  }
+  body.ninive-page .ninive-buy a { color: var(--lapis-cl); }
+
+  @media (max-width: 800px) {
+    body.ninive-page .ninive-roles,
+    body.ninive-page .ninive-examples,
+    body.ninive-page .ninive-modes { grid-template-columns: 1fr; }
+  }
 </style>
   <main>
     <article>
@@ -193,7 +330,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <span class="sticker yellow">Publicado por Ludoísmo</span>
             <h1>Nínive</h1>
             <p>Construir juntos.<br />Ganar por separado.</p>
-            <div class="fact-chips" aria-label="Ficha técnica"><span><b>2</b> jugadores</span><span><b>15′</b> duración</span><span><b>26</b> cartas</span></div>
+            <div class="fact-chips" aria-label="Ficha técnica"><span><b>2</b> jugadores</span><span><b>15′</b> duración</span><span><b>27</b> cartas</span></div>
+            {cms && <GameExtras bggId={cms.data.bggId} awards={cms.data.awards} tone="dark" />}
           </div>
           <figure class="ninive-hero-photo">
             <img src="/assets/ninive-palacio.webp" alt="Partida de Nínive con cartas formando un palacio" />
@@ -206,8 +344,23 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <section class="ninive-intro shell">
         <div class="section-label"><span>01</span><b>La idea</b></div>
         <div>
-          <h2>Un mismo palacio.<br /><em>Dos paisajes.</em></h2>
-          <div class="two-columns"><p>En Nínive, dos jugadores levantan una estructura compartida inspirada en los jardines de la antigua ciudad asiria. Uno puntúa el lado verde —hojas y flores— y el otro el azul —agua y rocas—.</p><p>La tensión está en construir algo común mientras cada carta altera lo que ambos podrán puntuar. A veces la mejor jugada para el palacio es una pésima jugada para ti.</p></div>
+          <h2>Un mismo palacio.<br /><em>Dos jardines.</em></h2>
+          <div class="two-columns">
+            <p>Hay quien dice que los Jardines Colgantes no estaban en Babilonia, sino en Nínive, capital del Imperio Asirio. En la mesa, dos jugadores levantan ese palacio jardín: una estructura compartida, llena de flores y fuentes.</p>
+            <p>La tensión está en construir algo común mientras cada carta cambia lo que ambos podrán puntuar. A veces la mejor jugada para el palacio es una pésima jugada para ti.</p>
+          </div>
+          <div class="ninive-roles">
+            <div class="ninive-role flowers">
+              <span>Naranja</span>
+              <h3>Flores</h3>
+              <p>Puntúa los números naranjas que queden visibles. En la ilustración, tantas flores como el número de su lado.</p>
+            </div>
+            <div class="ninive-role fountains">
+              <span>Azul</span>
+              <h3>Fuentes</h3>
+              <p>Puntúa los números azules que queden visibles. Tantos chorros de agua como el número de su lado.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -217,9 +370,21 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <div class="section-label"><span>02</span><b>Cómo se juega</b></div>
             <h2>Dos reglas para hacer crecer una ciudad.</h2>
             <div class="rules-stack">
-              <article><span>1</span><div><h3>Extiende la primera fila</h3><p>Juega una carta en cualquiera de los extremos. El valor que toca la fila debe ser menor o igual al valor de la carta adyacente.</p></div></article>
-              <article><span>2</span><div><h3>Construye hacia arriba</h3><p>Apoya una carta sobre dos cartas vecinas. Sus valores deben alcanzar o superar la suma que van a cubrir.</p></div></article>
-              <article><span>3</span><div><h3>Cuenta lo que quedó visible</h3><p>Al terminar, cada jugador suma todos los números visibles de su color.</p></div></article>
+              <article><span>1</span><div><h3>Extiende el suelo</h3><p>En el primer nivel siempre se juega a un extremo. Compara el número de afuera de ese extremo con el lado opuesto de tu carta: tiene que ser menor o igual. Naranja contra azul, nunca del mismo color.</p></div></article>
+              <article><span>2</span><div><h3>Construye hacia arriba</h3><p>Una carta nueva cubre dos mitades vecinas: el azul de la carta izquierda y el naranja de la derecha. La suma de tu carta tiene que alcanzar o superar lo que tapas. No puede quedar colgando.</p></div></article>
+              <article><span>3</span><div><h3>Cuenta lo que quedó visible</h3><p>Al terminar, cada uno suma su color a la vista. Lo tapado no vale. Si tuviste que descartar, esos números se restan.</p></div></article>
+            </div>
+            <div class="ninive-examples">
+              <article class="ninive-ex">
+                <span>Extremo · Andrea</span>
+                <h3>Carta 4 naranja / 5 azul</h3>
+                <p>Los extremos son 5 naranja y 3 azul. Entra a la izquierda (5≤5). No entra a la derecha (4>3).</p>
+              </article>
+              <article class="ninive-ex">
+                <span>Piso superior · Felipe</span>
+                <h3>Carta 4 / 4 (suma 8)</h3>
+                <p>Cubre 5+2=7, sí. Cubre 3+1=4, sí. Cubre 5+4=9, no: la suma de abajo gana.</p>
+              </article>
             </div>
           </div>
           <figure class="rule-photo">
@@ -231,25 +396,58 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <section class="decision-section shell">
         <div class="big-number">25</div>
-        <div><div class="section-label"><span>03</span><b>La tensión</b></div><h2>Veinticinco combinaciones. Ninguna jugada es solamente tuya.</h2><p>Cubrir un número favorable puede abrir una gran oportunidad posterior, pero también elimina puntos propios. Conservarlo puede dejarle al rival el soporte que estaba esperando. La estructura pertenece a ambos; la victoria, no.</p></div>
+        <div><div class="section-label"><span>03</span><b>La tensión</b></div><h2>Veinticinco combinaciones. Ninguna jugada es solamente tuya.</h2><p>Hay una carta por cada cruce de 1 a 5: naranja a la izquierda, azul a la derecha, orientación fija. Cubrir un número propio puede abrir el siguiente piso, pero también te borra puntos. Conservarlo puede dejarle al rival el soporte que estaba esperando. La estructura pertenece a ambos; la victoria, no.</p></div>
+      </section>
+
+      <section class="ninive-modes-section" aria-labelledby="ninive-modes-title">
+        <div class="shell-modes">
+          <div class="section-label"><span>04</span><b>Dos maneras</b></div>
+          <h2 id="ninive-modes-title">La misma ciudad, otro ritmo.</h2>
+          <p class="lede">La colocación no cambia. Cambia cuántas cartas tienes en la mano y qué pasa cuando te atascas. La caja enseña el modo corto; el largo reparte todo el mazo de una.</p>
+          <div class="ninive-modes">
+            <article class="ninive-mode">
+              <span>Básica · la caja</span>
+              <h3>Cinco cartas y un mazo.</h3>
+              <ul>
+                <li>Se revelan las dos cartas de rol. Fuentes empieza.</li>
+                <li>Cinco en mano, mazo al centro, una carta ya puesta como base.</li>
+                <li>El suelo aguanta como máximo diez cartas.</li>
+                <li>Si no puedes jugar, descartas. Al final restas tu color de esos descartes.</li>
+                <li>Empate: gana quien descartó menos.</li>
+              </ul>
+            </article>
+            <article class="ninive-mode">
+              <span>Avanzada</span>
+              <h3>Todo el mazo, de una.</h3>
+              <ul>
+                <li>Veinticinco de construcción más la carta de Agua: trece y trece.</li>
+                <li>Quien saca el Agua es Fuentes y juega segundo. Flores planta la semilla.</li>
+                <li>El suelo no tiene tope. No se roba.</li>
+                <li>Si te atascas, descartas: restas naranja y azul de esa carta.</li>
+                <li>Empate: otra vez, menos descartes.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section class="journey-section">
         <div class="shell">
-          <div class="section-label"><span>04</span><b>El recorrido</b></div>
+          <div class="section-label"><span>05</span><b>El recorrido</b></div>
           <h2>Del cartón a otras mesas</h2>
           <div class="journey-cards">
             <article><span>PRIMERO</span><h3>La estructura fue el juego.</h3><p>Las cartas dejaron de ser solo una mano y empezaron a construir el espacio de la partida.</p></article>
-            <article><span>DESPUÉS</span><h3>Las reglas se hicieron visibles.</h3><p>Valores, restricciones y ejemplos se ajustaron hasta poder entenderse mirando la mesa.</p></article>
-            <article><span>AHORA</span><h3>Nínive está publicado.</h3><p>Ludoísmo llevó el prototipo hasta una edición terminada para dos jugadores.</p></article>
+            <article><span>DESPUÉS</span><h3>Las reglas se hicieron visibles.</h3><p>Valores, restricciones y ejemplos se ajustaron hasta poder entenderse mirando la mesa. Andrea a la izquierda, Felipe hacia arriba.</p></article>
+            <article><span>AHORA</span><h3>Nínive está publicado.</h3><p>Ludoísmo lo editó para dos jugadores. Ya se juega en mesa.</p></article>
           </div>
         </div>
       </section>
 
       <section class="ninive-gallery shell">
-        <div class="section-label"><span>05</span><b>Galería</b></div>
-        <div class="gallery-heading"><h2>Así se ve<br />una partida.</h2><p>El resultado final no es solo un puntaje: es una pequeña construcción que registra cada decisión tomada.</p></div>
+        <div class="section-label"><span>06</span><b>Galería</b></div>
+        <div class="gallery-heading"><h2>Así se ve<br />una partida.</h2><p>El resultado final no es solo un puntaje: es una pequeña construcción que registra cada decisión tomada. Aunque un número quede tapado, las flores y los chorros de la ilustración siguen delatando la carta.</p></div>
         <div class="gallery-pair"><figure><img src="/assets/ninive-palacio.webp" alt="Palacio completo de Nínive" loading="lazy" /><figcaption>Vista general · estructura compartida</figcaption></figure><figure><img src="/assets/ninive-regla-superior.webp" alt="Detalle de construcción de Nínive" loading="lazy" /><figcaption>Detalle · nivel superior</figcaption></figure></div>
+        <p class="ninive-buy">Edición de <a href="https://ludoismo.cl/">Ludoísmo</a>. 2 jugadores · 15 minutos · 27 cartas.</p>
       </section>
 
       <nav class="back-to-table shell" aria-label="Volver a proyectos"><span>¿Seguimos mirando?</span><a href="/#juegos">Volver a todos los juegos →</a></nav>

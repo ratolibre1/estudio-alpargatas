@@ -4,7 +4,9 @@
 # Local (Chrome): npm run dev → /admin/ → "Work with Local Repository"
 #   y elige la raíz del repo. No usa decap-server.
 # Producción: GitHub OAuth vía /api/auth + /api/callback (funciones Vercel).
-# Local: Chrome → "Work with Local Repository".
+#
+# keyword = nombre del archivo = slug de URL (/juegos/<keyword>/).
+# Una sola palabra ASCII en minúsculas. El href no se edita: se deriva.
 
 backend:
   name: github
@@ -22,15 +24,21 @@ collections:
     folder: src/content/games
     create: true
     delete: false
-    slug: '{{slug}}'
+    slug: '{{keyword}}'
     extension: md
     format: frontmatter
-    identifier_field: name
-    summary: '{{emoji}} {{name}} — {{stateLabel}}'
+    identifier_field: keyword
+    summary: '{{emoji}} {{keyword}} — {{name}}'
     fields:
-      - { label: Nombre, name: name, widget: string }
+      - label: Keyword
+        name: keyword
+        widget: string
+        hint: 'Una palabra en minúsculas, sin tildes. Es el id y la URL: /juegos/<keyword>/. Ej: reloj, canes, mantas.'
+        pattern: ['^[a-z][a-z0-9]*$', 'Solo letras minúsculas ASCII, una palabra (ej: canes).']
+      - { label: Nombre, name: name, widget: string, hint: 'Nombre visible. Puede ser largo (Hasta un Reloj Roto…).' }
       - { label: Emoji, name: emoji, widget: string }
       - { label: Tagline, name: tagline, widget: string }
+      - { label: Descripción (home), name: description, widget: text, required: false, hint: 'Si está vacío, la home usa el tagline.' }
       - { label: Meta (género · versión), name: meta, widget: string }
       - label: Estado
         name: state
@@ -44,9 +52,46 @@ collections:
       - { label: Etiqueta del estado, name: stateLabel, widget: string, hint: 'Texto visible en la card, ej: En playtest' }
       - { label: Orden, name: stateOrder, widget: number, value_type: int, min: 1, max: 5, hint: '1=publicado … 5=proto' }
       - { label: Fecha (YYYY-MM), name: date, widget: string, pattern: ['^\d{4}-\d{2}$', 'Usa formato YYYY-MM'] }
-      - { label: URL de la página, name: href, widget: string, required: false, hint: 'Opcional. Si lo dejas vacío, se usa /juegos/<slug>/. El slash final se agrega solo.' }
+      - label: Sección en la home
+        name: home
+        widget: select
+        default: none
+        options:
+          - { label: Destacado (catálogo), value: featured }
+          - { label: Taller (prototipos), value: proto }
+          - { label: Solo portafolio, value: none }
+      - { label: Orden en la home, name: homeOrder, widget: number, value_type: int, required: false, hint: '1, 2, 3… dentro de la sección. 0 si no va en home.' }
       - { label: Jugadores, name: players, widget: string, required: false, hint: 'Ej: 2–4' }
       - { label: Duración, name: duration, widget: string, required: false, hint: 'Ej: 20–30 min' }
+      - label: Facts (home destacados)
+        name: facts
+        widget: list
+        required: false
+        field: { label: Fact, name: fact, widget: string }
+      - { label: Imagen (home), name: image, widget: string, required: false, hint: '/assets/archivo.webp' }
+      - { label: Alt de la imagen, name: imageAlt, widget: string, required: false }
+      - { label: Cover número, name: coverNumber, widget: string, required: false, hint: 'JUEGO 02' }
+      - { label: Cover título, name: coverTitle, widget: text, required: false, hint: 'Puede ir en dos líneas.' }
+      - { label: Cover status, name: coverStatus, widget: string, required: false }
+      - label: Cover theme
+        name: coverTheme
+        widget: select
+        required: false
+        options:
+          - { label: Rojo, value: red }
+          - { label: Verde, value: green }
+          - { label: Azul, value: blue }
+      - { label: Iniciales (taller), name: coverInitials, widget: string, required: false, hint: 'FC, PI, PV, TT' }
+      - { label: BGG ID, name: bggId, widget: number, value_type: int, required: false, hint: 'Número de boardgamegeek.com/boardgame/XXXXX. Nínive es 456259.' }
+      - label: Premios
+        name: awards
+        widget: list
+        required: false
+        hint: 'Imagen del premio + subtítulo. El link es opcional.'
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Imagen, name: image, widget: image, required: false }
+          - { label: Link, name: href, widget: string, required: false }
       - { label: Color de fondo, name: bg, widget: string }
       - { label: Color del título, name: titleColor, widget: string }
       - { label: Color del tagline, name: taglineColor, widget: string }
