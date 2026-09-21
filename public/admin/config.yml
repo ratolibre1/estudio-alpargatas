@@ -3,13 +3,14 @@
 # Sveltia CMS — editor de juegos.
 # Local (Chrome): npm run dev → /admin/ → "Work with Local Repository"
 #   y elige la raíz del repo. No usa decap-server.
-# Producción: backend GitHub. Login con PAT o con OAuth (Worker).
-#   base_url se agrega cuando esté el authenticator.
+# Producción: GitHub OAuth vía /api/auth + /api/callback (funciones Vercel).
+# Local: Chrome → "Work with Local Repository".
 
 backend:
   name: github
   repo: ratolibre1/estudio-alpargatas
   branch: main
+  base_url: https://estudio-alpargatas.vercel.app/api
 
 media_folder: public/assets
 public_folder: /assets
