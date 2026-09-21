@@ -45,7 +45,7 @@ export const featuredGames = [
 export const prototypes = [
   { name: 'Amateuratsu', meta: 'Estrategia · Saikū', description: 'Una procesión que va construyendo el tablero.', image: '/assets/amateuratsu-procesion.webp', imageAlt: 'Amateuratsu', href: '/juegos/amateuratsu/' },
   { name: 'HUBRIS', meta: 'Dados · tragedia', description: 'Coopera para completar hazañas, pero compite por reclamar su gloria.', image: '/assets/hubris-estelas.webp', imageAlt: 'HUBRIS', href: '/juegos/hubris/' },
-  { name: 'Hasta un Reloj Roto...', meta: 'Rapidez · 48 cartas', description: 'Horas, medias horas y modos nerviosos.', image: '/assets/reloj-collage.webp', imageAlt: 'Hasta un Reloj Roto...', href: '/juegos/reloj/' },
+  { name: 'Hasta un Reloj Roto...', meta: 'Rapidez · playtest', description: 'Tres desafíos rápidos para ordenar el día, reconocer horas equivalentes y reaccionar antes que los demás.', image: '/assets/reloj-playtest-orden.webp', imageAlt: 'Cartas de Hasta un Reloj Roto ordenadas durante un playtest', href: '/juegos/reloj/' },
   { name: 'Festival de Canes', meta: 'Combos · competencias', description: 'Cinco disciplinas caninas y acciones que crecen con cada especialidad.', initials: 'FC', coverClass: 'cover-canes', href: '/juegos/el-gran-festival-de-canes/' },
   { name: 'Piramisú', meta: 'Cooperativo · patrones', description: 'Construir juntos una pirámide de ingredientes sin repetir adyacencias.', initials: 'PI', coverClass: 'cover-piramisu', href: '/juegos/piramisu/' },
   { name: 'Pavoneo', meta: 'Duelo · información asimétrica', description: 'Mostrar un poco más puede dar puntos o hacer que todo se venga abajo.', initials: 'PV', coverClass: 'cover-pavoneo', href: '/juegos/pavoneo/' },

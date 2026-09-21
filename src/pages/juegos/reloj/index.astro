@@ -4,7 +4,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Hasta un Reloj Roto... — Estudio Alpargatas"
-  description="Hasta un Reloj Roto...: un juego de velocidad con 48 cartas. Construye horas válidas antes que los demás."
+  description="Hasta un Reloj Roto...: tres modos de velocidad con 48 cartas que representan cada hora y media hora del día."
   bodyClass="page-reloj"
   footerSubtitle="Hasta un Reloj Roto... · Rapidez · 48 cartas"
   themeColor="#f5f0e8"
@@ -85,6 +85,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     background: var(--crema);
     border-bottom: 2px solid var(--line);
     position: relative;
+  }
+  .rl-hero-grid {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
   }
   .rl-hero-title {
     font-size: clamp(3rem, 9vw, 7rem);
@@ -200,6 +207,69 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .rl-mode:nth-child(3) .rl-mode-name { color: var(--rojo); }
   .rl-mode-desc { font-size: .8rem; line-height: 1.6; color: rgba(245,240,232,.55); margin: 0; }
 
+  /* SECCIÓN 02: Último playtest */
+  .rl-playtest {
+    padding: clamp(4rem, 8vw, 7rem) 0;
+    background: var(--marfil);
+    border-bottom: 2px solid var(--line);
+  }
+  .rl-playtest-heading {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 7vw, 6rem);
+    align-items: end;
+    margin-bottom: 2.5rem;
+  }
+  .rl-playtest h2 {
+    max-width: 12ch;
+    margin: 0;
+    color: var(--tinta);
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -.05em;
+    line-height: .92;
+  }
+  .rl-playtest h2 em { color: var(--rojo); font-style: italic; }
+  .rl-playtest-copy p {
+    margin: 0 0 1rem;
+    color: var(--dim);
+    font-size: .95rem;
+    line-height: 1.8;
+  }
+  .rl-playtest-result {
+    padding: 1rem 1.2rem;
+    border-left: 4px solid var(--rojo);
+    background: var(--crema);
+    color: var(--tinta) !important;
+  }
+  .rl-gallery {
+    display: grid;
+    grid-template-columns: 1.35fr .65fr;
+    gap: 1.2rem;
+    align-items: end;
+  }
+  .rl-gallery figure {
+    margin: 0;
+    padding: .65rem .65rem 2.4rem;
+    border: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 8px 8px 0 rgba(139, 105, 20, .16);
+    position: relative;
+  }
+  .rl-gallery figure:first-child { transform: rotate(-.5deg); }
+  .rl-gallery figure:last-child { transform: rotate(1.2deg); }
+  .rl-gallery img { width: 100%; object-fit: cover; }
+  .rl-gallery figure:first-child img { aspect-ratio: 4 / 3; }
+  .rl-gallery figure:last-child img { aspect-ratio: 3 / 4; }
+  .rl-gallery figcaption {
+    position: absolute;
+    left: .9rem;
+    bottom: .65rem;
+    color: var(--dim);
+    font-size: .75rem;
+    font-style: italic;
+  }
+
   /* SECCIÓN 03: Estado */
   .rl-status {
     padding: clamp(4rem, 8vw, 7rem) 0;
@@ -233,14 +303,17 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .rl-back a:hover { color: var(--rojo); }
 
   @media (max-width: 720px) {
-    .rl-hero, .rl-concept-grid, .rl-status-grid { grid-template-columns: 1fr; }
+    .rl-hero, .rl-hero-grid, .rl-concept-grid, .rl-playtest-heading, .rl-status-grid { grid-template-columns: 1fr; }
+    .rl-hero-grid { gap: 2.5rem; }
     .rl-clock-face { width: 160px; }
+    .rl-gallery { grid-template-columns: 1fr; }
+    .rl-gallery figure:last-child { width: 72%; margin-left: auto; }
   }
 </style>
 
 <main>
   <section class="rl-hero">
-    <div class="rl-shell" style="grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+    <div class="rl-shell rl-hero-grid">
       <div>
         <nav class="rl-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Hasta un Reloj Roto...</span></nav>
         <h1 class="rl-hero-title">Hasta un<br />Reloj Roto...</h1>
@@ -248,7 +321,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <span class="rl-badge active">Proto</span>
           <span class="rl-badge">48 cartas</span>
         </div>
-        <p class="rl-hero-desc">Un juego de velocidad en el que los jugadores construyen horas válidas antes que los demás. Horas, medias horas y modos que ponen los nervios a prueba.</p>
+        <p class="rl-hero-desc">Cuarenta y ocho cartas, una por cada hora y media hora del día. Tres desafíos rápidos para ordenar, reconocer equivalencias y reaccionar antes que los demás.</p>
         <div class="rl-chips">
           <span class="rl-chip">2–5 jugadores</span>
           <span class="rl-chip">15–20 min</span>
@@ -276,14 +349,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <span class="rl-label" style="color: rgba(245,240,232,.6)">01 — La idea</span>
         <h2>Cuarenta y ocho cartas.<br /><em>Ninguna hora de sobra.</em></h2>
         <p>RELOJ parte de una pregunta: ¿cómo se puede meter tensión en un juego de apenas dos dígitos? La respuesta fue hacer que esos dígitos sean horas de reloj, con todo lo que eso implica.</p>
-        <p>El mazo tiene las 48 "horas válidas" de un reloj de 12 horas — cada cuarto de hora, cada media hora. Los jugadores compiten por ser los primeros en armar una hora completa con sus cartas, pero hay modos que cambian las reglas de validez a mitad de la partida.</p>
+        <p>El mazo recorre un día completo: desde las 00:00 hasta las 23:30, en intervalos de media hora. Cada carta también se relaciona con una franja del día y con su equivalente en un reloj de doce horas.</p>
       </div>
       <div>
         <div class="rl-modes">
           {[
-            { icon: '12', name: 'Modo Normal', desc: 'Armar cualquier hora completa (H:MM). El primero en lograrlo gana la ronda.' },
-            { icon: ':30', name: 'Modo Medias', desc: 'Solo valen medias horas. Los minutos deben ser exactamente 30.' },
-            { icon: '!!', name: 'Modo Nervioso', desc: 'El mazo avanza sólo, una carta por segundo. Hay que decidir rápido.' },
+            { icon: '09', name: 'Contrarreloj', desc: 'Cada persona recibe nueve cartas. Una carta central fija la hora de inicio: hay que ordenar la mano cronológicamente antes que el resto. Quien gana suma un punto y recibe una carta extra en la ronda siguiente. Dos puntos ganan la partida.' },
+            { icon: ':30', name: 'Hora cantada', desc: 'Se dicen las horas una a una. Sirven la hora exacta, su media hora y sus equivalentes doce horas después. El primero en tocar el montón gana la carta; al acabarse el mazo, se baraja y comienza de nuevo.' },
+            { icon: '≡', name: 'Coincidencias', desc: 'Se revelan cartas una a una. Si dos seguidas comparten franja del día, la última es premio; si muestran la misma hora en formato de doce horas, se ganan ambas. Gana quien reúne más cartas.' },
           ].map(m => (
             <div class="rl-mode">
               <div class="rl-mode-icon">{m.icon}</div>
@@ -298,21 +371,46 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     </div>
   </section>
 
+  <section class="rl-playtest">
+    <div class="rl-shell">
+      <div class="rl-playtest-heading">
+        <div>
+          <span class="rl-label">02 — Último playtest</span>
+          <h2>Nueve cartas.<br /><em>Una carrera.</em></h2>
+        </div>
+        <div class="rl-playtest-copy">
+          <p>En septiembre de 2026 llevamos los tres modos a la mesa con un prototipo hecho a mano.</p>
+          <p class="rl-playtest-result"><strong>Contrarreloj fue el favorito:</strong> produjo la tensión más clara y más ganas de repetir. Por ahora queda como el modo mejor encaminado, todavía no como la forma definitiva del juego.</p>
+        </div>
+      </div>
+      <div class="rl-gallery">
+        <figure>
+          <img src="/assets/reloj-playtest-orden.webp" alt="Cartas de RELOJ ordenadas cronológicamente durante el playtest" loading="lazy" />
+          <figcaption>Contrarreloj · ordenar desde una hora central</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/reloj-playtest-mazo.webp" alt="Mazo artesanal de RELOJ con horas e iconos dibujados a mano" loading="lazy" />
+          <figcaption>Prototipo · 48 cartas enfundadas</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <section class="rl-status">
     <div class="rl-shell rl-status-grid">
       <div>
         <span class="rl-label">03 — Estado actual</span>
-        <div class="rl-version" aria-hidden="true">Proto</div>
+        <div class="rl-version" aria-hidden="true">Playtest</div>
         <ul class="rl-change-list">
-          <li>El Modo Nervioso se probó con temporizador físico — funciona mejor con un app.</li>
-          <li>Las cartas de "hora inválida" se eliminaron: añadían confusión, no tensión.</li>
-          <li>Pendiente: definir si el mazo es de 48 o se reducen a horas en punto y medias (24 cartas).</li>
+          <li>Se probaron tres modos distintos con el mismo mazo de 48 cartas.</li>
+          <li>Contrarreloj fue el que mejor combinó velocidad, lectura de la mesa y ganas de repetir.</li>
+          <li>Próximo hito: comprobar cómo escala la dificultad al pasar de nueve a diez cartas y ajustar la duración de una partida a dos puntos.</li>
         </ul>
       </div>
       <div>
-        <h2>Un juego que<br />nació de un<br /><em>colage.</em></h2>
-        <p>RELOJ empezó como parte de un ejercicio visual: pegar fotos de relojes distintos y ver qué tenían en común. Lo que tenían en común era que todos marcaban una hora diferente, y eso fue suficiente para un prototipo.</p>
-        <p>Es el juego más corto del taller. Eso no lo hace simple — hace que cada decisión cuente más.</p>
+        <h2>Un modo se<br /><em>adelantó</em><br />al resto.</h2>
+        <p>La carrera por ordenar la mano desde una hora central convirtió un ejercicio de reconocimiento en una prueba física y mental: mirar, comparar, mover y decidir cuándo la secuencia está lista.</p>
+        <p>El siguiente paso es medir cuánto aumenta la dificultad con cada carta adicional y comprobar si llegar a dos puntos mantiene la partida corta sin volverla predecible.</p>
       </div>
     </div>
   </section>

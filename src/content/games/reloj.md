@@ -1,12 +1,12 @@
 ---
 name: Hasta un Reloj Roto...
 emoji: ⏰
-tagline: Dos veces al día tiene razón. ¿Y el resto?
-meta: Rapidez · 48 cartas
-state: proto
-stateLabel: Proto
-stateOrder: 5
-date: '2025-01'
+tagline: Ordena el día antes que los demás.
+meta: Rapidez · 3 modos · 48 cartas
+state: playtest
+stateLabel: Playtest activo
+stateOrder: 3
+date: '2026-09'
 href: /juegos/reloj/
 bg: '#f5eedc'
 titleColor: '#8b3a10'
