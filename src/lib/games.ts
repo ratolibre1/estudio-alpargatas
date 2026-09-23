@@ -1,4 +1,4 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 
 export const KEYWORD_PATTERN = /^[a-z][a-z0-9]*$/;
 
@@ -17,18 +17,31 @@ export type GameCard = CollectionEntry<'games'>['data'] & {
 };
 
 function toCard(entry: CollectionEntry<'games'>): GameCard {
-  const { keyword } = entry.data;
-  if (entry.id !== keyword) {
+  // El data-store de Astro (devalue) a veces omite campos de la primera
+  // entrada si su valor es un alias del id del Map. El frontmatter crudo
+  // sigue completo: lo usamos de respaldo.
+  const raw = (entry.rendered?.metadata?.frontmatter ?? {}) as Partial<
+    CollectionEntry<'games'>['data']
+  >;
+  const data = { ...raw, ...entry.data };
+  const keyword = data.keyword ?? entry.id;
+  if (data.keyword != null && entry.id !== data.keyword) {
     throw new Error(
-      `Keyword drift: src/content/games/${entry.id}.md declara keyword "${keyword}". El archivo y el keyword tienen que ser la misma palabra.`
+      `Keyword drift: src/content/games/${entry.id}.md declara keyword "${data.keyword}". El archivo y el keyword tienen que ser la misma palabra.`
     );
   }
   return {
+    ...data,
     id: keyword,
-    ...entry.data,
+    keyword,
     href: gameHref(keyword),
-    blurb: entry.data.description ?? entry.data.tagline,
+    blurb: data.description ?? data.tagline,
   };
+}
+
+export async function getGame(keyword: string): Promise<GameCard | undefined> {
+  const entry = await getEntry('games', keyword);
+  return entry ? toCard(entry) : undefined;
 }
 
 export async function getGames(): Promise<GameCard[]> {

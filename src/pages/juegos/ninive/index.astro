@@ -1,9 +1,30 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GameExtras from '../../../components/GameExtras.astro';
-import { getEntry } from 'astro:content';
+import { getGame } from '../../../lib/games';
 
-const cms = await getEntry('games', 'ninive');
+const cms = await getGame('ninive');
+
+const niniveAwards = cms?.awards?.length
+  ? cms.awards
+  : [
+      {
+        title: 'Juego oficial · Roll a Game Expo Chile 2025',
+        image: '/assets/roll-a-game-logo.webp',
+        href: 'https://rollagame.cl/',
+      },
+      {
+        title: 'Juego Chileno del Año 2025 · Diluvio Lúdico',
+        image: '/assets/diluvio-ludico-logo.webp',
+        href: 'https://www.youtube.com/@DiluvioLudico',
+      },
+      {
+        title: '2º lugar del jurado · 54-Card Game Design Contest 2024',
+        image: '/assets/54-card-contest-logo.webp',
+        href: 'https://boardgamegeek.com/thread/3327975/2024-54-card-game-design-contest',
+      },
+    ];
+const bggId = cms?.bggId ?? 456259;
 ---
 
 <BaseLayout
@@ -13,182 +34,188 @@ const cms = await getEntry('games', 'ninive');
   bodyClass="ninive-page"
   footerSubtitle="Nínive · diseño de Arturo · Ludoísmo"
   footerVariant="ninive"
-  themeColor="#1a2818"
+  themeColor="#5aa3c8"
 >
 
 <style is:global>
   /* ═══════════════════════════════════════════════════════════
-     NÍNIVE · Arquitectura mesopotámica · Verde + Celeste
+     NÍNIVE · Palacio jardín · Cielo + Flor + Piedra
      ═══════════════════════════════════════════════════════════ */
 
   body.ninive-page {
-    background-color: #0f1e14;
-    color: #e8dcc8;
+    background-color: #f6efe4;
+    color: #2a241c;
     font-family: Georgia, "Times New Roman", serif;
-    /* Patrón de ladrillo de ziggurat */
     background-image:
-      linear-gradient(rgba(45, 120, 90, .06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(45, 120, 90, .04) 1px, transparent 1px);
+      linear-gradient(rgba(90, 163, 200, .07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(224, 112, 48, .04) 1px, transparent 1px);
     background-size: 48px 24px;
-    --verde:    #2d7a5a;
-    --verde-cl: #4aab80;
-    --lapis:    #3b82a0;
-    --lapis-cl: #5fafc8;
-    --tierra:   #c47a3a;
-    --piedra:   #e8dcc8;
-    --piedra-bg: #f2ead8;
-    --noche:    #0f1e14;
-    --noche2:   #162010;
-    --dim:      rgba(232, 220, 200, .55);
-    --line:     rgba(45, 120, 90, .25);
+    --cielo:      #5aa3c8;
+    --cielo-cl:   #8ec8e0;
+    --cielo-deep: #2b6f96;
+    --cielo-pale: #d6eef6;
+    --flor:       #e07030;
+    --jardin:     #6a9a58;
+    --stone:      #f6efe4;
+    --stone2:     #efe6d6;
+    --ink:        #2a241c;
+    --papel:      #fffdf8;
+    --dim:        rgba(42, 36, 28, .58);
+    --line:       rgba(43, 111, 150, .2);
   }
 
-  /* ── Header: piedra oscura con banda de lapislázuli ────────────────────── */
   body.ninive-page .site-header {
-    background: rgba(15, 30, 20, .97);
-    border-bottom: 2px solid var(--lapis);
+    background: rgba(246, 239, 228, .96);
+    border-bottom: 2px solid var(--cielo);
   }
-  body.ninive-page .brand b     { color: var(--verde-cl); }
-  body.ninive-page .brand small { color: rgba(74, 171, 128, .45); }
-  body.ninive-page .nav-links a { color: rgba(232, 220, 200, .5); }
+  body.ninive-page .brand b     { color: var(--cielo-deep); }
+  body.ninive-page .brand small { color: rgba(43, 111, 150, .5); }
+  body.ninive-page .nav-links a { color: rgba(42, 36, 28, .48); }
   body.ninive-page .nav-links a:hover,
-  body.ninive-page .nav-links .active { color: var(--lapis-cl); }
+  body.ninive-page .nav-links .active { color: var(--flor); }
   body.ninive-page .nav-links .nav-instagram {
-    border-color: rgba(91, 175, 200, .35); color: var(--lapis-cl);
+    border-color: rgba(90, 163, 200, .45); color: var(--cielo-deep);
   }
   body.ninive-page .nav-links .nav-instagram:hover {
-    background: var(--lapis); border-color: var(--lapis); color: var(--piedra);
+    background: var(--cielo); border-color: var(--cielo); color: #fff;
   }
   body.ninive-page .brand-logo {
-    border-color: var(--verde);
-    box-shadow: 2px 2px 0 var(--verde);
+    border-color: var(--cielo);
+    box-shadow: 2px 2px 0 var(--flor);
   }
 
-  /* ── Footer ─────────────────────────────────────────────────────────────── */
   body.ninive-page .site-footer {
-    background: var(--noche);
-    border-top: 2px solid var(--verde);
-    color: var(--dim);
+    background: var(--cielo-deep);
+    border-top: 2px solid var(--flor);
+    color: rgba(255, 253, 248, .62);
   }
   body.ninive-page .site-footer b,
-  body.ninive-page .site-footer a { color: var(--verde-cl); }
-  body.ninive-page .site-footer a:hover { color: var(--lapis-cl); }
+  body.ninive-page .site-footer a { color: #fffdf8; }
+  body.ninive-page .site-footer a:hover { color: #ffd2a8; }
 
-  /* ── HERO ─────────────────────────────────────────────────────────────────── */
   body.ninive-page .ninive-hero {
-    background: linear-gradient(175deg, #162010 60%, #0f1e20 100%);
-    border-bottom: 2px solid var(--verde);
+    background: linear-gradient(175deg, #b7def0 0%, #e4f4fa 58%, #f6efe4 100%);
+    border-bottom: 2px solid var(--cielo);
   }
   body.ninive-page .ninive-hero h1 {
     font-family: Georgia, serif;
-    color: var(--piedra);
-    /* Trazo dorado-terracota */
-    text-shadow: 1px 1px 0 rgba(196, 122, 58, .4);
+    color: var(--cielo-deep);
+    text-shadow: 2px 2px 0 rgba(224, 112, 48, .18);
   }
-  body.ninive-page .ninive-hero p {
-    color: var(--lapis-cl);
-    font-style: italic;
-  }
+  body.ninive-page .ninive-hero p { color: var(--flor); font-style: italic; }
   body.ninive-page .breadcrumbs a,
-  body.ninive-page .breadcrumbs span { color: rgba(232, 220, 200, .38); }
-  body.ninive-page .breadcrumbs a:hover { color: var(--verde-cl); }
+  body.ninive-page .breadcrumbs span { color: rgba(43, 111, 150, .55); }
+  body.ninive-page .breadcrumbs a:hover { color: var(--flor); }
 
-  /* Sticker / etiqueta */
   body.ninive-page .sticker.yellow {
-    background: var(--tierra);
-    color: var(--piedra);
-    border: 1.5px solid rgba(232, 220, 200, .2);
+    background: var(--flor);
+    color: #fffdf8;
+    border: 1.5px solid rgba(42, 36, 28, .08);
   }
 
-  /* Fichas técnicas */
   body.ninive-page .fact-chips span {
-    border-color: var(--line);
-    color: var(--verde-cl);
+    border-color: rgba(43, 111, 150, .28);
+    color: var(--cielo-deep);
   }
-  body.ninive-page .fact-chips b { color: var(--piedra); }
+  body.ninive-page .fact-chips b { color: var(--ink); }
 
-  /* Foto del hero: borde lapislázuli */
+  body.ninive-page .ninive-hero-photo { box-shadow: 14px 14px 0 var(--cielo); }
   body.ninive-page .ninive-hero-photo img {
-    border: 2px solid var(--lapis);
-    box-shadow: 4px 4px 0 var(--verde);
+    border: 0;
+    box-shadow: none;
+    object-position: center 28%;
   }
   body.ninive-page figcaption { color: var(--dim); }
 
-  /* ── Secciones ───────────────────────────────────────────────────────────── */
-  body.ninive-page .ninive-intro { background: var(--noche2); }
-  body.ninive-page .ninive-intro h2 { color: var(--piedra); }
-  body.ninive-page .ninive-intro h2 em { color: var(--lapis-cl); }
+  body.ninive-page .ninive-intro { background: transparent; }
+  body.ninive-page .ninive-intro h2 { color: var(--ink); }
+  body.ninive-page .ninive-intro h2 em { color: var(--flor); }
   body.ninive-page .ninive-intro p { color: var(--dim); }
 
   body.ninive-page .section-label span {
-    color: var(--tierra);
-    border-color: rgba(196, 122, 58, .3);
+    color: var(--flor);
+    border-color: rgba(224, 112, 48, .35);
   }
-  body.ninive-page .section-label b { color: var(--verde-cl); }
+  body.ninive-page .section-label b { color: var(--cielo-deep); }
 
-  /* Sección "Cómo se juega" */
   body.ninive-page .how-section {
-    background: #162010;
+    background: var(--papel);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
-  body.ninive-page .how-section h2 { color: var(--piedra); }
+  body.ninive-page .how-section h2 { color: var(--ink); }
   body.ninive-page .how-section p  { color: var(--dim); }
+  body.ninive-page .rules-stack { border-top-color: var(--cielo); }
   body.ninive-page .rules-stack article span {
-    color: var(--verde-cl);
+    color: var(--flor);
     border-color: var(--line);
   }
-  body.ninive-page .rules-stack h3 { color: var(--piedra-bg); }
+  body.ninive-page .rules-stack h3 { color: var(--ink); }
+  body.ninive-page .rule-photo { box-shadow: 12px 12px 0 var(--flor); }
 
-  /* Sección "La tensión" */
   body.ninive-page .decision-section {
-    background: #0d1a10;
-    border-top: 2px solid var(--verde);
-    border-bottom: 2px solid var(--verde);
+    background: var(--cielo-pale);
+    border-top: 2px solid var(--cielo);
+    border-bottom: 2px solid var(--cielo);
   }
   body.ninive-page .decision-section .big-number {
-    color: var(--verde-cl);
-    opacity: .25;
+    color: var(--flor);
+    opacity: .28;
   }
-  body.ninive-page .decision-section h2 { color: var(--lapis-cl); }
+  body.ninive-page .decision-section h2 { color: var(--cielo-deep); }
   body.ninive-page .decision-section p  { color: var(--dim); }
 
-  /* Sección "El recorrido" */
   body.ninive-page .journey-section {
-    background: #162010;
-    border-top: 1px solid var(--line);
+    background: #e7f0d4;
+    border-top: 1px solid rgba(106, 154, 88, .25);
   }
-  body.ninive-page .journey-section h2 { color: var(--piedra); }
+  body.ninive-page .journey-section h2 { color: var(--ink); }
+  body.ninive-page .journey-cards { border-top-color: var(--jardin); }
   body.ninive-page .journey-cards article {
-    border-color: var(--line);
-    background: rgba(45, 120, 90, .05);
+    border-color: rgba(106, 154, 88, .22);
+    background: transparent;
   }
-  body.ninive-page .journey-cards span { color: var(--tierra); }
-  body.ninive-page .journey-cards h3   { color: var(--piedra-bg); }
+  body.ninive-page .journey-cards span { color: var(--flor); }
+  body.ninive-page .journey-cards h3   { color: var(--ink); }
   body.ninive-page .journey-cards p    { color: var(--dim); }
 
-  /* Galería */
-  body.ninive-page .ninive-gallery { background: var(--noche); }
-  body.ninive-page .ninive-gallery h2 { color: var(--piedra); }
+  body.ninive-page .ninive-gallery { background: transparent; }
+  body.ninive-page .ninive-gallery h2 { color: var(--ink); }
   body.ninive-page .ninive-gallery p  { color: var(--dim); }
-  body.ninive-page .gallery-pair figure img {
-    border: 2px solid var(--verde);
-    box-shadow: 3px 3px 0 var(--lapis);
+  body.ninive-page .ninive-gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 1.3rem;
+    align-items: start;
   }
-
-  /* Volver */
-  body.ninive-page .back-to-table {
-    background: var(--noche);
-    border-top: 2px solid var(--verde);
+  body.ninive-page .ninive-gallery-grid figure {
+    margin: 0;
+    padding: .7rem .7rem 2.4rem;
+    background: var(--papel);
+    box-shadow: 7px 7px 0 var(--cielo);
   }
-  body.ninive-page .back-to-table span { color: var(--dim); }
-  body.ninive-page .back-to-table a {
-    color: var(--lapis-cl);
+  body.ninive-page .ninive-gallery-grid figure:nth-child(odd) { transform: rotate(-1.2deg); }
+  body.ninive-page .ninive-gallery-grid figure:nth-child(even) { transform: rotate(1.4deg); }
+  body.ninive-page .ninive-gallery-grid img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  body.ninive-page .ninive-gallery-grid figcaption {
+    margin: .65rem .2rem 0;
+    font-family: Georgia, serif;
+    font-size: .82rem;
     font-style: italic;
   }
-  body.ninive-page .back-to-table a:hover { color: var(--verde-cl); }
 
-  /* Roles */
+  body.ninive-page .back-to-table {
+    background: transparent;
+    border-top: 2px solid var(--cielo);
+  }
+  body.ninive-page .back-to-table span { color: var(--dim); }
+  body.ninive-page .back-to-table a { color: var(--flor); font-style: italic; }
+  body.ninive-page .back-to-table a:hover { color: var(--cielo-deep); }
+
   body.ninive-page .ninive-roles {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -198,7 +225,7 @@ const cms = await getEntry('games', 'ninive');
   body.ninive-page .ninive-role {
     padding: 1.2rem 1.3rem 1.3rem;
     border: 1px solid var(--line);
-    background: rgba(45, 120, 90, .06);
+    background: var(--papel);
   }
   body.ninive-page .ninive-role span {
     display: block;
@@ -209,11 +236,11 @@ const cms = await getEntry('games', 'ninive');
     letter-spacing: .12em;
     text-transform: uppercase;
   }
-  body.ninive-page .ninive-role.flowers span { color: var(--tierra); }
-  body.ninive-page .ninive-role.fountains span { color: var(--lapis-cl); }
+  body.ninive-page .ninive-role.flowers span { color: var(--flor); }
+  body.ninive-page .ninive-role.fountains span { color: var(--cielo-deep); }
   body.ninive-page .ninive-role h3 {
     margin: 0 0 .4rem;
-    color: var(--piedra-bg);
+    color: var(--ink);
     font-size: 1.35rem;
   }
   body.ninive-page .ninive-role p {
@@ -222,7 +249,6 @@ const cms = await getEntry('games', 'ninive');
     font-size: .95rem;
   }
 
-  /* Ejemplos */
   body.ninive-page .ninive-examples {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -231,8 +257,8 @@ const cms = await getEntry('games', 'ninive');
   }
   body.ninive-page .ninive-ex {
     padding: 1.3rem 1.4rem 1.45rem;
-    border-top: 2px solid var(--tierra);
-    background: rgba(15, 30, 20, .45);
+    border-top: 2px solid var(--flor);
+    background: var(--stone);
   }
   body.ninive-page .ninive-ex span {
     font-family: "Helvetica Neue", Arial, sans-serif;
@@ -240,11 +266,11 @@ const cms = await getEntry('games', 'ninive');
     font-weight: 800;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: var(--tierra);
+    color: var(--flor);
   }
   body.ninive-page .ninive-ex h3 {
     margin: .55rem 0 .5rem;
-    color: var(--piedra-bg);
+    color: var(--ink);
     font-size: 1.15rem;
   }
   body.ninive-page .ninive-ex p {
@@ -253,9 +279,8 @@ const cms = await getEntry('games', 'ninive');
     font-size: .95rem;
   }
 
-  /* Dos modos */
   body.ninive-page .ninive-modes-section {
-    background: var(--noche2);
+    background: var(--stone2);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     padding-block: clamp(5rem, 10vw, 8rem);
@@ -264,7 +289,7 @@ const cms = await getEntry('games', 'ninive');
     width: min(1100px, calc(100% - 3rem));
     margin-inline: auto;
   }
-  body.ninive-page .ninive-modes-section h2 { color: var(--piedra); }
+  body.ninive-page .ninive-modes-section h2 { color: var(--ink); }
   body.ninive-page .ninive-modes-section > .shell-modes > p.lede {
     max-width: 40rem;
     margin: 1.2rem 0 2.5rem;
@@ -279,7 +304,7 @@ const cms = await getEntry('games', 'ninive');
   body.ninive-page .ninive-mode {
     padding: 1.6rem 1.6rem 1.8rem;
     border: 1px solid var(--line);
-    background: rgba(45, 120, 90, .05);
+    background: var(--papel);
   }
   body.ninive-page .ninive-mode span {
     font-family: "Helvetica Neue", Arial, sans-serif;
@@ -287,11 +312,11 @@ const cms = await getEntry('games', 'ninive');
     font-weight: 800;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--tierra);
+    color: var(--flor);
   }
   body.ninive-page .ninive-mode h3 {
     margin: .7rem 0 1rem;
-    color: var(--piedra-bg);
+    color: var(--ink);
     font-family: Georgia, serif;
     font-size: clamp(1.5rem, 3vw, 2.1rem);
   }
@@ -305,7 +330,7 @@ const cms = await getEntry('games', 'ninive');
   body.ninive-page .ninive-mode li + li { margin-top: .55rem; }
   body.ninive-page .ninive-mode li::before {
     content: "— ";
-    color: var(--verde-cl);
+    color: var(--jardin);
   }
 
   body.ninive-page .ninive-buy {
@@ -313,12 +338,13 @@ const cms = await getEntry('games', 'ninive');
     color: var(--dim);
     font-size: .95rem;
   }
-  body.ninive-page .ninive-buy a { color: var(--lapis-cl); }
+  body.ninive-page .ninive-buy a { color: var(--cielo-deep); }
 
   @media (max-width: 800px) {
     body.ninive-page .ninive-roles,
     body.ninive-page .ninive-examples,
-    body.ninive-page .ninive-modes { grid-template-columns: 1fr; }
+    body.ninive-page .ninive-modes,
+    body.ninive-page .ninive-gallery-grid { grid-template-columns: 1fr; }
   }
 </style>
   <main>
@@ -331,11 +357,11 @@ const cms = await getEntry('games', 'ninive');
             <h1>Nínive</h1>
             <p>Construir juntos.<br />Ganar por separado.</p>
             <div class="fact-chips" aria-label="Ficha técnica"><span><b>2</b> jugadores</span><span><b>15′</b> duración</span><span><b>27</b> cartas</span></div>
-            {cms && <GameExtras bggId={cms.data.bggId} awards={cms.data.awards} tone="dark" />}
+            <GameExtras bggId={bggId} awards={niniveAwards} />
           </div>
           <figure class="ninive-hero-photo">
-            <img src="/assets/ninive-palacio.webp" alt="Partida de Nínive con cartas formando un palacio" />
-            <figcaption>Una partida, un palacio distinto.</figcaption>
+            <img src="/assets/ninive-caja.webp" alt="Caja de Nínive sobre un tapete de cartas" />
+            <figcaption>La edición · Ludoísmo</figcaption>
             <i class="tape" aria-hidden="true"></i>
           </figure>
         </div>
@@ -388,8 +414,8 @@ const cms = await getEntry('games', 'ninive');
             </div>
           </div>
           <figure class="rule-photo">
-            <img src="/assets/ninive-regla-superior.webp" alt="Ejemplo de una carta construida sobre dos cartas de Nínive" loading="lazy" />
-            <figcaption>Lo que tapas importa tanto como lo que construyes.</figcaption>
+            <img src="/assets/ninive-colocar.webp" alt="Una carta de Nínive colocándose sobre el palacio" loading="lazy" />
+            <figcaption>Una carta cubre dos mitades.</figcaption>
           </figure>
         </div>
       </section>
@@ -446,7 +472,24 @@ const cms = await getEntry('games', 'ninive');
       <section class="ninive-gallery shell">
         <div class="section-label"><span>06</span><b>Galería</b></div>
         <div class="gallery-heading"><h2>Así se ve<br />una partida.</h2><p>El resultado final no es solo un puntaje: es una pequeña construcción que registra cada decisión tomada. Aunque un número quede tapado, las flores y los chorros de la ilustración siguen delatando la carta.</p></div>
-        <div class="gallery-pair"><figure><img src="/assets/ninive-palacio.webp" alt="Palacio completo de Nínive" loading="lazy" /><figcaption>Vista general · estructura compartida</figcaption></figure><figure><img src="/assets/ninive-regla-superior.webp" alt="Detalle de construcción de Nínive" loading="lazy" /><figcaption>Detalle · nivel superior</figcaption></figure></div>
+        <div class="ninive-gallery-grid">
+          <figure>
+            <img src="/assets/ninive-caja.webp" alt="Caja de Nínive sobre cartas del palacio" loading="lazy" />
+            <figcaption>Caja · Ludoísmo</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/ninive-partida.webp" alt="Palacio de Nínive armado sobre mantel rojo" loading="lazy" />
+            <figcaption>Una partida, un palacio</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/ninive-colocar.webp" alt="Colocando una carta sobre el palacio de Nínive" loading="lazy" />
+            <figcaption>Construir hacia arriba</figcaption>
+          </figure>
+          <figure>
+            <img src="/assets/ninive-mano.webp" alt="Mano con cuatro cartas de Nínive" loading="lazy" />
+            <figcaption>Flores y fuentes en la mano</figcaption>
+          </figure>
+        </div>
         <p class="ninive-buy">Edición de <a href="https://ludoismo.cl/">Ludoísmo</a>. 2 jugadores · 15 minutos · 27 cartas.</p>
       </section>
 
