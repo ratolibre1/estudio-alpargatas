@@ -1,70 +1,73 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GameExtras from '../../../components/GameExtras.astro';
-import { getEntry } from 'astro:content';
+import { getGame } from '../../../lib/games';
 
-const cms = await getEntry('games', 'letrados');
+const cms = await getGame('letrados');
 
-/* Demostración visual: par de letras con distancia calculada */
 const ejemplos = [
-  { a: 'A', b: 'M', dist: 12 },
-  { a: 'C', b: 'Z', dist: 23 },
-  { a: 'F', b: 'H', dist: 2  },
-  { a: 'B', b: 'R', dist: 16 },
+  { cover: 'N', top: 'T', score: '+3', note: 'verde' },
+  { cover: 'A', top: 'N', score: '+10', note: 'azul' },
+  { cover: 'B', top: 'Q', score: '−7', note: 'rojo' },
+  { cover: 'D', top: 'A', score: '−2', note: 'rojo' },
 ];
 
-const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 ---
 
 <BaseLayout
   title="Letrados — Estudio Alpargatas"
-  description="Letrados: duelo abstracto para dos jugadores. Construye una torre de letras y puntúa según la distancia que las separa en el abecedario."
+  description="Letrados: duelo de dos jugadores. Cada uno construye una torre de 13 letras y puntúa con la tabla de la carta cubierta."
   bodyClass="page-letrados"
-  footerSubtitle="Letrados · Duelo · Avanzado"
-  themeColor="#f2ede4"
+  footerSubtitle="Letrados · Lighthouse Games · 2 jugadores"
+  themeColor="#8ec4e8"
+  fontUrl="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;1,400&family=Patrick+Hand&display=swap"
 >
 
 <style is:global>
-  /* ═══════════════════════════════════════════════════════
-     LETRADOS · Tipografía modernista · Papel + Tinta + Rojo
-     ═══════════════════════════════════════════════════════ */
   body.page-letrados {
-    background: #f2ede4;
-    color: #1a1a1a;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    --papel:  #f2ede4;
-    --hoja:   #e8e2d8;
-    --tinta:  #1a1a1a;
-    --rojo:   #d62828;
-    --dim:    rgba(26, 26, 26, .5);
-    --line:   rgba(26, 26, 26, .1);
+    background: #eaf4fb;
+    color: #1f2626;
+    font-family: Nunito, "Helvetica Neue", Arial, sans-serif;
+    --papel:    #eaf4fb;
+    --hoja:     #fffdf8;
+    --tinta:    #1f2626;
+    --pizarra:  #24332a;
+    --cielo:    #8ec4e8;
+    --chaleco:  #2d7eb0;
+    --oro:      #d4a84b;
+    --rojo:     #c0393a;
+    --verde:    #2d6a4f;
+    --azul:     #2d7eb0;
+    --tiza:     #f7f3ea;
+    --dim:      rgba(31, 38, 38, .55);
+    --line:     rgba(45, 126, 176, .2);
+    --display:  "Patrick Hand", "Segoe Print", cursive;
   }
 
-  body.page-letrados .site-header   { background: #1a1a1a; border-bottom: 2px solid #d62828; }
-  body.page-letrados .brand b       { color: #f2ede4; }
-  body.page-letrados .brand small   { color: rgba(242,237,228,.4); }
-  body.page-letrados .nav-links a   { color: rgba(242,237,228,.5); }
-  body.page-letrados .nav-links a:hover { color: #f2ede4; }
-  body.page-letrados .nav-links .nav-instagram { border-color: rgba(214,40,40,.4); color: #d62828; }
-  body.page-letrados .nav-links .nav-instagram:hover { background: #d62828; border-color: #d62828; color: #f2ede4; }
-  body.page-letrados .brand-logo    { border-color: rgba(242,237,228,.3); box-shadow: 2px 2px 0 rgba(214,40,40,.3); }
+  body.page-letrados .site-header   { background: var(--pizarra); border-bottom: 3px solid var(--oro); }
+  body.page-letrados .brand b       { color: var(--tiza); }
+  body.page-letrados .brand small   { color: rgba(247,243,234,.45); }
+  body.page-letrados .nav-links a   { color: rgba(247,243,234,.62); }
+  body.page-letrados .nav-links a:hover { color: var(--oro); }
+  body.page-letrados .nav-links .nav-instagram { border-color: rgba(212,168,75,.45); color: var(--oro); }
+  body.page-letrados .nav-links .nav-instagram:hover { background: var(--oro); border-color: var(--oro); color: var(--pizarra); }
+  body.page-letrados .brand-logo    { border-color: rgba(247,243,234,.3); box-shadow: 2px 2px 0 rgba(212,168,75,.35); }
 
-  body.page-letrados .site-footer   { background: #1a1a1a; border-top: 2px solid rgba(214,40,40,.4); color: rgba(242,237,228,.4); }
+  body.page-letrados .site-footer   { background: var(--pizarra); border-top: 3px solid rgba(212,168,75,.45); color: rgba(247,243,234,.45); }
   body.page-letrados .site-footer b,
-  body.page-letrados .site-footer a { color: rgba(242,237,228,.65); }
-  body.page-letrados .site-footer a:hover { color: #f2ede4; }
+  body.page-letrados .site-footer a { color: rgba(247,243,234,.7); }
+  body.page-letrados .site-footer a:hover { color: var(--oro); }
 </style>
 
 <style>
-  /* ─── Shell ───────────────────────────────────── */
   .lt-shell { width: min(1050px, calc(100% - 3rem)); margin-inline: auto; }
 
   .lt-label {
     display: inline-flex; align-items: center; gap: .6rem;
     font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--dim); margin-bottom: 1.2rem;
+    color: var(--chaleco); margin-bottom: 1.2rem;
   }
-  .lt-label::before { content: ""; display: block; width: 1.5rem; height: 1px; background: var(--rojo); }
+  .lt-label::before { content: ""; display: block; width: 1.5rem; height: 1px; background: var(--oro); }
 
   .lt-breadcrumb {
     display: flex; gap: .4rem;
@@ -74,25 +77,24 @@ const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   .lt-breadcrumb a { text-decoration: none; color: inherit; }
   .lt-breadcrumb a:hover { color: var(--tinta); }
 
-  .lt-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,7vw,5rem); align-items: start; }
+  .lt-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem,6vw,5rem); align-items: start; }
 
-  /* ─── HÉROE ──────────────────────────────────── */
   .lt-hero {
     padding: clamp(3.5rem, 8vw, 6rem) 0;
     border-bottom: 1px solid var(--line);
     background: var(--papel);
   }
   .lt-hero-title {
-    font-size: clamp(5rem, 15vw, 12rem);
-    font-weight: 900;
-    letter-spacing: -.06em;
+    font-size: clamp(5rem, 15vw, 11rem);
+    font-weight: 400;
+    letter-spacing: .01em;
     line-height: .85;
-    color: var(--tinta);
-    font-family: Georgia, serif;
+    color: var(--pizarra);
+    font-family: var(--display);
     display: block;
     margin: .5rem 0 1.2rem;
   }
-  .lt-hero-title em { color: var(--rojo); font-style: italic; }
+  .lt-hero-title em { color: var(--chaleco); font-style: normal; }
   .lt-hero-sub { font-size: .95rem; line-height: 1.8; color: var(--dim); max-width: 28rem; margin: 0 0 1.5rem; }
   .lt-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
   .lt-badge {
@@ -100,90 +102,81 @@ const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     border: 1.5px solid rgba(26,26,26,.25);
     font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--dim);
   }
-  .lt-badge.active { background: var(--tinta); border-color: var(--tinta); color: var(--papel); }
-  .lt-badge.red    { border-color: rgba(214,40,40,.4); color: var(--rojo); }
+  .lt-badge.active { background: var(--pizarra); border-color: var(--pizarra); color: var(--tiza); }
+  .lt-badge.red    { border-color: rgba(192,57,58,.4); color: var(--rojo); }
 
-  /* Tira del abecedario */
-  .lt-alphabet-strip {
-    overflow: hidden;
+  .lt-hero-photo { margin: 0; }
+  .lt-hero-photo img {
+    width: 100%;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--cielo);
+  }
+  .lt-hero-photo figcaption {
+    margin-top: .6rem;
+    font-size: .72rem;
+    color: var(--dim);
+  }
+
+  .lt-section {
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .lt-section.alt { background: var(--hoja); border-top: 1px solid var(--line); }
+  .lt-section h2 {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 400; letter-spacing: .01em; line-height: .95;
+    color: var(--pizarra); margin: .8rem 0 1.2rem;
+  }
+  .lt-section h2 em { color: var(--chaleco); font-style: normal; }
+  .lt-section p { font-size: .9rem; line-height: 1.85; color: var(--dim); margin: 0 0 .9rem; }
+
+  .lt-bands {
+    display: grid;
+    gap: .7rem;
+  }
+  .lt-band {
+    padding: 1rem 1.1rem;
     border: 1px solid var(--line);
     background: var(--hoja);
+    border-radius: 10px;
+    border-left: 6px solid var(--band);
   }
-  .lt-alphabet-row {
+  .lt-band span {
+    display: block;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--band);
+    margin-bottom: .35rem;
+  }
+  .lt-band b { display: block; margin-bottom: .25rem; }
+  .lt-band p { margin: 0; font-size: .85rem; }
+
+  .lt-card-row {
     display: grid;
-    grid-template-columns: repeat(26, 1fr);
+    grid-template-columns: 1.6fr minmax(12rem, .7fr);
+    gap: 1.2rem;
+    margin-top: 2.4rem;
+    align-items: start;
   }
-  .lt-letter-cell {
-    aspect-ratio: 1;
-    display: flex; align-items: center; justify-content: center;
-    font-family: Georgia, serif;
-    font-size: clamp(.5rem, 1.5vw, .85rem);
-    font-weight: 700;
+  .lt-card-row figure { margin: 0; }
+  .lt-card-row img {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    display: block;
+  }
+  .lt-card-row figcaption {
+    margin-top: .55rem;
+    font-size: .72rem;
     color: var(--dim);
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
   }
-  .lt-letter-cell:last-child { border-right: none; }
-  .lt-letter-cell.highlight { background: var(--tinta); color: var(--papel); }
-  .lt-letter-cell.span-range { background: rgba(214,40,40,.08); }
-  .lt-dist-label {
-    display: flex; align-items: center; justify-content: center; gap: .3rem;
-    padding: .5rem;
-    font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dim);
-    border-top: 1px solid var(--line);
-  }
-  .lt-dist-num { font-size: 1.1rem; font-weight: 900; color: var(--rojo); letter-spacing: -.04em; }
 
-  /* ─── CONCEPTO (01) ─────────────────────────── */
-  .lt-concept {
-    padding: clamp(3.5rem, 8vw, 6rem) 0;
-    background: var(--hoja);
-    border-bottom: 1px solid var(--line);
-    border-top: 1px solid var(--line);
-  }
-  .lt-concept h2 {
-    font-family: Georgia, serif;
-    font-size: clamp(2rem, 5vw, 3.6rem);
-    font-weight: 700; letter-spacing: -.04em; line-height: .9;
-    color: var(--tinta); margin: .8rem 0 1.2rem;
-  }
-  .lt-concept h2 em { color: var(--rojo); font-style: italic; }
-  .lt-concept p { font-size: .9rem; line-height: 1.85; color: var(--dim); margin: 0 0 .9rem; }
-
-  /* Cuadro de pares de ejemplo */
-  .lt-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .lt-pair {
-    display: grid; grid-template-columns: auto 1fr auto; gap: .6rem; align-items: center;
-    padding: .7rem .9rem;
-    border: 1px solid var(--line); background: var(--papel);
-  }
-  .lt-pair-letter {
-    width: 2.2rem; height: 2.2rem;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--tinta); color: var(--papel);
-    font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700;
-  }
-  .lt-pair-arrow { font-size: .7rem; color: var(--dim); text-align: center; }
-  .lt-pair-score { text-align: right; }
-  .lt-pair-score strong { font-size: 1.5rem; font-weight: 900; color: var(--rojo); display: block; line-height: 1; }
-  .lt-pair-score span { font-size: .55rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
-
-  /* ─── MECÁNICA (02) ─────────────────────────── */
-  .lt-mechanic {
-    padding: clamp(3.5rem, 8vw, 6rem) 0;
-    background: var(--papel);
-    border-bottom: 1px solid var(--line);
-  }
-  .lt-mechanic h2 {
-    font-family: Georgia, serif;
-    font-size: clamp(2rem, 5vw, 3.6rem);
-    font-weight: 700; letter-spacing: -.04em; line-height: .9;
-    color: var(--tinta); margin: .8rem 0 1.2rem;
-  }
-  .lt-mechanic h2 em { color: var(--rojo); font-style: italic; }
-  .lt-mechanic p { font-size: .9rem; line-height: 1.85; color: var(--dim); margin: 0 0 .9rem; }
-
-  /* Reglas numeradas */
   .lt-rules { list-style: none; padding: 0; margin: 0; }
   .lt-rule {
     display: grid; grid-template-columns: 2.5rem 1fr; gap: .8rem; align-items: start;
@@ -191,182 +184,303 @@ const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   }
   .lt-rule:first-child { border-top: 1px solid var(--line); }
   .lt-rule-num {
-    font-family: Georgia, serif; font-size: 1.6rem; font-weight: 700;
-    color: var(--rojo); line-height: 1.1; text-align: center;
+    font-family: var(--display); font-size: 1.8rem; font-weight: 400;
+    color: var(--chaleco); line-height: 1.1; text-align: center;
   }
   .lt-rule-title { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--tinta); margin-bottom: .2rem; }
   .lt-rule-desc { font-size: .82rem; line-height: 1.65; color: var(--dim); margin: 0; }
 
-  /* ─── ESTADO (03) ────────────────────────────── */
-  .lt-status {
-    padding: clamp(3.5rem, 8vw, 6rem) 0;
+  .lt-roles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .8rem;
+    margin-top: 1.4rem;
+  }
+  .lt-role {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--line);
     background: var(--hoja);
-    border-bottom: 1px solid var(--line);
-    border-top: 1px solid var(--line);
+    border-radius: 10px;
   }
-  .lt-version {
-    font-size: clamp(5rem, 13vw, 10rem); font-weight: 900;
-    letter-spacing: -.1em; line-height: .82;
-    color: var(--rojo); margin-bottom: 1.4rem;
-    font-family: "Helvetica Neue", Arial, sans-serif;
+  .lt-role span {
+    display: block;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--chaleco);
+    margin-bottom: .4rem;
   }
-  .lt-status h2 {
-    font-family: Georgia, serif;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    font-weight: 700; letter-spacing: -.04em; line-height: .9;
-    color: var(--tinta); margin: .8rem 0 1.2rem;
-  }
-  .lt-status h2 em { color: var(--rojo); font-style: italic; }
-  .lt-status p { font-size: .9rem; line-height: 1.85; color: var(--dim); margin: 0 0 .9rem; }
-  .lt-change-list { list-style: none; padding: 0; margin: 0; }
-  .lt-change-list li {
-    display: grid; grid-template-columns: .8rem 1fr; gap: .6rem; align-items: start;
-    padding: .7rem 0; border-bottom: 1px solid var(--line);
-    font-size: .85rem; color: var(--dim);
-  }
-  .lt-change-list li:first-child { border-top: 1px solid var(--line); }
-  .lt-change-list li::before { content: "—"; color: var(--rojo); font-weight: 700; }
+  .lt-role b { display: block; font-family: var(--display); font-size: 1.45rem; font-weight: 400; margin-bottom: .35rem; }
+  .lt-role p { margin: 0; font-size: .82rem; }
 
-  /* ─── Nav de vuelta ──────────────────────────── */
+  .lt-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .lt-pair {
+    display: grid; grid-template-columns: auto 1fr auto; gap: .6rem; align-items: center;
+    padding: .7rem .9rem;
+    border: 1px solid var(--line); background: var(--hoja);
+    border-radius: 10px;
+  }
+  .lt-pair-letter {
+    width: 2.2rem; height: 2.2rem;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--pizarra); color: var(--tiza);
+    font-family: var(--display); font-size: 1.35rem; font-weight: 400;
+  }
+  .lt-pair-arrow { font-size: .68rem; color: var(--dim); }
+  .lt-pair-score { text-align: right; }
+  .lt-pair-score strong { font-size: 1.5rem; font-weight: 900; display: block; line-height: 1; }
+  .lt-pair-score strong.pos { color: var(--verde); }
+  .lt-pair-score strong.big { color: var(--oro); }
+  .lt-pair-score strong.neg { color: var(--rojo); }
+  .lt-pair-score span { font-size: .55rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+
+  .lt-example {
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--line);
+    background: var(--hoja);
+    border-radius: 10px;
+  }
+  .lt-example span {
+    display: block;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--chaleco);
+    margin-bottom: .5rem;
+  }
+  .lt-example p { margin: 0 0 .7rem; font-size: .88rem; }
+  .lt-example p:last-child { margin: 0; }
+
+  .lt-links {
+    display: flex; flex-wrap: wrap; gap: .6rem .9rem;
+    margin: 0 0 1.6rem;
+  }
+  .lt-links a {
+    display: inline-flex; padding: .35rem .75rem;
+    border: 1.5px solid rgba(26,26,26,.25);
+    font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    text-decoration: none; color: var(--tinta);
+  }
+  .lt-links a:hover { background: var(--pizarra); color: var(--tiza); border-color: var(--pizarra); }
+
+  .lt-lh-head {
+    display: grid;
+    grid-template-columns: minmax(7rem, 11rem) 1fr;
+    gap: 1.6rem 2rem;
+    align-items: center;
+    margin-bottom: 1.4rem;
+  }
+  .lt-lh-logo { display: block; text-decoration: none; }
+  .lt-lh-logo img { width: 100%; height: auto; display: block; }
+  .lt-lh-head .lt-label { margin-bottom: .7rem; }
+  .lt-lh-head h2 { margin: 0; }
+
+  .lt-lh-banner { margin: 0 0 1.2rem; }
+  .lt-lh-banner img { width: 100%; display: block; border: 1px solid var(--line); border-radius: 14px; background: var(--cielo); }
+
+  .lt-proto { margin: 0; }
+  .lt-proto img {
+    width: 100%;
+    max-height: 22rem;
+    object-fit: contain;
+    object-position: top center;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--cielo);
+  }
+  .lt-proto figcaption {
+    margin-top: .55rem;
+    font-size: .72rem;
+    color: var(--dim);
+  }
+
   .lt-back {
     padding: 2.5rem 0;
     display: flex; justify-content: space-between; align-items: center; gap: 2rem;
-    border-top: 1px solid var(--line);
   }
   .lt-back span { font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
-  .lt-back a { font-family: Georgia, serif; font-size: clamp(1.3rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -.03em; text-decoration: none; color: var(--tinta); }
-  .lt-back a:hover { color: var(--rojo); }
+  .lt-back a { font-family: var(--display); font-size: clamp(1.4rem, 3vw, 2.3rem); font-weight: 400; letter-spacing: .01em; text-decoration: none; color: var(--pizarra); }
+  .lt-back a:hover { color: var(--chaleco); }
 
   @media (max-width: 700px) {
-    .lt-cols { grid-template-columns: 1fr; }
-    .lt-pairs { grid-template-columns: 1fr; }
+    .lt-cols,
+    .lt-pairs,
+    .lt-roles,
+    .lt-card-row,
+    .lt-lh-head { grid-template-columns: 1fr; }
   }
 </style>
 
 <main>
-
-  <!-- ════ HÉROE ════════════════════════════════════════════ -->
   <section class="lt-hero">
     <div class="lt-shell lt-cols">
       <div>
         <nav class="lt-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Letrados</span></nav>
         <h1 class="lt-hero-title">Le<em>tra</em>dos</h1>
-        <p class="lt-hero-sub">Un duelo de dos jugadores donde construyes una torre de letras. Cada par que queda visible puntúa según la distancia que los separa en el abecedario.</p>
+        <p class="lt-hero-sub">Un duelo. Cada uno construye su torre de letras. Elegir qué carta poner —y cuál dejarle al otro— marca la diferencia.</p>
         <div class="lt-badges">
           <span class="lt-badge active">Avanzado</span>
           <span class="lt-badge red">2 jugadores</span>
           <span class="lt-badge">15 min</span>
           <span class="lt-badge">26 cartas</span>
+          <span class="lt-badge">13 por torre</span>
         </div>
-        {cms && <GameExtras bggId={cms.data.bggId} awards={cms.data.awards} />}
+        {cms && <GameExtras bggId={cms.bggId} awards={cms.awards} />}
       </div>
-      <div>
-        <!-- Tira del abecedario con las dos letras de un ejemplo -->
-        <div class="lt-alphabet-strip" aria-label="Abecedario: A a Z, distancia entre pares">
-          <div class="lt-alphabet-row">
-            {alfabeto.map((l, i) => (
-              <div class={`lt-letter-cell${l === 'C' || l === 'Z' ? ' highlight' : (i > 2 && i < 25 ? ' span-range' : '')}`}>
-                {l}
-              </div>
-            ))}
-          </div>
-          <div class="lt-dist-label">
-            <span>C → Z</span>
-            <span class="lt-dist-num">23</span>
-            <span>puntos</span>
-          </div>
-        </div>
-      </div>
+      <figure class="lt-hero-photo">
+        <img src="/assets/letrados-portada.webp" alt="Portada ilustrada de Letrados, Lighthouse Games" />
+        <figcaption>Portada de la edición. Arte de Lighthouse Games.</figcaption>
+      </figure>
     </div>
   </section>
 
-
-  <!-- ════ 01 — CONCEPTO ════════════════════════════════════ -->
-  <section class="lt-concept">
+  <section class="lt-section alt">
     <div class="lt-shell lt-cols">
       <div>
         <span class="lt-label">01 — La idea</span>
-        <h2>Las letras<br />lejanas<br /><em>valen más.</em></h2>
-        <p>En Letrados, cada jugador tiene una mano de cartas con letras del abecedario. En su turno juega una carta sobre la pila compartida, que va construyendo una torre visible para ambos.</p>
-        <p>Al final, cada par de letras que queda expuesto en la torre suma tantos puntos como posiciones las separan en el alfabeto: A y Z valen 25, A y B valen 1. El resultado es una tensión constante entre jugar pronto —para ocupar los extremos— o esperar para cubrir al rival.</p>
+        <h2>Dos torres.<br /><em>Una tabla</em><br />por carta.</h2>
+        <p>Hay 26 cartas: una por letra. En el centro va la Letra Principal. Alrededor, el resto del abecedario está acomodado para decirte cuánto vale montar otra letra encima.</p>
+        <p>Cuando cubres una carta, lees el puntaje en la de abajo. No se cuenta “cuántas letras hay de A a Z”. Se lee la tabla.</p>
+        <p>Se baraja el mazo y cada uno parte con dos cartas. Al final, cada torre tiene trece.</p>
       </div>
+      <div class="lt-bands">
+        <article class="lt-band" style="--band: var(--verde)">
+          <span>Derecha · verde</span>
+          <b>+1 a +7</b>
+          <p>Valores positivos. T sobre N, por el manual, da +3.</p>
+        </article>
+        <article class="lt-band" style="--band: var(--azul)">
+          <span>Abajo · azul</span>
+          <b>+10</b>
+          <p>La letra más lejana a la principal. N sobre A da +10.</p>
+        </article>
+        <article class="lt-band" style="--band: var(--rojo)">
+          <span>Izquierda · rojo</span>
+          <b>−1 a −7</b>
+          <p>Valores negativos. Q sobre B da −7.</p>
+        </article>
+      </div>
+    </div>
+    <div class="lt-shell">
+      <div class="lt-card-row">
+        <figure>
+          <img src="/assets/letrados-carta-editorial.webp" alt="Carta A ilustrada de Letrados, edición Lighthouse" />
+          <figcaption>Carta A de la edición. Positivos a la izquierda, negativos a la derecha, +10 en la pizarra.</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/letrados-carta-a.webp" alt="Carta A del prototipo de Letrados" />
+          <figcaption>La misma A en el proto, para leer la tabla.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="lt-section">
+    <div class="lt-shell lt-cols">
       <div>
-        <div class="lt-pairs" aria-label="Ejemplos de pares y su puntuación">
-          {ejemplos.map(e => (
-            <div class="lt-pair">
-              <div class="lt-pair-letter">{e.a}</div>
-              <div class="lt-pair-arrow">↔</div>
-              <div class="lt-pair-score">
-                <strong>{e.dist}</strong>
-                <span>{e.b} · {e.dist} pts</span>
-              </div>
-            </div>
-          ))}
+        <span class="lt-label">02 — El turno</span>
+        <h2>Selección,<br />construcción,<br /><em>reparto.</em></h2>
+        <p>Al comparar dos cartas, la Letra Principal más cerca de la A es la menor. La más cerca de la Z es la mayor.</p>
+        <div class="lt-roles">
+          <article class="lt-role">
+            <span>Letra menor</span>
+            <b>Capataz</b>
+            <p>Elige cuál de las dos cartas reveladas entra a su torre.</p>
+          </article>
+          <article class="lt-role">
+            <span>Letra mayor</span>
+            <b>Obrero</b>
+            <p>Se queda con la carta que el Capataz no quiso. Después reparte.</p>
+          </article>
         </div>
       </div>
+      <ul class="lt-rules">
+        <li class="lt-rule">
+          <div class="lt-rule-num">1</div>
+          <div>
+            <div class="lt-rule-title">Selección</div>
+            <p class="lt-rule-desc">Cada uno elige una carta de su mano y la pone boca abajo. Se revelan juntas. Quien mostró la letra más al inicio del abecedario es Capataz; el otro, Obrero.</p>
+          </div>
+        </li>
+        <li class="lt-rule">
+          <div class="lt-rule-num">2</div>
+          <div>
+            <div class="lt-rule-title">Construcción</div>
+            <p class="lt-rule-desc">El Capataz elige una de las dos cartas reveladas para su torre. La que no eligió se monta en la torre del Obrero.</p>
+          </div>
+        </li>
+        <li class="lt-rule">
+          <div class="lt-rule-num">3</div>
+          <div>
+            <div class="lt-rule-title">Reparto</div>
+            <p class="lt-rule-desc">El Obrero toma las dos primeras del mazo, las muestra, y se queda con la Carta Menor. El Capataz recibe la Mayor. Después, otro turno.</p>
+          </div>
+        </li>
+      </ul>
     </div>
   </section>
 
-
-  <!-- ════ 02 — MECÁNICA ════════════════════════════════════ -->
-  <section class="lt-mechanic">
+  <section class="lt-section alt">
     <div class="lt-shell lt-cols">
       <div>
-        <span class="lt-label">02 — La mecánica</span>
-        <h2>Una torre.<br /><em>Dos</em><br />puntuaciones.</h2>
-        <p>Cada turno es una sola decisión: qué carta jugar y dónde colocarla en la torre. Pero esa decisión afecta tanto tu puntuación como la del rival, porque la torre es compartida.</p>
-        <p>El final de partida llega cuando se acaba el mazo o cuando ningún jugador puede o quiere jugar más cartas. Entonces se revelan todos los pares visibles y se suman distancias.</p>
+        <span class="lt-label">03 — El cierre</span>
+        <h2>Trece cartas<br />y se suma.</h2>
+        <p>La partida termina cuando se juega el último par. Cada torre tiene 13 cartas. Cada uno suma el puntaje de cada par: la carta de arriba se busca en la tabla de la de abajo.</p>
+        <p>Gana el total más alto. Empate: otra vez.</p>
+        <div class="lt-example">
+          <span>Ejemplo del manual</span>
+          <p>Jugador 1: A sobre D (−2), N sobre A (+10), T sobre N (+3). Total 11.</p>
+          <p>Jugador 2: V sobre S (+2), F sobre V (+5), W sobre F (−5). Total 2.</p>
+        </div>
       </div>
-      <div>
-        <ul class="lt-rules">
-          {[
-            { num: '1', title: 'Juega una carta', desc: 'Colócala en cualquier extremo de la torre o sobre una carta ya colocada, si el valor es compatible.' },
-            { num: '2', title: 'La torre crece', desc: 'Cada carta apoyada cubre parcialmente las dos de abajo. Lo que queda visible forma los pares que se puntuarán.' },
-            { num: '3', title: 'Distancia = puntos', desc: 'Al final, cada par de letras adyacentes y visibles suma su distancia en el abecedario. A–Z = 25 pts. A–B = 1 pt.' },
-            { num: '4', title: 'Gana la distancia total', desc: 'El jugador con mayor suma de distancias visibles en su color gana la partida.' },
-          ].map(r => (
-            <li class="lt-rule">
-              <div class="lt-rule-num">{r.num}</div>
-              <div>
-                <div class="lt-rule-title">{r.title}</div>
-                <p class="lt-rule-desc">{r.desc}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ════ 03 — ESTADO ══════════════════════════════════════ -->
-  <section class="lt-status">
-    <div class="lt-shell lt-cols">
-      <div>
-        <span class="lt-label">03 — Estado actual</span>
-        <div class="lt-version" aria-hidden="true">Av.</div>
-        <ul class="lt-change-list">
-          <li>La regla de apoyo cambió tres veces: la versión actual es la más fluida.</li>
-          <li>Se probaron manos de 5, 7 y 9 cartas. Con 7 la partida respira mejor.</li>
-          <li>Las cartas de "comodín de posición" se descartaron: simplificaban demasiado.</li>
-          <li>Pendiente: testing con turno simultáneo en lugar de alternado.</li>
-        </ul>
-      </div>
-      <div>
-        <h2>Nació de un<br />problema de<br /><em>Scrabble.</em></h2>
-        <p>Letrados empezó pensando en qué parte del Scrabble es más interesante sin el vocabulario. La respuesta fue la colocación: decidir dónde poner una pieza y cómo eso afecta al tablero compartido.</p>
-        <p>Quitar el vocabulario obligó a inventar una métrica nueva para que las letras valieran algo. La distancia en el abecedario llegó en una tarde de lluvia y nunca se fue: es simple de entender y produce partidas donde siempre hay un par que duele no haber visto antes.</p>
+      <div class="lt-pairs" aria-label="Pares de ejemplo del manual">
+        {ejemplos.map((e) => (
+          <div class="lt-pair">
+            <div class="lt-pair-letter">{e.top}</div>
+            <div class="lt-pair-arrow">sobre {e.cover}</div>
+            <div class="lt-pair-score">
+              <strong class={e.score.startsWith('+10') ? 'big' : e.score.startsWith('−') ? 'neg' : 'pos'}>{e.score}</strong>
+              <span>{e.note}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
+  <section class="lt-section">
+    <div class="lt-shell">
+      <div class="lt-lh-head">
+        <a class="lt-lh-logo" href="https://www.lighthousegms.com/es" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/lighthouse-games-logo.webp" alt="Lighthouse Games" />
+        </a>
+        <div>
+          <span class="lt-label">04 — La editorial</span>
+          <h2>Lighthouse<br /><em>Games.</em></h2>
+        </div>
+      </div>
+      <p>La editorial mexicana lo está produciendo. Salió de Me Uno al Faro 2025; todavía no está en mesa.</p>
+      <div class="lt-links">
+        <a href="https://www.lighthousegms.com/es" target="_blank" rel="noopener noreferrer">Lighthouse Games ↗</a>
+        <a href="https://www.lighthousegms.com/meunoalfaro" target="_blank" rel="noopener noreferrer">Me Uno al Faro ↗</a>
+      </div>
+      <figure class="lt-lh-banner">
+        <img src="/assets/letrados-lighthouse-banner.webp" alt="Banner de Letrados, Lighthouse Games 2025" />
+      </figure>
+      <figure class="lt-proto">
+        <img src="/assets/letrados-proto.webp" alt="Dos torres de Letrados sobre la mesa, una carta por letra" />
+        <figcaption>El proto en mesa. Dos torres, veintiséis cartas.</figcaption>
+      </figure>
+    </div>
+  </section>
 
-  <!-- ════ Nav de vuelta ════════════════════════════════════ -->
   <nav class="lt-back lt-shell">
     <span>¿Seguimos mirando?</span>
     <a href="/portafolio/">Ver el portafolio completo →</a>
   </nav>
-
 </main>
 
 </BaseLayout>
