@@ -1,20 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../../i18n/locale';
+import { tartan as copy } from '../../../i18n/fichas/tartan';
 
-const hilos = [
-  { label: 'Hilo A', dir: 'Horizontal', color: '#9b2226' },
-  { label: 'Hilo B', dir: 'Horizontal', color: '#2d6a4f' },
-  { label: 'Hilo C', dir: 'Vertical',   color: '#1d3557' },
-  { label: 'Hilo D', dir: 'Vertical',   color: '#9b2226' },
-  { label: 'Hilo E', dir: 'Diagonal',   color: '#2d6a4f' },
-];
+const locale = getLocale(Astro);
+const t = copy[locale];
 ---
 
 <BaseLayout
-  title="Tartán — Estudio Alpargatas"
-  description="Tartán: un juego abstracto de patrones. Cruces, tramas y conexiones en un tablero tejido."
+  title={t.title}
+  description={t.description}
   bodyClass="page-tartan"
-  footerSubtitle="Tartán · Abstracto · Patrones"
+  footerSubtitle={t.footer}
   themeColor="#f8f4e8"
 >
 
@@ -69,7 +66,7 @@ const hilos = [
 
   /* HERO — Trama de tartán como fondo */
   .tt-hero {
-    padding: clamp(4rem, 8vw, 6rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.25rem) 0;
     background-color: var(--crema);
     /* Trama CSS: líneas horizontales + verticales */
     background-image:
@@ -84,7 +81,7 @@ const hilos = [
     display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
   }
   .tt-hero-title {
-    font-size: clamp(5rem, 16vw, 13rem); font-weight: 900; letter-spacing: -.06em; line-height: .85;
+    font-size: clamp(3.6rem, 10vw, 6.8rem); font-weight: 900; letter-spacing: -.06em; line-height: .85;
     color: var(--tinta); text-transform: uppercase; display: block;
   }
   .tt-hero-accent { color: var(--rojo); }
@@ -125,7 +122,7 @@ const hilos = [
 
   /* SECCIÓN 01 */
   .tt-concept {
-    padding: clamp(4rem, 8vw, 7rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.75rem) 0;
     background: var(--tinta);
     border-bottom: 3px solid var(--verde);
   }
@@ -146,12 +143,12 @@ const hilos = [
   .tt-thread-dir { font-size: .7rem; color: rgba(248,244,232,.4); }
 
   /* SECCIÓN 03: Estado */
-  .tt-status { padding: clamp(4rem, 8vw, 7rem) 0; background: var(--crema); border-top: 3px solid var(--rojo); }
+  .tt-status { padding: clamp(2.75rem, 5.5vw, 4.75rem) 0; background: var(--crema); border-top: 3px solid var(--rojo); }
   .tt-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem,8vw,6rem); align-items: start; }
   .tt-status h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: -.05em; line-height: .88; color: var(--tinta); margin: 1rem 0 1.5rem; }
   .tt-status h2 em { color: var(--verde); font-style: normal; }
   .tt-status p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
-  .tt-version { font-size: clamp(5rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.1em; line-height: .8; color: var(--verde); margin-bottom: 1.5rem; }
+  .tt-version { font-size: clamp(3.4rem, 8vw, 6rem); font-weight: 900; letter-spacing: -.1em; line-height: .8; color: var(--verde); margin-bottom: 1.5rem; }
   .tt-change-list { list-style: none; padding: 0; margin: 0; }
   .tt-change-list li {
     padding: .8rem 0; border-bottom: 1px solid var(--line);
@@ -169,8 +166,11 @@ const hilos = [
   .tt-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 900; letter-spacing: -.05em; text-decoration: none; color: var(--tinta); }
   .tt-back a:hover { color: var(--rojo); }
 
-  @media (max-width: 720px) {
+  @media (max-width: 980px) {
     .tt-hero-grid, .tt-concept-grid, .tt-status-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .tt-shell { width: min(1100px, calc(100% - 1.5rem)); }
   }
 </style>
 
@@ -179,18 +179,18 @@ const hilos = [
     <div class="tt-shell">
       <div class="tt-hero-grid">
         <div>
-          <nav class="tt-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Tartán</span></nav>
+          <nav class="tt-breadcrumb"><a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span></nav>
           <h1 class="tt-hero-title">Tar<span class="tt-hero-accent">tán</span></h1>
-          <p class="tt-hero-sub">Una exploración abierta alrededor de tramas, cruces y conexiones. Cada hilo que añades cambia lo que ya está, lo que puede venir y lo que ahora es imposible.</p>
+          <p class="tt-hero-sub">{t.heroSub}</p>
           <div class="tt-badges">
-            <span class="tt-badge dark">Proto</span>
-            <span class="tt-badge rojo">2 jugadores</span>
-            <span class="tt-badge verde">20–30 min</span>
+            <span class="tt-badge dark">{t.badgeProto}</span>
+            <span class="tt-badge rojo">{t.badgePlayers}</span>
+            <span class="tt-badge verde">{t.badgeTime}</span>
           </div>
         </div>
         <div>
           <div class="tt-swatch" aria-hidden="true">
-            <div class="tt-swatch-label"><span>Muestra · TT</span></div>
+            <div class="tt-swatch-label"><span>{t.swatch}</span></div>
           </div>
         </div>
       </div>
@@ -200,22 +200,22 @@ const hilos = [
   <section class="tt-concept">
     <div class="tt-shell tt-concept-grid">
       <div>
-        <span class="tt-label" style="color: rgba(248,244,232,.6)">01 — La idea</span>
-        <h2>Hilos que<br />se <em>cruzan.</em><br />Tramas que cambian.</h2>
-        <p>Tartán es un juego abstracto sobre construir un tejido compartido. En cada turno, el jugador activo añade un "hilo" al tablero — una ficha que corre en una dirección y que puede cruzar (o no) los hilos existentes.</p>
-        <p>Los cruces crean puntos de control: quien domine más cruces al final gana. Pero cada hilo nuevo cambia el valor de los que ya estaban ahí. La clave está en ver el tablero no como fichas sueltas, sino como una trama entera.</p>
+        <span class="tt-label" style="color: rgba(248,244,232,.6)">{t.labelIdea}</span>
+        <h2>{t.h2a}<br />{t.h2Mid}<em>{t.h2em}</em><br />{t.h2b}</h2>
+        <p>{t.p1}</p>
+        <p>{t.p2}</p>
       </div>
       <div>
-        <table class="tt-thread-table" aria-label="Tipos de hilo en Tartán">
+        <table class="tt-thread-table" aria-label={t.tableAria}>
           <thead>
             <tr>
-              <th>Color</th>
-              <th>Hilo</th>
-              <th>Dirección</th>
+              <th>{t.thColor}</th>
+              <th>{t.thThread}</th>
+              <th>{t.thDir}</th>
             </tr>
           </thead>
           <tbody>
-            {hilos.map(h => (
+            {t.threads.map(h => (
               <tr>
                 <td><span class="tt-thread-swatch" style={`background: ${h.color}`}></span></td>
                 <td><span class="tt-thread-label">{h.label}</span></td>
@@ -231,25 +231,25 @@ const hilos = [
   <section class="tt-status">
     <div class="tt-shell tt-status-grid">
       <div>
-        <span class="tt-label">03 — Estado actual</span>
-        <div class="tt-version" aria-hidden="true">Proto</div>
+        <span class="tt-label">{t.labelStatus}</span>
+        <div class="tt-version" aria-hidden="true">{t.version}</div>
         <ul class="tt-change-list">
-          <li>Con 5 tipos de hilo (3 dir.) la complejidad estratégica es buena, pero el setup tarda.</li>
-          <li>Los cruces diagonales añaden demasiada variabilidad — en pruebas solo horizontales y verticales.</li>
-          <li>Pendiente: probar si funciona como abstracto puro o necesita objetivos de misión.</li>
+          <li>{t.change1}</li>
+          <li>{t.change2}</li>
+          <li>{t.change3}</li>
         </ul>
       </div>
       <div>
-        <h2>Un tablero que<br />se construye<br /><em>dos veces.</em></h2>
-        <p>Tartán empezó de un problema de tejido real: ¿cómo ves todos los colores de un tartán a la vez, si cada uno pasa por encima y por debajo del otro? La respuesta en el tablero fue: no puedes verlos todos, y eso es exactamente el juego.</p>
-        <p>Es el proyecto más abierto del taller. Todavía no sé bien qué quiere ser, y eso es lo que lo hace interesante de probar.</p>
+        <h2>{t.originA}<br />{t.originB}<br /><em>{t.originEm}</em></h2>
+        <p>{t.originP1}</p>
+        <p>{t.originP2}</p>
       </div>
     </div>
   </section>
 
   <nav class="tt-back tt-shell">
-    <span>¿Seguimos mirando?</span>
-    <a href="/#juegos">Volver a todos los juegos →</a>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/#juegos', locale)}>{t.backLink}</a>
   </nav>
 </main>
 

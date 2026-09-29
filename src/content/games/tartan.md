@@ -2,15 +2,20 @@
 keyword: tartan
 name: Tartán
 emoji: 🏴󠁧󠁢󠁳󠁣󠁴󠁿
-tagline: Un tejido de alianzas que alguien siempre rompe.
-description: Una exploración abierta alrededor de tramas, cruces y conexiones.
-meta: Alianzas · Traición
+tagline: Teje el telar y entrega diseños a los clientes.
+taglineEn: Weave the loom and deliver designs to the clients.
+description: Gestionas hilos y tinturas, tejes una urdimbre lineal y cumples encargos. Un rondel, un telar, varios clientes. 2 a 5 jugadores.
+descriptionEn: You manage threads and dyes, weave a linear warp, and fill commissions. A rondel, a loom, several clients. 2 to 5 players.
+meta: Clanes · Telar · 2–5
+metaEn: Clans · Loom · 2–5
 state: proto
 stateLabel: Proto
+stateLabelEn: Prototype
 stateOrder: 5
 date: '2025-01'
 home: proto
 homeOrder: 7
+players: 2–5
 coverInitials: TT
 bg: '#f5f0e8'
 titleColor: '#8b1c1c'
@@ -20,5 +25,10 @@ palette:
   - '#8b1c1c'
   - '#2d5a27'
   - '#1a1a1a'
-titleFont: '"Helvetica Neue", Arial, sans-serif'
+titleFont: '"IM Fell English", serif'
+taglineFont: '"IM Fell English", serif'
+conceptos:
+  - clanes escoceses, telares y tinturas
+  - tartán tejido en crema, rojo y verde, look de taller
+  - rondel, teñir hilos, tejer urdimbre, entregar a clientes
 ---

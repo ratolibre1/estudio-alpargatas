@@ -1,12 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../../i18n/locale';
+import { mantas as copy } from '../../../i18n/fichas/mantas';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
 ---
 
 <BaseLayout
-  title="Mantas a Raya — Estudio Alpargatas"
-  description="Mantas a Raya: dos acuaristas mueven su meeple por una grilla 5×5, giran o voltean losetas y completan 5 misiones."
+  title={t.title}
+  description={t.description}
   bodyClass="page-mantas"
-  footerSubtitle="Mantas a Raya · Arturo Vial y Estefanía Lynch · Playtest V0.4"
+  footerSubtitle={t.footer}
   themeColor="#051820"
 >
 
@@ -94,7 +99,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: clamp(4rem, 8vw, 7rem) 0 6rem;
+    padding: clamp(2.75rem, 5.5vw, 4.75rem) 0 3.25rem;
     overflow: hidden;
   }
   .mr-hero::before {
@@ -184,7 +189,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .mr-turn,
   .mr-missions,
   .mr-end {
-    padding: clamp(5rem, 10vw, 8rem) 0;
+    padding: clamp(3rem, 6vw, 5rem) 0;
   }
   .mr-idea,
   .mr-missions { background: var(--deep); }
@@ -399,6 +404,38 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
   .mr-winner p { margin: 0; }
 
+  .mr-gallery {
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+    border-top: 1px solid var(--line);
+  }
+  .mr-gallery h2 {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: #d8eef4;
+    margin: 0 0 1.5rem;
+  }
+  .mr-gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .mr-gallery-grid figure {
+    margin: 0;
+    background: #04151c;
+    border: 1px solid rgba(90, 184, 200, .22);
+  }
+  .mr-gallery-grid figure:first-child { grid-column: 1 / -1; }
+  .mr-gallery-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  .mr-gallery-grid figure:first-child img { aspect-ratio: 16 / 10; }
+  .mr-gallery-grid figcaption {
+    padding: .65rem .8rem .75rem;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: .82rem;
+    color: var(--soft);
+  }
+
   .mr-back {
     padding: 2.5rem 0;
     border-top: 1px solid var(--line);
@@ -418,42 +455,49 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
   .mr-back a:hover { color: #d8eef4; }
 
-  @media (max-width: 780px) {
+  @media (max-width: 980px) {
     .mr-hero-grid,
     .mr-idea-grid,
     .mr-split,
-    .mr-actions { grid-template-columns: 1fr; }
-    .mr-components,
-    .mr-cards { grid-template-columns: 1fr 1fr; }
+    .mr-actions,
+    .mr-gallery-grid { grid-template-columns: 1fr; }
+    .mr-gallery-grid figure:first-child { grid-column: auto; }
     .mr-hero::before { display: none; }
     .mr-hero-logo { width: min(16rem, 80%); }
+  }
+  @media (max-width: 760px) {
+    .mr-shell { width: min(1100px, calc(100% - 1.5rem)); }
+  }
+  @media (max-width: 520px) {
+    .mr-components,
+    .mr-cards { grid-template-columns: 1fr; }
   }
 </style>
 
 <main>
   <section class="mr-hero">
     <div class="mr-shell mr-hero-inner">
-      <nav class="mr-breadcrumb" aria-label="Navegación">
-        <a href="/">Inicio</a><span>/</span><span>Mantas a Raya</span>
+      <nav class="mr-breadcrumb" aria-label={t.navAria}>
+        <a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span>
       </nav>
       <div class="mr-hero-grid">
         <div>
-          <p class="mr-label">Gran Acuario Oceánico</p>
-          <img class="mr-hero-logo" src="/assets/mantas-logo.webp" alt="Mantas a Raya" />
-          <h1>Mantas a Raya</h1>
-          <p class="mr-hero-tagline">Sé el primero en completar 5 misiones.</p>
-          <p>Dos acuaristas compiten por demostrar quién conoce mejor a las mantarrayas. Cada uno mueve su meeple por una grilla de 5×5, gira o voltea una loseta vecina, y busca una línea de tres que coincida con una carta.</p>
+          <p class="mr-label">{t.heroLabel}</p>
+          <img class="mr-hero-logo" src="/assets/mantas-logo.webp" alt={t.logoAlt} />
+          <h1>{t.crumbHere}</h1>
+          <p class="mr-hero-tagline">{t.heroTag}</p>
+          <p>{t.heroP}</p>
           <div class="mr-chips">
-            <span class="mr-chip">2 jugadores</span>
-            <span class="mr-chip">20–30 min</span>
-            <span class="mr-chip">8+</span>
-            <span class="mr-chip">5 misiones</span>
-            <span class="mr-chip sand">Playtest V0.4</span>
+            <span class="mr-chip">{t.chipPlayers}</span>
+            <span class="mr-chip">{t.chipTime}</span>
+            <span class="mr-chip">{t.chipAge}</span>
+            <span class="mr-chip">{t.chipMissions}</span>
+            <span class="mr-chip sand">{t.chipProto}</span>
           </div>
         </div>
         <figure class="mr-hero-board">
-          <img src="/assets/mantas-tablero.webp" alt="Grilla 5×5 de losetas de mantarraya con el bote en el centro" />
-          <figcaption>24 losetas + el bote al centro. Ahí empiezan los dos meeples.</figcaption>
+          <img src="/assets/mantas-tablero.webp" alt={t.boardAlt} />
+          <figcaption>{t.boardCap}</figcaption>
         </figure>
       </div>
     </div>
@@ -461,40 +505,40 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   <section class="mr-idea">
     <div class="mr-shell">
-      <p class="mr-label">01 — La idea</p>
+      <p class="mr-label">{t.ideaLabel}</p>
       <div class="mr-idea-grid">
         <div>
-          <h2>Un acuario<br />compartido.</h2>
-          <p>En el Gran Acuario Oceánico las mantarrayas nadan siguiendo las corrientes. Hoy, dos acuaristas se disputan el título de Acuarista Principal.</p>
-          <p>El tablero es de ambos: una grilla 5×5 de losetas cuadradas. Cada loseta tiene dos caras de distinto color y una dirección. En el centro va el bote. Los meeples salen de ahí. Tres cartas de misión quedan a la vista.</p>
-          <p>No hay puntaje escondido. Gana quien completa cinco cartas.</p>
+          <h2 set:html={t.ideaH2} />
+          <p>{t.ideaP1}</p>
+          <p>{t.ideaP2}</p>
+          <p>{t.ideaP3}</p>
         </div>
         <div>
           <div class="mr-components">
             <article class="mr-component">
-              <img src="/assets/mantas-loseta-a.webp" alt="Loseta de mantarraya verde" />
-              <span>24 losetas</span>
-              <p>6 rojas, 6 azules, 6 amarillas, 6 verdes. Cada una tiene dorso de otro color.</p>
+              <img src="/assets/mantas-loseta-a.webp" alt={t.comp1Alt} />
+              <span>{t.comp1K}</span>
+              <p>{t.comp1P}</p>
             </article>
             <article class="mr-component">
-              <img src="/assets/mantas-bote.webp" alt="Loseta del bote" />
-              <span>1 bote</span>
-              <p>Va al centro. Nadie puede moverse ahí.</p>
+              <img src="/assets/mantas-bote.webp" alt={t.comp2Alt} />
+              <span>{t.comp2K}</span>
+              <p>{t.comp2P}</p>
             </article>
             <article class="mr-component">
-              <img src="/assets/mantas-mision-2.webp" alt="Carta de misión con tres mantarrayas" />
-              <span>12 cartas</span>
-              <p>Patrones de 3 colores. Siempre hay 3 boca arriba.</p>
+              <img src="/assets/mantas-mision-2.webp" alt={t.comp3Alt} />
+              <span>{t.comp3K}</span>
+              <p>{t.comp3P}</p>
             </article>
             <article class="mr-component">
-              <img src="/assets/mantas-meeple-naranja.webp" alt="Meeple naranja de buzo" />
-              <span>2 meeples</span>
-              <p>Uno naranja, uno morado. El más joven empieza.</p>
+              <img src="/assets/mantas-meeple-naranja.webp" alt={t.comp4Alt} />
+              <span>{t.comp4K}</span>
+              <p>{t.comp4P}</p>
             </article>
             <article class="mr-component">
-              <img src="/assets/mantas-salvavidas.webp" alt="Ficha de salvavidas" />
-              <span>1 salvavidas</span>
-              <p>Marca la última loseta usada. Esa no se toca otra vez hasta que se mueva.</p>
+              <img src="/assets/mantas-salvavidas.webp" alt={t.comp5Alt} />
+              <span>{t.comp5K}</span>
+              <p>{t.comp5P}</p>
             </article>
           </div>
         </div>
@@ -505,55 +549,55 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="mr-turn">
     <div class="mr-shell mr-split">
       <div>
-        <p class="mr-label">02 — Tu turno</p>
-        <h2>Moverse,<br />después elegir.</h2>
+        <p class="mr-label">{t.turnLabel}</p>
+        <h2 set:html={t.turnH2} />
         <ol class="mr-steps">
           <li>
             <span class="mr-step-n">1</span>
             <div>
-              <b>Muévete</b>
-              <p>Lleva tu meeple a una loseta adyacente: horizontal, vertical o diagonal.</p>
+              <b>{t.step1Title}</b>
+              <p>{t.step1Body}</p>
             </div>
           </li>
           <li>
             <span class="mr-step-n">2</span>
             <div>
-              <b>Interactúa o completa</b>
-              <p>Elige una loseta vecina y haz una sola cosa: girar o voltear. O, si el patrón ya está armado, toma una misión en vez de tocar losetas.</p>
+              <b>{t.step2Title}</b>
+              <p>{t.step2Body}</p>
             </div>
           </li>
           <li>
             <span class="mr-step-n">3</span>
             <div>
-              <b>Deja el salvavidas</b>
-              <p>Si interactuaste, ponlo sobre esa loseta. Si completaste una misión, ponlo en el bote.</p>
+              <b>{t.step3Title}</b>
+              <p>{t.step3Body}</p>
             </div>
           </li>
         </ol>
-        <div class="mr-nope" aria-label="Casillas prohibidas">
-          <span><img src="/assets/mantas-bote.webp" alt="" /> No al bote</span>
-          <span><img src="/assets/mantas-meeple-morado.webp" alt="" /> No al otro meeple</span>
-          <span><img src="/assets/mantas-salvavidas.webp" alt="" /> No al salvavidas</span>
+        <div class="mr-nope" aria-label={t.nopeAria}>
+          <span><img src="/assets/mantas-bote.webp" alt="" /> {t.nopeBoat}</span>
+          <span><img src="/assets/mantas-meeple-morado.webp" alt="" /> {t.nopeMeeple}</span>
+          <span><img src="/assets/mantas-salvavidas.webp" alt="" /> {t.nopeLife}</span>
         </div>
       </div>
       <div>
         <div class="mr-actions">
           <article class="mr-action">
-            <span>Girar</span>
-            <p>90° horario o antihorario. Cambia la dirección, no el color. El 180° no vale.</p>
+            <span>{t.actRotate}</span>
+            <p>{t.actRotateP}</p>
             <div class="mr-flip">
-              <img src="/assets/mantas-loseta-a.webp" alt="Mantarraya verde hacia arriba" />
+              <img src="/assets/mantas-loseta-a.webp" alt={t.flipAlt1} />
               <em>90°</em>
-              <img src="/assets/mantas-loseta-a.webp" alt="Mantarraya verde girada" style="transform: rotate(90deg)" />
+              <img src="/assets/mantas-loseta-a.webp" alt={t.flipAlt2} style="transform: rotate(90deg)" />
             </div>
           </article>
           <article class="mr-action">
-            <span>Voltear</span>
-            <p>Revela el otro color. La dirección se queda igual.</p>
+            <span>{t.actFlip}</span>
+            <p>{t.actFlipP}</p>
             <div class="mr-flip">
-              <img src="/assets/mantas-loseta-a.webp" alt="Cara verde" />
+              <img src="/assets/mantas-loseta-a.webp" alt={t.flipAlt3} />
               <em>⇔</em>
-              <img src="/assets/mantas-loseta-b.webp" alt="Cara azul de la misma loseta" />
+              <img src="/assets/mantas-loseta-b.webp" alt={t.flipAlt4} />
             </div>
           </article>
         </div>
@@ -564,29 +608,29 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="mr-missions">
     <div class="mr-shell mr-split">
       <div>
-        <p class="mr-label">03 — Las misiones</p>
-        <h2>Tres en línea,<br />mismos colores.</h2>
-        <p>Puedes completar una carta cuando hay tres mantarrayas en línea recta —horizontal, vertical o diagonal— y se cumplen las cuatro condiciones. Una sola misión por turno, aunque armes más de un patrón.</p>
+        <p class="mr-label">{t.missLabel}</p>
+        <h2 set:html={t.missH2} />
+        <p>{t.missP1}</p>
         <ol class="mr-conditions">
-          <li><i>1</i> Forman una línea recta.</li>
-          <li><i>2</i> Todas apuntan al mismo lado.</li>
-          <li><i>3</i> Los colores coinciden con la carta, en orden.</li>
-          <li><i>4</i> Tu meeple está en la primera loseta de esa secuencia.</li>
+          <li><i>1</i> {t.cond1}</li>
+          <li><i>2</i> {t.cond2}</li>
+          <li><i>3</i> {t.cond3}</li>
+          <li><i>4</i> {t.cond4}</li>
         </ol>
-        <p>Tomas la carta, volteas las tres losetas (el color cambia, la dirección no), la dejas frente a ti y revelas una nueva del mazo.</p>
+        <p>{t.missP2}</p>
       </div>
       <div class="mr-cards">
         <figure>
-          <img src="/assets/mantas-mision-1.webp" alt="Carta de misión" />
-          <figcaption>Siempre hay tres a la vista.</figcaption>
+          <img src="/assets/mantas-mision-1.webp" alt={t.card1Alt} />
+          <figcaption>{t.card1Cap}</figcaption>
         </figure>
         <figure>
-          <img src="/assets/mantas-mision-2.webp" alt="Carta de misión amarillo, azul y rojo" />
-          <figcaption>El patrón se lee en orden.</figcaption>
+          <img src="/assets/mantas-mision-2.webp" alt={t.card2Alt} />
+          <figcaption>{t.card2Cap}</figcaption>
         </figure>
         <figure>
-          <img src="/assets/mantas-mision-3.webp" alt="Carta de misión" />
-          <figcaption>Al tomarla, entra otra.</figcaption>
+          <img src="/assets/mantas-mision-3.webp" alt={t.card3Alt} />
+          <figcaption>{t.card3Cap}</figcaption>
         </figure>
       </div>
     </div>
@@ -595,23 +639,52 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="mr-end">
     <div class="mr-shell mr-split">
       <div>
-        <p class="mr-label">04 — El cierre</p>
-        <h2>Cinco cartas<br />y se acaba.</h2>
-        <p>La partida termina en el momento en que un jugador completa su quinta misión. Ese jugador es el Acuarista Principal del Gran Acuario Oceánico.</p>
-        <p>Si ambos llegaran a la quinta en el mismo turno, gana quien tenía menos misiones justo antes. Si el empate sigue, comparten la victoria.</p>
-        <p>Diseño de Arturo Vial Arqueros y Estefanía Lynch Pearcy. Playtest V0.4, según el manual impreso.</p>
+        <p class="mr-label">{t.endLabel}</p>
+        <h2 set:html={t.endH2} />
+        <p>{t.endP1}</p>
+        <p>{t.endP2}</p>
+        <p>{t.endP3}</p>
       </div>
       <div class="mr-winner">
-        <span>Ganador</span>
-        <strong>Acuarista Principal</strong>
-        <p>No se suman puntos al final. Las cartas que no alcanzaste no restan. Lo que importa es llegar a cinco antes que el otro.</p>
+        <span>{t.winnerK}</span>
+        <strong>{t.winnerTitle}</strong>
+        <p>{t.winnerP}</p>
       </div>
     </div>
   </section>
 
-  <nav class="mr-back mr-shell" aria-label="Volver a proyectos">
-    <span>Seguimos mirando</span>
-    <a href="/#juegos">Volver a todos los juegos →</a>
+  <section class="mr-gallery">
+    <div class="mr-shell">
+      <p class="mr-label">{t.galLabel}</p>
+      <h2 set:html={t.galH2} />
+      <div class="mr-gallery-grid">
+        <figure>
+          <img src="/assets/mantas-partida.webp" alt={t.galPartidaAlt} />
+          <figcaption>{t.galPartidaCap}</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/mantas-losetas-mesa.webp" alt={t.galLosetasAlt} />
+          <figcaption>{t.galLosetasCap}</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/mantas-tabletopia.webp" alt={t.galDigitalAlt} />
+          <figcaption>{t.galDigitalCap}</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/mantas-proto-meeples.webp" alt={t.galProtoMeeplesAlt} />
+          <figcaption>{t.galProtoMeeplesCap}</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/mantas-proto-abanico.webp" alt={t.galProtoFanAlt} />
+          <figcaption>{t.galProtoFanCap}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <nav class="mr-back mr-shell" aria-label={t.backAria}>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/#juegos', locale)}>{t.backLink}</a>
   </nav>
 </main>
 

@@ -1,0 +1,8 @@
+---
+import Page from '../../../juegos/[slug]/index.astro';
+
+export { getStaticPaths } from '../../../juegos/[slug]/index.astro';
+
+const { entry } = Astro.props;
+---
+<Page entry={entry} />

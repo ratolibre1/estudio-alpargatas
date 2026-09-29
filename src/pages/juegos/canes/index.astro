@@ -1,50 +1,25 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../../i18n/locale';
+import { canes as copy } from '../../../i18n/fichas/canes';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
 
 const disciplinas = [
-  {
-    key: 'caza',
-    name: 'Caza',
-    color: '#b83020',
-    simple: 'Roba tres cartas al azar de la mano de otro jugador.',
-    avanzada: 'Pon un snack en el último espacio libre de una carta rival. Ese hueco queda bloqueado hasta el fin de ronda.',
-  },
-  {
-    key: 'agilidad',
-    name: 'Agilidad',
-    color: '#b88010',
-    simple: 'Intercambia tu mano completa con la de otro jugador.',
-    avanzada: 'Secuestras la acción que acaba de pagar otro: el efecto lo haces tú.',
-  },
-  {
-    key: 'rastreo',
-    name: 'Rastreo',
-    color: '#3a7a3a',
-    simple: 'Mira las cinco cartas más recientes del descarte, elige tres y llévalas a tu mano.',
-    avanzada: 'Recuperas todos tus snacks gastados, menos los que usaste para bloquear.',
-  },
-  {
-    key: 'estilo',
-    name: 'Estilo',
-    color: '#1a3a7a',
-    simple: 'Cambia esa ficha por dos fichas de otras disciplinas, si tienes espacio en tus cartas.',
-    avanzada: 'Descarta hasta cinco cartas de la mano y roba el doble.',
-  },
-  {
-    key: 'obediencia',
-    name: 'Obediencia',
-    color: '#6b3fa0',
-    simple: 'Anula una acción de otro jugador. También se puede anular de vuelta.',
-    avanzada: 'Anula un set que esté bajando otro jugador. Esas cartas van al descarte.',
-  },
+  { key: 'caza', name: t.discCaza, color: '#b83020', simple: t.discCazaSimple, avanzada: t.discCazaAdv },
+  { key: 'agilidad', name: t.discAgilidad, color: '#b88010', simple: t.discAgilidadSimple, avanzada: t.discAgilidadAdv },
+  { key: 'rastreo', name: t.discRastreo, color: '#3a7a3a', simple: t.discRastreoSimple, avanzada: t.discRastreoAdv },
+  { key: 'estilo', name: t.discEstilo, color: '#1a3a7a', simple: t.discEstiloSimple, avanzada: t.discEstiloAdv },
+  { key: 'obediencia', name: t.discObediencia, color: '#6b3fa0', simple: t.discObedienciaSimple, avanzada: t.discObedienciaAdv },
 ];
 ---
 
 <BaseLayout
-  title="El Gran Festival de Canes — Estudio Alpargatas"
-  description="El Gran Festival de Canes: sets de disciplinas, fichas de Acción y snacks. 2 a 5 jugadores, 30 minutos."
+  title={t.title}
+  description={t.description}
   bodyClass="page-canes"
-  footerSubtitle="El Gran Festival de Canes · Arturo Vial · Proto V0.2"
+  footerSubtitle={t.footer}
   themeColor="#e8f2e0"
 >
 
@@ -122,7 +97,7 @@ const disciplinas = [
   .ca-breadcrumb a:hover { color: var(--purple); }
 
   .ca-hero {
-    padding: clamp(3.5rem, 8vw, 6.5rem) 0 4rem;
+    padding: clamp(2.5rem, 5.5vw, 4.5rem) 0 2.5rem;
   }
   .ca-hero-grid {
     display: grid;
@@ -182,7 +157,7 @@ const disciplinas = [
     box-shadow: 6px 6px 0 var(--gold);
   }
 
-  .ca-section { padding: clamp(4.5rem, 9vw, 7.5rem) 0; }
+  .ca-section { padding: clamp(2.75rem, 5.5vw, 4.75rem) 0; }
   .ca-section.alt { background: #dcecc8; }
   .ca-section h2 {
     font-family: Georgia, serif;
@@ -372,6 +347,28 @@ const disciplinas = [
     text-transform: uppercase;
   }
 
+  .ca-gallery-grid {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 1rem;
+  }
+  .ca-gallery-grid figure {
+    margin: 0;
+    background: var(--white);
+    border: 3px solid var(--purple);
+    box-shadow: 4px 4px 0 var(--gold);
+  }
+  .ca-gallery-grid figure:first-child { grid-row: span 2; }
+  .ca-gallery-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+  .ca-gallery-grid figure:first-child img { aspect-ratio: 3 / 4; height: 100%; }
+  .ca-gallery-grid figcaption {
+    padding: .65rem .8rem .75rem;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: .82rem;
+    color: var(--muted);
+  }
+
   .ca-back {
     padding: 2.5rem 0;
     display: flex;
@@ -390,11 +387,19 @@ const disciplinas = [
   }
   .ca-back a:hover { color: #2d1545; }
 
-  @media (max-width: 800px) {
+  @media (max-width: 980px) {
     .ca-hero-grid,
     .ca-split,
-    .ca-score { grid-template-columns: 1fr; }
-    .ca-cards { grid-template-columns: repeat(3, 1fr); }
+    .ca-score,
+    .ca-gallery-grid { grid-template-columns: 1fr; }
+    .ca-gallery-grid figure:first-child { grid-row: auto; }
+    .ca-gallery-grid figure:first-child img { aspect-ratio: 4 / 3; }
+  }
+  @media (max-width: 760px) {
+    .ca-shell { width: min(1140px, calc(100% - 1.5rem)); }
+  }
+  @media (max-width: 520px) {
+    .ca-cards { grid-template-columns: 1fr 1fr; }
   }
 </style>
 
@@ -402,33 +407,33 @@ const disciplinas = [
   <section class="ca-hero">
     <div class="ca-shell ca-hero-grid">
       <div>
-        <nav class="ca-breadcrumb" aria-label="Navegación">
-          <a href="/">Inicio</a><span>/</span><span>El Gran Festival de Canes</span>
+        <nav class="ca-breadcrumb" aria-label={t.navAria}>
+          <a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span>
         </nav>
-        <img class="ca-hero-logo" src="/assets/canes-logo.webp" alt="El Gran Festival de Canes" />
-        <h1>El Gran Festival de Canes</h1>
-        <p class="ca-hero-tag">Completa las cinco disciplinas. El festival se gana por puntos.</p>
-        <p>Cada año llegan perros de todas las razas a demostrar qué los hace especiales. Tú eres el entrenador: robas cartas, bajas sets y gastas fichas de Acción. El primero en tener las cinco disciplinas frente a sí cierra la ronda.</p>
+        <img class="ca-hero-logo" src="/assets/canes-logo.webp" alt={t.logoAlt} />
+        <h1>{t.crumbHere}</h1>
+        <p class="ca-hero-tag">{t.heroTag}</p>
+        <p>{t.heroP}</p>
         <div class="ca-chips">
-          <span class="ca-chip">2–5 jugadores</span>
-          <span class="ca-chip">30 min</span>
-          <span class="ca-chip">8+</span>
-          <span class="ca-chip">5 disciplinas</span>
-          <span class="ca-chip gold">Proto V0.2</span>
+          <span class="ca-chip">{t.chipPlayers}</span>
+          <span class="ca-chip">{t.chipTime}</span>
+          <span class="ca-chip">{t.chipAge}</span>
+          <span class="ca-chip">{t.chipDisc}</span>
+          <span class="ca-chip gold">{t.chipProto}</span>
         </div>
       </div>
       <figure class="ca-hero-ill">
-        <img src="/assets/canes-hero.webp" alt="Perros en el podio del Gran Festival de Canes" />
+        <img src="/assets/canes-hero.webp" alt={t.heroIllAlt} />
       </figure>
     </div>
   </section>
 
   <section class="ca-section alt">
     <div class="ca-shell">
-      <span class="ca-label">01 — La idea</span>
-      <h2>Cinco disciplinas.<br /><em>Una mesa.</em></h2>
-      <p>Hay 100 cartas —20 de cada tipo— y 75 fichas de Acción. Los snacks sirven para robar de más y, al cierre, también suman. Cada jugador arranca con 5 cartas, 9 snacks y una carta de ayuda.</p>
-      <p>El primer set de cada disciplina queda boca arriba frente a ti. Encima van las fichas: 1 si bajaste 3 cartas, 2 si fueron 4, 3 si fueron 5. Esas fichas se gastan para frenar al rival o armarte el siguiente set.</p>
+      <span class="ca-label">{t.ideaLabel}</span>
+      <h2 set:html={t.ideaH2} />
+      <p>{t.ideaP1}</p>
+      <p>{t.ideaP2}</p>
       <div class="ca-cards">
         {disciplinas.map((d) => (
           <figure>
@@ -445,39 +450,39 @@ const disciplinas = [
   <section class="ca-section">
     <div class="ca-shell ca-split">
       <div>
-        <span class="ca-label">02 — El turno</span>
-        <h2>Roba, juega,<br /><em>deja cinco.</em></h2>
+        <span class="ca-label">{t.turnLabel}</span>
+        <h2 set:html={t.turnH2} />
         <ol class="ca-steps">
           <li>
             <span class="ca-n">1</span>
             <div>
-              <b>Fase de robo</b>
-              <p>Robas una carta gratis. Puedes gastar hasta 4 snacks para robar más, una por snack. También puedes canjear una ficha de Acción de tus cartas por 2 snacks.</p>
+              <b>{t.step1Title}</b>
+              <p>{t.step1Body}</p>
             </div>
           </li>
           <li>
             <span class="ca-n">2</span>
             <div>
-              <b>Fase de acciones</b>
-              <p>Bajas sets de 3, 4 o 5 cartas iguales, en el orden que quieras, las veces que puedas. Gastas 1 ficha para una acción simple o 2 para una avanzada.</p>
+              <b>{t.step2Title}</b>
+              <p>{t.step2Body}</p>
             </div>
           </li>
           <li>
             <span class="ca-n">3</span>
             <div>
-              <b>Fin de turno</b>
-              <p>Quedas con exactamente 5 cartas: si te pasaste, descartas; si te faltan, robas. Si el mazo se acaba, se baraja el descarte.</p>
+              <b>{t.step3Title}</b>
+              <p>{t.step3Body}</p>
             </div>
           </li>
         </ol>
       </div>
       <div class="ca-set">
-        <img src="/assets/canes-set.webp" alt="Carta de Estilo con dos fichas de Acción encima" />
-        <p>El primer set de esa disciplina se queda. El resto va al descarte. Las fichas se apilan en los tres huecos de la carta.</p>
+        <img src="/assets/canes-set.webp" alt={t.setAlt} />
+        <p>{t.setP}</p>
         <div class="ca-tokens">
-          <span><img src="/assets/canes-abanico.webp" alt="" /> 3 cartas → 1 ficha</span>
-          <span>4 cartas → 2 fichas</span>
-          <span>5 cartas → 3 fichas</span>
+          <span><img src="/assets/canes-abanico.webp" alt="" /> {t.token3}</span>
+          <span>{t.token4}</span>
+          <span>{t.token5}</span>
         </div>
       </div>
     </div>
@@ -485,9 +490,9 @@ const disciplinas = [
 
   <section class="ca-section alt">
     <div class="ca-shell">
-      <span class="ca-label">03 — Las acciones</span>
-      <h2>Una ficha, efecto simple.<br /><em>Dos, la versión dura.</em></h2>
-      <p>Devuelves las fichas a la reserva. Las puedes encadenar en el mismo turno si te alcanzan.</p>
+      <span class="ca-label">{t.actLabel}</span>
+      <h2 set:html={t.actH2} />
+      <p>{t.actP}</p>
       <div class="ca-disc">
         {disciplinas.map((d) => (
           <article style={`--disc:${d.color}`}>
@@ -496,8 +501,8 @@ const disciplinas = [
             </span>
             <div>
               <h3>{d.name}</h3>
-              <p><strong>1 ficha.</strong> {d.simple}</p>
-              <p><strong>2 fichas.</strong> {d.avanzada}</p>
+              <p><strong>{t.ficha1}</strong> {d.simple}</p>
+              <p><strong>{t.ficha2}</strong> {d.avanzada}</p>
             </div>
           </article>
         ))}
@@ -508,47 +513,68 @@ const disciplinas = [
   <section class="ca-section">
     <div class="ca-shell ca-split">
       <div>
-        <span class="ca-label">04 — El cierre</span>
-        <h2>La ronda se corta<br /><em>en cinco.</em></h2>
-        <p>Cuando un jugador tiene una carta de cada disciplina, la ronda termina ahí. Todos suman: 5 puntos por cerrarla, snacks que te queden, y las fichas que siguen sobre tus cartas (1 / 3 / 5 puntos si tienes 1, 2 o 3 del mismo tipo).</p>
-        <p>Después se baraja todo, vuelven las fichas a la reserva, cada uno recibe 5 cartas y 9 snacks, y el ganador de la ronda abre la siguiente.</p>
-        <p>Gana el festival quien acumule más puntos. Empate: más rondas ganadas. Proto V0.2, según el manual impreso.</p>
+        <span class="ca-label">{t.closeLabel}</span>
+        <h2 set:html={t.closeH2} />
+        <p>{t.closeP1}</p>
+        <p>{t.closeP2}</p>
+        <p>{t.closeP3}</p>
       </div>
       <div>
         <div class="ca-score">
           <article>
             <span>01</span>
-            <b>Cerrar la ronda</b>
-            <p>5 puntos para quien complete las cinco disciplinas.</p>
+            <b>{t.score1K}</b>
+            <p>{t.score1P}</p>
           </article>
           <article>
             <span>02</span>
-            <b>Snacks</b>
-            <p>9+ → 5 pts. 6+ → 3 pts. 3+ → 1 pt.</p>
+            <b>{t.score2K}</b>
+            <p>{t.score2P}</p>
           </article>
           <article>
             <span>03</span>
-            <b>Fichas en cartas</b>
-            <p>Por disciplina: 1 ficha = 1, 2 = 3, 3 = 5.</p>
+            <b>{t.score3K}</b>
+            <p>{t.score3P}</p>
           </article>
         </div>
         <table class="ca-rounds" style="margin-top:1.2rem;">
           <thead>
-            <tr><th>Jugadores</th><th>Rondas</th></tr>
+            <tr><th>{t.thPlayers}</th><th>{t.thRounds}</th></tr>
           </thead>
           <tbody>
             <tr><td>2</td><td>5</td></tr>
             <tr><td>3</td><td>4</td></tr>
-            <tr><td>4 o 5</td><td>3</td></tr>
+            <tr><td>{t.row45}</td><td>3</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <nav class="ca-back ca-shell" aria-label="Volver a proyectos">
-    <span>¿Seguimos mirando?</span>
-    <a href="/#juegos">Volver a todos los juegos →</a>
+  <section class="ca-section alt">
+    <div class="ca-shell">
+      <span class="ca-label">{t.galLabel}</span>
+      <h2 set:html={t.galH2} />
+      <div class="ca-gallery-grid">
+        <figure>
+          <img src="/assets/canes-mesa.webp" alt={t.galMesaAlt} />
+          <figcaption>{t.galMesaCap}</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/canes-mesa-accion.webp" alt={t.galAccionAlt} />
+          <figcaption>{t.galAccionCap}</figcaption>
+        </figure>
+        <figure>
+          <img src="/assets/canes-cartas-closeup.webp" alt={t.galCloseAlt} />
+          <figcaption>{t.galCloseCap}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <nav class="ca-back ca-shell" aria-label={t.backAria}>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/#juegos', locale)}>{t.backLink}</a>
   </nav>
 </main>
 
