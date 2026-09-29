@@ -1,12 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../../i18n/locale';
+import { pavoneo as copy } from '../../../i18n/fichas/pavoneo';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
 ---
 
 <BaseLayout
-  title="Pavoneo — Estudio Alpargatas"
-  description="Pavoneo: un duelo de información asimétrica. Mostrar un poco más puede dar puntos o hacer que todo se venga abajo."
+  title={t.title}
+  description={t.description}
   bodyClass="page-pavoneo"
-  footerSubtitle="Pavoneo · Duelo · Información asimétrica"
+  footerSubtitle={t.footer}
   themeColor="#0a1a24"
 >
 
@@ -61,9 +66,9 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* HERO */
   .pv-hero {
-    min-height: calc(100svh - 5rem);
+    min-height: auto;
     display: flex; flex-direction: column; justify-content: center;
-    padding: clamp(4rem, 8vw, 6rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.25rem) 0;
     background: var(--deep);
     border-bottom: 1px solid var(--line);
     position: relative; overflow: hidden;
@@ -92,8 +97,21 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     pointer-events: none;
   }
   .pv-hero-content { position: relative; z-index: 1; max-width: 42rem; }
+  .pv-logo {
+    display: block;
+    width: min(22rem, 100%);
+    height: auto;
+    margin: 0 0 1.4rem;
+  }
+  .pv-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
   .pv-hero-title {
-    font-size: clamp(5rem, 16vw, 13rem); font-weight: 900; letter-spacing: -.06em; line-height: .85;
+    font-size: clamp(3.6rem, 10vw, 6.8rem); font-weight: 900; letter-spacing: -.06em; line-height: .85;
     color: var(--gold);
     text-shadow: 2px 2px 0 rgba(10,147,150,.3), 4px 4px 0 rgba(10,147,150,.15);
     text-transform: uppercase; display: block; margin: 0 0 1.5rem;
@@ -113,7 +131,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* SECCIÓN 01 */
   .pv-concept {
-    padding: clamp(4rem, 8vw, 7rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.75rem) 0;
     background: var(--panel);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -135,9 +153,26 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .pv-risk-fill { height: 100%; border-radius: 2px; }
   .pv-risk-val { font-size: .75rem; font-weight: 700; color: var(--teal-cl); text-align: right; white-space: nowrap; }
 
+  .pv-fan {
+    margin: 0;
+  }
+  .pv-fan img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+  .pv-fan figcaption {
+    margin-top: .7rem;
+    font-size: .78rem;
+    color: var(--dim);
+    line-height: 1.5;
+  }
+
   /* SECCIÓN 03: Estado */
   .pv-status {
-    padding: clamp(4rem, 8vw, 7rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.75rem) 0;
     background: var(--deep);
     border-top: 1px solid var(--line);
   }
@@ -146,7 +181,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .pv-status h2 em { color: var(--gold); font-style: normal; }
   .pv-status p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
   .pv-version {
-    font-size: clamp(5rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.1em; line-height: .8;
+    font-size: clamp(3.4rem, 8vw, 6rem); font-weight: 900; letter-spacing: -.1em; line-height: .8;
     color: var(--teal); margin-bottom: 1.5rem;
   }
   .pv-change-list { list-style: none; padding: 0; margin: 0; }
@@ -166,22 +201,27 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .pv-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 900; letter-spacing: -.05em; text-decoration: none; color: var(--gold); }
   .pv-back a:hover { color: var(--teal); }
 
-  @media (max-width: 720px) {
+  @media (max-width: 980px) {
     .pv-concept-grid, .pv-status-grid { grid-template-columns: 1fr; }
     .pv-hero::before, .pv-hero::after { display: none; }
+  }
+  @media (max-width: 760px) {
+    .pv-shell { width: min(1100px, calc(100% - 1.5rem)); }
   }
 </style>
 
 <main>
   <section class="pv-hero">
     <div class="pv-shell pv-hero-content">
-      <nav class="pv-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Pavoneo</span></nav>
-      <h1 class="pv-hero-title">Pavoneo</h1>
-      <p class="pv-hero-sub">Un duelo de dos jugadores donde mostrar más puede darte la victoria o hundirte completamente. La información no es poder: es riesgo.</p>
+      <nav class="pv-breadcrumb"><a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span></nav>
+      <img class="pv-logo" src={t.logoSrc} alt={t.logoAlt} />
+      <h1 class="pv-visually-hidden">{t.displayName}</h1>
+      <p class="pv-hero-sub">{t.heroSub}</p>
       <div class="pv-badges">
-        <span class="pv-badge gold">Proto</span>
-        <span class="pv-badge teal">2 jugadores</span>
-        <span class="pv-badge danger">10–15 min</span>
+        <span class="pv-badge gold">{t.badgeProto}</span>
+        <span class="pv-badge teal">{t.badgePlayers}</span>
+        <span class="pv-badge danger">{t.badgeTime}</span>
+        <span class="pv-badge gold">{t.badgeCards}</span>
       </div>
     </div>
   </section>
@@ -189,20 +229,18 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="pv-concept">
     <div class="pv-shell pv-concept-grid">
       <div>
-        <span class="pv-label">01 — La idea</span>
-        <h2>Mostrar más.<br /><em>Ganar más.</em><br />Perder todo.</h2>
-        <p>En Pavoneo, cada jugador tiene una mano secreta de cartas. En cada turno puede elegir cuántas cartas revelar del total: revelar más da más puntos al final de la ronda, pero exponer demasiado le da al rival información que puede usar en tu contra.</p>
-        <p>La mecánica de información asimétrica: los dos jugadores nunca saben exactamente qué tiene el otro — solo lo que el otro ha decidido mostrar. Y a veces mostrar una carta falsa vale más que mostrar tres verdaderas.</p>
+        <span class="pv-label">{t.labelIdea}</span>
+        <h2>{t.h2a}<br /><em>{t.h2em}</em><br />{t.h2b}</h2>
+        <p>{t.p1}</p>
+        <p>{t.p2}</p>
       </div>
       <div>
-        <div class="pv-risk-meter" aria-label="Medidor de riesgo según cartas reveladas">
-          {[
-            { label: '1 carta', fill: 15, color: '#0a9396', pts: '+2 pts · riesgo mínimo' },
-            { label: '2 cartas', fill: 35, color: '#5f9ea0', pts: '+5 pts · riesgo bajo' },
-            { label: '3 cartas', fill: 58, color: '#e9c46a', pts: '+9 pts · riesgo medio' },
-            { label: '4 cartas', fill: 80, color: '#e07a5f', pts: '+14 pts · riesgo alto' },
-            { label: 'Mano completa', fill: 100, color: '#9b2226', pts: '+20 pts · todo o nada' },
-          ].map(r => (
+        <figure class="pv-fan">
+          <img src="/assets/pavoneo-abanico.webp" alt={t.fanAlt} />
+          <figcaption>{t.fanCap}</figcaption>
+        </figure>
+        <div class="pv-risk-meter" aria-label={t.riskAria}>
+          {t.risks.map(r => (
             <div class="pv-risk-row">
               <div class="pv-risk-label">{r.label}</div>
               <div class="pv-risk-bar">
@@ -219,25 +257,25 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="pv-status">
     <div class="pv-shell pv-status-grid">
       <div>
-        <span class="pv-label">03 — Estado actual</span>
-        <div class="pv-version" aria-hidden="true">Proto</div>
+        <span class="pv-label">{t.labelStatus}</span>
+        <div class="pv-version" aria-hidden="true">{t.version}</div>
         <ul class="pv-change-list">
-          <li>Las cartas de "señuelo" hacen el juego más interesante pero más difícil de balancear.</li>
-          <li>Con manos de 5 cartas el tiempo por partida baja a 10 min — posiblemente demasiado corto.</li>
-          <li>Pendiente: definir cuándo y cómo se resuelven los empates de puntuación al revelar.</li>
+          <li>{t.change1}</li>
+          <li>{t.change2}</li>
+          <li>{t.change3}</li>
         </ul>
       </div>
       <div>
-        <h2>Nació de un<br />juego de<br /><em>poker sin cartas.</em></h2>
-        <p>Pavoneo empezó pensando en qué parte del poker era más interesante sin el azar del reparto. La respuesta fue: el momento en que decides cuánto mostrar.</p>
-        <p>El pavo real como metáfora llegó solo: un animal que muestra todo lo que tiene para intimidar, y que a veces eso es exactamente lo que lo delata.</p>
+        <h2>{t.originA}<br />{t.originB}<br /><em>{t.originEm}</em></h2>
+        <p>{t.originP1}</p>
+        <p>{t.originP2}</p>
       </div>
     </div>
   </section>
 
   <nav class="pv-back pv-shell">
-    <span>¿Seguimos mirando?</span>
-    <a href="/#juegos">Volver a todos los juegos →</a>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/#juegos', locale)}>{t.backLink}</a>
   </nav>
 </main>
 

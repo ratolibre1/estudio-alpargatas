@@ -20,7 +20,7 @@ npm run preview
 
 ## Estructura
 
-- `src/pages/`: portada, mapa, portafolio y fichas en `/juegos/<keyword>/`.
+- `src/pages/`: portada, mapa, portafolio, sobre mí (`/sobre-mi/`) y fichas en `/juegos/<keyword>/`.
 - `src/layouts/BaseLayout.astro`: estructura HTML común y metadatos.
 - `src/components/`: encabezado y pie reutilizables.
 - `src/content/games/`: CMS — única fuente de verdad. El **keyword** (una palabra) es el id del archivo y el slug (`/juegos/reloj/`, `/juegos/canes/`).
@@ -30,6 +30,8 @@ npm run preview
 - `public/assets/`: logo y fotografías.
 
 Para añadir un juego: crea `src/content/games/<keyword>.md` (o desde `/admin/`) y, si necesita ficha diseñada, `src/pages/juegos/<keyword>/index.astro`.
+
+Lineamientos de ficha + mobile (breakpoints 980 / 760 / 520, i18n, wrapper `/en/`): **`docs/FICHAS.md`**.
 
 ## GitHub y Netlify
 

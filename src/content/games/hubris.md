@@ -2,17 +2,31 @@
 keyword: hubris
 name: Hubris
 emoji: ⚡
-tagline: Construyes para dominar. O para caer en gloria.
-description: Coopera para completar hazañas, pero compite por reclamar su gloria.
-meta: Dominio · V0.5
+tagline: La mayor proclama única se lleva la Hazaña. Némesis espera al más soberbio.
+taglineEn: The highest unique boast takes the Feat. Nemesis waits for the most arrogant.
+description: Cada era declaras en secreto un Alarde sobre un patrono del Panteón. Los valores repetidos se cancelan. Ganar Hazañas da Gloria; al cerrar, Némesis castiga al máximo de Hubris si llegó a 6.
+descriptionEn: Each era you secretly declare a Boast on a patron of the Pantheon. Repeated values cancel. Winning Feats scores Glory; at the close, Nemesis punishes the Hubris maximum if it reached 6.
+meta: Proclamas · V0.2
+metaEn: Boasts · V0.2
 state: rediseno
 stateLabel: En rediseño
+stateLabelEn: Being redesigned
 stateOrder: 4
 date: '2025-04'
 home: proto
 homeOrder: 2
+players: 2–4
+facts:
+  - 2–4 jugadores
+  - 4 eras
+  - 25 hazañas
+factsEn:
+  - 2–4 players
+  - 4 eras
+  - 25 feats
 image: /assets/hubris-estelas.webp
 imageAlt: Hubris
+imageAltEn: Hubris
 bg: "#2c1c3c"
 titleColor: "#d4af37"
 taglineColor: rgba(212,175,55,.65)
@@ -21,5 +35,10 @@ palette:
   - "#8b4513"
   - "#d4af37"
   - "#4a3060"
-titleFont: '"Trajan Pro", "Palatino Linotype", Georgia, serif'
+titleFont: 'Cinzel, serif'
+taglineFont: '"Cormorant Garamond", serif'
+conceptos:
+  - mitología griega, hybris, Némesis, Panteón
+  - neon cyberpunk sobre púrpura oscuro, glifos y columnas
+  - proclamas secretas, mayor único, Hubris y juicio al umbral 6
 ---

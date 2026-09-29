@@ -1,12 +1,13 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getLocale } from '../i18n/locale';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
-  current?: 'home' | 'ninive' | 'mapa';
+  current?: 'home' | 'ninive' | 'mapa' | 'portafolio' | 'estudio';
   bodyClass?: string;
   footerSubtitle: string;
   footerVariant?: 'default' | 'mapa' | 'ninive';
@@ -33,10 +34,12 @@ const {
 const cssVars = theme
   ? Object.entries(theme).map(([k, v]) => `--${k}: ${v}`).join('; ')
   : undefined;
+
+const locale = getLocale(Astro);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,7 +47,13 @@ const cssVars = theme
     <meta name="description" content={description} />
     <meta name="theme-color" content={themeColor} />
     <link rel="icon" type="image/webp" href="/assets/estudio-alpargatas-logo.webp" />
-    {fontUrl && <link rel="stylesheet" href={fontUrl} />}
+    {fontUrl && (
+      <>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href={fontUrl} />
+      </>
+    )}
   </head>
   <body class={bodyClass} style={cssVars}>
     <Header current={current} />

@@ -1,30 +1,57 @@
 ---
+import { chrome } from '../i18n/chrome';
+import { getLocale, localizePath, switchLocalePath } from '../i18n/locale';
+
 interface Props {
-  current?: 'home' | 'ninive' | 'mapa' | 'portafolio';
+  current?: 'home' | 'ninive' | 'mapa' | 'portafolio' | 'estudio';
 }
 
 const { current = 'home' } = Astro.props;
+const locale = getLocale(Astro);
+const t = chrome[locale];
 const isMap = current === 'mapa';
+const here = Astro.url.pathname;
+const nextLocale = locale === 'es' ? 'en' : 'es';
 ---
 
 <header class="site-header">
-  <nav class="nav shell" aria-label="Navegación principal">
-    <a class="brand" href="/" aria-label="Estudio Alpargatas, inicio">
+  <nav class="nav shell" aria-label={locale === 'en' ? 'Main navigation' : 'Navegación principal'}>
+    <a class="brand" href={localizePath('/', locale)} aria-label="Estudio Alpargatas">
       <img class="brand-logo" src="/assets/estudio-alpargatas-logo.webp" alt="" />
-      <span><b>Estudio Alpargatas</b><small>juegos de mesa · Chile</small></span>
+      <span><b>Estudio Alpargatas</b><small>{t.brandSmall}</small></span>
     </a>
     <div class="nav-links">
-      <a href="/#juegos">Juegos</a>
-      <a href="/#cuaderno">Cuaderno</a>
-      <a href="/juegos/ninive/" aria-current={current === 'ninive' ? 'page' : undefined}>Nínive</a>
-      <a href="/portafolio/" aria-current={current === 'portafolio' ? 'page' : undefined}>Portafolio</a>
+      <a href={`${localizePath('/', locale)}#juegos`}>{t.navGames}</a>
+      <a href={localizePath('/juegos/ninive/', locale)} aria-current={current === 'ninive' ? 'page' : undefined}>{t.navNinive}</a>
+      <a href={localizePath('/portafolio/', locale)} aria-current={current === 'portafolio' ? 'page' : undefined}>{t.navPortfolio}</a>
+      <a href={localizePath('/sobre-mi/', locale)} aria-current={current === 'estudio' ? 'page' : undefined}>{t.navEstudio}</a>
       {
         isMap ? (
-          <a class="nav-instagram" href="/" aria-current="page">Portada ↗</a>
+          <a class="nav-instagram nav-home" href={localizePath('/', locale)} aria-current="page">{t.navHome}</a>
         ) : (
-          <a class="nav-instagram" href="https://www.instagram.com/estudioalpargatas/">Instagram ↗</a>
+          <a class="nav-instagram" href="https://www.instagram.com/estudioalpargatas/" aria-label={t.navInstagram}>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </a>
         )
       }
+      <a
+        class="nav-lang"
+        href={switchLocalePath(here, nextLocale)}
+        aria-label={nextLocale === 'en' ? t.langToEn : t.langToEs}
+      >
+        {
+          nextLocale === 'en' ? (
+            <svg class="nav-flag" viewBox="0 0 16 12" width="16" height="12" aria-hidden="true"><rect width="16" height="12" fill="#bf0a30"/><rect y="1.33" width="16" height="1.34" fill="#fff"/><rect y="4" width="16" height="1.34" fill="#fff"/><rect y="6.67" width="16" height="1.33" fill="#fff"/><rect y="9.33" width="16" height="1.34" fill="#fff"/><rect width="7.2" height="6.5" fill="#002868"/></svg>
+          ) : (
+            <svg class="nav-flag" viewBox="0 0 16 12" width="16" height="12" aria-hidden="true"><rect width="16" height="12" fill="#d52b1e"/><rect width="16" height="6" fill="#fff"/><rect width="6" height="6" fill="#0039a6"/><path fill="#fff" d="M3 1.15l.62 1.9h2l-1.62 1.18.62 1.9L3 4.95l-1.62 1.18.62-1.9L.38 3.05h2z"/></svg>
+          )
+        }
+        {nextLocale === 'en' ? t.langEn : t.langEs}
+      </a>
     </div>
   </nav>
 </header>

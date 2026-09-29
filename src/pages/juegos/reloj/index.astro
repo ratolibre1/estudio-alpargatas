@@ -1,12 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../../i18n/locale';
+import { reloj as copy } from '../../../i18n/fichas/reloj';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
 ---
 
 <BaseLayout
-  title="Hasta un Reloj Roto... — Estudio Alpargatas"
-  description="Hasta un Reloj Roto...: tres modos de velocidad con 48 cartas que representan cada hora y media hora del día."
+  title={t.title}
+  description={t.description}
   bodyClass="page-reloj"
-  footerSubtitle="Hasta un Reloj Roto... · Rapidez · 48 cartas"
+  footerSubtitle={t.footer}
   themeColor="#f5f0e8"
 >
 
@@ -81,7 +86,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
-    padding: clamp(4rem, 8vw, 6rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.25rem) 0;
     background: var(--crema);
     border-bottom: 2px solid var(--line);
     position: relative;
@@ -94,7 +99,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     align-items: center;
   }
   .rl-hero-title {
-    font-size: clamp(3rem, 9vw, 7rem);
+    font-size: clamp(2.8rem, 7vw, 5.2rem);
     font-weight: 700;
     letter-spacing: -.04em;
     line-height: .85;
@@ -174,7 +179,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* SECCIÓN 01 */
   .rl-concept {
-    padding: clamp(4rem, 8vw, 7rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.75rem) 0;
     background: var(--tinta);
     border-bottom: 2px solid var(--bronce);
   }
@@ -209,7 +214,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* SECCIÓN 02: Último playtest */
   .rl-playtest {
-    padding: clamp(4rem, 8vw, 7rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.75rem) 0;
     background: var(--marfil);
     border-bottom: 2px solid var(--line);
   }
@@ -272,7 +277,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
   /* SECCIÓN 03: Estado */
   .rl-status {
-    padding: clamp(4rem, 8vw, 7rem) 0;
+    padding: clamp(2.75rem, 5.5vw, 4.75rem) 0;
     background: var(--crema);
     border-top: 2px solid var(--line);
   }
@@ -282,7 +287,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .rl-status p { font-size: .93rem; line-height: 1.85; color: var(--dim); margin: 0 0 1rem; }
   .rl-version {
     font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: clamp(5rem, 13vw, 10rem); font-weight: 900; letter-spacing: -.1em; line-height: .8;
+    font-size: clamp(3.4rem, 8vw, 6rem); font-weight: 900; letter-spacing: -.1em; line-height: .8;
     color: var(--rojo); margin-bottom: 1.5rem;
   }
   .rl-change-list { list-style: none; padding: 0; margin: 0; }
@@ -302,9 +307,12 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   .rl-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -.04em; text-decoration: none; color: var(--tinta); }
   .rl-back a:hover { color: var(--rojo); }
 
-  @media (max-width: 720px) {
+  @media (max-width: 980px) {
     .rl-hero, .rl-hero-grid, .rl-concept-grid, .rl-playtest-heading, .rl-status-grid { grid-template-columns: 1fr; }
     .rl-hero-grid { gap: 2.5rem; }
+  }
+  @media (max-width: 760px) {
+    .rl-shell { width: min(1100px, calc(100% - 1.5rem)); }
     .rl-clock-face { width: 160px; }
     .rl-gallery { grid-template-columns: 1fr; }
     .rl-gallery figure:last-child { width: 72%; margin-left: auto; }
@@ -315,17 +323,17 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="rl-hero">
     <div class="rl-shell rl-hero-grid">
       <div>
-        <nav class="rl-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Hasta un Reloj Roto...</span></nav>
+        <nav class="rl-breadcrumb"><a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span></nav>
         <h1 class="rl-hero-title">Hasta un<br />Reloj Roto...</h1>
         <div class="rl-hero-badges">
-          <span class="rl-badge active">Proto</span>
-          <span class="rl-badge">48 cartas</span>
+          <span class="rl-badge active">{t.badgeProto}</span>
+          <span class="rl-badge">{t.badgeCards}</span>
         </div>
-        <p class="rl-hero-desc">Cuarenta y ocho cartas, una por cada hora y media hora del día. Tres desafíos rápidos para ordenar, reconocer equivalencias y reaccionar antes que los demás.</p>
+        <p class="rl-hero-desc">{t.heroDesc}</p>
         <div class="rl-chips">
-          <span class="rl-chip">2–5 jugadores</span>
-          <span class="rl-chip">15–20 min</span>
-          <span class="rl-chip">Rapidez</span>
+          <span class="rl-chip">{t.chipPlayers}</span>
+          <span class="rl-chip">{t.chipTime}</span>
+          <span class="rl-chip">{t.chipSpeed}</span>
         </div>
       </div>
       <div>
@@ -346,18 +354,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="rl-concept">
     <div class="rl-shell rl-concept-grid">
       <div>
-        <span class="rl-label" style="color: rgba(245,240,232,.6)">01 — La idea</span>
-        <h2>Cuarenta y ocho cartas.<br /><em>Ninguna hora de sobra.</em></h2>
-        <p>RELOJ parte de una pregunta: ¿cómo se puede meter tensión en un juego de apenas dos dígitos? La respuesta fue hacer que esos dígitos sean horas de reloj, con todo lo que eso implica.</p>
-        <p>El mazo recorre un día completo: desde las 00:00 hasta las 23:30, en intervalos de media hora. Cada carta también se relaciona con una franja del día y con su equivalente en un reloj de doce horas.</p>
+        <span class="rl-label" style="color: rgba(245,240,232,.6)">{t.labelIdea}</span>
+        <h2>{t.h2a}<br /><em>{t.h2em}</em></h2>
+        <p>{t.p1}</p>
+        <p>{t.p2}</p>
       </div>
       <div>
         <div class="rl-modes">
-          {[
-            { icon: '09', name: 'Contrarreloj', desc: 'Cada persona recibe nueve cartas. Una carta central fija la hora de inicio: hay que ordenar la mano cronológicamente antes que el resto. Quien gana suma un punto y recibe una carta extra en la ronda siguiente. Dos puntos ganan la partida.' },
-            { icon: ':30', name: 'Hora cantada', desc: 'Se dicen las horas una a una. Sirven la hora exacta, su media hora y sus equivalentes doce horas después. El primero en tocar el montón gana la carta; al acabarse el mazo, se baraja y comienza de nuevo.' },
-            { icon: '≡', name: 'Coincidencias', desc: 'Se revelan cartas una a una. Si dos seguidas comparten franja del día, la última es premio; si muestran la misma hora en formato de doce horas, se ganan ambas. Gana quien reúne más cartas.' },
-          ].map(m => (
+          {t.modes.map(m => (
             <div class="rl-mode">
               <div class="rl-mode-icon">{m.icon}</div>
               <div>
@@ -375,22 +379,22 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     <div class="rl-shell">
       <div class="rl-playtest-heading">
         <div>
-          <span class="rl-label">02 — Último playtest</span>
-          <h2>Nueve cartas.<br /><em>Una carrera.</em></h2>
+          <span class="rl-label">{t.labelPlaytest}</span>
+          <h2>{t.playH2a}<br /><em>{t.playH2em}</em></h2>
         </div>
         <div class="rl-playtest-copy">
-          <p>En septiembre de 2026 llevamos los tres modos a la mesa con un prototipo hecho a mano.</p>
-          <p class="rl-playtest-result"><strong>Contrarreloj fue el favorito:</strong> produjo la tensión más clara y más ganas de repetir. Por ahora queda como el modo mejor encaminado, todavía no como la forma definitiva del juego.</p>
+          <p>{t.playP1}</p>
+          <p class="rl-playtest-result"><strong>{t.playResultLead}</strong>{t.playResult}</p>
         </div>
       </div>
       <div class="rl-gallery">
         <figure>
-          <img src="/assets/reloj-playtest-orden.webp" alt="Cartas de RELOJ ordenadas cronológicamente durante el playtest" loading="lazy" />
-          <figcaption>Contrarreloj · ordenar desde una hora central</figcaption>
+          <img src="/assets/reloj-playtest-orden.webp" alt={t.altOrden} loading="lazy" />
+          <figcaption>{t.capOrden}</figcaption>
         </figure>
         <figure>
-          <img src="/assets/reloj-playtest-mazo.webp" alt="Mazo artesanal de RELOJ con horas e iconos dibujados a mano" loading="lazy" />
-          <figcaption>Prototipo · 48 cartas enfundadas</figcaption>
+          <img src="/assets/reloj-playtest-mazo.webp" alt={t.altMazo} loading="lazy" />
+          <figcaption>{t.capMazo}</figcaption>
         </figure>
       </div>
     </div>
@@ -399,25 +403,25 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   <section class="rl-status">
     <div class="rl-shell rl-status-grid">
       <div>
-        <span class="rl-label">03 — Estado actual</span>
-        <div class="rl-version" aria-hidden="true">Playtest</div>
+        <span class="rl-label">{t.labelStatus}</span>
+        <div class="rl-version" aria-hidden="true">{t.version}</div>
         <ul class="rl-change-list">
-          <li>Se probaron tres modos distintos con el mismo mazo de 48 cartas.</li>
-          <li>Contrarreloj fue el que mejor combinó velocidad, lectura de la mesa y ganas de repetir.</li>
-          <li>Próximo hito: comprobar cómo escala la dificultad al pasar de nueve a diez cartas y ajustar la duración de una partida a dos puntos.</li>
+          <li>{t.change1}</li>
+          <li>{t.change2}</li>
+          <li>{t.change3}</li>
         </ul>
       </div>
       <div>
-        <h2>Un modo se<br /><em>adelantó</em><br />al resto.</h2>
-        <p>La carrera por ordenar la mano desde una hora central convirtió un ejercicio de reconocimiento en una prueba física y mental: mirar, comparar, mover y decidir cuándo la secuencia está lista.</p>
-        <p>El siguiente paso es medir cuánto aumenta la dificultad con cada carta adicional y comprobar si llegar a dos puntos mantiene la partida corta sin volverla predecible.</p>
+        <h2>{t.statusH2a}<br /><em>{t.statusH2em}</em><br />{t.statusH2b}</h2>
+        <p>{t.statusP1}</p>
+        <p>{t.statusP2}</p>
       </div>
     </div>
   </section>
 
   <nav class="rl-back rl-shell">
-    <span>¿Seguimos mirando?</span>
-    <a href="/#juegos">Volver a todos los juegos →</a>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/#juegos', locale)}>{t.backLink}</a>
   </nav>
 </main>
 

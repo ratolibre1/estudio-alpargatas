@@ -1,59 +1,64 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../i18n/locale';
+import { mapa as copy } from '../../i18n/mapa';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
 ---
 
 <BaseLayout
-  title="Mapa del sitio — Estudio Alpargatas"
-  description="Mapa visual de la estructura propuesta para el portafolio de juegos de mesa de Arturo."
+  title={t.title}
+  description={t.description}
   current="mapa"
-  footerSubtitle="Estructura del sitio."
+  footerSubtitle={t.footer}
   footerVariant="mapa"
 >
   <main class="shell">
     <header class="page-hero">
-      <p class="eyebrow">Arquitectura propuesta</p>
-      <h1 class="page-title">Un sitio para mirar juegos y seguir su evolución.</h1>
-      <p class="lede">El catálogo es el centro. Desde él se llega a fichas vivas, y las bitácoras conectan cada decisión con el proyecto al que pertenece.</p>
+      <p class="eyebrow">{t.eyebrow}</p>
+      <h1 class="page-title">{t.h1}</h1>
+      <p class="lede">{t.lede}</p>
     </header>
 
-    <section class="map-wrap" aria-label="Mapa visual del sitio">
+    <section class="map-wrap" aria-label={t.mapAria}>
       <div class="map-intro">
         <article class="map-node primary">
-          <span class="node-id">Entrada principal</span>
-          <h2>Inicio · Juegos en la mesa</h2>
-          <p>Proyectos destacados, estado actual y última actualización. Sin una portada publicitaria que esconda el contenido.</p>
+          <span class="node-id">{t.n1Id}</span>
+          <h2>{t.n1Title}</h2>
+          <p>{t.n1Body}</p>
           <span class="route">/</span>
         </article>
         <article class="map-node">
-          <span class="node-id">Vista global</span>
-          <h2>Catálogo de juegos</h2>
-          <p>Todos los proyectos, filtrables por publicado, activo, temprano o pausado.</p>
+          <span class="node-id">{t.n2Id}</span>
+          <h2>{t.n2Title}</h2>
+          <p>{t.n2Body}</p>
           <span class="route">/juegos</span>
         </article>
       </div>
 
       <div class="map-branch">
         <article class="map-node">
-          <span class="node-id">Rama 01 · El corazón</span>
-          <h3>Ficha de juego</h3>
-          <p>Experiencia, estado, galería, evolución, reglas resumidas y siguiente hito.</p>
+          <span class="node-id">{t.r1Id}</span>
+          <h3>{t.r1Title}</h3>
+          <p>{t.r1Body}</p>
           <span class="route">/juegos/ninive</span>
         </article>
         <article class="map-node">
-          <span class="node-id">Rama 02 · El proceso</span>
-          <h3>Bitácora</h3>
-          <p>Entradas breves: problema, prueba, resultado y decisión siguiente.</p>
+          <span class="node-id">{t.r2Id}</span>
+          <h3>{t.r2Title}</h3>
+          <p>{t.r2Body}</p>
           <span class="route">/bitacora</span>
         </article>
-        <article class="map-node">
-          <span class="node-id">Rama 03 · El autor</span>
-          <h3>Sobre mí y contacto</h3>
-          <p>Trayectoria, enfoque de diseño y una vía directa para editoriales o jugadores.</p>
+        <a class="map-node" href={localizePath('/sobre-mi/', locale)}>
+          <span class="node-id">{t.r3Id}</span>
+          <h3>{t.r3Title}</h3>
+          <p>{t.r3Body}</p>
           <span class="route">/sobre-mi</span>
-        </article>
+        </a>
       </div>
 
-      <p class="flow-note"><strong>Flujo prioritario:</strong> alguien descubre un juego en la portada, entiende su propuesta en menos de un minuto y después puede profundizar en su proceso o material disponible.</p>
+      <p class="flow-note"><strong>{t.flow}</strong>{t.flowBody}</p>
     </section>
   </main>
 </BaseLayout>

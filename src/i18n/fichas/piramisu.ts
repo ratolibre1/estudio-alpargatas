@@ -1,0 +1,146 @@
+import type { Lang } from '../locale';
+
+export const piramisu = {
+  es: {
+    title: 'Piramisú — Estudio Alpargatas',
+    description:
+      'Piramisú: cooperativo de 2 a 4. Construyan una pirámide de ingredientes sin que dos iguales queden de vecinos.',
+    footer: 'Piramisú · Arturo Vial · Rodrigo Morales / Loica Estudio',
+    crumbAria: 'Migas de pan',
+    crumbHome: 'Inicio',
+    crumbHere: 'Piramisú',
+    logoAlt: 'Piramisú',
+    heroDesc:
+      'Cooperativo. Entre todos levantan una pirámide de ingredientes. La carta que pones no puede tocar a otra del mismo tipo: hasta seis vecinos, en hexágono.',
+    badgeProto: 'Proto V2.0',
+    badgePlayers: '2–4 jugadores',
+    badgeTime: '10–20 min',
+    badgeCards: '24 cartas',
+    badgeAge: '10+',
+    heroAlt: 'Maqueta digital de Piramisú: pirámide de cinco pisos sobre la mesa',
+    heroCap: 'Maqueta digital · cinco pisos, quince cartas.',
+    protoAlt: 'Pirámide de cinco pisos al cierre de una ronda de Piramisú',
+    protoCap: 'Proto en mesa · cinco pisos, quince cartas.',
+    labelIdea: '01 — La idea',
+    h2a: 'Un zigurat',
+    h2b: 'de mascarpone.',
+    p1: 'Hay cuatro ingredientes: savoiardi, café, merengue y chocolate. Seis cartas de cada uno. Cada carta tiene dos mitades —dulce o amarga— que importan si el escenario pide caras.',
+    p2: 'El modo base pide solo la altura: cinco pisos (15 cartas) o seis (21). Ganan si la pirámide se completa. Pierden si alguien, en su turno, no tiene ninguna jugada válida.',
+    ingsAria: 'Ingredientes',
+    ings: [
+      { name: 'Savoiardi', note: 'Galletas · 6 cartas', swatch: '#e8c9a0' },
+      { name: 'Café', note: '6 cartas', swatch: '#7c3d0a' },
+      { name: 'Merengue', note: '6 cartas', swatch: '#f7f1e6' },
+      { name: 'Chocolate', note: '6 cartas', swatch: '#3d1f0a' },
+    ],
+    labelTurn: '02 — El turno',
+    turnH2a: 'Colocar.',
+    turnH2em: 'Robar.',
+    turnH2b: 'Pasar.',
+    turnP1:
+      'En orden: juegas una carta, verificas tokens si el escenario los usa, robas una si queda mazo, y le pasas al de la derecha.',
+    turnP2:
+      'La base crece hasta seis cartas. Arriba, una posición existe solo si dos cartas adyacentes del piso de abajo la sostienen. Se puede completar el suelo primero o subir dejando huecos.',
+    rule1Name: 'Adyacencia',
+    rule1Desc:
+      'La carta no puede compartir ingrediente con ninguno de sus vecinos. El patrón es hexagonal: hasta seis lados, también las diagonales.',
+    rule2Name: 'Soporte',
+    rule2Desc: 'En un piso nuevo hacen falta dos cartas juntas abajo. No hace falta que el nivel inferior esté lleno.',
+    rule3Name: 'Derrota',
+    rule3Desc:
+      'Si un jugador no puede colocar, caen todos. Con tokens, también pierden si una fila se cierra y no alcanza para pagar la mayoría.',
+    labelMods: '03 — Módulos',
+    modsH2a: 'La misma pirámide,',
+    modsH2em: 'otra presión.',
+    modsLede:
+      'El escenario elige altura, cartas en mano y, si quiere, uno o los dos módulos. Se puede hablar de lo que hay en la mano; no se muestran las cartas.',
+    modATag: 'Variante A',
+    modATitle: 'Caras',
+    modABody:
+      'Entre dos cartas del mismo piso, las mitades que se tocan forman un par. El escenario pide un mínimo de caras blancas, negras, agridulces o puras. Solo cuenta lo horizontal.',
+    modBTag: 'Variante B',
+    modBTitle: 'Tokens',
+    modBBody:
+      'Al completar una fila se gasta un token de cada ingrediente en mayoría. Empate: se paga cada uno. Estándar 3 de cada; difícil 2; caótico, un puñado al azar.',
+    labelCredits: '04 — Créditos',
+    credH2a: 'Con Loica',
+    credH2b: 'Estudio.',
+    credP:
+      'Diseño de Arturo Vial. Se trabajó junto con Rodrigo Morales, de Loica Estudio. Manual v2.0, febrero 2026.',
+    credLink: 'Rodrigo Morales · Loica Estudio ↗',
+    backAria: 'Volver a proyectos',
+    backPrompt: '¿Seguimos mirando?',
+    backLink: 'Volver a todos los juegos →',
+  },
+  en: {
+    title: 'Piramisú — Estudio Alpargatas',
+    description:
+      'Piramisú: cooperative for 2 to 4. Build a pyramid of ingredients without two of the same sitting as neighbors.',
+    footer: 'Piramisú · Arturo Vial · Rodrigo Morales / Loica Estudio',
+    crumbAria: 'Breadcrumbs',
+    crumbHome: 'Home',
+    crumbHere: 'Piramisú',
+    logoAlt: 'Piramisú',
+    heroDesc:
+      'Cooperative. Together you raise a pyramid of ingredients. The card you play cannot touch another of the same type: up to six neighbors, in a hexagon.',
+    badgeProto: 'Prototype V2.0',
+    badgePlayers: '2–4 players',
+    badgeTime: '10–20 min',
+    badgeCards: '24 cards',
+    badgeAge: '10+',
+    heroAlt: 'Digital mockup of Piramisú: a five-tier pyramid on the table',
+    heroCap: 'Digital mockup · five tiers, fifteen cards.',
+    protoAlt: 'Five-tier pyramid at the close of a Piramisú round',
+    protoCap: 'Table proto · five tiers, fifteen cards.',
+    labelIdea: '01 — The idea',
+    h2a: 'A ziggurat',
+    h2b: 'of mascarpone.',
+    p1: 'There are four ingredients: savoiardi, coffee, meringue, and chocolate. Six cards of each. Each card has two halves — sweet or bitter — that matter if the scenario asks for faces.',
+    p2: 'The base mode only asks for height: five tiers (15 cards) or six (21). You win if the pyramid is completed. You lose if someone, on their turn, has no valid play.',
+    ingsAria: 'Ingredients',
+    ings: [
+      { name: 'Savoiardi', note: 'Cookies · 6 cards', swatch: '#e8c9a0' },
+      { name: 'Coffee', note: '6 cards', swatch: '#7c3d0a' },
+      { name: 'Meringue', note: '6 cards', swatch: '#f7f1e6' },
+      { name: 'Chocolate', note: '6 cards', swatch: '#3d1f0a' },
+    ],
+    labelTurn: '02 — The turn',
+    turnH2a: 'Place.',
+    turnH2em: 'Draw.',
+    turnH2b: 'Pass.',
+    turnP1:
+      'In order: you play a card, check tokens if the scenario uses them, draw one if the deck remains, and pass to the player on your right.',
+    turnP2:
+      'The base grows up to six cards. Above, a slot exists only if two adjacent cards on the floor below support it. You can finish the ground first or climb while leaving gaps.',
+    rule1Name: 'Adjacency',
+    rule1Desc:
+      'The card cannot share an ingredient with any of its neighbors. The pattern is hexagonal: up to six sides, diagonals included.',
+    rule2Name: 'Support',
+    rule2Desc: 'On a new floor you need two cards sitting together below. The lower level does not have to be full.',
+    rule3Name: 'Defeat',
+    rule3Desc:
+      'If a player cannot place, everyone falls. With tokens, you also lose if a row closes and there is not enough to pay the majority.',
+    labelMods: '03 — Modules',
+    modsH2a: 'The same pyramid,',
+    modsH2em: 'a different pressure.',
+    modsLede:
+      'The scenario picks height, cards in hand, and, if it wants, one or both modules. You may talk about what is in your hand; you do not show the cards.',
+    modATag: 'Variant A',
+    modATitle: 'Faces',
+    modABody:
+      'Between two cards on the same floor, the halves that touch form a pair. The scenario asks for a minimum of white, black, bittersweet, or pure faces. Only the horizontal counts.',
+    modBTag: 'Variant B',
+    modBTitle: 'Tokens',
+    modBBody:
+      'When a row is completed you spend one token of each ingredient in the majority. Tie: you pay each. Standard 3 of each; hard 2; chaotic, a random handful.',
+    labelCredits: '04 — Credits',
+    credH2a: 'With Loica',
+    credH2b: 'Estudio.',
+    credP:
+      'Design by Arturo Vial. Worked with Rodrigo Morales, of Loica Estudio. Manual v2.0, February 2026.',
+    credLink: 'Rodrigo Morales · Loica Estudio ↗',
+    backAria: 'Back to projects',
+    backPrompt: 'Shall we keep looking?',
+    backLink: 'Back to all the games →',
+  },
+} as const satisfies Record<Lang, Record<string, unknown>>;

@@ -1,9 +1,11 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import type { Lang } from '../i18n/locale';
+import { localizePath } from '../i18n/locale';
 
 export const KEYWORD_PATTERN = /^[a-z][a-z0-9]*$/;
 
-export function gameHref(keyword: string): string {
-  return `/juegos/${keyword}/`;
+export function gameHref(keyword: string, locale: Lang = 'es'): string {
+  return localizePath(`/juegos/${keyword}/`, locale);
 }
 
 export function bggHref(bggId: number): string {
@@ -56,4 +58,34 @@ export async function getHomeGames(section: 'featured' | 'proto'): Promise<GameC
   return games
     .filter((game) => game.home === section)
     .sort((a, b) => a.homeOrder - b.homeOrder);
+}
+
+export function localizeGame(game: GameCard, locale: Lang): GameCard {
+  const href = gameHref(game.keyword, locale);
+  if (locale !== 'en') return { ...game, href };
+  const description = game.descriptionEn ?? game.description;
+  const tagline = game.taglineEn ?? game.tagline;
+  return {
+    ...game,
+    href,
+    tagline,
+    description,
+    blurb: description ?? tagline,
+    meta: game.metaEn ?? game.meta,
+    stateLabel: game.stateLabelEn ?? game.stateLabel,
+    facts: game.factsEn ?? game.facts,
+    imageAlt: game.imageAltEn ?? game.imageAlt,
+    fotos: game.fotos?.map((foto) => ({
+      ...foto,
+      alt: foto.altEn ?? foto.alt,
+      caption: foto.captionEn ?? foto.caption,
+    })),
+    coverNumber: game.coverNumberEn ?? game.coverNumber,
+    coverTitle: game.coverTitleEn ?? game.coverTitle,
+    coverStatus: game.coverStatusEn ?? game.coverStatus,
+    awards: game.awards?.map((award) => ({
+      ...award,
+      title: award.titleEn ?? award.title,
+    })),
+  };
 }

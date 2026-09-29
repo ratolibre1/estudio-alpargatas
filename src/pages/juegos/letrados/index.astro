@@ -1,24 +1,29 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GameExtras from '../../../components/GameExtras.astro';
-import { getGame } from '../../../lib/games';
+import { getGame, localizeGame } from '../../../lib/games';
+import { getLocale, localizePath } from '../../../i18n/locale';
+import { letrados as copy } from '../../../i18n/fichas/letrados';
 
+const locale = getLocale(Astro);
+const t = copy[locale];
 const cms = await getGame('letrados');
+const game = cms ? localizeGame(cms, locale) : undefined;
 
 const ejemplos = [
-  { cover: 'N', top: 'T', score: '+3', note: 'verde' },
-  { cover: 'A', top: 'N', score: '+10', note: 'azul' },
-  { cover: 'B', top: 'Q', score: '−7', note: 'rojo' },
-  { cover: 'D', top: 'A', score: '−2', note: 'rojo' },
+  { cover: 'N', top: 'T', score: '+3', note: t.noteGreen },
+  { cover: 'A', top: 'N', score: '+10', note: t.noteBlue },
+  { cover: 'B', top: 'Q', score: '−7', note: t.noteRed },
+  { cover: 'D', top: 'A', score: '−2', note: t.noteRed },
 ];
 
 ---
 
 <BaseLayout
-  title="Letrados — Estudio Alpargatas"
-  description="Letrados: duelo de dos jugadores. Cada uno construye una torre de 13 letras y puntúa con la tabla de la carta cubierta."
+  title={t.title}
+  description={t.description}
   bodyClass="page-letrados"
-  footerSubtitle="Letrados · Lighthouse Games · 2 jugadores"
+  footerSubtitle={t.footer}
   themeColor="#8ec4e8"
   fontUrl="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;1,400&family=Patrick+Hand&display=swap"
 >
@@ -80,12 +85,19 @@ const ejemplos = [
   .lt-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem,6vw,5rem); align-items: start; }
 
   .lt-hero {
-    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    padding: clamp(2.5rem, 5.5vw, 4.25rem) 0;
     border-bottom: 1px solid var(--line);
     background: var(--papel);
   }
+  .lt-hero-logo {
+    display: block;
+    width: min(16rem, 80%);
+    margin: 0 0 1rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
   .lt-hero-title {
-    font-size: clamp(5rem, 15vw, 11rem);
+    font-size: clamp(3.4rem, 9vw, 6.2rem);
     font-weight: 400;
     letter-spacing: .01em;
     line-height: .85;
@@ -120,7 +132,7 @@ const ejemplos = [
   }
 
   .lt-section {
-    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    padding: clamp(2.5rem, 5.5vw, 4.25rem) 0;
     border-bottom: 1px solid var(--line);
   }
   .lt-section.alt { background: var(--hoja); border-top: 1px solid var(--line); }
@@ -252,6 +264,19 @@ const ejemplos = [
   }
   .lt-example p { margin: 0 0 .7rem; font-size: .88rem; }
   .lt-example p:last-child { margin: 0; }
+  .lt-ejemplo-board { margin: 2rem 0 0; }
+  .lt-ejemplo-board img {
+    width: 100%;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #c4a36a;
+  }
+  .lt-ejemplo-board figcaption {
+    margin-top: .6rem;
+    font-size: .72rem;
+    color: var(--dim);
+  }
 
   .lt-links {
     display: flex; flex-wrap: wrap; gap: .6rem .9rem;
@@ -305,12 +330,15 @@ const ejemplos = [
   .lt-back a { font-family: var(--display); font-size: clamp(1.4rem, 3vw, 2.3rem); font-weight: 400; letter-spacing: .01em; text-decoration: none; color: var(--pizarra); }
   .lt-back a:hover { color: var(--chaleco); }
 
-  @media (max-width: 700px) {
+  @media (max-width: 980px) {
     .lt-cols,
     .lt-pairs,
     .lt-roles,
     .lt-card-row,
     .lt-lh-head { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .lt-shell { width: min(1050px, calc(100% - 1.5rem)); }
   }
 </style>
 
@@ -318,21 +346,22 @@ const ejemplos = [
   <section class="lt-hero">
     <div class="lt-shell lt-cols">
       <div>
-        <nav class="lt-breadcrumb"><a href="/">Inicio</a><span>/</span><span>Letrados</span></nav>
-        <h1 class="lt-hero-title">Le<em>tra</em>dos</h1>
-        <p class="lt-hero-sub">Un duelo. Cada uno construye su torre de letras. Elegir qué carta poner —y cuál dejarle al otro— marca la diferencia.</p>
+        <nav class="lt-breadcrumb"><a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span></nav>
+        <img class="lt-hero-logo" src="/assets/letrados-logo-proto.webp" alt={t.logoProtoAlt} />
+        <h1 class="lt-hero-title" set:html={t.heroTitle} />
+        <p class="lt-hero-sub">{t.heroSub}</p>
         <div class="lt-badges">
-          <span class="lt-badge active">Avanzado</span>
-          <span class="lt-badge red">2 jugadores</span>
-          <span class="lt-badge">15 min</span>
-          <span class="lt-badge">26 cartas</span>
-          <span class="lt-badge">13 por torre</span>
+          <span class="lt-badge active">{t.badgeAdvanced}</span>
+          <span class="lt-badge red">{t.badgePlayers}</span>
+          <span class="lt-badge">{t.badgeTime}</span>
+          <span class="lt-badge">{t.badgeCards}</span>
+          <span class="lt-badge">{t.badgeTower}</span>
         </div>
-        {cms && <GameExtras bggId={cms.bggId} awards={cms.awards} />}
+        {game && <GameExtras bggId={game.bggId} awards={game.awards} />}
       </div>
       <figure class="lt-hero-photo">
-        <img src="/assets/letrados-portada.webp" alt="Portada ilustrada de Letrados, Lighthouse Games" />
-        <figcaption>Portada de la edición. Arte de Lighthouse Games.</figcaption>
+        <img src="/assets/letrados-portada.webp" alt={t.heroAlt} />
+        <figcaption>{t.heroCaption}</figcaption>
       </figure>
     </div>
   </section>
@@ -340,39 +369,39 @@ const ejemplos = [
   <section class="lt-section alt">
     <div class="lt-shell lt-cols">
       <div>
-        <span class="lt-label">01 — La idea</span>
-        <h2>Dos torres.<br /><em>Una tabla</em><br />por carta.</h2>
-        <p>Hay 26 cartas: una por letra. En el centro va la Letra Principal. Alrededor, el resto del abecedario está acomodado para decirte cuánto vale montar otra letra encima.</p>
-        <p>Cuando cubres una carta, lees el puntaje en la de abajo. No se cuenta “cuántas letras hay de A a Z”. Se lee la tabla.</p>
-        <p>Se baraja el mazo y cada uno parte con dos cartas. Al final, cada torre tiene trece.</p>
+        <span class="lt-label">{t.s01}</span>
+        <h2 set:html={t.ideaH2} />
+        <p>{t.ideaP1}</p>
+        <p>{t.ideaP2}</p>
+        <p>{t.ideaP3}</p>
       </div>
       <div class="lt-bands">
         <article class="lt-band" style="--band: var(--verde)">
-          <span>Derecha · verde</span>
+          <span>{t.band1Tag}</span>
           <b>+1 a +7</b>
-          <p>Valores positivos. T sobre N, por el manual, da +3.</p>
+          <p>{t.band1Body}</p>
         </article>
         <article class="lt-band" style="--band: var(--azul)">
-          <span>Abajo · azul</span>
+          <span>{t.band2Tag}</span>
           <b>+10</b>
-          <p>La letra más lejana a la principal. N sobre A da +10.</p>
+          <p>{t.band2Body}</p>
         </article>
         <article class="lt-band" style="--band: var(--rojo)">
-          <span>Izquierda · rojo</span>
+          <span>{t.band3Tag}</span>
           <b>−1 a −7</b>
-          <p>Valores negativos. Q sobre B da −7.</p>
+          <p>{t.band3Body}</p>
         </article>
       </div>
     </div>
     <div class="lt-shell">
       <div class="lt-card-row">
         <figure>
-          <img src="/assets/letrados-carta-editorial.webp" alt="Carta A ilustrada de Letrados, edición Lighthouse" />
-          <figcaption>Carta A de la edición. Positivos a la izquierda, negativos a la derecha, +10 en la pizarra.</figcaption>
+          <img src="/assets/letrados-carta-editorial.webp" alt={t.cardEdAlt} />
+          <figcaption>{t.cardEdCap}</figcaption>
         </figure>
         <figure>
-          <img src="/assets/letrados-carta-a.webp" alt="Carta A del prototipo de Letrados" />
-          <figcaption>La misma A en el proto, para leer la tabla.</figcaption>
+          <img src="/assets/letrados-carta-a.webp" alt={t.cardProtoAlt} />
+          <figcaption>{t.cardProtoCap}</figcaption>
         </figure>
       </div>
     </div>
@@ -381,19 +410,19 @@ const ejemplos = [
   <section class="lt-section">
     <div class="lt-shell lt-cols">
       <div>
-        <span class="lt-label">02 — El turno</span>
-        <h2>Selección,<br />construcción,<br /><em>reparto.</em></h2>
-        <p>Al comparar dos cartas, la Letra Principal más cerca de la A es la menor. La más cerca de la Z es la mayor.</p>
+        <span class="lt-label">{t.s02}</span>
+        <h2 set:html={t.turnH2} />
+        <p>{t.turnP}</p>
         <div class="lt-roles">
           <article class="lt-role">
-            <span>Letra menor</span>
-            <b>Capataz</b>
-            <p>Elige cuál de las dos cartas reveladas entra a su torre.</p>
+            <span>{t.role1Tag}</span>
+            <b>{t.role1Title}</b>
+            <p>{t.role1Body}</p>
           </article>
           <article class="lt-role">
-            <span>Letra mayor</span>
-            <b>Obrero</b>
-            <p>Se queda con la carta que el Capataz no quiso. Después reparte.</p>
+            <span>{t.role2Tag}</span>
+            <b>{t.role2Title}</b>
+            <p>{t.role2Body}</p>
           </article>
         </div>
       </div>
@@ -401,22 +430,22 @@ const ejemplos = [
         <li class="lt-rule">
           <div class="lt-rule-num">1</div>
           <div>
-            <div class="lt-rule-title">Selección</div>
-            <p class="lt-rule-desc">Cada uno elige una carta de su mano y la pone boca abajo. Se revelan juntas. Quien mostró la letra más al inicio del abecedario es Capataz; el otro, Obrero.</p>
+            <div class="lt-rule-title">{t.rule1Title}</div>
+            <p class="lt-rule-desc">{t.rule1Body}</p>
           </div>
         </li>
         <li class="lt-rule">
           <div class="lt-rule-num">2</div>
           <div>
-            <div class="lt-rule-title">Construcción</div>
-            <p class="lt-rule-desc">El Capataz elige una de las dos cartas reveladas para su torre. La que no eligió se monta en la torre del Obrero.</p>
+            <div class="lt-rule-title">{t.rule2Title}</div>
+            <p class="lt-rule-desc">{t.rule2Body}</p>
           </div>
         </li>
         <li class="lt-rule">
           <div class="lt-rule-num">3</div>
           <div>
-            <div class="lt-rule-title">Reparto</div>
-            <p class="lt-rule-desc">El Obrero toma las dos primeras del mazo, las muestra, y se queda con la Carta Menor. El Capataz recibe la Mayor. Después, otro turno.</p>
+            <div class="lt-rule-title">{t.rule3Title}</div>
+            <p class="lt-rule-desc">{t.rule3Body}</p>
           </div>
         </li>
       </ul>
@@ -426,21 +455,21 @@ const ejemplos = [
   <section class="lt-section alt">
     <div class="lt-shell lt-cols">
       <div>
-        <span class="lt-label">03 — El cierre</span>
-        <h2>Trece cartas<br />y se suma.</h2>
-        <p>La partida termina cuando se juega el último par. Cada torre tiene 13 cartas. Cada uno suma el puntaje de cada par: la carta de arriba se busca en la tabla de la de abajo.</p>
-        <p>Gana el total más alto. Empate: otra vez.</p>
+        <span class="lt-label">{t.s03}</span>
+        <h2 set:html={t.closeH2} />
+        <p>{t.closeP1}</p>
+        <p>{t.closeP2}</p>
         <div class="lt-example">
-          <span>Ejemplo del manual</span>
-          <p>Jugador 1: A sobre D (−2), N sobre A (+10), T sobre N (+3). Total 11.</p>
-          <p>Jugador 2: V sobre S (+2), F sobre V (+5), W sobre F (−5). Total 2.</p>
+          <span>{t.exampleTag}</span>
+          <p>{t.exampleP1}</p>
+          <p>{t.exampleP2}</p>
         </div>
       </div>
-      <div class="lt-pairs" aria-label="Pares de ejemplo del manual">
+      <div class="lt-pairs" aria-label={t.pairsAria}>
         {ejemplos.map((e) => (
           <div class="lt-pair">
             <div class="lt-pair-letter">{e.top}</div>
-            <div class="lt-pair-arrow">sobre {e.cover}</div>
+            <div class="lt-pair-arrow">{t.over} {e.cover}</div>
             <div class="lt-pair-score">
               <strong class={e.score.startsWith('+10') ? 'big' : e.score.startsWith('−') ? 'neg' : 'pos'}>{e.score}</strong>
               <span>{e.note}</span>
@@ -449,37 +478,43 @@ const ejemplos = [
         ))}
       </div>
     </div>
+    <div class="lt-shell">
+      <figure class="lt-ejemplo-board">
+        <img src="/assets/letrados-ejemplo-torres.webp" alt={t.exampleImgAlt} />
+        <figcaption>{t.exampleImgCap}</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="lt-section">
     <div class="lt-shell">
       <div class="lt-lh-head">
         <a class="lt-lh-logo" href="https://www.lighthousegms.com/es" target="_blank" rel="noopener noreferrer">
-          <img src="/assets/lighthouse-games-logo.webp" alt="Lighthouse Games" />
+          <img src="/assets/lighthouse-games-logo.webp" alt={t.lhAlt} />
         </a>
         <div>
-          <span class="lt-label">04 — La editorial</span>
-          <h2>Lighthouse<br /><em>Games.</em></h2>
+          <span class="lt-label">{t.s04}</span>
+          <h2 set:html={t.pubH2} />
         </div>
       </div>
-      <p>La editorial mexicana lo está produciendo. Salió de Me Uno al Faro 2025; todavía no está en mesa.</p>
+      <p>{t.pubP}</p>
       <div class="lt-links">
-        <a href="https://www.lighthousegms.com/es" target="_blank" rel="noopener noreferrer">Lighthouse Games ↗</a>
-        <a href="https://www.lighthousegms.com/meunoalfaro" target="_blank" rel="noopener noreferrer">Me Uno al Faro ↗</a>
+        <a href="https://www.lighthousegms.com/es" target="_blank" rel="noopener noreferrer">{t.linkLh}</a>
+        <a href="https://www.lighthousegms.com/meunoalfaro" target="_blank" rel="noopener noreferrer">{t.linkFaro}</a>
       </div>
       <figure class="lt-lh-banner">
-        <img src="/assets/letrados-lighthouse-banner.webp" alt="Banner de Letrados, Lighthouse Games 2025" />
+        <img src="/assets/letrados-lighthouse-banner.webp" alt={t.bannerAlt} />
       </figure>
       <figure class="lt-proto">
-        <img src="/assets/letrados-proto.webp" alt="Dos torres de Letrados sobre la mesa, una carta por letra" />
-        <figcaption>El proto en mesa. Dos torres, veintiséis cartas.</figcaption>
+        <img src="/assets/letrados-proto.webp" alt={t.protoAlt} />
+        <figcaption>{t.protoCap}</figcaption>
       </figure>
     </div>
   </section>
 
   <nav class="lt-back lt-shell">
-    <span>¿Seguimos mirando?</span>
-    <a href="/portafolio/">Ver el portafolio completo →</a>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/portafolio/', locale)}>{t.backLink}</a>
   </nav>
 </main>
 

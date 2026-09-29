@@ -6,6 +6,8 @@
  * (keyword = una palabra, igual al .md del CMS, ej: reloj, canes, mantas)
  * y reemplaza cada marcador [ ... ] con contenido real.
  *
+ * Mobile + i18n: docs/FICHAS.md — solo breakpoints 980 / 760 / 520.
+ *
  * Props de BaseLayout que debes completar:
  *   title         → "Nombre del Juego — Estudio Alpargatas"
  *   description   → Párrafo SEO (~155 caracteres)
@@ -209,7 +211,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   }
 
   /* ─── Responsive ─────────────────────────────────────────── */
-  @media (max-width: 640px) { .pt-cols { grid-template-columns: 1fr; } }
+  @media (max-width: 980px) { .pt-cols { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .pt-shell { width: min(960px, calc(100% - 1.5rem)); } }
 </style>
 
 <main>

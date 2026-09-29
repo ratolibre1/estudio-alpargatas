@@ -1,10 +1,15 @@
 ---
+import { chrome } from '../i18n/chrome';
+import { getLocale, localizePath } from '../i18n/locale';
+
 interface Props {
   subtitle: string;
   variant?: 'default' | 'mapa' | 'ninive';
 }
 
 const { subtitle, variant = 'default' } = Astro.props;
+const locale = getLocale(Astro);
+const t = chrome[locale];
 ---
 
 <footer class="site-footer">
@@ -12,11 +17,11 @@ const { subtitle, variant = 'default' } = Astro.props;
     <div><b>Estudio Alpargatas</b><span>{subtitle}</span></div>
     <div class="footer-links">
       {variant === 'mapa' ? (
-        <a href="/juegos/ninive/">Ver la ficha de Nínive →</a>
+        <a href={localizePath('/juegos/ninive/', locale)}>{t.footerNinive}</a>
       ) : variant === 'ninive' ? (
-        <><a href="/">Inicio</a><a href="https://www.instagram.com/estudioalpargatas/">@estudioalpargatas ↗</a></>
+        <><a href={localizePath('/', locale)}>{t.footerHome}</a><a href="https://www.instagram.com/estudioalpargatas/">{t.footerIg}</a></>
       ) : (
-        <><a href="/mapa/">Mapa del sitio</a><a href="https://www.instagram.com/estudioalpargatas/">@estudioalpargatas ↗</a></>
+        <><a href={localizePath('/sobre-mi/', locale)}>{t.navEstudio}</a><a href={localizePath('/mapa/', locale)}>{t.footerMap}</a><a href="https://www.instagram.com/estudioalpargatas/">{t.footerIg}</a></>
       )}
     </div>
   </div>

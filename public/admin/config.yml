@@ -70,6 +70,15 @@ collections:
         field: { label: Fact, name: fact, widget: string }
       - { label: Imagen (home), name: image, widget: string, required: false, hint: '/assets/archivo.webp' }
       - { label: Alt de la imagen, name: imageAlt, widget: string, required: false }
+      - label: Fotos de playtest
+        name: fotos
+        widget: list
+        required: false
+        hint: 'Galería de mesa en la ficha stub. No se usa en la home.'
+        fields:
+          - { label: Archivo, name: src, widget: string, hint: '/assets/archivo.webp' }
+          - { label: Alt, name: alt, widget: string }
+          - { label: Pie, name: caption, widget: string, required: false }
       - { label: Cover número, name: coverNumber, widget: string, required: false, hint: 'JUEGO 02' }
       - { label: Cover título, name: coverTitle, widget: text, required: false, hint: 'Puede ir en dos líneas.' }
       - { label: Cover status, name: coverStatus, widget: string, required: false }
@@ -101,5 +110,13 @@ collections:
         min: 4
         max: 4
         field: { label: Color, name: color, widget: string }
-      - { label: Fuente CSS del título, name: titleFont, widget: string }
+      - { label: Fuente CSS del título, name: titleFont, widget: string, hint: 'Google Font + fallback, ej. "Cinzel, serif". Si es una familia nueva, sumarla a src/lib/caja-fonts.ts' }
+      - { label: Fuente CSS del subtítulo, name: taglineFont, widget: string, hint: 'Google Font del tagline. Misma regla: si es nueva, caja-fonts.ts' }
+      - label: Conceptos (imagen)
+        name: conceptos
+        widget: list
+        min: 3
+        max: 3
+        hint: 'Exactamente 3, en este orden: temática, estilo visual, mecánicas. Lo usa el agente de imágenes; no se muestra en la web.'
+        field: { label: Concepto, name: concepto, widget: string }
       - { label: Concepto / notas, name: body, widget: markdown, required: false, hint: 'Texto largo bajo el héroe. Codex también puede editarlo en el .md' }

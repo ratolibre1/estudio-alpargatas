@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../i18n/locale';
+import { sobre as copy } from '../../i18n/sobre';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
+---
+
+<BaseLayout
+  title={t.title}
+  description={t.description}
+  current="estudio"
+  footerSubtitle={t.footer}
+>
+  <style>
+    .sm-hero { padding-block: clamp(2.25rem, 5vw, 3.75rem) 0; }
+    .sm-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, .85fr);
+      align-items: end;
+      gap: clamp(1.75rem, 4vw, 3rem);
+    }
+    .sm-crumb {
+      display: flex;
+      gap: .6rem;
+      margin-bottom: 1.15rem;
+      color: var(--ink-soft);
+      font-size: .75rem;
+      font-weight: 850;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .sm-crumb a { text-decoration: none; }
+    .sm-crumb a:hover { color: var(--red); }
+    .sm-hero .page-title { max-width: 12ch; }
+    .sm-hero .lede { max-width: 38rem; }
+    .sm-photo {
+      position: relative;
+      margin: 0 auto;
+      max-width: 22rem;
+      padding: .8rem .8rem 2.5rem;
+      background: var(--white);
+      box-shadow: 12px 12px 0 var(--blue);
+      transform: rotate(2deg);
+    }
+    .sm-photo img { width: 100%; display: block; }
+    .sm-logo {
+      display: block;
+      width: min(14rem, 70%);
+      margin: 1.4rem 0 0;
+    }
+    .sm-photo figcaption {
+      position: absolute;
+      left: 1rem;
+      bottom: .6rem;
+      font-family: Georgia, serif;
+      font-size: .86rem;
+      font-style: italic;
+    }
+
+    .sm-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 4vw, 2.75rem);
+      padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    }
+    .sm-kicker {
+      margin: 0 0 .7rem;
+      color: var(--red);
+      font-size: .72rem;
+      font-weight: 950;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .sm-split h2 {
+      margin: 0 0 1rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 950;
+      letter-spacing: -.06em;
+      line-height: .95;
+    }
+    .sm-split p { margin: 0; color: var(--ink-soft); font-size: 1.05rem; }
+
+    .sm-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      padding-bottom: clamp(2.5rem, 6vw, 4rem);
+    }
+    .sm-facts article {
+      padding: 1.25rem 1.3rem 1.4rem;
+      border: 1.5px solid var(--ink);
+      background: var(--white);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .sm-facts h3 {
+      margin: 0 0 .45rem;
+      font-size: 1.05rem;
+      letter-spacing: -.03em;
+    }
+    .sm-facts p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+
+    .sm-duo {
+      display: grid;
+      grid-template-columns: minmax(12rem, .7fr) 1fr;
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+      align-items: center;
+      margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    }
+    .sm-duo .sm-photo { max-width: 22rem; transform: rotate(-1.5deg); box-shadow: 12px 12px 0 var(--red); }
+    .sm-duo h2 { margin: 0 0 .7rem; font-size: clamp(1.8rem, 3.5vw, 2.4rem); letter-spacing: -.05em; }
+    .sm-duo p { margin: 0; color: var(--ink-soft); font-size: 1.05rem; }
+
+    .sm-contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.4rem;
+      margin-top: 1.5rem;
+    }
+    .sm-contact-links .underlined-link { color: #d6e7fa; }
+
+    @media (max-width: 980px) {
+      .sm-hero-grid,
+      .sm-split,
+      .sm-duo { grid-template-columns: 1fr; }
+      .sm-photo { margin-left: 0; }
+    }
+    @media (max-width: 760px) {
+      .sm-facts { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <main>
+    <header class="page-hero sm-hero">
+      <div class="shell sm-hero-grid">
+        <div>
+          <nav class="sm-crumb" aria-label={t.crumbAria}>
+            <a href={localizePath('/', locale)}>{t.crumbHome}</a>
+            <span>/</span>
+            <span>{t.crumbHere}</span>
+          </nav>
+          <p class="eyebrow">{t.eyebrow}</p>
+          <h1 class="page-title">{t.h1}</h1>
+          <p class="lede">{t.lede}</p>
+        </div>
+        <figure class="sm-photo">
+          <img src="/assets/arturo.webp" alt={t.photoAlt} />
+          <figcaption>{t.photoCaption}</figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <section class="shell sm-split" aria-labelledby="sm-me-title">
+      <article>
+        <p class="sm-kicker">{t.meLabel}</p>
+        <h2 id="sm-me-title">{t.meTitle}</h2>
+        <p>{t.meBody}</p>
+      </article>
+      <article>
+        <p class="sm-kicker">{t.studioLabel}</p>
+        <h2>{t.studioTitle}</h2>
+        <p>{t.studioBody}</p>
+        <img class="sm-logo" src="/assets/estudio-alpargatas-logo-hd.webp" alt={t.logoAlt} />
+      </article>
+    </section>
+
+    <section class="shell sm-facts" aria-label={t.eyebrow}>
+      <article>
+        <h3>{t.fact1k}</h3>
+        <p>{t.fact1v}</p>
+      </article>
+      <article>
+        <h3>{t.fact2k}</h3>
+        <p>{t.fact2v}</p>
+      </article>
+      <article>
+        <h3>{t.fact3k}</h3>
+        <p>{t.fact3v}</p>
+      </article>
+    </section>
+
+    <section class="shell">
+      <div class="sm-duo">
+        <figure class="sm-photo">
+          <img src="/assets/arturo-estefi.webp" alt={t.duoAlt} />
+          <figcaption>{t.duoCaption}</figcaption>
+        </figure>
+        <div>
+          <h2>{t.collabTitle}</h2>
+          <p>{t.collabBody}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" aria-labelledby="sm-contact-title">
+      <div class="shell about-grid">
+        <div class="about-word">ESTUDIO</div>
+        <div class="about-copy">
+          <p class="overline">{t.contactOverline}</p>
+          <h2 id="sm-contact-title">{t.contactTitle}</h2>
+          <p>{t.contactBody}</p>
+          <div class="sm-contact-links">
+            <a class="button blue" href="https://www.instagram.com/estudioalpargatas/">{t.ctaIg}</a>
+            <a class="underlined-link" href={localizePath('/portafolio/', locale)}>{t.ctaPortfolio}</a>
+            <a class="underlined-link" href={localizePath('/juegos/ninive/', locale)}>{t.ctaNinive}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

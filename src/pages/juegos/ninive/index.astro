@@ -1,38 +1,48 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GameExtras from '../../../components/GameExtras.astro';
-import { getGame } from '../../../lib/games';
+import { getGame, localizeGame } from '../../../lib/games';
+import { getLocale, localizePath } from '../../../i18n/locale';
+import { ninive as copy } from '../../../i18n/fichas/ninive';
 
+const locale = getLocale(Astro);
+const t = copy[locale];
 const cms = await getGame('ninive');
+const game = cms ? localizeGame(cms, locale) : undefined;
 
-const niniveAwards = cms?.awards?.length
-  ? cms.awards
+const niniveAwards = game?.awards?.length
+  ? game.awards
   : [
       {
-        title: 'Juego oficial · Roll a Game Expo Chile 2025',
+        title: t.award1,
         image: '/assets/roll-a-game-logo.webp',
-        href: 'https://rollagame.cl/',
+        href: 'https://www.instagram.com/p/DP2ROVEEuOM/',
       },
       {
-        title: 'Juego Chileno del Año 2025 · Diluvio Lúdico',
+        title: t.award2,
+        image: '/assets/paraguas-de-oro-2025.webp',
+        href: 'https://www.instagram.com/p/DS8Uhj-kWoL/?img_index=7',
+      },
+      {
+        title: t.award3,
         image: '/assets/diluvio-ludico-logo.webp',
-        href: 'https://www.youtube.com/@DiluvioLudico',
+        href: 'https://www.youtube.com/watch?v=iNGk06DjYow',
       },
       {
-        title: '2º lugar del jurado · 54-Card Game Design Contest 2024',
+        title: t.award4,
         image: '/assets/54-card-contest-logo.webp',
         href: 'https://boardgamegeek.com/thread/3327975/2024-54-card-game-design-contest',
       },
     ];
-const bggId = cms?.bggId ?? 456259;
+const bggId = game?.bggId ?? 456259;
 ---
 
 <BaseLayout
-  title="Nínive — Estudio Alpargatas"
-  description="Nínive, juego de cartas para dos jugadores diseñado por Estudio Alpargatas y publicado por Ludoísmo."
+  title={t.title}
+  description={t.description}
   current="ninive"
   bodyClass="ninive-page"
-  footerSubtitle="Nínive · diseño de Arturo · Ludoísmo"
+  footerSubtitle={t.footer}
   footerVariant="ninive"
   themeColor="#5aa3c8"
 >
@@ -220,7 +230,7 @@ const bggId = cms?.bggId ?? 456259;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
   }
   body.ninive-page .ninive-role {
     padding: 1.2rem 1.3rem 1.3rem;
@@ -283,7 +293,7 @@ const bggId = cms?.bggId ?? 456259;
     background: var(--stone2);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
-    padding-block: clamp(5rem, 10vw, 8rem);
+    padding-block: clamp(3rem, 6vw, 5rem);
   }
   body.ninive-page .ninive-modes-section .shell-modes {
     width: min(1100px, calc(100% - 3rem));
@@ -340,7 +350,7 @@ const bggId = cms?.bggId ?? 456259;
   }
   body.ninive-page .ninive-buy a { color: var(--cielo-deep); }
 
-  @media (max-width: 800px) {
+  @media (max-width: 980px) {
     body.ninive-page .ninive-roles,
     body.ninive-page .ninive-examples,
     body.ninive-page .ninive-modes,
@@ -352,39 +362,39 @@ const bggId = cms?.bggId ?? 456259;
       <header class="ninive-hero">
         <div class="shell ninive-hero-grid">
           <div class="ninive-hero-copy">
-            <nav class="breadcrumbs" aria-label="Migas de pan"><a href="/">Juegos</a><span>/</span><span>Nínive</span></nav>
-            <span class="sticker yellow">Publicado por Ludoísmo</span>
+            <nav class="breadcrumbs" aria-label={t.crumbAria}><a href={localizePath('/', locale)}>{t.crumb}</a><span>/</span><span>{t.crumbHere}</span></nav>
+            <span class="sticker yellow">{t.sticker}</span>
             <h1>Nínive</h1>
-            <p>Construir juntos.<br />Ganar por separado.</p>
-            <div class="fact-chips" aria-label="Ficha técnica"><span><b>2</b> jugadores</span><span><b>15′</b> duración</span><span><b>27</b> cartas</span></div>
+            <p set:html={t.tagline} />
+            <div class="fact-chips" aria-label={t.factsAria}><span><b>2</b> {t.factPlayers}</span><span><b>15′</b> {t.factDuration}</span><span><b>27</b> {t.factCards}</span></div>
             <GameExtras bggId={bggId} awards={niniveAwards} />
           </div>
           <figure class="ninive-hero-photo">
-            <img src="/assets/ninive-caja.webp" alt="Caja de Nínive sobre un tapete de cartas" />
-            <figcaption>La edición · Ludoísmo</figcaption>
+            <img src="/assets/ninive-caja.webp" alt={t.heroAlt} />
+            <figcaption>{t.heroCaption}</figcaption>
             <i class="tape" aria-hidden="true"></i>
           </figure>
         </div>
       </header>
 
       <section class="ninive-intro shell">
-        <div class="section-label"><span>01</span><b>La idea</b></div>
+        <div class="section-label"><span>01</span><b>{t.s01}</b></div>
         <div>
-          <h2>Un mismo palacio.<br /><em>Dos jardines.</em></h2>
+          <h2 set:html={t.introH2} />
           <div class="two-columns">
-            <p>Hay quien dice que los Jardines Colgantes no estaban en Babilonia, sino en Nínive, capital del Imperio Asirio. En la mesa, dos jugadores levantan ese palacio jardín: una estructura compartida, llena de flores y fuentes.</p>
-            <p>La tensión está en construir algo común mientras cada carta cambia lo que ambos podrán puntuar. A veces la mejor jugada para el palacio es una pésima jugada para ti.</p>
+            <p>{t.introP1}</p>
+            <p>{t.introP2}</p>
           </div>
           <div class="ninive-roles">
             <div class="ninive-role flowers">
-              <span>Naranja</span>
-              <h3>Flores</h3>
-              <p>Puntúa los números naranjas que queden visibles. En la ilustración, tantas flores como el número de su lado.</p>
+              <span>{t.roleOrange}</span>
+              <h3>{t.roleFlowers}</h3>
+              <p>{t.roleFlowersBody}</p>
             </div>
             <div class="ninive-role fountains">
-              <span>Azul</span>
-              <h3>Fuentes</h3>
-              <p>Puntúa los números azules que queden visibles. Tantos chorros de agua como el número de su lado.</p>
+              <span>{t.roleBlue}</span>
+              <h3>{t.roleFountains}</h3>
+              <p>{t.roleFountainsBody}</p>
             </div>
           </div>
         </div>
@@ -393,64 +403,56 @@ const bggId = cms?.bggId ?? 456259;
       <section class="how-section">
         <div class="shell how-grid">
           <div class="how-copy">
-            <div class="section-label"><span>02</span><b>Cómo se juega</b></div>
-            <h2>Dos reglas para hacer crecer una ciudad.</h2>
+            <div class="section-label"><span>02</span><b>{t.s02}</b></div>
+            <h2>{t.howH2}</h2>
             <div class="rules-stack">
-              <article><span>1</span><div><h3>Extiende el suelo</h3><p>En el primer nivel siempre se juega a un extremo. Compara el número de afuera de ese extremo con el lado opuesto de tu carta: tiene que ser menor o igual. Naranja contra azul, nunca del mismo color.</p></div></article>
-              <article><span>2</span><div><h3>Construye hacia arriba</h3><p>Una carta nueva cubre dos mitades vecinas: el azul de la carta izquierda y el naranja de la derecha. La suma de tu carta tiene que alcanzar o superar lo que tapas. No puede quedar colgando.</p></div></article>
-              <article><span>3</span><div><h3>Cuenta lo que quedó visible</h3><p>Al terminar, cada uno suma su color a la vista. Lo tapado no vale. Si tuviste que descartar, esos números se restan.</p></div></article>
+              <article><span>1</span><div><h3>{t.rule1Title}</h3><p>{t.rule1Body}</p></div></article>
+              <article><span>2</span><div><h3>{t.rule2Title}</h3><p>{t.rule2Body}</p></div></article>
+              <article><span>3</span><div><h3>{t.rule3Title}</h3><p>{t.rule3Body}</p></div></article>
             </div>
             <div class="ninive-examples">
               <article class="ninive-ex">
-                <span>Extremo · Andrea</span>
-                <h3>Carta 4 naranja / 5 azul</h3>
-                <p>Los extremos son 5 naranja y 3 azul. Entra a la izquierda (5≤5). No entra a la derecha (4>3).</p>
+                <span>{t.ex1Label}</span>
+                <h3>{t.ex1Title}</h3>
+                <p>{t.ex1Body}</p>
               </article>
               <article class="ninive-ex">
-                <span>Piso superior · Felipe</span>
-                <h3>Carta 4 / 4 (suma 8)</h3>
-                <p>Cubre 5+2=7, sí. Cubre 3+1=4, sí. Cubre 5+4=9, no: la suma de abajo gana.</p>
+                <span>{t.ex2Label}</span>
+                <h3>{t.ex2Title}</h3>
+                <p>{t.ex2Body}</p>
               </article>
             </div>
           </div>
           <figure class="rule-photo">
-            <img src="/assets/ninive-colocar.webp" alt="Una carta de Nínive colocándose sobre el palacio" loading="lazy" />
-            <figcaption>Una carta cubre dos mitades.</figcaption>
+            <img src="/assets/ninive-colocar.webp" alt={t.rulePhotoAlt} loading="lazy" />
+            <figcaption>{t.ruleCaption}</figcaption>
           </figure>
         </div>
       </section>
 
       <section class="decision-section shell">
         <div class="big-number">25</div>
-        <div><div class="section-label"><span>03</span><b>La tensión</b></div><h2>Veinticinco combinaciones. Ninguna jugada es solamente tuya.</h2><p>Hay una carta por cada cruce de 1 a 5: naranja a la izquierda, azul a la derecha, orientación fija. Cubrir un número propio puede abrir el siguiente piso, pero también te borra puntos. Conservarlo puede dejarle al rival el soporte que estaba esperando. La estructura pertenece a ambos; la victoria, no.</p></div>
+        <div><div class="section-label"><span>03</span><b>{t.s03}</b></div><h2>{t.decisionH2}</h2><p>{t.decisionP}</p></div>
       </section>
 
       <section class="ninive-modes-section" aria-labelledby="ninive-modes-title">
         <div class="shell-modes">
-          <div class="section-label"><span>04</span><b>Dos maneras</b></div>
-          <h2 id="ninive-modes-title">La misma ciudad, otro ritmo.</h2>
-          <p class="lede">La colocación no cambia. Cambia cuántas cartas tienes en la mano y qué pasa cuando te atascas. La caja enseña el modo corto; el largo reparte todo el mazo de una.</p>
+          <div class="section-label"><span>04</span><b>{t.s04}</b></div>
+          <h2 id="ninive-modes-title">{t.modesH2}</h2>
+          <p class="lede">{t.modesLede}</p>
           <div class="ninive-modes">
             <article class="ninive-mode">
-              <span>Básica · la caja</span>
-              <h3>Cinco cartas y un mazo.</h3>
+              <span>{t.mode1Tag}</span>
+              <h3>{t.mode1Title}</h3>
               <ul>
-                <li>Se revelan las dos cartas de rol. Fuentes empieza.</li>
-                <li>Cinco en mano, mazo al centro, una carta ya puesta como base.</li>
-                <li>El suelo aguanta como máximo diez cartas.</li>
-                <li>Si no puedes jugar, descartas. Al final restas tu color de esos descartes.</li>
-                <li>Empate: gana quien descartó menos.</li>
+                {t.mode1Items.map((item) => <li>{item}</li>)}
               </ul>
             </article>
             <article class="ninive-mode">
-              <span>Avanzada</span>
-              <h3>Todo el mazo, de una.</h3>
+              <span>{t.mode2Tag}</span>
+              <h3>{t.mode2Title}</h3>
               <ul>
-                <li>Veinticinco de construcción más la carta de Agua: trece y trece.</li>
-                <li>Quien saca el Agua es Fuentes y juega segundo. Flores planta la semilla.</li>
-                <li>El suelo no tiene tope. No se roba.</li>
-                <li>Si te atascas, descartas: restas naranja y azul de esa carta.</li>
-                <li>Empate: otra vez, menos descartes.</li>
+                {t.mode2Items.map((item) => <li>{item}</li>)}
               </ul>
             </article>
           </div>
@@ -459,41 +461,33 @@ const bggId = cms?.bggId ?? 456259;
 
       <section class="journey-section">
         <div class="shell">
-          <div class="section-label"><span>05</span><b>El recorrido</b></div>
-          <h2>Del cartón a otras mesas</h2>
+          <div class="section-label"><span>05</span><b>{t.s05}</b></div>
+          <h2>{t.journeyH2}</h2>
           <div class="journey-cards">
-            <article><span>PRIMERO</span><h3>La estructura fue el juego.</h3><p>Las cartas dejaron de ser solo una mano y empezaron a construir el espacio de la partida.</p></article>
-            <article><span>DESPUÉS</span><h3>Las reglas se hicieron visibles.</h3><p>Valores, restricciones y ejemplos se ajustaron hasta poder entenderse mirando la mesa. Andrea a la izquierda, Felipe hacia arriba.</p></article>
-            <article><span>AHORA</span><h3>Nínive está publicado.</h3><p>Ludoísmo lo editó para dos jugadores. Ya se juega en mesa.</p></article>
+            <article><span>{t.j1Tag}</span><h3>{t.j1Title}</h3><p>{t.j1Body}</p></article>
+            <article><span>{t.j2Tag}</span><h3>{t.j2Title}</h3><p>{t.j2Body}</p></article>
+            <article><span>{t.j3Tag}</span><h3>{t.j3Title}</h3><p>{t.j3Body}</p></article>
           </div>
         </div>
       </section>
 
       <section class="ninive-gallery shell">
-        <div class="section-label"><span>06</span><b>Galería</b></div>
-        <div class="gallery-heading"><h2>Así se ve<br />una partida.</h2><p>El resultado final no es solo un puntaje: es una pequeña construcción que registra cada decisión tomada. Aunque un número quede tapado, las flores y los chorros de la ilustración siguen delatando la carta.</p></div>
+        <div class="section-label"><span>06</span><b>{t.s06}</b></div>
+        <div class="gallery-heading"><h2 set:html={t.galH2} /><p>{t.galP}</p></div>
         <div class="ninive-gallery-grid">
           <figure>
-            <img src="/assets/ninive-caja.webp" alt="Caja de Nínive sobre cartas del palacio" loading="lazy" />
-            <figcaption>Caja · Ludoísmo</figcaption>
+            <img src="/assets/ninive-partida.webp" alt={t.gal1Alt} loading="lazy" />
+            <figcaption>{t.gal1Cap}</figcaption>
           </figure>
           <figure>
-            <img src="/assets/ninive-partida.webp" alt="Palacio de Nínive armado sobre mantel rojo" loading="lazy" />
-            <figcaption>Una partida, un palacio</figcaption>
-          </figure>
-          <figure>
-            <img src="/assets/ninive-colocar.webp" alt="Colocando una carta sobre el palacio de Nínive" loading="lazy" />
-            <figcaption>Construir hacia arriba</figcaption>
-          </figure>
-          <figure>
-            <img src="/assets/ninive-mano.webp" alt="Mano con cuatro cartas de Nínive" loading="lazy" />
-            <figcaption>Flores y fuentes en la mano</figcaption>
+            <img src="/assets/ninive-mano.webp" alt={t.gal2Alt} loading="lazy" />
+            <figcaption>{t.gal2Cap}</figcaption>
           </figure>
         </div>
-        <p class="ninive-buy">Edición de <a href="https://ludoismo.cl/">Ludoísmo</a>. 2 jugadores · 15 minutos · 27 cartas.</p>
+        <p class="ninive-buy">{t.buyBefore} <a href="https://ludoismo.cl/">Ludoísmo</a>{t.buyAfter}</p>
       </section>
 
-      <nav class="back-to-table shell" aria-label="Volver a proyectos"><span>¿Seguimos mirando?</span><a href="/#juegos">Volver a todos los juegos →</a></nav>
+      <nav class="back-to-table shell" aria-label={t.backAria}><span>{t.backPrompt}</span><a href={`${localizePath('/', locale)}#juegos`}>{t.backLink}</a></nav>
     </article>
   </main>
 </BaseLayout>
