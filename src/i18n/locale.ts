@@ -21,6 +21,11 @@ export function getLocale(astro: { locals: App.Locals; request: Request; url: UR
   return astro.locals?.locale === 'es' ? 'es' : 'es';
 }
 
+/** Quita trailing slash de rutas internas (compatible con trailingSlash:'never'). */
+function stripSlash(s: string): string {
+  return s.length > 1 ? s.replace(/\/$/, '') : s;
+}
+
 /** Prefija /en en rutas internas. Deja intactos http(s), #, mailto y /admin. */
 export function localizePath(path: string, locale: Lang): string {
   if (!path || path.startsWith('http') || path.startsWith('#') || path.startsWith('mailto:')) {
@@ -29,10 +34,12 @@ export function localizePath(path: string, locale: Lang): string {
   if (path.startsWith('/admin')) return path;
   if (locale === 'es') {
     if (path === '/en' || path === '/en/') return '/';
-    return path.startsWith('/en/') ? path.slice(3) : path;
+    const result = path.startsWith('/en/') ? path.slice(3) : path;
+    return stripSlash(result);
   }
-  if (path === '/en' || path === '/en/' || path.startsWith('/en/')) return path;
-  return path === '/' ? '/en/' : `/en${path.startsWith('/') ? path : `/${path}`}`;
+  if (path === '/en' || path === '/en/' || path.startsWith('/en/')) return stripSlash(path);
+  const result = path === '/' ? '/en' : `/en${path.startsWith('/') ? path : `/${path}`}`;
+  return stripSlash(result);
 }
 
 export function switchLocalePath(pathname: string, next: Lang): string {

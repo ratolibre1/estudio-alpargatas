@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   output: 'static',
-  trailingSlash: 'always',
+  trailingSlash: 'never',
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
