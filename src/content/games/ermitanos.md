@@ -12,6 +12,9 @@ stateLabelEn: Idea
 stateOrder: 6
 date: '2026-10'
 home: none
+image: /assets/concepto-ermitanos.webp
+imageAlt: Cangrejos ermitaños coloridos con caparazones hechos de basura marina tropical
+imageAltEn: Colorful hermit crabs with shells made from tropical marine trash
 bg: '#0e4f5c'
 titleColor: '#fde68a'
 taglineColor: '#7dd3fc'

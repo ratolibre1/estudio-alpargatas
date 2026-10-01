@@ -12,6 +12,9 @@ stateLabelEn: Idea
 stateOrder: 6
 date: '2026-10'
 home: none
+image: /assets/concepto-chauvet.webp
+imageAlt: Pinturas rupestres en caverna prehistórica con siluetas de bisontes en ocre y rojo
+imageAltEn: Cave paintings in a prehistoric cavern with bison silhouettes in ochre and red
 bg: '#2c1a0e'
 titleColor: '#f5e6c8'
 taglineColor: '#c17c4a'

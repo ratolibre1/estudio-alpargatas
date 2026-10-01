@@ -12,6 +12,9 @@ stateLabelEn: Idea
 stateOrder: 6
 date: '2026-10'
 home: none
+image: /assets/concepto-nudis.webp
+imageAlt: Nudibranquios de colores imposibles ilustrados al estilo de guía de campo científica
+imageAltEn: Impossibly colorful nudibranchs illustrated in scientific field guide style
 bg: '#f8f5ef'
 titleColor: '#1e3a5f'
 taglineColor: '#5b6e8a'

@@ -12,6 +12,9 @@ stateLabelEn: Idea
 stateOrder: 6
 date: '2026-10'
 home: none
+image: /assets/concepto-palomas.webp
+imageAlt: Pandilla de palomas urbanas en póster de acción con alto contraste en blanco, negro y rojo
+imageAltEn: Urban pigeon gang on a high-contrast action poster in black, white and red
 bg: '#1c1c1e'
 titleColor: '#f5f5f5'
 taglineColor: '#e53e3e'

@@ -12,6 +12,9 @@ stateLabelEn: Idea
 stateOrder: 6
 date: '2026-10'
 home: none
+image: /assets/concepto-gato.webp
+imageAlt: Gato doméstico echado en un departamento bañado por la luz dorada de la tarde
+imageAltEn: Domestic cat lounging in an apartment bathed in warm golden afternoon light
 bg: '#fef3c7'
 titleColor: '#78350f'
 taglineColor: '#a16207'

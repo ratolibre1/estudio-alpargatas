@@ -12,6 +12,9 @@ stateLabelEn: Idea
 stateOrder: 6
 date: '2026-10'
 home: none
+image: /assets/concepto-almagesto.webp
+imageAlt: Cielo nocturno estrellado con constelaciones doradas trazadas sobre fondo azul índigo
+imageAltEn: Starry night sky with golden constellations traced over deep indigo background
 bg: '#0f172a'
 titleColor: '#f0d060'
 taglineColor: '#a5b4fc'
