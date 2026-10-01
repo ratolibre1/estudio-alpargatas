@@ -9,7 +9,7 @@ export const evoluciona = {
     crumbHome: 'Inicio',
     crumbPortfolio: 'Portafolio',
     crumbHere: 'Evoluciona',
-    badgeState: 'En playtest',
+    badgeState: 'Boceto',
     badgeMeta: 'Card Shedding',
     heroDesc:
       'Card shedding de primates. En playtest desde julio de 2026, con un proto manuscrito: una pista de cinco especies y tres comodines.',
@@ -62,7 +62,7 @@ export const evoluciona = {
     crumbHome: 'Home',
     crumbPortfolio: 'Portfolio',
     crumbHere: 'Evoluciona',
-    badgeState: 'Playtesting',
+    badgeState: 'Sketch',
     badgeMeta: 'Card Shedding',
     heroDesc:
       'A primate card-shedding game. In playtest since July 2026, with a handwritten proto: a five-species track and three wilds.',

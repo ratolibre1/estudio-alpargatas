@@ -8,10 +8,10 @@ description: Un único mazo, tres acciones visibles y una mecha que obliga a med
 descriptionEn: One shared deck, three visible actions, and a fuse that forces you to measure how much each play consumes.
 meta: Riesgo compartido · V0.3
 metaEn: Shared risk · V0.3
-state: playtest
-stateLabel: En playtest
-stateLabelEn: Playtesting
-stateOrder: 3
+state: pruebas
+stateLabel: En pruebas
+stateLabelEn: In testing
+stateOrder: 4
 date: '2025-06'
 home: featured
 homeOrder: 4

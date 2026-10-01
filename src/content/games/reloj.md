@@ -8,10 +8,10 @@ description: Tres desafíos rápidos para ordenar el día, reconocer horas equiv
 descriptionEn: Three quick challenges to sort the day, spot equivalent hours, and react before the others.
 meta: Rapidez · 3 modos · 48 cartas
 metaEn: Speed · 3 modes · 48 cards
-state: playtest
-stateLabel: Playtest activo
-stateLabelEn: Active playtest
-stateOrder: 3
+state: pruebas
+stateLabel: En pruebas
+stateLabelEn: In testing
+stateOrder: 4
 date: '2026-09'
 home: proto
 homeOrder: 3

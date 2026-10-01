@@ -26,7 +26,7 @@ const games = defineCollection({
     descriptionEn: z.string().optional(),
     meta: z.string(),
     metaEn: z.string().optional(),
-    state: z.enum(['publicado', 'avanzado', 'playtest', 'rediseno', 'proto']),
+    state: z.enum(['publicado', 'produccion', 'disponible', 'pruebas', 'boceto', 'idea']),
     stateLabel: z.string(),
     stateLabelEn: z.string().optional(),
     stateOrder: z.number().int(),

@@ -44,13 +44,34 @@ collections:
         name: state
         widget: select
         options:
-          - { label: Publicado, value: publicado }
-          - { label: Avanzado, value: avanzado }
-          - { label: En playtest, value: playtest }
-          - { label: En rediseño, value: rediseno }
-          - { label: Proto, value: proto }
-      - { label: Etiqueta del estado, name: stateLabel, widget: string, hint: 'Texto visible en la card, ej: En playtest' }
-      - { label: Orden, name: stateOrder, widget: number, value_type: int, min: 1, max: 5, hint: '1=publicado … 5=proto' }
+          - { label: 'Publicado — en el mercado', value: publicado }
+          - { label: 'En producción — reglas cerradas, camino a editorial', value: produccion }
+          - { label: 'Disponible — prototipo jugable estable', value: disponible }
+          - { label: 'En pruebas — motor en testeo activo', value: pruebas }
+          - { label: 'Boceto — idea o proto muy temprano', value: boceto }
+          - { label: 'Idea — concepto muy temprano o abstracto', value: idea }
+      - label: Etiqueta del estado (ES)
+        name: stateLabel
+        widget: select
+        options:
+          - { label: Publicado, value: Publicado }
+          - { label: En producción, value: En producción }
+          - { label: Disponible, value: Disponible }
+          - { label: En pruebas, value: En pruebas }
+          - { label: Boceto, value: Boceto }
+          - { label: Idea, value: Idea }
+      - label: Etiqueta del estado (EN)
+        name: stateLabelEn
+        widget: select
+        required: false
+        options:
+          - { label: Published, value: Published }
+          - { label: In production, value: In production }
+          - { label: Available, value: Available }
+          - { label: In testing, value: In testing }
+          - { label: Sketch, value: Sketch }
+          - { label: Idea, value: Idea }
+      - { label: Orden, name: stateOrder, widget: number, value_type: int, min: 1, max: 6, hint: '1=publicado · 2=produccion · 3=disponible · 4=pruebas · 5=boceto · 6=idea' }
       - { label: Fecha (YYYY-MM), name: date, widget: string, pattern: ['^\d{4}-\d{2}$', 'Usa formato YYYY-MM'] }
       - label: Sección en la home
         name: home

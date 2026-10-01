@@ -8,9 +8,9 @@ description: Aportas Luz a cinco Paisajes compartidos, ganas Favor por mayorías
 descriptionEn: You add Light to five shared Landscapes, score Favor on majorities, and dodge —or force— the Eclipse when the reserve runs short. Four Dawns.
 meta: Luz · Favor · Paisajes
 metaEn: Light · Favor · Landscapes
-state: proto
-stateLabel: Proto
-stateLabelEn: Prototype
+state: boceto
+stateLabel: Boceto
+stateLabelEn: Sketch
 stateOrder: 5
 date: '2025-05'
 home: proto

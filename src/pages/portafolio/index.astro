@@ -10,11 +10,12 @@ const t = pf[locale];
 const games = (await getGames()).map((g) => localizeGame(g, locale));
 
 const stateBadge: Record<string, { bg: string; color: string }> = {
-  publicado: { bg: '#22c55e',              color: '#fff' },
-  avanzado:  { bg: '#3b82f6',              color: '#fff' },
-  playtest:  { bg: '#f97316',              color: '#fff' },
-  rediseno:  { bg: '#d946ef',              color: '#fff' },
-  proto:     { bg: 'rgba(255,255,255,.18)', color: 'rgba(255,255,255,.85)' },
+  publicado:  { bg: '#7c3aed', color: '#fff' },
+  produccion: { bg: '#2563eb', color: '#fff' },
+  disponible: { bg: '#16a34a', color: '#fff' },
+  pruebas:    { bg: '#eab308', color: '#1a1205' },
+  boceto:     { bg: '#f97316', color: '#fff' },
+  idea:       { bg: '#dc2626', color: '#fff' },
 };
 
 /**
@@ -22,6 +23,7 @@ const stateBadge: Record<string, { bg: string; color: string }> = {
  * < 0.40 → oscuro; 0.40–0.65 → medio; ≥ 0.65 → claro
  */
 const overlayStrength: Record<string, 'light' | 'medium' | 'dark'> = {
+  carcinogenial: 'medium', // 0.508
   canes:      'light',   // 0.793
   evoluciona: 'light',   // 0.756
   pavoneo:    'light',   // 0.740
@@ -41,7 +43,6 @@ const overlayStrength: Record<string, 'light' | 'medium' | 'dark'> = {
   title={t.title}
   description={t.description}
   current="portafolio"
-  footerSubtitle={t.footer}
   fontUrl={CAJA_FONTS_URL}
 >
 
@@ -220,15 +221,6 @@ const overlayStrength: Record<string, 'light' | 'medium' | 'dark'> = {
     color: #fff;
     text-shadow: 0 1px 6px rgba(0, 0, 0, .4);
   }
-  .pf-card-tagline {
-    display: block;
-    font-size: clamp(.98rem, 1.5vw, 1.18rem);
-    font-style: italic;
-    line-height: 1.4;
-    color: rgba(255, 255, 255, .78);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, .35);
-  }
-
   .pf-card-foot {
     display: flex;
     align-items: center;
@@ -330,9 +322,6 @@ const overlayStrength: Record<string, 'light' | 'medium' | 'dark'> = {
               <div class="pf-card-body">
                 <span class="pf-card-title" style={`font-family: ${g.titleFont};`}>
                   {g.name}
-                </span>
-                <span class="pf-card-tagline" style={`font-family: ${g.taglineFont};`}>
-                  {g.tagline}
                 </span>
                 <div class="pf-card-foot">
                   <div class="pf-swatches" aria-hidden="true">

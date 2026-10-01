@@ -8,9 +8,9 @@ description: Duelo de dos. COLA sostiene el abanico; CABEZA decide cuánto abrir
 descriptionEn: Two-player duel. TAIL holds the fan; HEAD decides how far to open it. Each reveal adds stars and skulls. Too many skulls and you fall.
 meta: Abanico · v1.0
 metaEn: Fan · v1.0
-state: proto
-stateLabel: Proto
-stateLabelEn: Prototype
+state: boceto
+stateLabel: Boceto
+stateLabelEn: Sketch
 stateOrder: 5
 date: '2025-01'
 home: proto

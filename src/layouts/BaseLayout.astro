@@ -7,10 +7,8 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
-  current?: 'home' | 'ninive' | 'mapa' | 'portafolio' | 'estudio';
+  current?: 'home' | 'ninive' | 'portafolio' | 'estudio';
   bodyClass?: string;
-  footerSubtitle: string;
-  footerVariant?: 'default' | 'mapa' | 'ninive';
   /** CSS custom properties inyectadas en <html>. Clave sin --, valor completo. */
   theme?: Record<string, string>;
   /** URL de una hoja de estilos extra (fuentes, etc.) */
@@ -24,8 +22,6 @@ const {
   description,
   current = 'home',
   bodyClass,
-  footerSubtitle,
-  footerVariant = 'default',
   theme,
   fontUrl,
   themeColor = '#f4f0df',
@@ -58,6 +54,6 @@ const locale = getLocale(Astro);
   <body class={bodyClass} style={cssVars}>
     <Header current={current} />
     <slot />
-    <Footer subtitle={footerSubtitle} variant={footerVariant} />
+    <Footer />
   </body>
 </html>

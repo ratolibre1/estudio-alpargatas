@@ -8,10 +8,10 @@ description: Cooperativo de 2 a 4. Veinticuatro cartas, cuatro ingredientes. La 
 descriptionEn: Cooperative for 2 to 4. Twenty-four cards, four ingredients. The pyramid does not allow two matching neighbors.
 meta: Cooperativo · V2.0
 metaEn: Cooperative · V2.0
-state: proto
-stateLabel: Proto
-stateLabelEn: Prototype
-stateOrder: 5
+state: disponible
+stateLabel: Disponible
+stateLabelEn: Available
+stateOrder: 3
 date: '2026-02'
 home: proto
 homeOrder: 5
