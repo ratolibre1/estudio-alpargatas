@@ -8,10 +8,10 @@ description: Cada era declaras en secreto un Alarde sobre un patrono del Panteó
 descriptionEn: Each era you secretly declare a Boast on a patron of the Pantheon. Repeated values cancel. Winning Feats scores Glory; at the close, Nemesis punishes the Hubris maximum if it reached 6.
 meta: Proclamas · V0.2
 metaEn: Boasts · V0.2
-state: rediseno
-stateLabel: En rediseño
-stateLabelEn: Being redesigned
-stateOrder: 4
+state: boceto
+stateLabel: Boceto
+stateLabelEn: Sketch
+stateOrder: 5
 date: '2025-04'
 home: proto
 homeOrder: 2

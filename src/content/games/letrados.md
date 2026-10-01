@@ -8,9 +8,9 @@ description: Duelo de dos. Cada turno el Capataz elige carta y el Obrero se qued
 descriptionEn: A two-player duel. Each turn the Foreman picks a card and the Worker keeps the other. You score with the covered card's table.
 meta: Lighthouse · 2025
 metaEn: Lighthouse · 2025
-state: avanzado
-stateLabel: Avanzado
-stateLabelEn: Advanced
+state: produccion
+stateLabel: En producción
+stateLabelEn: In production
 stateOrder: 2
 date: '2025-02'
 home: featured
@@ -49,8 +49,8 @@ palette:
   - '#d4a84b'
   - '#24332a'
   - '#c0393a'
-titleFont: '"Patrick Hand", cursive'
-taglineFont: '"Patrick Hand", cursive'
+titleFont: '"Raleway", sans-serif'
+taglineFont: '"Raleway", sans-serif'
 conceptos:
   - construcción, letras, obra en altura
   - pizarra azul Lighthouse, lettering a mano Patrick Hand

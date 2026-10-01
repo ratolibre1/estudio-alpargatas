@@ -8,7 +8,7 @@ export const chispas = {
     crumbHere: 'Chispas',
     heroTitle: 'CHIS<em>PAS</em>',
     badgeVersion: 'V0.3',
-    badgeState: 'En playtest',
+    badgeState: 'En pruebas',
     heroDesc:
       'Un mazo único, tres acciones visibles y una mecha que obliga a medir cuánto consume cada jugada.',
     chipPlayers: '2–6 jugadores',
@@ -83,7 +83,7 @@ export const chispas = {
     crumbHere: 'Chispas',
     heroTitle: 'CHIS<em>PAS</em>',
     badgeVersion: 'V0.3',
-    badgeState: 'In playtest',
+    badgeState: 'In testing',
     heroDesc:
       'One shared deck, three face-up actions, and a fuse that makes you measure how much each play consumes.',
     chipPlayers: '2–6 players',

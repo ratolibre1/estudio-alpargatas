@@ -6,10 +6,10 @@ tagline: Zapada Lúdica
 taglineEn: Zapada Lúdica
 meta: Card Shedding
 metaEn: Card Shedding
-state: proto
-stateLabel: En playtest
-stateLabelEn: Playtesting
-stateOrder: 3
+state: boceto
+stateLabel: Boceto
+stateLabelEn: Sketch
+stateOrder: 5
 date: '2026-07'
 home: none
 players: 2-5

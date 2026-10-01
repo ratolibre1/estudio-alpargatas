@@ -8,10 +8,10 @@ description: Cada turno robas, bajas sets de 3 a 5 cartas iguales y gastas ficha
 descriptionEn: Each turn you draw, play sets of 3 to 5 matching cards, and spend Action tokens. The first to finish all five disciplines closes the round.
 meta: Sets · Fichas · V0.2
 metaEn: Sets · Tokens · V0.2
-state: proto
-stateLabel: Proto
-stateLabelEn: Prototype
-stateOrder: 5
+state: disponible
+stateLabel: Disponible
+stateLabelEn: Available
+stateOrder: 3
 date: '2025-03'
 home: proto
 homeOrder: 4

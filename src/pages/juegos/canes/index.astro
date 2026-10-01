@@ -19,7 +19,6 @@ const disciplinas = [
   title={t.title}
   description={t.description}
   bodyClass="page-canes"
-  footerSubtitle={t.footer}
   themeColor="#e8f2e0"
 >
 
@@ -571,6 +570,18 @@ const disciplinas = [
       </div>
     </div>
   </section>
+
+  <div class="ca-shell" style="padding-bottom: 1rem;">
+    <div style="display:flex; gap:1rem; align-items:center; background:#fffdf6; border-radius:12px; padding:1.2rem 1.4rem; border:2px solid rgba(74,32,112,.12);">
+      <span aria-hidden="true" style="font-size:2rem; flex-shrink:0;">🦀</span>
+      <div>
+        <div style="font-size:.6rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:rgba(45,74,26,.45); margin-bottom:.35rem;">{t.originLabel}</div>
+        <p style="margin:0; font-size:.88rem; line-height:1.65; color:rgba(45,74,26,.62);">
+          {t.originP} <a href={localizePath('/juegos/carcinogenial', locale)} style="color:#4a2070; font-weight:700;">{t.originLink}</a>
+        </p>
+      </div>
+    </div>
+  </div>
 
   <nav class="ca-back ca-shell" aria-label={t.backAria}>
     <span>{t.backPrompt}</span>

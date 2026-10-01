@@ -8,9 +8,9 @@ description: Dos acuaristas mueven su meeple por una grilla 5×5. Giran o voltea
 descriptionEn: Two aquarists move their meeple on a 5×5 grid. They rotate or flip tiles to form lines of three stingrays matching the color of the cards.
 meta: Área · Misiones · V0.4
 metaEn: Area · Missions · V0.4
-state: playtest
-stateLabel: En playtest
-stateLabelEn: Playtesting
+state: disponible
+stateLabel: Disponible
+stateLabelEn: Available
 stateOrder: 3
 date: '2025-07'
 home: featured

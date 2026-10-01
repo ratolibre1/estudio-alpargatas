@@ -8,10 +8,10 @@ description: Gestionas hilos y tinturas, tejes una urdimbre lineal y cumples enc
 descriptionEn: You manage threads and dyes, weave a linear warp, and fill commissions. A rondel, a loom, several clients. 2 to 5 players.
 meta: Clanes · Telar · 2–5
 metaEn: Clans · Loom · 2–5
-state: proto
-stateLabel: Proto
-stateLabelEn: Prototype
-stateOrder: 5
+state: pruebas
+stateLabel: En pruebas
+stateLabelEn: In testing
+stateOrder: 4
 date: '2025-01'
 home: proto
 homeOrder: 7
