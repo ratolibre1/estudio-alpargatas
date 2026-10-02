@@ -76,7 +76,7 @@ const t = copy[locale];
       position: relative;
       margin: 0;
       max-width: 27rem;
-      padding: .8rem .8rem 2.5rem;
+      padding: .8rem .8rem 3.8rem;
       background: var(--white);
       box-shadow: 12px 12px 0 var(--blue);
       transform: rotate(-1.5deg);
@@ -91,11 +91,11 @@ const t = copy[locale];
       position: absolute;
       left: 1rem;
       right: 1rem;
-      bottom: .6rem;
+      bottom: .9rem;
       font-family: Georgia, serif;
       font-size: .84rem;
       font-style: italic;
-      line-height: 1.3;
+      line-height: 1.35;
     }
     .studio-kicker {
       margin: 0 0 .7rem;
@@ -139,12 +139,8 @@ const t = copy[locale];
     .studio-cats-logo {
       display: grid;
       place-items: center;
-      min-height: 15rem;
-      padding: 1.5rem;
-      border-radius: 50%;
-      background: var(--paper);
     }
-    .studio-cats-logo img { width: min(15rem, 100%); }
+    .studio-cats-logo img { width: min(22rem, 100%); aspect-ratio: 1; object-fit: cover; border-radius: 50%; display: block; }
     .studio-formula {
       margin: 1.5rem 0 0;
       color: var(--blue);
@@ -170,14 +166,14 @@ const t = copy[locale];
       .studio-mark { min-height: 14rem; }
       .studio-profile:nth-child(even) .studio-photo { order: 0; justify-self: start; }
       .studio-photo { width: min(100%, 27rem); }
-      .studio-cats-logo { min-height: 12rem; }
+      .studio-cats-logo img { width: min(18rem, 100%); }
     }
     @media (max-width: 520px) {
       .studio-mark { padding: 1.5rem; box-shadow: 7px 7px 0 var(--blue); }
       .studio-photo { box-shadow: 7px 7px 0 var(--blue); }
       .studio-profile:nth-child(even) .studio-photo { box-shadow: 7px 7px 0 var(--red); }
       .studio-cats { padding: 1.4rem; box-shadow: 6px 6px 0 var(--ink); }
-      .studio-cats-logo { min-height: 10rem; }
+      .studio-cats-logo img { width: min(14rem, 100%); }
       .studio-formula { overflow-wrap: anywhere; }
     }
   </style>
@@ -251,7 +247,7 @@ const t = copy[locale];
           <p class="studio-formula">{t.catsFormula}</p>
         </div>
         <div class="studio-cats-logo">
-          <img src="/assets/gatitas.webp" alt={t.catsLabel} style="width:100%;height:100%;object-fit:cover;" />
+          <img src="/assets/gatitas.webp" alt={t.catsLabel} />
         </div>
       </div>
     </section>
