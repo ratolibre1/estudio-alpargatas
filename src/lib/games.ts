@@ -60,6 +60,18 @@ export async function getHomeGames(section: 'featured' | 'proto'): Promise<GameC
     .sort((a, b) => a.homeOrder - b.homeOrder);
 }
 
+export async function getIdeaGames(): Promise<GameCard[]> {
+  const games = await getGames();
+  return games.filter((game) => game.state === 'idea');
+}
+
+export async function getHomeAllGames(): Promise<GameCard[]> {
+  const games = await getGames();
+  return games
+    .filter((game) => game.home !== 'none')
+    .sort((a, b) => a.stateOrder - b.stateOrder || a.homeOrder - b.homeOrder || b.date.localeCompare(a.date));
+}
+
 export function localizeGame(game: GameCard, locale: Lang): GameCard {
   const href = gameHref(game.keyword, locale);
   if (locale !== 'en') return { ...game, href };

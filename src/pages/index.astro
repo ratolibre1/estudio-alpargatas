@@ -1,14 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { archiveGames } from '../data/archive';
-import { getHomeGames, localizeGame } from '../lib/games';
+import { getHomeAllGames, localizeGame } from '../lib/games';
 import { home } from '../i18n/home';
 import { getLocale, localizePath } from '../i18n/locale';
 
 const locale = getLocale(Astro);
 const t = home[locale];
-const featuredGames = (await getHomeGames('featured')).map((g) => localizeGame(g, locale));
-const prototypes = (await getHomeGames('proto')).map((g) => localizeGame(g, locale));
+const homeGames = (await getHomeAllGames()).map((g) => localizeGame(g, locale));
+
+const stateBadge: Record<string, { bg: string; color: string }> = {
+  publicado:  { bg: '#7c3aed', color: '#fff' },
+  produccion: { bg: '#2563eb', color: '#fff' },
+  disponible: { bg: '#16a34a', color: '#fff' },
+  pruebas:    { bg: '#eab308', color: '#1a1205' },
+  boceto:     { bg: '#f97316', color: '#fff' },
+  idea:       { bg: '#dc2626', color: '#fff' },
+};
 ---
 
 <BaseLayout
@@ -22,23 +29,15 @@ const prototypes = (await getHomeGames('proto')).map((g) => localizeGame(g, loca
         <h1 id="hero-title">{t.h1}</h1>
         <p class="hero-lede">{t.lede}</p>
         <div class="hero-links">
-          <a class="button red" href="#juegos">{t.ctaGames}</a>
-          <a class="underlined-link" href="#cuaderno">{t.ctaNotebook}</a>
+          <a class="button red" href={localizePath('/portafolio/', locale)}>{t.ctaGames}</a>
+          <a class="underlined-link" href={localizePath('/estudio/', locale)}>{t.ctaNotebook}</a>
         </div>
       </div>
 
-      <div class="table-collage" aria-label={t.collageAria}>
-        <a class="photo-card photo-ninive" href={localizePath('/juegos/ninive/', locale)}>
-          <img src="/assets/ninive-caja.webp" alt={t.photoNiniveAlt} />
-          <span>{t.photoNinive}</span>
-        </a>
-        <article class="photo-card photo-llama sample-cover sample-blue"><small>{t.chispasVersion}</small><h3>Chispas</h3><p>{t.chispasMeta}</p><span>{t.chispasStatus}</span></article>
-        <article class="photo-card photo-reloj sample-cover sample-yellow"><small>26 CARTAS</small><h3>Letrados</h3><p>{t.letradosMeta}</p><span>{t.letradosTime}</span></article>
-        <span class="tape tape-one" aria-hidden="true"></span>
-        <span class="tape tape-two" aria-hidden="true"></span>
-        <span class="doodle-arrow" aria-hidden="true">↙</span>
-        <p class="margin-note" set:html={t.marginNote} />
-      </div>
+      <a class="hero-ninive" href={localizePath('/juegos/ninive/', locale)} aria-label={t.photoNinive}>
+        <img src="/assets/ninive-caja.webp" alt={t.photoNiniveAlt} />
+        <span>{t.photoNinive}</span>
+      </a>
     </section>
 
     <section class="games-section" id="juegos" aria-labelledby="games-title">
@@ -48,62 +47,30 @@ const prototypes = (await getHomeGames('proto')).map((g) => localizeGame(g, loca
           <h2 id="games-title" set:html={t.catTitle} />
           <p>{t.catLede}</p>
         </header>
-
-        <div class="published-grid">
-          {featuredGames.map((game) => game.image && !game.coverTheme ? (
-            <a class="published-card published-ninive" href={game.href}>
-              <div class="published-image"><img src={game.image} alt={game.imageAlt ?? game.name} loading="lazy" /><span class="sticker blue">{t.published}</span></div>
-              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.blurb}</p><ul>{game.facts?.map((fact) => <li>{fact}</li>)}</ul><span class="feed-link">{t.openFicha}</span></div>
-            </a>
-          ) : (
-            <a class={`published-card sample-game sample-game-${game.coverTheme}`} href={game.href}>
-              <div class="sample-game-cover"><span>{game.coverNumber}</span><strong>{(game.coverTitle ?? game.name).split('\n').map((line, index) => <>{index > 0 && <br />}{line}</>)}</strong><small>{game.coverStatus}</small></div>
-              <div class="published-copy"><p class="feed-meta">{game.meta}</p><h3>{game.name}</h3><p>{game.blurb}</p><ul>{game.facts?.map((fact) => <li>{fact}</li>)}</ul></div>
-            </a>
-          ))}
+        <div class="home-games-grid">
+          {homeGames.map((game) => {
+            const badge = stateBadge[game.state] ?? { bg: '#888', color: '#fff' };
+            return (
+              <a href={game.href} class="home-game-card">
+                {game.image
+                  ? <img src={game.image} alt={game.imageAlt ?? game.name} loading="lazy" />
+                  : game.coverTheme
+                    ? <div class={`home-game-cover sample-game-${game.coverTheme}`}>
+                        <span>{game.coverNumber}</span>
+                        <strong>{game.coverTitle ?? game.name}</strong>
+                        <small>{game.coverStatus}</small>
+                      </div>
+                    : <div class={`prototype-cover cover-${game.keyword}`}><b>{game.coverInitials}</b></div>
+                }
+                <div class="home-game-info">
+                  <span class="home-game-badge" style={`background:${badge.bg};color:${badge.color}`}>{game.stateLabel}</span>
+                  <h3>{game.name}</h3>
+                  <p>{game.blurb}</p>
+                </div>
+              </a>
+            );
+          })}
         </div>
-      </div>
-    </section>
-
-    <section class="prototype-section shell" aria-labelledby="prototype-title">
-      <header class="prototype-heading"><div><span class="section-number">02</span><p class="overline">{t.protoOverline}</p></div><h2 id="prototype-title">{t.protoTitle}</h2><p>{t.protoLede}</p></header>
-      <div class="prototype-mini-grid">
-        {prototypes.map((game) => (
-          <a href={game.href} class="proto-link">
-            {game.image
-              ? <img src={game.image} alt={game.imageAlt ?? game.name} loading="lazy" />
-              : <div class={`prototype-cover cover-${game.keyword}`} aria-hidden="true"><b>{game.coverInitials}</b></div>}
-            <div><span>{game.meta}</span><h3>{game.name}</h3><p>{game.blurb}</p></div>
-          </a>
-        ))}
-      </div>
-      <div class="idea-archive" aria-labelledby="archive-title">
-        <div><p class="overline">{t.archiveOverline}</p><h3 id="archive-title">{t.archiveTitle}</h3></div>
-        <ul>{archiveGames.map((game) => <li>{game}</li>)}</ul>
-      </div>
-    </section>
-
-    <section class="now-section" aria-labelledby="now-title">
-      <div class="shell now-grid">
-        <div class="now-heading"><span class="section-number">03</span><p class="overline">{t.nowOverline}</p><h2 id="now-title">{t.nowTitle}</h2></div>
-        <div class="change-list">
-          <article><span>{t.now1Tag}</span><h3>{t.now1Title}</h3><p>{t.now1Body}</p></article>
-          <article><span>{t.now2Tag}</span><h3>{t.now2Title}</h3><p>{t.now2Body}</p></article>
-          <article><span>{t.now3Tag}</span><h3>{t.now3Title}</h3><p>{t.now3Body}</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="notebook-section shell" id="cuaderno" aria-labelledby="notebook-title">
-      <header class="notebook-heading">
-        <div><span class="section-number">04</span><p class="overline">{t.nbOverline}</p></div>
-        <h2 id="notebook-title" set:html={t.nbTitle} />
-        <p>{t.nbLede}</p>
-      </header>
-      <div class="note-cards">
-        <article class="paper-note note-yellow"><span>{t.note1Tag}</span><h3>{t.note1Title}</h3><p>{t.note1Body}</p></article>
-        <article class="paper-note note-blue"><span>{t.note2Tag}</span><h3>{t.note2Title}</h3><p>{t.note2Body}</p></article>
-        <article class="paper-note note-pink"><span>{t.note3Tag}</span><h3>{t.note3Title}</h3><p>{t.note3Body}</p></article>
       </div>
     </section>
 
@@ -115,7 +82,7 @@ const prototypes = (await getHomeGames('proto')).map((g) => localizeGame(g, loca
           <h2>{t.aboutTitle}</h2>
           <p>{t.aboutBody}</p>
           <div class="hero-links">
-            <a class="button blue" href={localizePath('/sobre-mi/', locale)}>{t.aboutPage}</a>
+            <a class="button blue" href={localizePath('/estudio/', locale)}>{t.aboutPage}</a>
             <a class="underlined-link" href="https://www.instagram.com/estudioalpargatas/">{t.aboutCta}</a>
           </div>
         </div>

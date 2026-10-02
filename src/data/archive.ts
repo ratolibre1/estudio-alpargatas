@@ -1,12 +1,6 @@
-/** Ideas del cuaderno: no son juegos del CMS. */
+/** Ideas del cuaderno aún sin entrada en el CMS. */
 export const archiveGames = [
   'Snorkel',
-  'Palomas',
-  'Manda Nudis',
-  'Ermitaños',
-  'Carcinogenial',
   'Carpas Koi',
   'Trinkets',
-  'Chauvet',
-  'Almagesto',
 ] as const;
