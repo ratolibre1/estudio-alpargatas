@@ -56,7 +56,7 @@ export const home = {
     aboutTitle: 'Diseño juegos para ver qué hacen las personas con una regla simple y una mesa llena de posibilidades.',
     aboutBody: 'Estudio Alpargatas es mi rincón para crear, probar y compartir juegos de mesa desde Chile. Hay proyectos terminados, ideas muy tempranas y bastante cartón cortado a mano.',
     aboutCta: 'Seguir el proceso en Instagram ↗',
-    aboutPage: 'Sobre mí y el estudio →',
+    aboutPage: 'Conocer el estudio →',
   },
   en: {
     title: 'Estudio Alpargatas — Board games',
@@ -113,6 +113,6 @@ export const home = {
     aboutTitle: 'I design games to see what people do with a simple rule and a table full of possibilities.',
     aboutBody: 'Estudio Alpargatas is my corner for making, testing, and sharing board games from Chile. Finished projects, very early ideas, and a lot of hand-cut cardboard.',
     aboutCta: 'Follow the process on Instagram ↗',
-    aboutPage: 'About me and the studio →',
+    aboutPage: 'Meet the studio →',
   },
 } as const satisfies Record<Lang, Record<string, string>>;
