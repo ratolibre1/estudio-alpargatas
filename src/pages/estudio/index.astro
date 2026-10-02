@@ -13,14 +13,18 @@ const t = copy[locale];
   current="estudio"
 >
   <style>
-    .sm-hero { padding-block: clamp(2.25rem, 5vw, 3.75rem) 0; }
-    .sm-hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(16rem, .85fr);
-      align-items: end;
-      gap: clamp(1.75rem, 4vw, 3rem);
+    .studio-page { overflow: hidden; }
+
+    .studio-hero {
+      padding-block: clamp(2.25rem, 5vw, 4.5rem);
     }
-    .sm-crumb {
+    .studio-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(16rem, .75fr);
+      align-items: center;
+      gap: clamp(2rem, 5vw, 5rem);
+    }
+    .studio-crumb {
       display: flex;
       gap: .6rem;
       margin-bottom: 1.15rem;
@@ -30,41 +34,72 @@ const t = copy[locale];
       letter-spacing: .06em;
       text-transform: uppercase;
     }
-    .sm-crumb a { text-decoration: none; }
-    .sm-crumb a:hover { color: var(--red); }
-    .sm-hero .page-title { max-width: 12ch; }
-    .sm-hero .lede { max-width: 38rem; }
-    .sm-photo {
-      position: relative;
-      margin: 0 auto;
-      max-width: 22rem;
-      padding: .8rem .8rem 2.5rem;
+    .studio-crumb a { text-decoration: none; }
+    .studio-crumb a:hover { color: var(--red); }
+    .studio-hero .page-title { max-width: 11ch; }
+    .studio-story {
+      display: grid;
+      gap: .9rem;
+      max-width: 47rem;
+      margin-top: 1.5rem;
+    }
+    .studio-story p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(1rem, 1.5vw, 1.12rem);
+    }
+    .studio-mark {
+      display: grid;
+      place-items: center;
+      min-height: 20rem;
+      padding: clamp(2rem, 5vw, 4rem);
+      border: 1.5px solid var(--ink);
       background: var(--white);
       box-shadow: 12px 12px 0 var(--blue);
       transform: rotate(2deg);
     }
-    .sm-photo img { width: 100%; display: block; }
-    .sm-logo {
-      display: block;
-      width: min(14rem, 70%);
-      margin: 1.4rem 0 0;
+    .studio-mark img { width: min(18rem, 100%); }
+
+    .studio-profiles {
+      display: grid;
+      gap: clamp(3rem, 7vw, 6rem);
+      padding-block: clamp(3rem, 7vw, 6rem);
     }
-    .sm-photo figcaption {
+    .studio-profile {
+      display: grid;
+      grid-template-columns: minmax(15rem, .8fr) minmax(0, 1.2fr);
+      align-items: center;
+      gap: clamp(2rem, 5vw, 4.5rem);
+    }
+    .studio-profile:nth-child(even) .studio-photo { order: 2; }
+    .studio-photo {
+      position: relative;
+      margin: 0;
+      max-width: 27rem;
+      padding: .8rem .8rem 2.5rem;
+      background: var(--white);
+      box-shadow: 12px 12px 0 var(--blue);
+      transform: rotate(-1.5deg);
+    }
+    .studio-profile:nth-child(even) .studio-photo {
+      justify-self: end;
+      box-shadow: 12px 12px 0 var(--red);
+      transform: rotate(1.5deg);
+    }
+    .studio-photo img { width: 100%; display: block; }
+    .studio-photo figcaption {
       position: absolute;
       left: 1rem;
+      right: 1rem;
       bottom: .6rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       font-family: Georgia, serif;
-      font-size: .86rem;
+      font-size: .84rem;
       font-style: italic;
     }
-
-    .sm-split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(1.5rem, 4vw, 2.75rem);
-      padding-block: clamp(2.5rem, 6vw, 4.5rem);
-    }
-    .sm-kicker {
+    .studio-kicker {
       margin: 0 0 .7rem;
       color: var(--red);
       font-size: .72rem;
@@ -72,136 +107,165 @@ const t = copy[locale];
       letter-spacing: .1em;
       text-transform: uppercase;
     }
-    .sm-split h2 {
-      margin: 0 0 1rem;
+    .studio-profile h2,
+    .studio-cats h2 {
+      margin: 0 0 1.15rem;
       font-family: Arial, Helvetica, sans-serif;
-      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
       font-weight: 950;
-      letter-spacing: -.06em;
+      letter-spacing: -.065em;
       line-height: .95;
     }
-    .sm-split p { margin: 0; color: var(--ink-soft); font-size: 1.05rem; }
-
-    .sm-facts {
+    .studio-copy {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      padding-bottom: clamp(2.5rem, 6vw, 4rem);
+      gap: .85rem;
+      max-width: 42rem;
     }
-    .sm-facts article {
-      padding: 1.25rem 1.3rem 1.4rem;
+    .studio-copy p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+    }
+
+    .studio-cats-wrap { padding-bottom: clamp(3rem, 7vw, 6rem); }
+    .studio-cats {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, .7fr);
+      align-items: center;
+      gap: clamp(2rem, 5vw, 4rem);
+      padding: clamp(2rem, 5vw, 4rem);
       border: 1.5px solid var(--ink);
       background: var(--white);
-      box-shadow: 4px 4px 0 var(--ink);
+      box-shadow: 8px 8px 0 var(--ink);
     }
-    .sm-facts h3 {
-      margin: 0 0 .45rem;
-      font-size: 1.05rem;
-      letter-spacing: -.03em;
-    }
-    .sm-facts p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
-
-    .sm-duo {
+    .studio-cats-logo {
       display: grid;
-      grid-template-columns: minmax(12rem, .7fr) 1fr;
-      gap: clamp(1.5rem, 4vw, 2.5rem);
-      align-items: center;
-      margin-bottom: clamp(2.5rem, 6vw, 4rem);
+      place-items: center;
+      min-height: 15rem;
+      padding: 1.5rem;
+      border-radius: 50%;
+      background: var(--paper);
     }
-    .sm-duo .sm-photo { max-width: 22rem; transform: rotate(-1.5deg); box-shadow: 12px 12px 0 var(--red); }
-    .sm-duo h2 { margin: 0 0 .7rem; font-size: clamp(1.8rem, 3.5vw, 2.4rem); letter-spacing: -.05em; }
-    .sm-duo p { margin: 0; color: var(--ink-soft); font-size: 1.05rem; }
+    .studio-cats-logo img { width: min(15rem, 100%); }
+    .studio-formula {
+      margin: 1.5rem 0 0;
+      color: var(--blue);
+      font-size: clamp(1.9rem, 5vw, 4.2rem);
+      font-weight: 950;
+      letter-spacing: -.06em;
+      line-height: .9;
+    }
 
-    .sm-contact-links {
+    .studio-contact-links {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 1rem 1.4rem;
       margin-top: 1.5rem;
     }
-    .sm-contact-links .underlined-link { color: #d6e7fa; }
+    .studio-contact-links .underlined-link { color: #d6e7fa; }
 
-    @media (max-width: 980px) {
-      .sm-hero-grid,
-      .sm-split,
-      .sm-duo { grid-template-columns: 1fr; }
-      .sm-photo { margin-left: 0; }
+    @media (max-width: 900px) {
+      .studio-hero-grid,
+      .studio-profile,
+      .studio-cats { grid-template-columns: minmax(0, 1fr); }
+      .studio-mark { min-height: 14rem; }
+      .studio-profile:nth-child(even) .studio-photo { order: 0; justify-self: start; }
+      .studio-photo { width: min(100%, 27rem); }
+      .studio-cats-logo { min-height: 12rem; }
     }
-    @media (max-width: 760px) {
-      .sm-facts { grid-template-columns: 1fr; }
+    @media (max-width: 520px) {
+      .studio-mark { padding: 1.5rem; box-shadow: 7px 7px 0 var(--blue); }
+      .studio-photo { box-shadow: 7px 7px 0 var(--blue); }
+      .studio-profile:nth-child(even) .studio-photo { box-shadow: 7px 7px 0 var(--red); }
+      .studio-cats { padding: 1.4rem; box-shadow: 6px 6px 0 var(--ink); }
+      .studio-cats-logo { min-height: 10rem; }
+      .studio-formula { overflow-wrap: anywhere; }
     }
   </style>
 
-  <main>
-    <header class="page-hero sm-hero">
-      <div class="shell sm-hero-grid">
+  <main class="studio-page">
+    <header class="page-hero studio-hero">
+      <div class="shell studio-hero-grid">
         <div>
-          <nav class="sm-crumb" aria-label={t.crumbAria}>
+          <nav class="studio-crumb" aria-label={t.crumbAria}>
             <a href={localizePath('/', locale)}>{t.crumbHome}</a>
             <span>/</span>
             <span>{t.crumbHere}</span>
           </nav>
           <p class="eyebrow">{t.eyebrow}</p>
           <h1 class="page-title">{t.h1}</h1>
-          <p class="lede">{t.lede}</p>
+          <div class="studio-story">
+            <p>{t.history1}</p>
+            <p>{t.history2}</p>
+            <p>{t.history3}</p>
+            <p>{t.history4}</p>
+          </div>
         </div>
-        <figure class="sm-photo">
-          <img src="/assets/arturo.webp" alt={t.photoAlt} />
-          <figcaption>{t.photoCaption}</figcaption>
-        </figure>
+        <div class="studio-mark">
+          <img src="/assets/estudio-alpargatas-logo-hd.webp" alt={t.logoAlt} />
+        </div>
       </div>
     </header>
 
-    <section class="shell sm-split" aria-labelledby="sm-me-title">
-      <article>
-        <p class="sm-kicker">{t.meLabel}</p>
-        <h2 id="sm-me-title">{t.meTitle}</h2>
-        <p>{t.meBody}</p>
-      </article>
-      <article>
-        <p class="sm-kicker">{t.studioLabel}</p>
-        <h2>{t.studioTitle}</h2>
-        <p>{t.studioBody}</p>
-        <img class="sm-logo" src="/assets/estudio-alpargatas-logo-hd.webp" alt={t.logoAlt} />
-      </article>
-    </section>
-
-    <section class="shell sm-facts" aria-label={t.eyebrow}>
-      <article>
-        <h3>{t.fact1k}</h3>
-        <p>{t.fact1v}</p>
-      </article>
-      <article>
-        <h3>{t.fact2k}</h3>
-        <p>{t.fact2v}</p>
-      </article>
-      <article>
-        <h3>{t.fact3k}</h3>
-        <p>{t.fact3v}</p>
-      </article>
-    </section>
-
-    <section class="shell">
-      <div class="sm-duo">
-        <figure class="sm-photo">
-          <img src="/assets/arturo-estefi.webp" alt={t.duoAlt} />
-          <figcaption>{t.duoCaption}</figcaption>
+    <section class="shell studio-profiles">
+      <article class="studio-profile" aria-labelledby="studio-arturo-title">
+        <figure class="studio-photo">
+          <img src="/assets/arturo.webp" alt={t.arturoAlt} />
+          <figcaption>{t.arturoCaption}</figcaption>
         </figure>
         <div>
-          <h2>{t.collabTitle}</h2>
-          <p>{t.collabBody}</p>
+          <p class="studio-kicker">{t.arturoLabel}</p>
+          <h2 id="studio-arturo-title">{t.arturoTitle}</h2>
+          <div class="studio-copy">
+            <p>{t.arturoBody1}</p>
+            <p>{t.arturoBody2}</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="studio-profile" aria-labelledby="studio-estefi-title">
+        <figure class="studio-photo">
+          <img src="/assets/arturo-estefi.webp" alt={t.estefiAlt} />
+          <figcaption>{t.estefiCaption}</figcaption>
+        </figure>
+        <div>
+          <p class="studio-kicker">{t.estefiLabel}</p>
+          <h2 id="studio-estefi-title">{t.estefiTitle}</h2>
+          <div class="studio-copy">
+            <p>{t.estefiBody1}</p>
+            <p>{t.estefiBody2}</p>
+            <p>{t.estefiBody3}</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="shell studio-cats-wrap" aria-labelledby="studio-cats-title">
+      <div class="studio-cats">
+        <div>
+          <p class="studio-kicker">{t.catsLabel}</p>
+          <h2 id="studio-cats-title">{t.catsTitle}</h2>
+          <div class="studio-copy">
+            <p>{t.catsBody}</p>
+            <p>{t.catsParts}</p>
+          </div>
+          <p class="studio-formula">{t.catsFormula}</p>
+        </div>
+        <div class="studio-cats-logo">
+          <img src="/assets/estudio-alpargatas-logo-hd.webp" alt="" />
         </div>
       </div>
     </section>
 
-    <section class="about-section" aria-labelledby="sm-contact-title">
+    <section class="about-section" aria-labelledby="studio-contact-title">
       <div class="shell about-grid">
         <div class="about-word">ESTUDIO</div>
         <div class="about-copy">
           <p class="overline">{t.contactOverline}</p>
-          <h2 id="sm-contact-title">{t.contactTitle}</h2>
+          <h2 id="studio-contact-title">{t.contactTitle}</h2>
           <p>{t.contactBody}</p>
-          <div class="sm-contact-links">
+          <div class="studio-contact-links">
             <a class="button blue" href="https://www.instagram.com/estudioalpargatas/">{t.ctaIg}</a>
             <a class="underlined-link" href={localizePath('/portafolio/', locale)}>{t.ctaPortfolio}</a>
             <a class="underlined-link" href={localizePath('/juegos/ninive/', locale)}>{t.ctaNinive}</a>
