@@ -92,12 +92,10 @@ const t = copy[locale];
       left: 1rem;
       right: 1rem;
       bottom: .6rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       font-family: Georgia, serif;
       font-size: .84rem;
       font-style: italic;
+      line-height: 1.3;
     }
     .studio-kicker {
       margin: 0 0 .7rem;
@@ -253,7 +251,7 @@ const t = copy[locale];
           <p class="studio-formula">{t.catsFormula}</p>
         </div>
         <div class="studio-cats-logo">
-          <img src="/assets/estudio-alpargatas-logo-hd.webp" alt="" />
+          <img src="/assets/gatitas.webp" alt={t.catsLabel} style="width:100%;height:100%;object-fit:cover;" />
         </div>
       </div>
     </section>
