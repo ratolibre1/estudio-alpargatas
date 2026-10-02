@@ -10,7 +10,7 @@ state: idea
 stateLabel: Idea
 stateLabelEn: Idea
 stateOrder: 6
-date: '2026-10'
+date: '2023-12'
 home: none
 image: /assets/concepto-nudis.webp
 imageAlt: Nudibranquios de colores imposibles ilustrados al estilo de guía de campo científica

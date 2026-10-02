@@ -12,7 +12,7 @@ state: boceto
 stateLabel: Boceto
 stateLabelEn: Sketch
 stateOrder: 5
-date: '2025-05'
+date: '2026-07'
 home: proto
 homeOrder: 1
 players: 2–4

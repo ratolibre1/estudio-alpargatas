@@ -12,7 +12,7 @@ state: produccion
 stateLabel: En producción
 stateLabelEn: In production
 stateOrder: 2
-date: '2025-02'
+date: '2025-01'
 home: featured
 homeOrder: 2
 facts:

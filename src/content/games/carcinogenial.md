@@ -12,7 +12,7 @@ state: disponible
 stateLabel: Disponible
 stateLabelEn: Available
 stateOrder: 3
-date: '2023-12'
+date: '2023-06'
 home: none
 players: '2-4'
 facts:

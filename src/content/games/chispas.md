@@ -12,7 +12,7 @@ state: pruebas
 stateLabel: En pruebas
 stateLabelEn: In testing
 stateOrder: 4
-date: '2025-06'
+date: '2026-08'
 home: featured
 homeOrder: 4
 facts:

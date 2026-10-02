@@ -10,7 +10,7 @@ state: idea
 stateLabel: Idea
 stateLabelEn: Idea
 stateOrder: 6
-date: '2026-10'
+date: '2022-07'
 home: none
 image: /assets/concepto-chauvet.webp
 imageAlt: Pinturas rupestres en caverna prehistórica con siluetas de bisontes en ocre y rojo

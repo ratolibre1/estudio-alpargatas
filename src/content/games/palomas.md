@@ -10,7 +10,7 @@ state: idea
 stateLabel: Idea
 stateLabelEn: Idea
 stateOrder: 6
-date: '2026-10'
+date: '2024-03'
 home: none
 image: /assets/concepto-palomas.webp
 imageAlt: Pandilla de palomas urbanas en póster de acción con alto contraste en blanco, negro y rojo

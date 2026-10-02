@@ -10,7 +10,7 @@ state: idea
 stateLabel: Idea
 stateLabelEn: Idea
 stateOrder: 6
-date: '2026-10'
+date: '2026-03'
 home: none
 image: /assets/concepto-gato.webp
 imageAlt: Gato doméstico echado en un departamento bañado por la luz dorada de la tarde

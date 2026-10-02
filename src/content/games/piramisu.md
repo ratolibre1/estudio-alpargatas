@@ -12,7 +12,7 @@ state: disponible
 stateLabel: Disponible
 stateLabelEn: Available
 stateOrder: 3
-date: '2026-02'
+date: '2026-01'
 home: proto
 homeOrder: 5
 facts:

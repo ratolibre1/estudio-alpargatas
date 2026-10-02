@@ -12,7 +12,7 @@ state: pruebas
 stateLabel: En pruebas
 stateLabelEn: In testing
 stateOrder: 4
-date: '2025-01'
+date: '2025-10'
 home: proto
 homeOrder: 7
 players: 2–5

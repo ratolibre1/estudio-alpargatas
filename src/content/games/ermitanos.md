@@ -10,7 +10,7 @@ state: idea
 stateLabel: Idea
 stateLabelEn: Idea
 stateOrder: 6
-date: '2026-10'
+date: '2023-11'
 home: none
 image: /assets/concepto-ermitanos.webp
 imageAlt: Cangrejos ermitaños coloridos con caparazones hechos de basura marina tropical

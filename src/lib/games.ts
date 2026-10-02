@@ -50,7 +50,7 @@ export async function getGames(): Promise<GameCard[]> {
   const entries = await getCollection('games');
   return entries
     .map(toCard)
-    .sort((a, b) => a.stateOrder - b.stateOrder || b.date.localeCompare(a.date));
+    .sort((a, b) => b.date.localeCompare(a.date) || a.stateOrder - b.stateOrder);
 }
 
 export async function getHomeGames(section: 'featured' | 'proto'): Promise<GameCard[]> {
@@ -69,7 +69,7 @@ export async function getHomeAllGames(): Promise<GameCard[]> {
   const games = await getGames();
   return games
     .filter((game) => game.home !== 'none')
-    .sort((a, b) => a.stateOrder - b.stateOrder || a.homeOrder - b.homeOrder || b.date.localeCompare(a.date));
+    .sort((a, b) => b.date.localeCompare(a.date) || a.stateOrder - b.stateOrder || a.homeOrder - b.homeOrder);
 }
 
 export function localizeGame(game: GameCard, locale: Lang): GameCard {

@@ -10,7 +10,7 @@ state: idea
 stateLabel: Idea
 stateLabelEn: Idea
 stateOrder: 6
-date: '2026-10'
+date: '2019-09'
 home: none
 image: /assets/concepto-almagesto.webp
 imageAlt: Cielo nocturno estrellado con constelaciones doradas trazadas sobre fondo azul índigo
