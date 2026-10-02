@@ -2,79 +2,101 @@ import type { Lang } from './locale';
 
 export const sobre = {
   es: {
-    title: 'Sobre mí — Estudio Alpargatas',
-    description: 'Arturo Vial y Estudio Alpargatas: diseño de juegos de mesa desde Chile.',
-    footer: 'El autor y el taller.',
+    title: 'El estudio — Estudio Alpargatas',
+    description: 'La historia de Estudio Alpargatas, Arturo, Estefi, Chofi y Baqui.',
+    footer: 'La historia detrás de los juegos.',
     crumbHome: 'Inicio',
     crumbHere: 'Estudio',
     crumbAria: 'Migas de pan',
-    eyebrow: 'El autor y el taller',
-    h1: 'Hola, soy Arturo.',
-    lede: 'Diseño juegos para ver qué hacen las personas con una regla simple y una mesa llena de posibilidades.',
+    eyebrow: 'La historia del estudio',
+    h1: 'De los videojuegos a la mesa.',
+    history1:
+      'Empecé a diseñar juegos de mesa durante la pandemia, aunque la idea de construir experiencias mediante reglas venía de mucho antes: años atrás trabajé como desarrollador de videojuegos.',
+    history2:
+      'A mediados de 2023 decidí tomarme el diseño más en serio con Carcinogenial, el primer prototipo que llevé a un evento, en noviembre de ese mismo año.',
+    history3:
+      'Estudio Alpargatas tomó forma en junio de 2024, cuando comencé a mostrar Nínive. Dos meses después lo presenté en La Mesa Maestra, donde surgió el contacto con Ludoísmo que terminaría convirtiéndolo en mi primer juego publicado.',
+    history4:
+      'En ese camino también ha sido fundamental Punto de Partida, un grupo de testeo donde he podido probar juegos, aprender del proceso y compartir con otros diseñadores que están recorriendo caminos parecidos.',
     logoAlt: 'Logo de Estudio Alpargatas',
-    photoAlt: 'Arturo Vial de pie en el desierto, bajo la Vía Láctea, señala el cielo',
-    photoCaption: 'Arturo. Sin recorte: el cielo entra entero.',
-    duoAlt: 'Arturo Vial y Estefanía Lynch bajo el mismo cielo estrellado',
-    duoCaption: 'Arturo y Estefi. El estudio somos los dos.',
-    meLabel: '01 · Yo',
-    meTitle: 'Arturo Vial',
-    meBody:
-      'Diseño, corto cartón y pruebo partidas desde Chile. Me interesa la regla chica que abre una mesa: tensión, lectura del otro, ganas de repetir. El nombre completo aparece en los créditos como Arturo Vial Arqueros. En el estudio llevo el trabajo principal de edición y diseño.',
-    studioLabel: '02 · El estudio',
-    studioTitle: 'Alpargatas',
-    studioBody:
-      'Estudio Alpargatas somos Arturo Vial y Estefanía Lynch. No es una oficina: es el taller. Hay un título publicado, prototipos que todavía estamos rompiendo e ideas muy tempranas.',
-    fact1k: 'Chile',
-    fact1v: 'Desde acá se diseñan y se prueban.',
-    fact2k: 'Nínive',
-    fact2v: 'Publicado por Ludoísmo. El resto sigue en el taller.',
-    fact3k: 'Proceso a la vista',
-    fact3v: 'Versiones, dudas y cartón cortado a mano. El cuaderno también cuenta.',
-    collabTitle: 'Los dos',
-    collabBody:
-      'En rigor Alpargatas no es un proyecto de una sola persona. Estefi está en el estudio. Yo empujo edición y diseño; la mesa es compartida.',
-    contactOverline: 'Si quieres hablar',
-    contactTitle: 'Instagram es la vía directa.',
-    contactBody: 'Editoriales, jugadores o alguien que quiere sentarse a una partida de prueba: por ahí contesto.',
+    arturoLabel: 'Arturo',
+    arturoTitle: 'El que diseña los juegos.',
+    arturoBody1:
+      'Soy Arturo Vial Arqueros, informático de profesión y diseñador de juegos por insistencia. Me interesa descubrir cuánto puede ocurrir alrededor de una regla sencilla.',
+    arturoBody2:
+      'El proceso suele empezar con cartulina, Sharpies y una idea todavía medio borrosa. Después vienen las pruebas, los cambios de reglas y los archivos llamados «final final», hasta que el juego encuentra su forma.',
+    arturoAlt: 'Arturo Vial de pie en el desierto, bajo la Vía Láctea, señalando el cielo',
+    arturoCaption: 'Arturo Vial Arqueros.',
+    estefiLabel: 'Estefi',
+    estefiTitle: 'La primera en romper los juegos.',
+    estefiBody1:
+      'Estefi es una parte clave del proceso de diseño. Durante las pruebas encuentra los resquicios de las reglas, lleva los juegos hasta donde empiezan a fallar y propone ideas y soluciones para hacerlos mejores.',
+    estefiBody2:
+      'Yo diseño los prototipos, pero muchas veces encuentran su forma después de que ella descubre cómo romperlos.',
+    estefiBody3:
+      'Además, Estefi lleva el Instagram de Estudio Alpargatas y comparte hacia afuera todo lo que ocurre alrededor de los juegos.',
+    estefiAlt: 'Arturo Vial y Estefi bajo el mismo cielo estrellado',
+    estefiCaption: 'Arturo y Estefi, diseñando entre pruebas, ideas y reglas rotas.',
+    catsLabel: 'Alcachofa y Albahaquita',
+    catsTitle: 'Las dueñas del nombre.',
+    catsBody:
+      'Estudio Alpargatas toma su nombre de nuestras dos gatitas: Alcachofa (Chofi) y Albahaquita (Baqui).',
+    catsParts: 'Sus nombres comienzan con AL, forman un PAR y son GATAS.',
+    catsFormula: 'AL + PAR + GATAS.',
+    contactOverline: 'Pasa a la mesa',
+    contactTitle: '¿Algo te dio curiosidad?',
+    contactBody:
+      'Si quieres conocer un juego, probar un prototipo o conversar sobre una posible publicación, puedes escribirnos por Instagram. Probablemente te responda Estefi.',
     ctaIg: 'Abrir Instagram ↗',
     ctaPortfolio: 'Ver el portafolio →',
     ctaNinive: 'La ficha de Nínive →',
   },
   en: {
-    title: 'About — Estudio Alpargatas',
-    description: 'Arturo Vial and Estudio Alpargatas: board-game design from Chile.',
-    footer: 'The author and the workshop.',
+    title: 'The studio — Estudio Alpargatas',
+    description: 'The story of Estudio Alpargatas, Arturo, Estefi, Chofi, and Baqui.',
+    footer: 'The story behind the games.',
     crumbHome: 'Home',
     crumbHere: 'Studio',
     crumbAria: 'Breadcrumb',
-    eyebrow: 'The author and the workshop',
-    h1: 'Hi, I am Arturo.',
-    lede: 'I design games to see what people do with a simple rule and a table full of possibilities.',
+    eyebrow: 'The studio story',
+    h1: 'From video games to the table.',
+    history1:
+      'I started designing board games during the pandemic, although the idea of building experiences through rules went back much further: years earlier, I worked as a video game developer.',
+    history2:
+      'In mid-2023 I decided to take game design more seriously with Carcinogenial, the first prototype I brought to an event, in November of that year.',
+    history3:
+      'Estudio Alpargatas took shape in June 2024, when I began showing Nínive. Two months later I presented it at La Mesa Maestra, where I connected with Ludoísmo, the publisher that would turn it into my first published game.',
+    history4:
+      'Punto de Partida has also been essential along the way: a playtesting group where I have been able to test games, learn from the process, and share with other emerging designers following similar paths.',
     logoAlt: 'Estudio Alpargatas logo',
-    photoAlt: 'Arturo Vial standing in the desert under the Milky Way, pointing at the sky',
-    photoCaption: 'Arturo. Uncropped: the whole sky is in.',
-    duoAlt: 'Arturo Vial and Estefanía Lynch under the same starry sky',
-    duoCaption: 'Arturo and Estefi. The studio is both of us.',
-    meLabel: '01 · Me',
-    meTitle: 'Arturo Vial',
-    meBody:
-      'I design, cut cardboard, and playtest from Chile. I care about the small rule that opens a table: tension, reading the other player, wanting another round. Credits list the full name as Arturo Vial Arqueros. In the studio I do the main editing and design work.',
-    studioLabel: '02 · The studio',
-    studioTitle: 'Alpargatas',
-    studioBody:
-      'Estudio Alpargatas is Arturo Vial and Estefanía Lynch. Not an office: a workshop. One published title, prototypes we are still breaking, and very early ideas.',
-    fact1k: 'Chile',
-    fact1v: 'Designed and tested from here.',
-    fact2k: 'Nínive',
-    fact2v: 'Published by Ludoísmo. The rest is still in the workshop.',
-    fact3k: 'Process in view',
-    fact3v: 'Versions, doubts, and hand-cut cardboard. The notebook counts too.',
-    collabTitle: 'The two of us',
-    collabBody:
-      'Alpargatas is not a one-person project. Estefi is in the studio. I push editing and design; the table is shared.',
-    contactOverline: 'If you want to talk',
-    contactTitle: 'Instagram is the direct line.',
-    contactBody: 'Publishers, players, or someone who wants a test game: that is where I answer.',
+    arturoLabel: 'Arturo',
+    arturoTitle: 'The one who designs the games.',
+    arturoBody1:
+      'I am Arturo Vial Arqueros, a software engineer by profession and a game designer by persistence. I am interested in discovering how much can happen around a simple rule.',
+    arturoBody2:
+      'The process usually begins with cardstock, Sharpies, and an idea that is still a little blurry. Then come the playtests, the rule changes, and the files named “final final”, until the game finds its shape.',
+    arturoAlt: 'Arturo Vial standing in the desert under the Milky Way, pointing at the sky',
+    arturoCaption: 'Arturo Vial Arqueros.',
+    estefiLabel: 'Estefi',
+    estefiTitle: 'The first to break the games.',
+    estefiBody1:
+      'Estefi is a key part of the design process. During playtests she finds the cracks in the rules, pushes games until they begin to fail, and proposes ideas and solutions to make them better.',
+    estefiBody2:
+      'I design the prototypes, but they often find their shape after she discovers how to break them.',
+    estefiBody3:
+      'Estefi also runs the Estudio Alpargatas Instagram account, sharing everything that happens around the games with the outside world.',
+    estefiAlt: 'Arturo Vial and Estefi under the same starry sky',
+    estefiCaption: 'Arturo and Estefi, designing through playtests, ideas, and broken rules.',
+    catsLabel: 'Alcachofa and Albahaquita',
+    catsTitle: 'The owners of the name.',
+    catsBody:
+      'Estudio Alpargatas takes its name from our two cats: Alcachofa (Chofi) and Albahaquita (Baqui).',
+    catsParts: 'Their names begin with AL, they are a PAIR — PAR in Spanish — and they are CATS — GATAS.',
+    catsFormula: 'AL + PAR + GATAS.',
+    contactOverline: 'Come to the table',
+    contactTitle: 'Did something catch your interest?',
+    contactBody:
+      'If you want to learn about a game, playtest a prototype, or discuss a possible publication, write to us on Instagram. Estefi will probably be the one to reply.',
     ctaIg: 'Open Instagram ↗',
     ctaPortfolio: 'See the portfolio →',
     ctaNinive: 'The Nínive page →',
