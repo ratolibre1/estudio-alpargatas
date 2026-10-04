@@ -1,0 +1,255 @@
+---
+import GameGallery from './GameGallery.astro';
+import { ficha as copy } from '../i18n/fichas/ficha';
+import { bggHref } from '../lib/games';
+import { stateBadgeStyle } from '../lib/state-badge';
+import { IG_DM_ESTUDIO, instagramDmHref } from '../lib/instagram';
+import { fichaThemeStyle } from '../lib/ficha-theme';
+import type { Lang } from '../i18n/locale';
+import type { FichaContent } from '../lib/ficha';
+import '../styles/ficha.css';
+
+interface Props {
+  ficha: FichaContent;
+  locale: Lang;
+}
+
+const { ficha: g, locale } = Astro.props;
+const t = copy[locale];
+const isPub = g.variant === 'publicado';
+const ctaHref = isPub
+  ? g.buyUrl
+  : instagramDmHref(g.ctaHref ?? IG_DM_ESTUDIO);
+const ctaLabel = isPub ? t.ctaBuy : t.ctaTry;
+const howTo = (g.howTo ?? []).slice(0, 3);
+const awards = g.awards ?? [];
+const components = g.components ?? [];
+const photos = g.photos ?? [];
+const resources = g.resources ?? [];
+const hasDev = !isPub && Boolean(g.version || g.adjusting || g.nextPlaytests);
+const hasExt = Boolean(g.bggId || (g.publisherUrl && g.publisherLabel));
+const stripRight = g.pitchSubtitle ?? g.pitch;
+const showStrip = Boolean(g.pitchTitle && stripRight);
+---
+
+<article class="ficha" data-ficha-variant={g.variant} style={fichaThemeStyle(g)}>
+  <header class="ficha-hero">
+      <div class="ficha-hero-copy">
+        <div class="ficha-hero-copy-inner">
+        <p class="ficha-badge" style={stateBadgeStyle(g.state)}>{g.stateLabel}</p>
+        <h1>{g.name}</h1>
+        <p class="ficha-tagline">{g.tagline}</p>
+        {(g.players || g.duration) && (
+          <ul class="ficha-facts">
+            {g.players && (
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 19c0-3 2.5-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 19c0-2.2 1.4-3.8 3.4-4.5"/></svg>
+                {g.players} {t.factPlayers}
+              </li>
+            )}
+            {g.duration && (
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg>
+                {g.duration}
+              </li>
+            )}
+          </ul>
+        )}
+        {ctaHref && (
+          <div class="ficha-cta-block">
+            <div class="ficha-cta-row">
+              <a class="ficha-cta" href={ctaHref} target="_blank" rel="noopener noreferrer">
+                {!isPub && (
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+                )}
+                {ctaLabel} →
+              </a>
+              {g.rulesUrl && (
+                <a class="ficha-rules" href={g.rulesUrl} target="_blank" rel="noopener noreferrer">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                  {g.rulesLabel ?? (isPub ? t.rules : t.rulesProto)}
+                </a>
+              )}
+            </div>
+            {!isPub && <p class="ficha-cta-note">{t.ctaTryNote}</p>}
+          </div>
+        )}
+        {hasExt && (
+          <div class="ficha-ext">
+            {g.bggId && (
+              <a href={bggHref(g.bggId)} target="_blank" rel="noopener noreferrer">{t.bgg} ↗</a>
+            )}
+            {g.publisherUrl && g.publisherLabel && (
+              <a href={g.publisherUrl} target="_blank" rel="noopener noreferrer">{g.publisherLabel} ↗</a>
+            )}
+          </div>
+        )}
+        </div>
+      </div>
+      {g.image && (
+        <figure class="ficha-concept ficha-concept-bleed">
+          <div class="ficha-concept-media">
+            <img src={g.image} alt={g.imageAlt ?? g.name} loading="eager" decoding="async" />
+          </div>
+          {(g.imageCaption || g.image.includes('concepto-')) && (
+            <figcaption>{g.imageCaption ?? t.conceptCaption}</figcaption>
+          )}
+        </figure>
+      )}
+  </header>
+
+  {showStrip && (
+    <section class="ficha-strip" aria-label={g.pitchTitle}>
+      <div class="ficha-shell ficha-strip-inner">
+        <h2>{g.pitchTitle}</h2>
+        <p>{stripRight}</p>
+      </div>
+    </section>
+  )}
+
+  {hasDev && (
+    <section class="ficha-section ficha-dev">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{t.devTitle}</h2>
+        <div class="ficha-dev-cards">
+          {(g.version || g.adjusting) && (
+            <article class="ficha-panel">
+              <div class="ficha-panel-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              </div>
+              <h3>{g.version ? `${t.devVersion} ${g.version}` : t.devAdjusting}</h3>
+              <p>{g.adjusting ?? ''}</p>
+            </article>
+          )}
+          {g.nextPlaytests && (
+            <article class="ficha-panel">
+              <div class="ficha-panel-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><path d="M3 19c0-2.5 2.5-4 6-4s6 1.5 6 4"/><circle cx="17" cy="8" r="2.5"/><path d="M14 19c0-1.8 1.5-3 3-3"/></svg>
+              </div>
+              <h3>{t.devNext}</h3>
+              <p>{g.nextPlaytests}</p>
+            </article>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {awards.length > 0 && (
+    <section class="ficha-section">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{t.awards}</h2>
+        <ul class="ficha-awards-list">
+          {awards.map((award) => {
+            const Tag = award.href ? 'a' : 'div';
+            return (
+              <li>
+                <Tag
+                  class="ficha-award-card"
+                  href={award.href}
+                  target={award.href ? '_blank' : undefined}
+                  rel={award.href ? 'noopener noreferrer' : undefined}
+                >
+                  <div class="ficha-award-card-inner">
+                    {award.image && <img src={award.image} alt="" />}
+                    <span>
+                      <strong>{award.title}</strong>
+                      {award.href && <em>{t.awardLink} →</em>}
+                    </span>
+                  </div>
+                </Tag>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {howTo.length > 0 && (
+    <section class="ficha-section">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{t.howto}</h2>
+        <div class="ficha-howto-grid">
+          {howTo.map((step, index) => (
+            <figure class="ficha-step">
+              {step.image && <img src={step.image} alt={step.imageAlt ?? step.title} loading="lazy" />}
+              <span class="ficha-step-num">{index + 1}.</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {components.length > 0 && (
+    <section class="ficha-section">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{isPub ? t.componentsPub : t.componentsProto}</h2>
+        <div class="ficha-comp-grid">
+          {g.componentsPhoto && (
+            <div class="ficha-comp-photo">
+              <img src={g.componentsPhoto} alt={g.componentsPhotoAlt ?? ''} loading="lazy" />
+            </div>
+          )}
+          <div>
+            <ul class="ficha-comp-list">
+              {components.map((item) => (
+                <li>
+                  <span class="ficha-comp-icon" aria-hidden="true">▣</span>
+                  <span>{item.name}</span>
+                  <b>{item.qty}</b>
+                </li>
+              ))}
+            </ul>
+            {g.componentsNote && <p class="ficha-comp-note">{g.componentsNote}</p>}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {photos.length > 0 && (
+    <section class="ficha-section">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{isPub ? t.galleryPub : t.galleryProto}</h2>
+        <GameGallery photos={photos} locale={locale} id={g.keyword} />
+      </div>
+    </section>
+  )}
+
+  {resources.length > 0 && (
+    <section class="ficha-section">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{t.resources}</h2>
+        <div class="ficha-resources">
+          {resources.map((resource) => (
+            <a class="ficha-resource" href={resource.href} target="_blank" rel="noopener noreferrer">
+              <span class="ficha-resource-lead">
+                <span class="ficha-resource-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                </span>
+                <span>
+                  <strong>{resource.label}</strong>
+                  {resource.meta && <small>{resource.meta}</small>}
+                </span>
+              </span>
+              <span class="ficha-resource-dl" aria-hidden="true">↓</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {g.credits && (
+    <footer class="ficha-credits">
+      <div class="ficha-shell ficha-credits-row">
+        <span>{g.credits}</span>
+        <a href={t.ig} target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      </div>
+    </footer>
+  )}
+</article>

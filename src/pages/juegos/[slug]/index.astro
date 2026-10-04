@@ -1,18 +1,23 @@
 ---
 /**
- * Página proto generada desde Content Collections.
- * Si el juego ya tiene una carpeta hecha a mano (chispas, nínive, etc.),
- * esa gana: no se incluye en getStaticPaths para evitar colisión.
+ * Ficha unificada desde Content Collections + GameFicha.
+ * Reservado en rutas: `plantilla/`, `old/` (fichas deprecadas).
+ * Legacy handmade: `/juegos/old/<keyword>/`
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import GameExtras from '../../../components/GameExtras.astro';
-import { getCollection, render } from 'astro:content';
+import GameFicha from '../../../components/GameFicha.astro';
+import { getCollection } from 'astro:content';
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
-import { getLocale, localizePath } from '../../../i18n/locale';
+import { getLocale } from '../../../i18n/locale';
 import { localizeGame, gameHref } from '../../../lib/games';
+import { fichaConceptArtUrl, mergeFicha, toFicha, type FichaContent } from '../../../lib/ficha';
+import { demoNinive, demoReloj } from '../../../lib/ficha-demos';
+import { ficha as fichaCopy } from '../../../i18n/fichas/ficha';
+import { fichaThemeVars } from '../../../lib/ficha-theme';
 import { CAJA_FONTS_URL } from '../../../lib/caja-fonts';
-import { slug as copy } from '../../../i18n/fichas/slug';
+import type { GameCard } from '../../../lib/games';
+import type { Lang } from '../../../i18n/locale';
 
 export async function getStaticPaths() {
   const games = await getCollection('games');
@@ -31,10 +36,22 @@ export async function getStaticPaths() {
     }));
 }
 
+function buildFicha(card: GameCard, locale: Lang, keyword: string): FichaContent {
+  if (keyword === 'ninive') return demoNinive(card, locale);
+  if (keyword === 'reloj') return demoReloj(card, locale);
+
+  const ui = fichaCopy[locale];
+  return mergeFicha(toFicha(card), {
+    image: fichaConceptArtUrl(keyword),
+    imageAlt: card.imageAlt ?? card.name,
+    imageCaption: ui.conceptCaption,
+    pitch: card.pitch ?? card.description,
+  });
+}
+
 const { entry } = Astro.props;
 const locale = getLocale(Astro);
-const t = copy[locale];
-const g = localizeGame(
+const card = localizeGame(
   {
     ...entry.data,
     id: entry.id,
@@ -43,184 +60,17 @@ const g = localizeGame(
   },
   locale
 );
-const { Content } = await render(entry);
-const hasBody = Boolean(entry.body?.trim());
-const fotos = g.fotos ?? [];
+const ficha = buildFicha(card, locale, entry.id);
+const theme = fichaThemeVars(ficha);
 ---
 
 <BaseLayout
-  title={`${g.name} — Estudio Alpargatas`}
-  description={g.tagline}
-  bodyClass="page-proto-auto"
-  themeColor={g.bg}
+  title={`${ficha.name} — Estudio Alpargatas`}
+  description={ficha.tagline}
+  bodyClass="ficha-page"
+  theme={theme}
+  themeColor={ficha.bg}
   fontUrl={CAJA_FONTS_URL}
 >
-
-<style is:global>
-  body.page-proto-auto {
-    background: #f8f5ef;
-    color: var(--proto-ink, #1a1a1a);
-    font-family: "Helvetica Neue", Arial, sans-serif;
-  }
-  body.page-proto-auto .site-header { background: #1a1a1a; border-bottom: 2px solid #333; }
-  body.page-proto-auto .brand b { color: #f8f5ef; }
-  body.page-proto-auto .brand small { color: rgba(248,245,239,.4); }
-  body.page-proto-auto .nav-links a { color: rgba(248,245,239,.5); }
-  body.page-proto-auto .nav-links a:hover { color: #f8f5ef; }
-  body.page-proto-auto .nav-links .nav-instagram { border-color: rgba(248,245,239,.3); color: rgba(248,245,239,.6); }
-  body.page-proto-auto .nav-links .nav-instagram:hover { background: #f8f5ef; color: #1a1a1a; border-color: #f8f5ef; }
-  body.page-proto-auto .brand-logo { border-color: rgba(248,245,239,.35); box-shadow: 2px 2px 0 rgba(248,245,239,.15); }
-  body.page-proto-auto .site-footer { background: #1a1a1a; border-top: 2px solid #333; color: rgba(248,245,239,.45); }
-  body.page-proto-auto .site-footer b,
-  body.page-proto-auto .site-footer a { color: rgba(248,245,239,.7); }
-</style>
-
-<style>
-  .pa-shell { width: min(960px, calc(100% - 3rem)); margin-inline: auto; }
-  @media (max-width: 760px) { .pa-shell { width: min(960px, calc(100% - 1.5rem)); } }
-
-  .pa-hero {
-    padding: clamp(2.5rem, 5.5vw, 4.25rem) 0 2.25rem;
-    border-bottom: 1px solid rgba(26,26,26,.1);
-  }
-  .pa-crumb {
-    display: flex; gap: .4rem;
-    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-    color: rgba(26,26,26,.45); margin-bottom: 1.4rem;
-  }
-  .pa-crumb a { text-decoration: none; color: inherit; }
-  .pa-crumb a:hover { color: #1a1a1a; }
-
-  .pa-emoji {
-    width: 3.2rem; height: 3.2rem; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,.35);
-    font-size: 1.4rem; margin-bottom: 1.2rem;
-  }
-  .pa-title {
-    font-size: clamp(2.3rem, 5.5vw, 3.6rem);
-    font-weight: 900; letter-spacing: -.04em; line-height: .9;
-    margin: 0 0 .8rem;
-  }
-  .pa-tagline {
-    font-size: 1.05rem; font-style: italic; line-height: 1.5;
-    max-width: 36rem; margin: 0 0 1.4rem;
-  }
-  .pa-badges { display: flex; gap: 6px; flex-wrap: wrap; }
-  .pa-badge {
-    font-size: .6rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
-    padding: .35rem .7rem; border: 1.5px solid rgba(26,26,26,.18);
-  }
-
-  .pa-section { padding: clamp(2.5rem, 6vw, 4rem) 0; border-bottom: 1px solid rgba(26,26,26,.08); }
-  .pa-section:last-of-type { border-bottom: none; }
-  .pa-label {
-    font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-    color: rgba(26,26,26,.4); display: flex; align-items: center; gap: .6rem; margin-bottom: 1.2rem;
-  }
-  .pa-label::before { content: ""; display: block; width: 1.5rem; height: 1px; background: rgba(26,26,26,.22); }
-
-  .pa-swatches { display: flex; gap: 8px; }
-  .pa-swatch { width: 2.2rem; height: 2.2rem; outline: 1px solid rgba(0,0,0,.12); }
-
-  .pa-note {
-    font-size: .85rem; line-height: 1.7; color: rgba(26,26,26,.55); max-width: 38rem;
-  }
-  .pa-note a { color: inherit; }
-  .pa-body { font-size: .95rem; line-height: 1.7; max-width: 40rem; }
-
-  .pa-gallery {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    align-items: start;
-  }
-  .pa-gallery figure { margin: 0; }
-  .pa-gallery img {
-    width: 100%;
-    height: auto;
-    display: block;
-    background: #fff;
-    outline: 1px solid rgba(26,26,26,.1);
-  }
-  .pa-gallery figcaption {
-    margin: .55rem .1rem 0;
-    font-size: .82rem;
-    font-style: italic;
-    line-height: 1.45;
-    color: rgba(26,26,26,.55);
-  }
-  @media (max-width: 760px) {
-    .pa-gallery { grid-template-columns: 1fr; }
-  }
-</style>
-
-<main>
-  <header class="pa-hero">
-    <div class="pa-shell">
-      <nav class="pa-crumb">
-        <a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span>
-        <a href={localizePath('/portafolio/', locale)}>{t.crumbPortfolio}</a><span>/</span>
-        <span>{g.name}</span>
-      </nav>
-      <div class="pa-emoji" aria-hidden="true">{g.emoji}</div>
-      <h1 class="pa-title" style={`color:${g.titleColor};font-family:${g.titleFont};`}>{g.name}</h1>
-      <p class="pa-tagline" style={`color:${g.taglineColor};`}>{g.tagline}</p>
-      <div class="pa-badges">
-        <span class="pa-badge">{g.stateLabel}</span>
-        {g.players && <span class="pa-badge">{g.players}</span>}
-        {g.duration && <span class="pa-badge">{g.duration}</span>}
-        <span class="pa-badge">{g.meta}</span>
-      </div>
-      <GameExtras bggId={g.bggId} awards={g.awards} />
-    </div>
-  </header>
-
-  {(hasBody || fotos.length === 0) && (
-    <section class="pa-section">
-      <div class="pa-shell">
-        <div class="pa-label">{t.labelConcept}</div>
-        {hasBody ? (
-          <div class="pa-body"><Content /></div>
-        ) : (
-          <p class="pa-note">
-            {t.emptyBefore}
-            <a href="/admin/">/admin/</a>{t.emptyMid}
-            <code>src/content/games/{entry.id}.md</code>{t.emptyAfter}
-          </p>
-        )}
-      </div>
-    </section>
-  )}
-
-  {fotos.length > 0 && (
-    <section class="pa-section">
-      <div class="pa-shell">
-        <div class="pa-label">{t.labelPlaytest}</div>
-        <div class="pa-gallery">
-          {fotos.map((foto) => (
-            <figure>
-              <img src={foto.src} alt={foto.alt} loading="lazy" />
-              {foto.caption && <figcaption>{foto.caption}</figcaption>}
-            </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <section class="pa-section">
-    <div class="pa-shell">
-      <div class="pa-label">{t.labelStatus}</div>
-      <p class="pa-note">
-        {t.statusBefore}<code>index.astro</code>{t.statusMid}
-        <code>src/pages/juegos/{entry.id}/</code>{t.statusAfter}
-      </p>
-      <div class="pa-swatches" aria-hidden="true" style="margin-top:1.4rem;">
-        {g.palette.map((c) => <span class="pa-swatch" style={`background:${c};`} />)}
-      </div>
-    </div>
-  </section>
-</main>
-
+  <GameFicha ficha={ficha} locale={locale} />
 </BaseLayout>

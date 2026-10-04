@@ -99,5 +99,30 @@ export function localizeGame(game: GameCard, locale: Lang): GameCard {
       ...award,
       title: award.titleEn ?? award.title,
     })),
+    imageCaption: game.imageCaptionEn ?? game.imageCaption,
+    pitchTitle: game.pitchTitleEn ?? game.pitchTitle,
+    pitch: game.pitchEn ?? game.pitch,
+    rulesLabel: game.rulesLabelEn ?? game.rulesLabel,
+    publisherLabel: game.publisherLabelEn ?? game.publisherLabel,
+    adjusting: game.adjustingEn ?? game.adjusting,
+    nextPlaytests: game.nextPlaytestsEn ?? game.nextPlaytests,
+    howTo: game.howTo?.map((step) => ({
+      ...step,
+      title: step.titleEn ?? step.title,
+      body: step.bodyEn ?? step.body,
+      imageAlt: step.imageAltEn ?? step.imageAlt,
+    })),
+    componentsPhotoAlt: game.componentsPhotoAltEn ?? game.componentsPhotoAlt,
+    componentsNote: game.componentsNoteEn ?? game.componentsNote,
+    components: game.components?.map((item) => ({
+      ...item,
+      name: item.nameEn ?? item.name,
+    })),
+    resources: game.resources?.map((resource) => ({
+      ...resource,
+      label: resource.labelEn ?? resource.label,
+      meta: resource.metaEn ?? resource.meta,
+    })),
+    credits: game.creditsEn ?? game.credits,
   };
 }

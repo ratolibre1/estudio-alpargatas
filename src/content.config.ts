@@ -79,11 +79,83 @@ const games = defineCollection({
     titleFont: z.string(),
     /** Default para que un md a medias no tumbe toda la colección en el watcher. */
     taglineFont: z.string().default('Georgia, serif'),
+    /** Fuente del cuerpo (secciones). Si vacío, taglineFont o UI sans. */
+    bodyFont: z.string().optional(),
+    bodyColor: z.string().optional(),
+    mutedColor: z.string().optional(),
+    lineColor: z.string().optional(),
+    surfaceColor: z.string().optional(),
+    ctaColor: z.string().optional(),
+    headerBg: z.string().optional(),
+    headerText: z.string().optional(),
+    headerMuted: z.string().optional(),
+    footerBg: z.string().optional(),
+    footerText: z.string().optional(),
+    footerMuted: z.string().optional(),
     /**
      * Brief para generar imágenes: [temática, estilo visual, mecánicas].
      * Exactamente 3 strings. No se muestra en la web.
      */
     conceptos: z.tuple([z.string(), z.string(), z.string()]),
+    imageCaption: z.string().optional(),
+    imageCaptionEn: z.string().optional(),
+    pitchTitle: z.string().optional(),
+    pitchTitleEn: z.string().optional(),
+    pitch: z.string().optional(),
+    pitchEn: z.string().optional(),
+    buyUrl: z.string().optional(),
+    ctaHref: z.string().optional(),
+    rulesUrl: z.string().optional(),
+    rulesLabel: z.string().optional(),
+    rulesLabelEn: z.string().optional(),
+    publisherUrl: z.string().optional(),
+    publisherLabel: z.string().optional(),
+    publisherLabelEn: z.string().optional(),
+    version: z.string().optional(),
+    adjusting: z.string().optional(),
+    adjustingEn: z.string().optional(),
+    nextPlaytests: z.string().optional(),
+    nextPlaytestsEn: z.string().optional(),
+    howTo: z
+      .array(
+        z.object({
+          title: z.string(),
+          titleEn: z.string().optional(),
+          body: z.string(),
+          bodyEn: z.string().optional(),
+          image: z.string().optional(),
+          imageAlt: z.string().optional(),
+          imageAltEn: z.string().optional(),
+        })
+      )
+      .optional(),
+    componentsPhoto: z.string().optional(),
+    componentsPhotoAlt: z.string().optional(),
+    componentsPhotoAltEn: z.string().optional(),
+    componentsNote: z.string().optional(),
+    componentsNoteEn: z.string().optional(),
+    components: z
+      .array(
+        z.object({
+          qty: z.string(),
+          name: z.string(),
+          nameEn: z.string().optional(),
+        })
+      )
+      .optional(),
+    resources: z
+      .array(
+        z.object({
+          label: z.string(),
+          labelEn: z.string().optional(),
+          href: z.string(),
+          meta: z.string().optional(),
+          metaEn: z.string().optional(),
+        })
+      )
+      .optional(),
+    credits: z.string().optional(),
+    creditsEn: z.string().optional(),
   }),
 });
 

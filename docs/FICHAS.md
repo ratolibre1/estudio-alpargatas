@@ -1,7 +1,53 @@
 # Fichas de juegos — lineamientos
 
-Para agentes y humanos que armen una página nueva en `/juegos/<keyword>/`.
-Si este archivo choca con un diseño puntual de una ficha, gana el diseño **solo** en color/foto. Layout mobile y breakpoints no se negocian.
+Para agentes y humanos que mantengan `/juegos/<keyword>/` (ES) y `/en/juegos/<keyword>/` (EN).
+
+Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenido** (copy, fotos). Layout mobile y breakpoints no se negocian.
+
+## Arquitectura (2026-10)
+
+| Pieza | Rol |
+|---|---|
+| `src/pages/juegos/[slug]/index.astro` | Una ruta estática por juego del CMS (19 keywords). |
+| `src/components/GameFicha.astro` | Markup compartido: héroe, franjas, galería, CTA, bloque dev (proto). |
+| `src/styles/ficha.css` | Grid 12 col, héroe full-bleed, shell 8/12 (`cols 3–10`). |
+| `src/lib/ficha.ts` | Tipos + `toFicha()` desde `GameCard`. |
+| `src/lib/ficha-theme.ts` | Skin por juego → CSS vars (`fichaThemeVars`, `fichaThemeStyle`). |
+| `src/lib/ficha-demos.ts` | Overlays ricos para **Nínive** y **Reloj** (también usados en producción). |
+| `src/content/games/<keyword>.md` | Fuente de verdad: copy, estado, paleta, fotos, `howTo`, premios, etc. |
+| `/juegos/plantilla/` | Demo interna (toggle Nínive publicado / Reloj proto). **No** duplicar en prod. |
+| `src/pages/juegos/old/<keyword>/` | Fichas Astro legacy (13), deprecadas. URL: `/juegos/old/<keyword>/`. |
+
+**Reservado en rutas:** `plantilla/` y `old/`. No crear `src/pages/juegos/<keyword>/` salvo que quieras anular el catch-all a propósito.
+
+### Skin (tema por juego, no “modo oscuro”)
+
+- `publicado` vs `proto` cambia **contenido** (comprar vs probar por IG, bloque “en qué estamos”), **no** una paleta alternativa.
+- Colores y fuentes vienen del CMS (`bg`, `titleColor`, `taglineColor`, `palette`, `titleFont`, opcionales `bodyColor`, `ctaColor`, `headerBg`, …).
+- Página:
+
+```astro
+<BaseLayout
+  bodyClass="ficha-page"
+  theme={fichaThemeVars(ficha)}
+  themeColor={ficha.bg}
+  fontUrl={CAJA_FONTS_URL}
+>
+  <GameFicha ficha={ficha} locale={locale} />
+</BaseLayout>
+```
+
+- `body.ficha-page` en `ficha.css` enlaza header/footer a `--ficha-header-*` / `--ficha-footer-*`.
+
+### Héroe e imagen
+
+- Grid desktop: col 1 vacía; copy cols **2–4**; imagen cols **5–12** (arte a la derecha, copy alineado a la derecha dentro de su columna).
+- Imagen por defecto: **`/assets/concepto-<keyword>.webp`** (`fichaConceptArtUrl`) — mismo arte que el portafolio.
+- Nínive / Reloj: overlays en `ficha-demos.ts` (reglas, galería, URLs Ludoísmo, etc.).
+
+### CTA proto
+
+- Instagram DM normalizado: `src/lib/instagram.ts` → `https://ig.me/m/estudioalpargatas/`.
 
 ## Breakpoints oficiales
 
@@ -9,71 +55,41 @@ Tres cortes. **No inventar 680 / 700 / 720 / 780 / 800 / 1100.**
 
 | Corte | Ancho | Qué pasa |
 |---|---|---|
-| Tablet | `max-width: 980px` | Héroes y secciones 2 col → **1 col**. Catálogos bajan un nivel (4→3). |
-| Phone | `max-width: 760px` | Nav compacto, gutter `1.5rem`, títulos con `clamp`, galerías 1 col. |
-| Small | `max-width: 520px` | Grillas densas (3–4 chips/cartas) → 2 o 1 col. Collage del home se achica. |
+| Tablet | `max-width: 980px` | Héroe y secciones 2 col → **1 col**. |
+| Phone | `max-width: 760px` | Nav compacto, gutter `1.5rem`, galerías 1 col. |
+| Small | `max-width: 520px` | Grillas densas → 2 o 1 col. |
 
-Viven en `src/styles/global.css`. Las fichas con `<style>` propio **repiten esos tres números**, no otros.
+Viven en `src/styles/global.css` y se repiten en `ficha.css` donde aplique.
 
-```css
-@media (max-width: 980px) {
-  .xx-hero-grid,
-  .xx-cols { grid-template-columns: 1fr; }
-}
-@media (max-width: 760px) {
-  .xx-shell { width: min(960px, calc(100% - 1.5rem)); }
-}
-@media (max-width: 520px) {
-  .xx-cards { grid-template-columns: 1fr; }
-}
-```
+## Receta para un juego nuevo
 
-Desktop queda libre: 2 col, 12-col, lo que pida el diseño.
+Keyword = una palabra, igual al archivo CMS. Ejemplo: `almagesto` → `/juegos/almagesto` y `/en/juegos/almagesto`.
 
-## Shell y tipo
+1. **CMS** — `src/content/games/<keyword>.md` (o `/admin/`). Frontmatter ES + campos `*En`. Obligatorio: `conceptos` (tuple de 3 strings: temática, estilo visual, mecánicas). Brief para imágenes; no se pinta en la web.
+2. **Asset** — `public/assets/concepto-<keyword>.webp` para portafolio y héroe de ficha.
+3. **Build** — `npm run build`. Deben salir ES + EN sin crear carpeta en `src/pages/juegos/<keyword>/`.
+4. **Contenido extra** (opcional): campos opcionales del schema (`howTo`, `fotos`, `pitchTitle`, …) o overlay en `ficha-demos.ts` si hace falta lógica que no cabe en YAML.
 
-- Shell de ficha: `width: min(960px, calc(100% - 3rem)); margin-inline: auto;`
-- A **760**: `calc(100% - 1.5rem)` — mismo gutter que `.shell` global.
-- Títulos: `clamp()`, no `px` fijos gigantes. En phone el h1 de ficha no debería pasar ~`clamp(2.4rem, 12vw, 4rem)`.
-- No `position: absolute` de fotos/números sobre el copy en mobile: a 760 se vuelven `static` o se apilan.
-- Decoraciones `::before`/`::after` del hero: `display: none` a 980 si tapan texto.
+### Wrapper EN
 
-## Receta para una ficha nueva
+Ya centralizado: `src/pages/en/juegos/[slug]/index.astro` reexporta la página ES.
 
-Keyword = una palabra, igual al archivo CMS. Ejemplo: `reloj` → `/juegos/reloj/` y `/en/juegos/reloj/`.
+### Diccionarios `src/i18n/fichas/<keyword>.ts`
 
-1. **CMS** — `src/content/games/<keyword>.md` (o `/admin/`). Frontmatter ES + campos `*En` (título, tagline, etc.). Obligatorio: `conceptos` con exactamente 3 strings, en este orden: temática, estilo visual, mecánicas. Es brief para el agente de imágenes; no se pinta en la web. Si falta, el glob-loader tira toda la colección.
-2. **Diccionario** — `src/i18n/fichas/<keyword>.ts` con `{ es, en }`. Copiar uno cercano (`ninive.ts`, `canes.ts`).
-3. **Página** — copiar `src/pages/juegos/plantilla/index.astro` → `src/pages/juegos/<keyword>/index.astro`.
-   - `getLocale(Astro)` + `localizePath` en todos los `href` internos.
-   - Textos desde el diccionario, no hardcodeados (salvo el nombre propio si no cambia).
-4. **Wrapper EN** — `src/pages/en/juegos/<keyword>/index.astro`:
-
-```astro
----
-import Page from '../../../juegos/<keyword>/index.astro';
----
-<Page />
-```
-
-5. **Layout** — `BaseLayout` con `title`, `description`, `bodyClass="page-<keyword>"`, `themeColor`.
-6. **Extras** — si hay BGG/premios, `<GameExtras bggId awards />`. Premios: logo + link + título corto. Ancho de badge `4.75rem`.
-7. **Build** — `npm run build`. Tiene que salir `/juegos/<keyword>/` y `/en/juegos/<keyword>/`.
-
-Sin ficha diseñada, el catch-all `src/pages/juegos/[slug]/index.astro` arma una ficha mínima desde el markdown. El wrapper EN ya existe: `src/pages/en/juegos/[slug]/index.astro`.
+Siguen existiendo para las fichas archivadas y como referencia de copy. La plantilla unificada lee **CMS**; solo Nínive/Reloj mezclan diccionario vía `ficha-demos.ts`. Si migras secciones de un juego archivado, mueve el texto al markdown CMS o a un overlay explícito.
 
 ## Qué no hacer
 
-- Un breakpoint “porque en *esta* ficha se veía mejor a 720”.
-- Padding de sección `6rem+` en mobile. En 760, `clamp(2rem, 6vw, 3.5rem)` alcanza.
-- Grillas de 3+ columnas que no colapsan a 520.
+- Breakpoints ad hoc.
+- `src/pages/juegos/<keyword>/` duplicado (colisiona con `[slug]` si no está en `RESERVED`).
 - Links relativos (`../`) — usar `localizePath('/juegos/otro/', locale)`.
-- Meter copy EN en el `.astro`. Va al diccionario o al frontmatter `*En`.
+- Meter copy EN en el `.astro` de producción.
+- Confundir “proto” con un tema oscuro global.
 
 ## Checklist visual (DevTools)
 
-- 1200 desktop — 2 col, aire OK.
-- 980 tablet — hero apilado, sin overlap.
-- 760 phone — nav no se parte, textos no se montan, gutter 1.5rem.
-- 390 iPhone — h1 entra, chips wrap, fotos no empujan horizontal (`overflow-x` no).
-- `/en/juegos/<keyword>/` — mismo layout, copy en inglés, switcher CL/US funciona.
+- 1200 desktop — héroe 12 col, imagen pegada a la derecha, shell 8/12 en cuerpo.
+- 980 tablet — héroe apilado.
+- 760 phone — nav OK, gutter 1.5rem, CTA legible.
+- 390 — h1 entra, badges wrap, sin scroll horizontal.
+- `/en/juegos/<keyword>/` — mismo layout, copy EN del CMS, switcher CL/US OK.

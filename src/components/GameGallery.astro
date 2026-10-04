@@ -1,0 +1,84 @@
+---
+import { ficha as copy } from '../i18n/fichas/ficha';
+import type { Lang } from '../i18n/locale';
+import type { FichaPhoto } from '../lib/ficha';
+
+interface Props {
+  photos: FichaPhoto[];
+  locale: Lang;
+  id: string;
+}
+
+const { photos, locale, id } = Astro.props;
+const t = copy[locale];
+const first = photos[0];
+---
+
+{photos.length > 0 && first && (
+  <div class="ficha-gallery" data-gallery={id}>
+    <figure class="ficha-gallery-main">
+      <img data-main src={first.src} alt={first.alt} />
+      {photos.length > 1 && (
+        <>
+          <button class="ficha-gallery-btn prev" type="button" data-prev aria-label={t.prev}>‹</button>
+          <button class="ficha-gallery-btn next" type="button" data-next aria-label={t.next}>›</button>
+        </>
+      )}
+    </figure>
+    <div class="ficha-gallery-cap">
+      <span data-cap>{first.caption ?? ''}</span>
+      <span data-count>1 / {photos.length}</span>
+    </div>
+    {photos.length > 1 && (
+      <div class="ficha-thumbs">
+        {photos.map((photo, index) => (
+          <button type="button" data-thumb={index} class={index === 0 ? 'is-on' : undefined}>
+            <img src={photo.src} alt="" />
+          </button>
+        ))}
+      </div>
+    )}
+    <script type="application/json" data-photos set:html={JSON.stringify(photos)} />
+  </div>
+)}
+
+<script>
+  function bindGallery(root: HTMLElement) {
+    const raw = root.querySelector('[data-photos]')?.textContent;
+    if (!raw) return;
+    const photos = JSON.parse(raw) as { src: string; alt: string; caption?: string }[];
+    if (photos.length < 2) return;
+    let index = 0;
+    const img = root.querySelector<HTMLImageElement>('[data-main]');
+    const cap = root.querySelector('[data-cap]');
+    const count = root.querySelector('[data-count]');
+    const thumbs = [...root.querySelectorAll<HTMLButtonElement>('[data-thumb]')];
+
+    const paint = () => {
+      const photo = photos[index];
+      if (!photo || !img) return;
+      img.src = photo.src;
+      img.alt = photo.alt;
+      if (cap) cap.textContent = photo.caption ?? '';
+      if (count) count.textContent = `${index + 1} / ${photos.length}`;
+      thumbs.forEach((thumb, i) => thumb.classList.toggle('is-on', i === index));
+    };
+
+    root.querySelector('[data-prev]')?.addEventListener('click', () => {
+      index = (index - 1 + photos.length) % photos.length;
+      paint();
+    });
+    root.querySelector('[data-next]')?.addEventListener('click', () => {
+      index = (index + 1) % photos.length;
+      paint();
+    });
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        index = Number(thumb.dataset.thumb);
+        paint();
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(bindGallery);
+</script>

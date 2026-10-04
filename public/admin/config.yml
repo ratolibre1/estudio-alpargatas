@@ -133,6 +133,18 @@ collections:
         field: { label: Color, name: color, widget: string }
       - { label: Fuente CSS del título, name: titleFont, widget: string, hint: 'Google Font + fallback, ej. "Cinzel, serif". Si es una familia nueva, sumarla a src/lib/caja-fonts.ts' }
       - { label: Fuente CSS del subtítulo, name: taglineFont, widget: string, hint: 'Google Font del tagline. Misma regla: si es nueva, caja-fonts.ts' }
+      - { label: Fuente cuerpo (secciones), name: bodyFont, widget: string, required: false, hint: 'UI y párrafos. Si vacío: taglineFont o sans.' }
+      - { label: Color texto cuerpo, name: bodyColor, widget: string, required: false, hint: 'Párrafos y UI. Si vacío: color del título.' }
+      - { label: Color texto secundario, name: mutedColor, widget: string, required: false }
+      - { label: Color bordes, name: lineColor, widget: string, required: false }
+      - { label: Color superficie (cards), name: surfaceColor, widget: string, required: false, hint: 'Fondo de paneles; default paleta[4] o blanco.' }
+      - { label: Color CTA, name: ctaColor, widget: string, required: false, hint: 'Botón principal; default paleta.' }
+      - { label: Header fondo, name: headerBg, widget: string, required: false }
+      - { label: Header texto, name: headerText, widget: string, required: false }
+      - { label: Header links, name: headerMuted, widget: string, required: false }
+      - { label: Footer fondo, name: footerBg, widget: string, required: false }
+      - { label: Footer texto, name: footerText, widget: string, required: false }
+      - { label: Footer links, name: footerMuted, widget: string, required: false }
       - label: Conceptos (imagen)
         name: conceptos
         widget: list
@@ -140,4 +152,44 @@ collections:
         max: 3
         hint: 'Exactamente 3, en este orden: temática, estilo visual, mecánicas. Lo usa el agente de imágenes; no se muestra en la web.'
         field: { label: Concepto, name: concepto, widget: string }
+      - { label: Pie de la imagen conceptual, name: imageCaption, widget: string, required: false }
+      - { label: Título del pitch, name: pitchTitle, widget: string, required: false }
+      - { label: Pitch, name: pitch, widget: text, required: false, hint: 'Párrafo de experiencia. Si está vacío, se usa description.' }
+      - { label: URL de compra, name: buyUrl, widget: string, required: false, hint: 'Solo publicados. Ej: https://ludoismo.cl/' }
+      - { label: CTA proto (opcional), name: ctaHref, widget: string, required: false, hint: 'Chat IG directo, ej. https://ig.me/m/estudioalpargatas/ — si vacío, usa ese enlace.' }
+      - { label: URL de reglas, name: rulesUrl, widget: string, required: false }
+      - { label: Etiqueta de reglas, name: rulesLabel, widget: string, required: false }
+      - { label: URL editorial, name: publisherUrl, widget: string, required: false }
+      - { label: Nombre editorial, name: publisherLabel, widget: string, required: false }
+      - { label: Versión (proto), name: version, widget: string, required: false, hint: 'Ej: 0.4' }
+      - { label: Qué se está ajustando, name: adjusting, widget: text, required: false }
+      - { label: Próximas pruebas, name: nextPlaytests, widget: text, required: false }
+      - label: Cómo se juega (máx. 3)
+        name: howTo
+        widget: list
+        required: false
+        fields:
+          - { label: Título, name: title, widget: string }
+          - { label: Texto, name: body, widget: text }
+          - { label: Imagen, name: image, widget: string, required: false, hint: '/assets/archivo.webp' }
+          - { label: Alt, name: imageAlt, widget: string, required: false }
+      - { label: Foto de componentes, name: componentsPhoto, widget: string, required: false }
+      - { label: Alt foto componentes, name: componentsPhotoAlt, widget: string, required: false }
+      - { label: Nota de componentes, name: componentsNote, widget: string, required: false, hint: 'Ej: Materiales en revisión' }
+      - label: Componentes
+        name: components
+        widget: list
+        required: false
+        fields:
+          - { label: Cantidad, name: qty, widget: string }
+          - { label: Nombre, name: name, widget: string }
+      - label: Recursos (PDF, PnP)
+        name: resources
+        widget: list
+        required: false
+        fields:
+          - { label: Etiqueta, name: label, widget: string }
+          - { label: URL, name: href, widget: string }
+          - { label: Meta, name: meta, widget: string, required: false, hint: 'Versión o idioma' }
+      - { label: Créditos, name: credits, widget: string, required: false }
       - { label: Concepto / notas, name: body, widget: markdown, required: false, hint: 'Texto largo bajo el héroe. Codex también puede editarlo en el .md' }

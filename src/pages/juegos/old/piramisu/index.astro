@@ -1,0 +1,345 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../../../i18n/locale';
+import { piramisu as copy } from '../../../../i18n/fichas/piramisu';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
+---
+
+<BaseLayout
+  title={t.title}
+  description={t.description}
+  bodyClass="page-piramisu"
+  themeColor="#fef9f0"
+>
+
+<style is:global>
+  body.page-piramisu {
+    background-color: #fef9f0;
+    color: #2c1a10;
+    font-family: Georgia, "Times New Roman", serif;
+    background-image: none;
+    --vainilla: #fef9f0;
+    --crema:    #f5ead0;
+    --cacao:    #c4a06a;
+    --cafe:     #7c3d0a;
+    --espresso: #2c1a10;
+    --dim:      rgba(44, 26, 16, .58);
+    --line:     rgba(124, 61, 10, .16);
+  }
+
+  body.page-piramisu .site-header { background: #2c1a10; border-bottom: 2px solid #c4a06a; }
+  body.page-piramisu .brand b     { color: #fef9f0; }
+  body.page-piramisu .brand small { color: rgba(254,249,240,.4); }
+  body.page-piramisu .nav-links a { color: rgba(254,249,240,.5); }
+  body.page-piramisu .nav-links a:hover { color: #c4a06a; }
+  body.page-piramisu .nav-links .nav-instagram { border-color: rgba(196,160,106,.45); color: #c4a06a; }
+  body.page-piramisu .nav-links .nav-instagram:hover { background: #c4a06a; border-color: #c4a06a; color: #2c1a10; }
+  body.page-piramisu .brand-logo { border-color: #c4a06a; box-shadow: 2px 2px 0 #c4a06a; }
+
+  body.page-piramisu .site-footer { background: #2c1a10; border-top: 2px solid #7c3d0a; color: rgba(254,249,240,.45); }
+  body.page-piramisu .site-footer b,
+  body.page-piramisu .site-footer a { color: #c4a06a; }
+  body.page-piramisu .site-footer a:hover { color: #fef9f0; }
+</style>
+
+<style>
+  .pi-shell { width: min(1100px, calc(100% - 3rem)); margin-inline: auto; }
+
+  .pi-label {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--cafe); margin-bottom: 1.2rem;
+  }
+  .pi-label::before { content: ""; display: block; width: 2rem; height: 1px; background: var(--cacao); }
+
+  .pi-breadcrumb {
+    display: flex; gap: .5rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 1.6rem;
+  }
+  .pi-breadcrumb a { text-decoration: none; color: inherit; }
+  .pi-breadcrumb a:hover { color: var(--cafe); }
+
+  .pi-hero {
+    padding: clamp(2.75rem, 5.5vw, 4.5rem) 0;
+    border-bottom: 2px solid var(--line);
+  }
+  .pi-hero-grid {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .pi-logo {
+    display: block;
+    width: min(16rem, 70%);
+    height: auto;
+    margin-bottom: 1.4rem;
+  }
+  .pi-hero h1 {
+    margin: 0;
+    font-size: clamp(3rem, 7vw, 5.2rem);
+    font-weight: 700;
+    letter-spacing: -.045em;
+    line-height: .85;
+    color: var(--espresso);
+  }
+  .pi-hero h1 em { color: var(--cafe); font-style: italic; }
+  .pi-hero-desc {
+    max-width: 30rem;
+    margin: 1.4rem 0 1.6rem;
+    font-size: .95rem;
+    line-height: 1.8;
+    color: var(--dim);
+  }
+  .pi-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .pi-badge {
+    display: inline-flex; padding: .3rem .7rem; border: 1.5px solid var(--cacao);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cafe);
+  }
+  .pi-badge.active { background: var(--cafe); border-color: var(--cafe); color: var(--vainilla); }
+
+  .pi-hero-photo {
+    margin: 0;
+    padding: .7rem .7rem 2.4rem;
+    background: #fff;
+    box-shadow: 12px 12px 0 var(--cacao);
+    transform: rotate(1.2deg);
+  }
+  .pi-hero-photo img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: center 55%; }
+  .pi-hero-photo figcaption {
+    margin: .65rem .2rem 0;
+    font-size: .82rem;
+    font-style: italic;
+    color: var(--dim);
+  }
+  .pi-proto-photo {
+    margin-top: clamp(2.5rem, 5vw, 3.75rem);
+    max-width: 42rem;
+    transform: rotate(-1.1deg);
+  }
+
+  .pi-section { padding: clamp(2.75rem, 5.5vw, 4.75rem) 0; }
+  .pi-section.alt { background: var(--crema); border-block: 2px solid var(--line); }
+  .pi-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+  .pi-section h2 {
+    margin: 0 0 1.4rem;
+    font-size: clamp(2.1rem, 5vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -.04em;
+    line-height: .9;
+    color: var(--espresso);
+  }
+  .pi-section h2 em { color: var(--cafe); font-style: italic; }
+  .pi-section p { margin: 0 0 1rem; font-size: .93rem; line-height: 1.85; color: var(--dim); }
+
+  .pi-ings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .7rem;
+  }
+  .pi-ing {
+    padding: 1rem 1.05rem 1.1rem;
+    background: var(--vainilla);
+    border: 1px solid var(--line);
+  }
+  .pi-ing i {
+    display: block;
+    width: 1.6rem;
+    height: .55rem;
+    margin-bottom: .55rem;
+    border-radius: 999px;
+    background: var(--swatch, var(--cacao));
+    box-shadow: inset 0 0 0 1px rgba(44,26,16,.12);
+  }
+  .pi-ing b { display: block; margin-bottom: .2rem; color: var(--espresso); }
+  .pi-ing span {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .68rem;
+    letter-spacing: .04em;
+    color: var(--dim);
+  }
+
+  .pi-rules { display: grid; gap: 8px; }
+  .pi-rule {
+    display: grid; grid-template-columns: 1.8rem 1fr; gap: .8rem; align-items: start;
+    padding: .9rem 1rem; border: 1px solid var(--line); background: var(--vainilla);
+  }
+  .pi-rule-num { font-size: 1.4rem; font-weight: 700; color: var(--cafe); line-height: 1; text-align: center; }
+  .pi-rule-name {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--cafe); margin-bottom: .2rem;
+  }
+  .pi-rule-desc { margin: 0; font-size: .8rem; line-height: 1.6; color: var(--dim); }
+
+  .pi-mods { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .pi-mod {
+    padding: 1.35rem 1.4rem 1.5rem;
+    background: var(--vainilla);
+    border-top: 2px solid var(--cafe);
+  }
+  .pi-mod span {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cafe);
+  }
+  .pi-mod h3 { margin: .55rem 0 .6rem; font-size: 1.35rem; color: var(--espresso); }
+  .pi-mod p { margin: 0; font-size: .88rem; }
+
+  .pi-credit {
+    padding: 1.5rem 1.6rem 1.65rem;
+    background: var(--vainilla);
+    border: 1px solid var(--line);
+  }
+  .pi-credit p { margin: 0; }
+  .pi-credit a { color: var(--cafe); }
+  .pi-credit a:hover { color: var(--espresso); }
+
+  .pi-back {
+    padding: 2.5rem 0;
+    display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+    border-top: 2px solid var(--line);
+  }
+  .pi-back span { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .78rem; color: var(--dim); }
+  .pi-back a { font-size: clamp(1.4rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -.04em; text-decoration: none; color: var(--espresso); }
+  .pi-back a:hover { color: var(--cafe); }
+
+  @media (max-width: 980px) {
+    .pi-hero-grid,
+    .pi-cols,
+    .pi-mods { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .pi-shell { width: min(1100px, calc(100% - 1.5rem)); }
+  }
+</style>
+
+<main>
+  <section class="pi-hero">
+    <div class="pi-shell pi-hero-grid">
+      <div>
+        <nav class="pi-breadcrumb" aria-label={t.crumbAria}><a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span></nav>
+        <img class="pi-logo" src="/assets/piramisu-logo.webp" alt={t.logoAlt} />
+        <h1>Pira<em>misú</em></h1>
+        <p class="pi-hero-desc">{t.heroDesc}</p>
+        <div class="pi-badges">
+          <span class="pi-badge active">{t.badgeProto}</span>
+          <span class="pi-badge">{t.badgePlayers}</span>
+          <span class="pi-badge">{t.badgeTime}</span>
+          <span class="pi-badge">{t.badgeCards}</span>
+          <span class="pi-badge">{t.badgeAge}</span>
+        </div>
+      </div>
+      <figure class="pi-hero-photo">
+        <img src="/assets/piramisu-maqueta.webp" alt={t.heroAlt} />
+        <figcaption>{t.heroCap}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="pi-section alt">
+    <div class="pi-shell pi-cols">
+      <div>
+        <span class="pi-label">{t.labelIdea}</span>
+        <h2>{t.h2a}<br />{t.h2b}</h2>
+        <p>{t.p1}</p>
+        <p>{t.p2}</p>
+      </div>
+      <div class="pi-ings" aria-label={t.ingsAria}>
+        {t.ings.map((ing) => (
+          <article class="pi-ing" style={`--swatch: ${ing.swatch}`}>
+            <i aria-hidden="true"></i>
+            <b>{ing.name}</b>
+            <span>{ing.note}</span>
+          </article>
+        ))}
+      </div>
+    </div>
+    <div class="pi-shell">
+      <figure class="pi-hero-photo pi-proto-photo">
+        <img src="/assets/piramisu-ronda.webp" alt={t.protoAlt} />
+        <figcaption>{t.protoCap}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="pi-section">
+    <div class="pi-shell pi-cols">
+      <div>
+        <span class="pi-label">{t.labelTurn}</span>
+        <h2>{t.turnH2a}<br /><em>{t.turnH2em}</em><br />{t.turnH2b}</h2>
+        <p>{t.turnP1}</p>
+        <p>{t.turnP2}</p>
+      </div>
+      <div class="pi-rules">
+        <article class="pi-rule">
+          <div class="pi-rule-num">1</div>
+          <div>
+            <div class="pi-rule-name">{t.rule1Name}</div>
+            <p class="pi-rule-desc">{t.rule1Desc}</p>
+          </div>
+        </article>
+        <article class="pi-rule">
+          <div class="pi-rule-num">2</div>
+          <div>
+            <div class="pi-rule-name">{t.rule2Name}</div>
+            <p class="pi-rule-desc">{t.rule2Desc}</p>
+          </div>
+        </article>
+        <article class="pi-rule">
+          <div class="pi-rule-num">3</div>
+          <div>
+            <div class="pi-rule-name">{t.rule3Name}</div>
+            <p class="pi-rule-desc">{t.rule3Desc}</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pi-section alt">
+    <div class="pi-shell">
+      <span class="pi-label">{t.labelMods}</span>
+      <h2>{t.modsH2a}<br /><em>{t.modsH2em}</em></h2>
+      <p style="max-width:40rem;margin-bottom:2rem;">{t.modsLede}</p>
+      <div class="pi-mods">
+        <article class="pi-mod">
+          <span>{t.modATag}</span>
+          <h3>{t.modATitle}</h3>
+          <p>{t.modABody}</p>
+        </article>
+        <article class="pi-mod">
+          <span>{t.modBTag}</span>
+          <h3>{t.modBTitle}</h3>
+          <p>{t.modBBody}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pi-section">
+    <div class="pi-shell pi-cols">
+      <div>
+        <span class="pi-label">{t.labelCredits}</span>
+        <h2>{t.credH2a}<br />{t.credH2b}</h2>
+        <p>{t.credP}</p>
+      </div>
+      <aside class="pi-credit">
+        <p><a href="https://www.instagram.com/loicaestudio/" target="_blank" rel="noopener noreferrer">{t.credLink}</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <nav class="pi-back pi-shell" aria-label={t.backAria}>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/#juegos', locale)}>{t.backLink}</a>
+  </nav>
+</main>
+
+</BaseLayout>

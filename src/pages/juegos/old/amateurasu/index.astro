@@ -1,0 +1,473 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { getLocale, localizePath } from '../../../../i18n/locale';
+import { amateurasu as copy } from '../../../../i18n/fichas/amateurasu';
+
+const locale = getLocale(Astro);
+const t = copy[locale];
+---
+
+<BaseLayout
+  title={t.title}
+  description={t.description}
+  bodyClass="page-amateurasu"
+  themeColor="#1a0a05"
+>
+
+<style is:global>
+  /* ═══════════════════════════════════════════════════════════
+     AMATEURASU · Estética japonesa · Colores del amanecer
+     ═══════════════════════════════════════════════════════════ */
+
+  body.page-amateurasu {
+    background-color: #1a0a05;
+    color: #fff8f0;
+    font-family: Georgia, "Times New Roman", serif;
+    background-image: none;
+    --ink:     #1a0a05;
+    --ink-mid: #2d1510;
+    --red:     #dc2626;
+    --orange:  #ea580c;
+    --gold:    #d97706;
+    --pale:    #fff8f0;
+    --mist:    rgba(255, 248, 240, .65);
+    --dim:     rgba(255, 248, 240, .45);
+    --ember:   #7f1d1d;
+    --line:    rgba(255, 248, 240, .12);
+  }
+
+  /* ── Header: tinta oscura con banda bermellón ───────────────────────────── */
+  body.page-amateurasu .site-header {
+    background: rgba(26, 10, 5, .97);
+    border-bottom: 2px solid rgba(220, 38, 38, .4);
+  }
+  body.page-amateurasu .brand b      { color: #fff8f0; }
+  body.page-amateurasu .brand small  { color: rgba(255, 248, 240, .38); }
+  body.page-amateurasu .nav-links a  { color: rgba(255, 248, 240, .45); }
+  body.page-amateurasu .nav-links a:hover { color: var(--orange); }
+  body.page-amateurasu .nav-links .nav-instagram {
+    border-color: rgba(220, 38, 38, .35); color: var(--red);
+  }
+  body.page-amateurasu .nav-links .nav-instagram:hover {
+    background: var(--red); border-color: var(--red); color: var(--pale);
+  }
+  body.page-amateurasu .brand-logo {
+    border-color: rgba(234, 88, 12, .5); box-shadow: 2px 2px 0 rgba(220, 38, 38, .4);
+  }
+
+  /* ── Footer ──────────────────────────────────────────────────────────────── */
+  body.page-amateurasu .site-footer {
+    background: var(--ink);
+    border-top: 2px solid rgba(217, 119, 6, .3);
+    color: var(--dim);
+  }
+  body.page-amateurasu .site-footer b,
+  body.page-amateurasu .site-footer a { color: var(--gold); }
+  body.page-amateurasu .site-footer a:hover { color: var(--orange); }
+
+  /* ── Shell + utilidades ──────────────────────────────────────────────────── */
+  .am-shell { width: min(860px, calc(100% - 3rem)); margin-inline: auto; }
+  .am-center { text-align: center; }
+
+  /* Línea de sección en bermellón */
+  .am-rule {
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    background: var(--red);
+    margin: 0 0 1.2rem;
+  }
+  .am-center .am-rule { margin-inline: auto; }
+
+  /* Número de sección */
+  .am-num {
+    display: block;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .6rem;
+  }
+
+  /* Breadcrumb */
+  .am-breadcrumb {
+    display: flex;
+    gap: .5rem;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 3.5rem;
+  }
+  .am-breadcrumb a { text-decoration: none; color: inherit; }
+  .am-breadcrumb a:hover { color: var(--orange); }
+
+  /* Badge */
+  .am-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: .35rem .8rem;
+    border: 1px solid;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .am-badge.gold   { border-color: rgba(217, 119, 6, .5);  color: var(--gold); }
+  .am-badge.red    { border-color: rgba(220, 38, 38, .5);   color: var(--red); }
+  .am-badge.orange { border-color: rgba(234, 88, 12, .5);   color: var(--orange); }
+  .am-badge.mist   { border-color: rgba(255, 248, 240, .2); color: var(--dim); }
+
+  /* ── HERO: amanecer ──────────────────────────────────────────────────────── */
+  .am-hero {
+    min-height: calc(100svh - 5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(2.75rem, 5.5vw, 4.25rem) 0 clamp(2.25rem, 4.5vw, 3.5rem);
+    background-color: var(--ink);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(220, 38, 38, .2);
+  }
+  /* Corona del amanecer */
+  .am-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 55% at 50% -15%, rgba(220, 38, 38, .55) 0%, rgba(234, 88, 12, .35) 30%, rgba(217, 119, 6, .15) 55%, transparent 75%);
+    pointer-events: none;
+  }
+  /* Banda horizontal bermellón baja */
+  .am-hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--red), var(--orange), var(--gold), transparent);
+  }
+
+  .am-hero-content { position: relative; z-index: 1; }
+
+  /* La línea kana decorativa */
+  .am-hero-kana {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .3em;
+    color: rgba(255, 248, 240, .3);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  /* TÍTULO: grande, con gradiente de amanecer */
+  .am-hero-title {
+    font-weight: 700;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    letter-spacing: .04em;
+    line-height: .9;
+    /* Gradiente de amanecer como fill del texto */
+    background: linear-gradient(160deg, #fff8f0 0%, #fef3c7 35%, #d97706 70%, #ea580c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 2rem;
+    display: block;
+  }
+
+  /* Línea separadora gruesa */
+  .am-hero-divider {
+    width: 5rem;
+    height: 3px;
+    background: var(--red);
+    margin: 0 0 2rem;
+  }
+
+  .am-hero-sub {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(.9rem, 1.8vw, 1.1rem);
+    letter-spacing: .06em;
+    color: var(--mist);
+    max-width: 38rem;
+    line-height: 1.75;
+    margin: 0 0 2rem;
+  }
+
+  .am-hero-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+  /* ── SECCIÓN OSCURA: EL AMANECER ─────────────────────────────────────────── */
+  .am-dawn {
+    background: var(--ink-mid);
+    padding: clamp(3rem, 6vw, 5.25rem) 0;
+    border-bottom: 1px solid rgba(217, 119, 6, .15);
+  }
+  .am-dawn h2 {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: .92;
+    color: var(--pale);
+    margin: .8rem 0 2rem;
+  }
+  .am-dawn h2 em { font-style: italic; color: var(--orange); }
+  .am-dawn p {
+    font-size: clamp(.9rem, 1.5vw, 1rem);
+    line-height: 2;
+    color: var(--mist);
+    max-width: 36rem;
+    margin: 0 0 1.2rem;
+  }
+
+  /* Cita */
+  .am-quote {
+    margin: 3rem 0 0;
+    padding: 2rem 2.5rem;
+    border-left: 3px solid var(--gold);
+    max-width: 34rem;
+  }
+  .am-quote blockquote {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--gold);
+    font-style: italic;
+    margin: 0 0 .8rem;
+  }
+  .am-quote cite {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(217, 119, 6, .5);
+    font-style: normal;
+  }
+
+  /* ── SECCIÓN CLARA: LAS OFRENDAS ─────────────────────────────────────────── */
+  .am-offerings {
+    background: #fff8f0;
+    padding: clamp(3rem, 6vw, 5.25rem) 0;
+    border-bottom: 1px solid rgba(26, 10, 5, .12);
+    color: var(--ink);
+  }
+  .am-offerings h2 {
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: .92;
+    color: var(--ember);
+    margin: .8rem 0 2rem;
+  }
+  .am-offerings h2 em { font-style: italic; color: var(--orange); }
+  .am-offerings p {
+    font-size: clamp(.9rem, 1.5vw, 1rem);
+    line-height: 2;
+    color: rgba(26, 10, 5, .65);
+    max-width: 36rem;
+    margin: 0 0 1.2rem;
+  }
+  .am-offerings .am-num { color: var(--orange); }
+
+  /* Grid de tres habilidades */
+  .am-skills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 2.5rem;
+    background: rgba(26, 10, 5, .15);
+  }
+  .am-skill {
+    background: #fff8f0;
+    padding: 2rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .am-skill-icon { font-size: 2rem; }
+  .am-skill-num  { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .55rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+  .am-skill-name { font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em; color: var(--ember); }
+  .am-skill-desc { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .8rem; line-height: 1.65; color: rgba(26, 10, 5, .6); margin: 0; }
+  .am-skill:nth-child(1) { border-top: 3px solid var(--red); }
+  .am-skill:nth-child(2) { border-top: 3px solid var(--orange); }
+  .am-skill:nth-child(3) { border-top: 3px solid var(--gold); }
+
+  /* ── SECCIÓN OSCURA: ESTADO ───────────────────────────────────────────────── */
+  .am-status {
+    background: var(--ink);
+    padding: clamp(3rem, 6vw, 5.25rem) 0;
+    border-top: 1px solid rgba(217, 119, 6, .15);
+    color: var(--mist);
+  }
+  .am-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: start;
+  }
+  .am-status h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: .92;
+    color: var(--pale);
+    margin: .8rem 0 2rem;
+  }
+  .am-status h2 em { font-style: italic; color: var(--orange); }
+  .am-status p { font-size: clamp(.9rem, 1.5vw, 1rem); line-height: 2; color: var(--mist); margin: 0 0 1.2rem; }
+
+  .am-version {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    font-weight: 900;
+    letter-spacing: -.1em;
+    line-height: .82;
+    background: linear-gradient(160deg, #fff8f0 0%, #d97706 60%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+  }
+  .am-change-list { list-style: none; padding: 0; margin: 0; }
+  .am-change-list li {
+    padding: .9rem 0;
+    border-bottom: 1px solid rgba(255, 248, 240, .08);
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    gap: .8rem;
+    font-size: .88rem;
+    line-height: 1.6;
+    color: var(--mist);
+    align-items: start;
+  }
+  .am-change-list li:first-child { border-top: 1px solid rgba(255, 248, 240, .08); }
+  .am-change-list li::before { content: "·"; color: var(--gold); font-size: 1.2rem; line-height: 1; }
+
+  /* ── Back ───────────────────────────────────────────────────────────────── */
+  .am-back {
+    background: var(--ink);
+    padding: 3rem 0;
+    border-top: 1px solid rgba(220, 38, 38, .2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .am-back span { font-family: "Helvetica Neue", Arial, sans-serif; font-size: .78rem; color: var(--dim); letter-spacing: .08em; }
+  .am-back a {
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    text-decoration: none;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .am-back a:hover { background: linear-gradient(90deg, var(--red), var(--orange)); -webkit-background-clip: text; background-clip: text; }
+
+  @media (max-width: 980px) {
+    .am-skills { grid-template-columns: 1fr; }
+    .am-status-grid { grid-template-columns: 1fr; }
+    .am-back { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 760px) {
+    .am-shell { width: min(860px, calc(100% - 1.5rem)); }
+  }
+</style>
+
+<main>
+  <!-- ── HERO ── -->
+  <section class="am-hero">
+    <div class="am-shell am-hero-content">
+      <nav class="am-breadcrumb" aria-label={t.navAria}>
+        <a href={localizePath('/', locale)}>{t.crumbHome}</a><span>/</span><span>{t.crumbHere}</span>
+      </nav>
+      <span class="am-hero-kana">{t.kana}</span>
+      <h1 class="am-hero-title">Amateurasu</h1>
+      <div class="am-hero-divider"></div>
+      <p class="am-hero-sub">{t.heroSub}</p>
+      <div class="am-hero-badges">
+        <span class="am-badge gold">{t.badgePlayers}</span>
+        <span class="am-badge orange">{t.badgeTime}</span>
+        <span class="am-badge red">{t.badgeOfferings}</span>
+        <span class="am-badge mist">{t.badgeProto}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: EL AMANECER ── -->
+  <section class="am-dawn">
+    <div class="am-shell">
+      <span class="am-num">{t.ideaNum}</span>
+      <div class="am-rule"></div>
+      <h2 set:html={t.ideaH2} />
+      <p>{t.ideaP1}</p>
+      <p>{t.ideaP2}</p>
+      <div class="am-quote">
+        <blockquote>{t.quote}</blockquote>
+        <cite>{t.quoteCite}</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: LAS OFRENDAS ── -->
+  <section class="am-offerings">
+    <div class="am-shell">
+      <span class="am-num">{t.mechNum}</span>
+      <div class="am-rule" style="background: var(--orange)"></div>
+      <h2 set:html={t.mechH2} />
+      <p>{t.mechP1}</p>
+      <p>{t.mechP2}</p>
+      <div class="am-skills">
+        {[
+          { icon: '☀️', num: '01', name: t.skill1Name, desc: t.skill1Desc },
+          { icon: '💮', num: '02', name: t.skill2Name, desc: t.skill2Desc },
+          { icon: '🌑', num: '03', name: t.skill3Name, desc: t.skill3Desc },
+        ].map(s => (
+          <div class="am-skill">
+            <span class="am-skill-icon">{s.icon}</span>
+            <div class="am-skill-num">{s.num}</div>
+            <div class="am-skill-name">{s.name}</div>
+            <p class="am-skill-desc">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECCIÓN: ESTADO ACTUAL ── -->
+  <section class="am-status">
+    <div class="am-shell am-status-grid">
+      <div>
+        <span class="am-num">{t.statusNum}</span>
+        <div class="am-rule"></div>
+        <div class="am-version" aria-hidden="true">{t.version}</div>
+        <ul class="am-change-list">
+          <li>{t.change1}</li>
+          <li>{t.change2}</li>
+          <li>{t.change3}</li>
+          <li>{t.change4}</li>
+        </ul>
+      </div>
+      <div>
+        <h2 set:html={t.originH2} />
+        <p>{t.originP1}</p>
+        <p>{t.originP2}</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="am-back am-shell" aria-label={t.backAria}>
+    <span>{t.backPrompt}</span>
+    <a href={localizePath('/#juegos', locale)}>{t.backLink}</a>
+  </nav>
+</main>
+
+</BaseLayout>
