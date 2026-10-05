@@ -45,7 +45,8 @@ palette:
   - '#7fc8e8'
   - '#c9e8f5'
 titleFont: '"Josefin Sans", sans-serif'
-taglineFont: '"Josefin Sans", sans-serif'
+taglineFont: 'Nunito, sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - acuario, mantarrayas, acuaristas
   - submarino azul profundo, losetas y líneas de color

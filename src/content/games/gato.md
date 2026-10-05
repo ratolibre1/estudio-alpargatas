@@ -20,6 +20,8 @@ titleColor: '#78350f'
 taglineColor: '#a16207'
 palette: ['#fef3c7', '#f97316', '#78350f', '#84cc16']
 titleFont: '"Quicksand", sans-serif'
+taglineFont: 'Quicksand, sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - 'gatos domésticos en un departamento chileno buscando los mejores spots de sol, calor y confort a lo largo del día'
   - 'ilustración cozy y cálida: acuarela suave con luz dorada de tarde, texturas de tela y madera, atmósfera de hogar tranquilo'

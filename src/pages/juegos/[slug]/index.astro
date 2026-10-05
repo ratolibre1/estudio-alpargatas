@@ -11,14 +11,9 @@ import { readdirSync } from 'node:fs';
 import path from 'node:path';
 import { getLocale } from '../../../i18n/locale';
 import { localizeGame, gameHref } from '../../../lib/games';
-import { fichaConceptArtUrl, mergeFicha, toFicha, type FichaContent } from '../../../lib/ficha';
-import { demoNinive, demoReloj } from '../../../lib/ficha-demos';
-import { ficha as fichaCopy } from '../../../i18n/fichas/ficha';
+import { buildLegacyFicha } from '../../../lib/ficha-overlays';
 import { fichaThemeVars } from '../../../lib/ficha-theme';
 import { CAJA_FONTS_URL } from '../../../lib/caja-fonts';
-import type { GameCard } from '../../../lib/games';
-import type { Lang } from '../../../i18n/locale';
-
 export async function getStaticPaths() {
   const games = await getCollection('games');
   const juegosDir = path.join(process.cwd(), 'src/pages/juegos');
@@ -36,19 +31,6 @@ export async function getStaticPaths() {
     }));
 }
 
-function buildFicha(card: GameCard, locale: Lang, keyword: string): FichaContent {
-  if (keyword === 'ninive') return demoNinive(card, locale);
-  if (keyword === 'reloj') return demoReloj(card, locale);
-
-  const ui = fichaCopy[locale];
-  return mergeFicha(toFicha(card), {
-    image: fichaConceptArtUrl(keyword),
-    imageAlt: card.imageAlt ?? card.name,
-    imageCaption: ui.conceptCaption,
-    pitch: card.pitch ?? card.description,
-  });
-}
-
 const { entry } = Astro.props;
 const locale = getLocale(Astro);
 const card = localizeGame(
@@ -60,7 +42,7 @@ const card = localizeGame(
   },
   locale
 );
-const ficha = buildFicha(card, locale, entry.id);
+const ficha = buildLegacyFicha(card, locale, entry.id);
 const theme = fichaThemeVars(ficha);
 ---
 

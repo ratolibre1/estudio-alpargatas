@@ -37,7 +37,8 @@ palette:
   - '#d4af37'
   - '#4a9b8c'
 titleFont: '"Playfair Display", serif'
-taglineFont: '"Playfair Display", serif'
+taglineFont: '"Cormorant Garamond", serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - pavos reales, exhibición y bluff
   - plumas verdes y violetas con ocelos, logo cartoon sobre negro

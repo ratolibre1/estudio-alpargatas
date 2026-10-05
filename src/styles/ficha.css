@@ -5,10 +5,17 @@
   max-width: none;
   /* Fallbacks si la página no inyecta tema (ver ficha-theme.ts) */
   --ficha-bg: #f7f4eb;
-  --ficha-ink: #1a2847;
-  --ficha-navy: var(--ficha-ink, #1a2847);
-  --ficha-dim: var(--ficha-muted, rgba(26, 40, 71, .62));
-  --ficha-muted: rgba(26, 40, 71, .48);
+  --ficha-on-light-ink: #1a2847;
+  --ficha-on-light-title: #1a2847;
+  --ficha-on-light-tag: rgba(26, 40, 71, .72);
+  --ficha-on-light-muted: rgba(26, 40, 71, .62);
+  --ficha-on-band-ink: #1a2847;
+  --ficha-on-band-title: #1a2847;
+  --ficha-on-band-muted: rgba(26, 40, 71, .62);
+  --ficha-ink: var(--ficha-on-light-ink, #1a2847);
+  --ficha-navy: var(--ficha-on-light-ink, #1a2847);
+  --ficha-dim: var(--ficha-on-light-muted, rgba(26, 40, 71, .62));
+  --ficha-muted: var(--ficha-on-light-tag, rgba(26, 40, 71, .48));
   --ficha-line: rgba(26, 40, 71, .12);
   --ficha-strip: rgba(37, 99, 235, .35);
   --ficha-accent: #ea580c;
@@ -24,7 +31,7 @@
   --ficha-shell-offset: max(var(--ficha-gutter), calc((100% - var(--ficha-shell-w)) / 2));
   /* Concept art del portafolio: 1200×800 (3:2) */
   --ficha-concept-ratio: 3 / 2;
-  background: var(--ficha-bg);
+  background: transparent;
   color: var(--ficha-ink);
   font-family: var(--ficha-body-font);
   font-size: 15px;
@@ -67,13 +74,12 @@
   font-weight: 700;
   letter-spacing: -.04em;
   line-height: .9;
-  color: var(--ficha-title);
-  text-transform: uppercase;
+  color: var(--ficha-on-light-title, var(--ficha-title));
 }
 .ficha-tagline {
   margin: 0 0 1.15rem;
   max-width: 34rem;
-  color: var(--ficha-tag);
+  color: var(--ficha-on-light-tag, var(--ficha-tag));
   font-family: var(--ficha-body-font);
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   font-style: italic;
@@ -189,8 +195,8 @@
 
 /* —— Franja pitch (barra azul) —— */
 .ficha-strip {
-  border-block: 1px solid var(--ficha-strip);
-  background: rgba(255, 255, 255, .45);
+  border-block: 1px solid var(--ficha-line);
+  background: var(--ficha-band-bg, var(--ficha-bg));
   padding: clamp(.85rem, 2vw, 1.1rem) 0;
 }
 .ficha-strip-inner {
@@ -206,11 +212,11 @@
   font-weight: 700;
   letter-spacing: -.02em;
   line-height: 1.15;
-  color: var(--ficha-navy);
+  color: var(--ficha-on-band-title, var(--ficha-navy));
 }
 .ficha-strip p {
   margin: 0;
-  color: var(--ficha-dim);
+  color: var(--ficha-on-band-muted, var(--ficha-dim));
   font-size: .95rem;
   line-height: 1.55;
 }
@@ -218,6 +224,7 @@
 /* —— Secciones —— */
 .ficha-section {
   padding: clamp(1.15rem, 2.5vw, 1.75rem) 0;
+  background: var(--ficha-page-bg, #fafafa);
 }
 .ficha-section + .ficha-section {
   padding-top: clamp(.75rem, 1.75vw, 1.15rem);
@@ -273,47 +280,76 @@
 .ficha-awards-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .ficha-award-card {
   display: block;
-  padding: 1rem 1.05rem;
-  border: 1px solid var(--ficha-line);
-  border-radius: .35rem;
-  background: var(--ficha-card);
-  color: inherit;
+  padding: 1.05rem 1.15rem;
+  border: 2px solid var(--ficha-award-border, var(--ficha-line));
+  border-radius: .5rem;
+  background: var(--ficha-award-bg, var(--ficha-page-bg, #fff));
+  color: var(--ficha-award-title, var(--ficha-on-light-ink));
+  font-family: var(--ficha-body-font);
   text-decoration: none;
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--ficha-award-bar, var(--ficha-accent)) 18%, transparent);
+  transition: box-shadow .18s ease, border-color .18s ease;
 }
-.ficha-award-card:hover { border-color: rgba(26, 40, 71, .22); }
+.ficha-award-card:hover {
+  border-color: var(--ficha-award-bar, var(--ficha-accent));
+  box-shadow:
+    0 3px 0 var(--ficha-award-bar, var(--ficha-accent)),
+    0 10px 22px rgba(26, 40, 71, .1);
+}
 .ficha-award-card-inner {
   display: flex;
-  align-items: flex-start;
-  gap: .85rem;
+  align-items: center;
+  gap: 1rem;
+}
+.ficha-award-card-inner > span {
+  font-style: normal;
+  min-width: 0;
 }
 .ficha-award-card img {
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 3.75rem;
+  height: 3.75rem;
   flex: 0 0 auto;
   object-fit: contain;
+  padding: .35rem;
   background: #fff;
-  border: 1px solid var(--ficha-line);
+  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, #fff);
+  border-radius: .35rem;
+  box-shadow: 0 1px 3px rgba(26, 40, 71, .06);
 }
 .ficha-award-card strong {
   display: block;
-  font-size: .92rem;
-  line-height: 1.3;
-  color: var(--ficha-navy);
-}
-.ficha-award-card em {
-  display: block;
-  margin-top: .45rem;
-  color: var(--ficha-accent);
-  font-size: .78rem;
+  font-family: var(--ficha-body-font);
+  font-size: .95rem;
+  line-height: 1.35;
   font-style: normal;
   font-weight: 800;
+  letter-spacing: -.015em;
+  color: var(--ficha-award-title, var(--ficha-on-light-title));
+}
+.ficha-award-card em {
+  display: inline-block;
+  margin-top: .5rem;
+  color: var(--ficha-award-link, var(--ficha-link-on-light));
+  font-family: var(--ficha-body-font);
+  font-size: .8rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: .2em;
+  text-decoration-color: color-mix(in srgb, var(--ficha-award-link, var(--ficha-accent)) 55%, transparent);
+}
+.ficha-award-card:hover em {
+  text-decoration-color: var(--ficha-award-link, var(--ficha-accent));
 }
 
 /* —— Cómo se juega —— */
@@ -426,17 +462,23 @@
 .ficha-gallery-btn {
   position: absolute;
   top: 50%;
+  display: grid;
+  place-items: center;
   width: 2.5rem;
   height: 2.5rem;
+  padding: 0;
   border: 1px solid var(--ficha-line);
   border-radius: 50%;
   background: rgba(255, 255, 255, .95);
-  color: var(--ficha-navy);
-  font-size: 1.35rem;
-  line-height: 1;
+  /* Siempre oscuro: el botón es claro aunque --ficha-ink sea crema (ej. Letrados). */
+  color: #1a2847;
   cursor: pointer;
   transform: translateY(-50%);
   box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+}
+.ficha-gallery-btn svg {
+  display: block;
+  flex: 0 0 auto;
 }
 .ficha-gallery-btn.prev { left: .85rem; }
 .ficha-gallery-btn.next { right: .85rem; }
@@ -523,26 +565,6 @@
   font-weight: 700;
 }
 
-/* —— Créditos —— */
-.ficha-credits {
-  padding-block: 1rem 1.5rem;
-  border-top: 1px solid var(--ficha-line);
-}
-.ficha-credits-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: .75rem 1.5rem;
-  color: var(--ficha-muted);
-  font-size: .82rem;
-}
-.ficha-credits a {
-  color: var(--ficha-navy);
-  font-weight: 700;
-  text-decoration: none;
-}
-.ficha-credits a:hover { text-decoration: underline; }
-
 /* —— Demo bar —— */
 .ficha-demo-bar {
   position: sticky;
@@ -592,8 +614,9 @@
 
 /* Chrome del sitio cuando la página inyecta ficha-theme.ts en <body> */
 body.ficha-page {
-  background: var(--ficha-bg, #f7f4eb);
-  color: var(--ficha-ink, #1a2847);
+  /* Tinte suave del juego; franja/header un tono más, sin blanco puro vs noche. */
+  background: var(--ficha-page-bg, #fafafa);
+  color: var(--ficha-on-light-ink, var(--ficha-ink, #1a2847));
 }
 body.ficha-page article.ficha,
 body.ficha-page [data-demo-panel] {
@@ -601,8 +624,10 @@ body.ficha-page [data-demo-panel] {
   max-width: none;
 }
 body.ficha-page .site-header {
-  background: var(--ficha-header-bg, var(--ficha-bg, #f7f4eb));
-  border-bottom-color: var(--ficha-line, rgba(26, 40, 71, .12));
+  background-color: var(--ficha-header-bg, var(--ficha-bg, #f7f4eb));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid var(--ficha-line, rgba(26, 40, 71, .12));
 }
 body.ficha-page .site-header .shell,
 body.ficha-page .site-footer .shell {
@@ -630,8 +655,10 @@ body.ficha-page .nav-links .nav-instagram:hover {
   color: var(--ficha-bg, #fff);
 }
 body.ficha-page .site-footer {
-  background: var(--ficha-footer-bg, var(--ficha-header-bg, #1a2847));
-  border-top-color: var(--ficha-line, rgba(26, 40, 71, .12));
+  background-color: var(--ficha-footer-bg, var(--ficha-header-bg, #1a2847));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-top: 1px solid var(--ficha-line, rgba(26, 40, 71, .12));
   color: var(--ficha-footer-muted, rgba(255, 255, 255, .55));
 }
 body.ficha-page .site-footer b,

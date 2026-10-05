@@ -20,6 +20,8 @@ titleColor: '#fde68a'
 taglineColor: '#7dd3fc'
 palette: ['#0e4f5c', '#f97316', '#7dd3fc', '#fde68a']
 titleFont: '"Baloo 2", sans-serif'
+taglineFont: 'Nunito, sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - 'cangrejos ermitaños que usan basura marina como caparazones progresivamente más grandes: tapas de refresco, vasos de ramen, frascos de vidrio'
   - 'ilustración flat pop tropical: paleta pastel brillante, líneas limpias y expresivas, diferente al realismo de Mantas y Carcinogenial'

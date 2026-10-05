@@ -28,6 +28,7 @@ palette:
   - '#1a1a1a'
 titleFont: 'Fraunces, serif'
 taglineFont: 'Fraunces, serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - relojes, horas del día, carrera contra el tiempo
   - papel crema, cartas de hora, tipografía Fraunces

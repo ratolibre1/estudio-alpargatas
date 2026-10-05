@@ -20,6 +20,8 @@ titleColor: '#f5f5f5'
 taglineColor: '#e53e3e'
 palette: ['#1c1c1e', '#7a7a7a', '#e53e3e', '#f5f5f5']
 titleFont: '"Bebas Neue", sans-serif'
+taglineFont: 'Oswald, sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - 'pandillas de palomas urbanas en guerra por el territorio de la ciudad: grietas, techos, plazas y basureros'
   - 'póster de película de acción paródico y exagerado: grunge urbano, tipografía agresiva, alto contraste en blanco, negro y rojo'

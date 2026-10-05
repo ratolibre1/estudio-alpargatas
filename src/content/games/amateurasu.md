@@ -38,6 +38,7 @@ palette:
   - '#5c3d1e'
 titleFont: '"Shippori Mincho", serif'
 taglineFont: '"Zen Maru Gothic", sans-serif'
+bodyFont: '"Zen Maru Gothic", sans-serif'
 conceptos:
   - mitología japonesa, Amaterasu, aprendices del amanecer
   - xilografía y tinta bermellón sobre papel de arroz, cinco paisajes del Cielo

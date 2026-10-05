@@ -26,7 +26,8 @@ palette:
   - '#2d5a27'
   - '#1a1a1a'
 titleFont: '"IM Fell English", serif'
-taglineFont: '"IM Fell English", serif'
+taglineFont: '"Josefin Sans", sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - clanes escoceses, telares y tinturas
   - tartán tejido en crema, rojo y verde, look de taller

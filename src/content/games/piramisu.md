@@ -39,6 +39,7 @@ palette:
   - '#2c1a10'
 titleFont: '"Yeseva One", serif'
 taglineFont: '"Cormorant Garamond", serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - tiramisú, ingredientes de postre, zigurat
   - cartas de café, savoiardi, merengue y chocolate apiladas en pirámide sobre mesa de madera

@@ -37,6 +37,7 @@ palette:
   - "#4a3060"
 titleFont: 'Cinzel, serif'
 taglineFont: '"Cormorant Garamond", serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - mitología griega, hybris, Némesis, Panteón
   - neon cyberpunk sobre púrpura oscuro, glifos y columnas

@@ -63,7 +63,8 @@ palette:
   - '#9855c8'
   - '#55a8d8'
 titleFont: '"Bubblegum Sans", cursive'
-taglineFont: '"Bubblegum Sans", cursive'
+taglineFont: 'Nunito, sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - cangrejos, mutación, ciencia ficción cómica, carcinización acelerada
   - cartoon ilustrado, paleta de 5 colores por tipo de mutación, fondo gris claro

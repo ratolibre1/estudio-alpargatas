@@ -44,6 +44,7 @@ palette:
   - "#5b9fd5"
 titleFont: 'Bungee, sans-serif'
 taglineFont: 'Oswald, sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - mecha, fuego, riesgo compartido
   - ACME cartoon, negro con amarillo y rojo, tipografía Bungee

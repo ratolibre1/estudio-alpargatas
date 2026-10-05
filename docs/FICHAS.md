@@ -13,7 +13,8 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 | `src/styles/ficha.css` | Grid 12 col, héroe full-bleed, shell 8/12 (`cols 3–10`). |
 | `src/lib/ficha.ts` | Tipos + `toFicha()` desde `GameCard`. |
 | `src/lib/ficha-theme.ts` | Skin por juego → CSS vars (`fichaThemeVars`, `fichaThemeStyle`). |
-| `src/lib/ficha-demos.ts` | Overlays ricos para **Nínive** y **Reloj** (también usados en producción). |
+| `src/lib/ficha-demos.ts` | Overlays ricos para **Nínive** y **Reloj**. |
+| `src/lib/ficha-overlays.ts` | `buildLegacyFicha`: CMS + copy/fotos de `i18n/fichas/*` (13 juegos con ficha old). |
 | `src/content/games/<keyword>.md` | Fuente de verdad: copy, estado, paleta, fotos, `howTo`, premios, etc. |
 | `/juegos/plantilla/` | Demo interna (toggle Nínive publicado / Reloj proto). **No** duplicar en prod. |
 | `src/pages/juegos/old/<keyword>/` | Fichas Astro legacy (13), deprecadas. URL: `/juegos/old/<keyword>/`. |
@@ -23,7 +24,7 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 ### Skin (tema por juego, no “modo oscuro”)
 
 - `publicado` vs `proto` cambia **contenido** (comprar vs probar por IG, bloque “en qué estamos”), **no** una paleta alternativa.
-- Colores y fuentes vienen del CMS (`bg`, `titleColor`, `taglineColor`, `palette`, `titleFont`, opcionales `bodyColor`, `ctaColor`, `headerBg`, …).
+- Colores y fuentes vienen del CMS (`bg`, `titleColor`, `taglineColor`, `palette`, …). **`ficha-theme.ts` calcula texto legible** por superficie: página blanca (`--ficha-on-light-*`), franja pitch (`--ficha-on-band-*`), header/footer (`--ficha-header-*`). `titleColor` sigue mandando en chrome del sitio cuando contrasta con `bg`.
 - Página:
 
 ```astro
@@ -38,6 +39,11 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 ```
 
 - `body.ficha-page` en `ficha.css` enlaza header/footer a `--ficha-header-*` / `--ficha-footer-*`.
+
+### Tipografía
+
+- Pares título + cuerpo documentados en **`docs/FUENTES_JUEGOS.md`** (criterio tipo [Fontpair](https://fontpair.co/all)).
+- `bodyFont` en CMS alimenta párrafos y UI de sección; si falta, cae en `taglineFont`.
 
 ### Héroe e imagen
 

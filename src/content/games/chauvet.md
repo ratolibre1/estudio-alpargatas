@@ -20,6 +20,8 @@ titleColor: '#f5e6c8'
 taglineColor: '#c17c4a'
 palette: ['#2c1a0e', '#c17c4a', '#8b1a1a', '#f5e6c8']
 titleFont: 'Cardo, serif'
+taglineFont: '"Cormorant Garamond", serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - 'tribu prehistórica en las cuevas del sur de Francia, año 30.000 AC: cazar, sembrar y registrar la experiencia en pinturas rupestres'
   - 'arte rupestre con pigmentos naturales: ocre, rojo sangre y negro carbón; siluetas de bisontes, caballos y manos sobre roca oscura'

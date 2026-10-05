@@ -20,6 +20,8 @@ titleColor: '#f0d060'
 taglineColor: '#a5b4fc'
 palette: ['#0f172a', '#f0d060', '#a5b4fc', '#e2e8f0']
 titleFont: 'Spectral, serif'
+taglineFont: '"Cormorant Garamond", serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - 'astrónomos y cartógrafos de la antigüedad trazando constelaciones en el cielo nocturno estrellado'
   - 'ilustración mística dorada y azul índigo, estética de cartas de tarot medievales, constelaciones con líneas finas y estrellas'

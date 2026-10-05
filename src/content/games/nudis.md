@@ -20,6 +20,8 @@ titleColor: '#1e3a5f'
 taglineColor: '#5b6e8a'
 palette: ['#f8f5ef', '#1e3a5f', '#e84393', '#39d0c0']
 titleFont: 'Lora, serif'
+taglineFont: 'Lora, serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - 'biólogos marinos catalogando nudibranquios: babosas de mar con combinaciones de colores imposibles y extravagantes'
   - 'ilustración científica de guía de campo: acuarela detallada sobre papel crema envejecido, estilo libro de historia natural del siglo XIX'

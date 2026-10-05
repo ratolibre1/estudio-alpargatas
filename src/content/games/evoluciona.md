@@ -28,18 +28,20 @@ fotos:
     altEn: Evoluciona playtest table, with cards in play, a deck, and a wild in hand
     caption: Mesa de playtest.
     captionEn: Playtest table.
-bg: '#123456'
-titleColor: '#654321'
-taglineColor: '#978567'
+bg: '#ede4cf'
+titleColor: '#3d2914'
+taglineColor: 'rgba(61, 41, 20, .62)'
+headerBg: '#1a4a72'
 palette:
-  - '#475869'
-  - '#123212'
-  - '#3d456f'
-  - '#563729'
+  - '#3d2914'
+  - '#ede4cf'
+  - '#2b6fd6'
+  - '#e07832'
 titleFont: '"Shantell Sans", sans-serif'
-taglineFont: '"Shantell Sans", sans-serif'
+taglineFont: '"Patrick Hand", cursive'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - primates, evolución, Australopithecus a Homo Tech
-  - doodle manuscrito, Shantell Sans, tierra y azul noche
+  - pergamino, garabato sepia, chispa azul-cian en Homo Tech
   - card shedding, pista de cinco especies, Super comodín, Caída, Comodín
 ---

@@ -20,8 +20,12 @@ const first = photos[0];
       <img data-main src={first.src} alt={first.alt} />
       {photos.length > 1 && (
         <>
-          <button class="ficha-gallery-btn prev" type="button" data-prev aria-label={t.prev}>‹</button>
-          <button class="ficha-gallery-btn next" type="button" data-next aria-label={t.next}>›</button>
+          <button class="ficha-gallery-btn prev" type="button" data-prev aria-label={t.prev}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="ficha-gallery-btn next" type="button" data-next aria-label={t.next}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
         </>
       )}
     </figure>

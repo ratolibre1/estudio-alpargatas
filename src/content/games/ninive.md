@@ -54,6 +54,7 @@ palette:
   - '#6a9a58'
 titleFont: '"Cormorant Garamond", serif'
 taglineFont: '"Cormorant Garamond", serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - Mesopotamia, palacio jardín de Nínive
   - cerámica turquesa, flores naranjas y fuentes azules, serif editorial

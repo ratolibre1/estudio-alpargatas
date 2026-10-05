@@ -50,7 +50,8 @@ palette:
   - '#24332a'
   - '#c0393a'
 titleFont: '"Raleway", sans-serif'
-taglineFont: '"Raleway", sans-serif'
+taglineFont: '"Cormorant Garamond", serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - construcción, letras, obra en altura
   - pizarra azul Lighthouse, lettering a mano Patrick Hand

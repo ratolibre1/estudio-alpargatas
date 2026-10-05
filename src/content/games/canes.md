@@ -39,6 +39,7 @@ palette:
   - '#8db87e'
 titleFont: 'Fredoka, sans-serif'
 taglineFont: 'Nunito, sans-serif'
+bodyFont: 'Nunito, sans-serif'
 conceptos:
   - festival canino, cinco disciplinas, entrenadores
   - ilustración familiar, verdes y ocres, tipografía Fredoka
