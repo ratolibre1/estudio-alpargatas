@@ -6,6 +6,8 @@ export const reloj = {
     description:
       'Hasta un Reloj Roto...: tres modos de velocidad con 48 cartas que representan cada hora y media hora del día.',
     footer: 'Hasta un Reloj Roto... · Rapidez · 48 cartas',
+    fichaConceptAlt: 'Arte conceptual — horas y medias horas del día en un reloj',
+    fichaCredits: 'Diseño · Estudio Alpargatas',
     crumbHome: 'Inicio',
     crumbHere: 'Hasta un Reloj Roto...',
     badgeProto: 'Proto',
@@ -69,6 +71,8 @@ export const reloj = {
     description:
       'Hasta un Reloj Roto...: three speed modes with 48 cards, one for every hour and half-hour of the day.',
     footer: 'Hasta un Reloj Roto... · Speed · 48 cards',
+    fichaConceptAlt: 'Concept art — clock hours and half-hours of the day',
+    fichaCredits: 'Design · Estudio Alpargatas',
     crumbHome: 'Home',
     crumbHere: 'Hasta un Reloj Roto...',
     badgeProto: 'Prototype',

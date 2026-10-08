@@ -1,5 +1,10 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { COMP_ICON_SLUGS } from './lib/comp-icons';
+
+const compIconSlug = z.enum(
+  COMP_ICON_SLUGS as unknown as [string, ...string[]]
+);
 
 const keyword = z
   .string()
@@ -140,6 +145,10 @@ const games = defineCollection({
           qty: z.string(),
           name: z.string(),
           nameEn: z.string().optional(),
+          icon: compIconSlug.optional(),
+          image: z.string().optional(),
+          imageAlt: z.string().optional(),
+          imageAltEn: z.string().optional(),
         })
       )
       .optional(),

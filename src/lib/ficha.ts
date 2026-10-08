@@ -12,6 +12,11 @@ export type FichaHowToStep = {
 export type FichaComponent = {
   qty: string;
   name: string;
+  /** Slug de `COMP_ICON_SLUGS` (ej. deck-cards) o ruta `/assets/…` custom. */
+  icon?: string;
+  /** Foto al hover/click; si falta, se mantiene la mesa general. */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type FichaResource = {
@@ -44,14 +49,20 @@ export type FichaContent = {
   image?: string;
   imageAlt?: string;
   imageCaption?: string;
-  pitchTitle?: string;
-  /** Línea derecha de la franja bajo el héroe (mockup GPT). */
-  pitchSubtitle?: string;
-  pitch?: string;
+  inspirationTitle?: string;
+  inspiration?: string;
   buyUrl?: string;
   ctaHref?: string;
   rulesUrl?: string;
   rulesLabel?: string;
+  /** PDF del manual. Si falta junto con `pnpUrl`, se esconde «Ver archivos». */
+  manualUrl?: string;
+  /** Última actualización del manual, `YYYY-MM-DD`. */
+  manualUpdated?: string;
+  /** Archivo print-and-play. */
+  pnpUrl?: string;
+  /** Última actualización del PnP, `YYYY-MM-DD`. */
+  pnpUpdated?: string;
   publisherUrl?: string;
   publisherLabel?: string;
   bggId?: number;
@@ -111,8 +122,8 @@ export function toFicha(game: GameCard): FichaContent {
     image: game.image,
     imageAlt: game.imageAlt,
     imageCaption: game.imageCaption,
-    pitchTitle: game.pitchTitle,
-    pitch: game.pitch ?? game.description,
+    inspirationTitle: game.pitchTitle,
+    inspiration: game.pitch ?? game.description,
     buyUrl: game.buyUrl,
     ctaHref: game.ctaHref,
     rulesUrl: game.rulesUrl,

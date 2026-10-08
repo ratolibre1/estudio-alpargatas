@@ -32,12 +32,12 @@ awards:
     titleEn: Official game · Roll a Game Expo Chile 2025
     image: /assets/roll-a-game-logo.webp
     href: https://www.instagram.com/p/DP2ROVEEuOM/
-  - title: Juego Chileno del Año 2025 · Diluvio Lúdico
-    titleEn: Chilean Game of the Year 2025 · Diluvio Lúdico
+  - title: Paraguas de Oro al Mejor Juego Chileno 2025 · Diluvio Lúdico
+    titleEn: Golden Umbrella for Best Chilean Game 2025 · Diluvio Lúdico
     image: /assets/paraguas-de-oro-2025.webp
     href: https://www.instagram.com/p/DS8Uhj-kWoL/?img_index=7
-  - title: 4º lugar en Juegos chilenos
-    titleEn: 4th place in Chilean Games
+  - title: 4º lugar Mejores Juegos chilenos · Diluvio Lúdico
+    titleEn: 4th place Best Chilean Games · Diluvio Lúdico
     image: /assets/diluvio-ludico-logo.webp
     href: https://www.youtube.com/watch?v=iNGk06DjYow
   - title: 2º lugar del jurado · 54-Card Game Design Contest 2024

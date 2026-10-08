@@ -71,6 +71,9 @@ export const carcinogenial = {
     backAria: 'Navegación de vuelta',
     backPrompt: 'Ver el catálogo completo',
     backLink: '← Portafolio',
+    footer: 'Carcinogenial · Estudio Alpargatas',
+    componentsPhotoAlt: 'Prototipo Carcinogenial en mesa',
+    mutationCardAlt: 'Carta de mutación Caparazón',
   },
   en: {
     title: 'Carcinogenial — Estudio Alpargatas',
@@ -142,5 +145,8 @@ export const carcinogenial = {
     backAria: 'Back navigation',
     backPrompt: 'See the full catalogue',
     backLink: '← Portfolio',
+    footer: 'Carcinogenial · Estudio Alpargatas',
+    componentsPhotoAlt: 'Carcinogenial prototype on the table',
+    mutationCardAlt: 'Shell mutation card',
   },
 } as const satisfies Record<Lang, Record<string, string>>;
