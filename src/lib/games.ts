@@ -117,6 +117,7 @@ export function localizeGame(game: GameCard, locale: Lang): GameCard {
     components: game.components?.map((item) => ({
       ...item,
       name: item.nameEn ?? item.name,
+      imageAlt: item.imageAltEn ?? item.imageAlt,
     })),
     resources: game.resources?.map((resource) => ({
       ...resource,

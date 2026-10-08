@@ -1,0 +1,158 @@
+---
+import type { FichaComponent } from '../lib/ficha';
+import { resolveComponentIcon } from '../lib/comp-icons';
+
+interface Props {
+  defaultPhoto?: string;
+  defaultAlt?: string;
+  components: FichaComponent[];
+}
+
+const { defaultPhoto, defaultAlt = '', components } = Astro.props;
+const hasStage = Boolean(defaultPhoto || components.some((c) => c.image));
+const show = components.length > 0;
+---
+
+{show && (
+  <div
+    class:list={['ficha-comp-interactive', !hasStage && 'ficha-comp-interactive--tiles-only']}
+    data-ficha-components={hasStage ? true : undefined}
+    data-default-src={defaultPhoto ?? ''}
+    data-default-alt={defaultAlt}
+  >
+    {hasStage && (
+      <div class="ficha-comp-stage-wrap">
+        <div class="ficha-comp-photo ficha-comp-stage">
+          {defaultPhoto ? (
+            <img
+              data-comp-main
+              src={defaultPhoto}
+              alt={defaultAlt}
+              loading="lazy"
+            />
+          ) : (
+            <img data-comp-main src="" alt="" hidden />
+          )}
+        </div>
+        <p class="ficha-comp-stage-cap" data-comp-cap aria-live="polite">
+          {defaultAlt}
+        </p>
+      </div>
+    )}
+
+    <div class="ficha-comp-side">
+      <div class="ficha-comp-tiles" role="list">
+        {components.map((item, index) => {
+          const hasDetail = Boolean(item.image);
+          const iconSrc = resolveComponentIcon(item.name, item.icon);
+          return (
+            <button
+              type="button"
+              class:list={['ficha-comp-tile', !hasDetail && 'is-static']}
+              role="listitem"
+              data-comp-index={index}
+              data-comp-src={item.image ?? ''}
+              data-comp-alt={item.imageAlt ?? item.name}
+              aria-pressed="false"
+            >
+              <img class="ficha-comp-tile-icon" src={iconSrc} alt="" />
+              <span class="ficha-comp-tile-body">
+                <span class="ficha-comp-tile-qty">{item.qty}</span>
+                <span class="ficha-comp-tile-name">{item.name}</span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
+  </div>
+)}
+
+{hasStage && (
+<script>
+  function bindComponents(root: HTMLElement) {
+    const main = root.querySelector<HTMLImageElement>('[data-comp-main]');
+    const cap = root.querySelector<HTMLElement>('[data-comp-cap]');
+    const tiles = [
+      ...root.querySelectorAll<HTMLButtonElement>('.ficha-comp-tile'),
+    ].filter((tile) => Boolean(tile.dataset.compSrc));
+    const defaultSrc = root.dataset.defaultSrc ?? '';
+    const defaultAlt = root.dataset.defaultAlt ?? '';
+
+    if (!main) return;
+
+    let pinned: HTMLButtonElement | null = null;
+
+    const setPhoto = (src: string, alt: string) => {
+      if (!src) {
+        main.hidden = true;
+        main.removeAttribute('src');
+        if (cap) cap.textContent = '';
+        return;
+      }
+      main.hidden = false;
+      main.src = src;
+      main.alt = alt;
+      if (cap) cap.textContent = alt;
+    };
+
+    const setActive = (active: HTMLButtonElement | null) => {
+      tiles.forEach((tile) => {
+        const on = tile === active;
+        tile.classList.toggle('is-active', on);
+        tile.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    };
+
+    const showDefault = () => {
+      pinned = null;
+      setActive(null);
+      setPhoto(defaultSrc, defaultAlt);
+    };
+
+    const showTile = (tile: HTMLButtonElement) => {
+      const src = tile.dataset.compSrc ?? '';
+      const alt = tile.dataset.compAlt ?? '';
+      if (!src) {
+        showDefault();
+        return;
+      }
+      setPhoto(src, alt);
+      setActive(tile);
+    };
+
+    showDefault();
+
+    tiles.forEach((tile) => {
+      const src = tile.dataset.compSrc;
+      if (!src) return;
+
+      tile.addEventListener('mouseenter', () => {
+        if (pinned) return;
+        showTile(tile);
+      });
+
+      tile.addEventListener('mouseleave', () => {
+        if (pinned) return;
+        showDefault();
+      });
+
+      tile.addEventListener('click', () => {
+        if (pinned === tile) {
+          showDefault();
+          return;
+        }
+        pinned = tile;
+        showTile(tile);
+      });
+    });
+
+    root.addEventListener('mouseleave', () => {
+      if (!pinned) showDefault();
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ficha-components]').forEach(bindComponents);
+</script>
+)}

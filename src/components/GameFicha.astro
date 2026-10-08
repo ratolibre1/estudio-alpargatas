@@ -1,5 +1,6 @@
 ---
 import GameGallery from './GameGallery.astro';
+import GameComponents from './GameComponents.astro';
 import { ficha as copy } from '../i18n/fichas/ficha';
 import { bggHref } from '../lib/games';
 import { stateBadgeStyle } from '../lib/state-badge';
@@ -24,12 +25,34 @@ const ctaLabel = isPub ? t.ctaBuy : t.ctaTry;
 const howTo = (g.howTo ?? []).slice(0, 3);
 const awards = g.awards ?? [];
 const components = g.components ?? [];
+const showComponents = components.length > 0 || Boolean(g.componentsPhoto);
 const photos = g.photos ?? [];
 const resources = g.resources ?? [];
+const FILE_MONTHS: Record<Lang, string[]> = {
+  es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+};
+
+function formatFileDate(iso: string | undefined): string | undefined {
+  const match = iso?.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return undefined;
+  const month = FILE_MONTHS[locale][Number(match[2]) - 1];
+  if (!month) return undefined;
+  return `${match[3]} ${month}, ${match[1]}`;
+}
+
+const fileLinks = [
+  g.manualUrl
+    ? { href: g.manualUrl, label: t.fileManual, icon: '/assets/ficha-icons/manual.png', updated: formatFileDate(g.manualUpdated) }
+    : null,
+  g.pnpUrl
+    ? { href: g.pnpUrl, label: t.filePnp, icon: '/assets/ficha-icons/pnp.png', updated: formatFileDate(g.pnpUpdated) }
+    : null,
+].filter((item): item is { href: string; label: string; icon: string; updated?: string } => item !== null);
+const hasFiles = fileLinks.length > 0;
 const hasDev = !isPub && Boolean(g.version || g.adjusting || g.nextPlaytests);
 const hasExt = Boolean(g.bggId || (g.publisherUrl && g.publisherLabel));
-const stripRight = g.pitchSubtitle ?? g.pitch;
-const showStrip = Boolean(g.pitchTitle && stripRight);
+const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
 ---
 
 <article class="ficha" data-ficha-variant={g.variant} style={fichaThemeStyle(g)}>
@@ -64,14 +87,19 @@ const showStrip = Boolean(g.pitchTitle && stripRight);
                 )}
                 {ctaLabel} →
               </a>
-              {g.rulesUrl && (
+              {isPub && g.rulesUrl && (
                 <a class="ficha-rules" href={g.rulesUrl} target="_blank" rel="noopener noreferrer">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-                  {g.rulesLabel ?? (isPub ? t.rules : t.rulesProto)}
+                  {g.rulesLabel ?? t.rules}
+                </a>
+              )}
+              {!isPub && hasFiles && (
+                <a class="ficha-rules" href="#ficha-archivos">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                  {t.seeFiles}
                 </a>
               )}
             </div>
-            {!isPub && <p class="ficha-cta-note">{t.ctaTryNote}</p>}
           </div>
         )}
         {hasExt && (
@@ -97,43 +125,6 @@ const showStrip = Boolean(g.pitchTitle && stripRight);
         </figure>
       )}
   </header>
-
-  {showStrip && (
-    <section class="ficha-strip" aria-label={g.pitchTitle}>
-      <div class="ficha-shell ficha-strip-inner">
-        <h2>{g.pitchTitle}</h2>
-        <p>{stripRight}</p>
-      </div>
-    </section>
-  )}
-
-  {hasDev && (
-    <section class="ficha-section ficha-dev">
-      <div class="ficha-shell">
-        <h2 class="ficha-section-title">{t.devTitle}</h2>
-        <div class="ficha-dev-cards">
-          {(g.version || g.adjusting) && (
-            <article class="ficha-panel">
-              <div class="ficha-panel-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-              </div>
-              <h3>{g.version ? `${t.devVersion} ${g.version}` : t.devAdjusting}</h3>
-              <p>{g.adjusting ?? ''}</p>
-            </article>
-          )}
-          {g.nextPlaytests && (
-            <article class="ficha-panel">
-              <div class="ficha-panel-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><path d="M3 19c0-2.5 2.5-4 6-4s6 1.5 6 4"/><circle cx="17" cy="8" r="2.5"/><path d="M14 19c0-1.8 1.5-3 3-3"/></svg>
-              </div>
-              <h3>{t.devNext}</h3>
-              <p>{g.nextPlaytests}</p>
-            </article>
-          )}
-        </div>
-      </div>
-    </section>
-  )}
 
   {awards.length > 0 && (
     <section class="ficha-section">
@@ -166,6 +157,56 @@ const showStrip = Boolean(g.pitchTitle && stripRight);
     </section>
   )}
 
+  {hasDev && (
+    <section class="ficha-section ficha-dev">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{t.devTitle}</h2>
+        <div class="ficha-dev-cards">
+          {(g.version || g.adjusting) && (
+            <article class="ficha-panel">
+              <div class="ficha-panel-icon" aria-hidden="true">
+                <img src="/assets/ficha-icons/version.png" alt="" />
+              </div>
+              <h3>{g.version ? `${t.devVersion} ${g.version}` : t.devAdjusting}</h3>
+              <p>{g.adjusting ?? ''}</p>
+            </article>
+          )}
+          {g.nextPlaytests && (
+            <article class="ficha-panel">
+              <div class="ficha-panel-icon" aria-hidden="true">
+                <img src="/assets/ficha-icons/experimentos.png" alt="" />
+              </div>
+              <h3>{t.devNext}</h3>
+              <p>{g.nextPlaytests}</p>
+            </article>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {showInspiration && (
+    <section class="ficha-inspiration" aria-label={g.inspirationTitle}>
+      <div class="ficha-shell ficha-inspiration-inner">
+        <h2>{g.inspirationTitle}</h2>
+        <p class="ficha-inspiration-body">{g.inspiration}</p>
+      </div>
+    </section>
+  )}
+
+  {showComponents && (
+    <section class="ficha-section">
+      <div class="ficha-shell">
+        <h2 class="ficha-section-title">{isPub ? t.componentsPub : t.componentsProto}</h2>
+        <GameComponents
+          defaultPhoto={g.componentsPhoto}
+          defaultAlt={g.componentsPhotoAlt ?? ''}
+          components={components}
+        />
+      </div>
+    </section>
+  )}
+
   {howTo.length > 0 && (
     <section class="ficha-section">
       <div class="ficha-shell">
@@ -184,33 +225,6 @@ const showStrip = Boolean(g.pitchTitle && stripRight);
     </section>
   )}
 
-  {components.length > 0 && (
-    <section class="ficha-section">
-      <div class="ficha-shell">
-        <h2 class="ficha-section-title">{isPub ? t.componentsPub : t.componentsProto}</h2>
-        <div class="ficha-comp-grid">
-          {g.componentsPhoto && (
-            <div class="ficha-comp-photo">
-              <img src={g.componentsPhoto} alt={g.componentsPhotoAlt ?? ''} loading="lazy" />
-            </div>
-          )}
-          <div>
-            <ul class="ficha-comp-list">
-              {components.map((item) => (
-                <li>
-                  <span class="ficha-comp-icon" aria-hidden="true">▣</span>
-                  <span>{item.name}</span>
-                  <b>{item.qty}</b>
-                </li>
-              ))}
-            </ul>
-            {g.componentsNote && <p class="ficha-comp-note">{g.componentsNote}</p>}
-          </div>
-        </div>
-      </div>
-    </section>
-  )}
-
   {photos.length > 0 && (
     <section class="ficha-section">
       <div class="ficha-shell">
@@ -220,11 +234,27 @@ const showStrip = Boolean(g.pitchTitle && stripRight);
     </section>
   )}
 
-  {resources.length > 0 && (
-    <section class="ficha-section">
+  {(hasFiles || resources.length > 0) && (
+    <section class="ficha-section" id={hasFiles ? 'ficha-archivos' : undefined}>
       <div class="ficha-shell">
-        <h2 class="ficha-section-title">{t.resources}</h2>
+        <h2 class="ficha-section-title">{hasFiles ? t.filesTitle : t.resources}</h2>
         <div class="ficha-resources">
+          {fileLinks.map((file) => (
+            <a class="ficha-comp-tile" href={file.href} target="_blank" rel="noopener noreferrer">
+              <img class="ficha-comp-tile-icon" src={file.icon} alt="" />
+              <span class="ficha-comp-tile-body">
+                <span class="ficha-comp-tile-qty">{file.label}</span>
+                {file.updated && <span class="ficha-comp-tile-name">{file.updated}</span>}
+              </span>
+              <span class="ficha-file-dl" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v12" />
+                  <path d="m7 10 5 5 5-5" />
+                  <path d="M5 21h14" />
+                </svg>
+              </span>
+            </a>
+          ))}
           {resources.map((resource) => (
             <a class="ficha-resource" href={resource.href} target="_blank" rel="noopener noreferrer">
               <span class="ficha-resource-lead">

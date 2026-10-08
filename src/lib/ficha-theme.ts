@@ -237,7 +237,6 @@ export function fichaThemeVars(g: FichaContent): FichaThemeVars {
   const footerMuted = g.footerMuted ?? headerMuted;
 
   const accent = g.ctaColor ?? palette[2] ?? palette[1] ?? FALLBACK.accent;
-  const surface = g.surfaceColor ?? palette[3] ?? FALLBACK.card;
 
   const linkOnLight = pickOnBackground(
     pageBg,
@@ -270,7 +269,8 @@ export function fichaThemeVars(g: FichaContent): FichaThemeVars {
     'ficha-title': onLightTitle,
     'ficha-tag': onLightTag,
     'ficha-line': g.lineColor ?? FALLBACK.line,
-    'ficha-card': surface,
+    /* Paneles/recursos: mismo fondo legible que premios (no palette[3] oscuro). */
+    'ficha-card': awardBg,
     'ficha-title-font': g.titleFont,
     'ficha-body-font': g.bodyFont ?? g.taglineFont ?? FALLBACK.ui,
     'ficha-accent': accent,

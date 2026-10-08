@@ -183,6 +183,40 @@ collections:
         fields:
           - { label: Cantidad, name: qty, widget: string }
           - { label: Nombre, name: name, widget: string }
+          - label: Icono
+            name: icon
+            widget: select
+            required: false
+            hint: 'Slugs en src/lib/comp-icons.ts (COMP_ICON_LABELS). Vacío = fichas genéricas.'
+            options:
+              - { label: '— Default (fichas)', value: '' }
+              - { label: Reglamento, value: rulebook }
+              - { label: Mazo / cartas, value: deck-cards }
+              - { label: Cartas en mano / rol, value: hand-cards }
+              - { label: Dado D6, value: die-d6 }
+              - { label: Dados poliédricos, value: dice-poly }
+              - { label: Fichas / tokens, value: tokens-stack }
+              - { label: Losetas, value: tiles-stack }
+              - { label: Meeples, value: meeples }
+              - { label: Peones, value: pawn }
+              - { label: Miniaturas, value: miniature }
+              - { label: Mapa, value: map }
+              - { label: Tablero personal, value: player-board }
+              - { label: Losetas hex, value: hex-tiles }
+              - { label: Terreno / paisaje, value: terrain-tiles }
+              - { label: Piezas especiales, value: puzzle }
+              - { label: Monedas, value: coins }
+              - { label: Cubos de recurso, value: resource-cubes }
+              - { label: Cilindros, value: cylinders }
+              - { label: Salvavidas / corazón, value: heart-star }
+              - { label: Banderas, value: flags }
+              - { label: Reloj / temporizador, value: hourglass }
+              - { label: Bolsa de fichas, value: token-bag }
+              - { label: Pantalla de jugador, value: player-screen }
+              - { label: Ruleta / spinner, value: spinner }
+              - { label: Bloc de puntuación, value: score-pad }
+          - { label: Foto detalle, name: image, widget: string, required: false, hint: 'Hover/click en la ficha' }
+          - { label: Alt foto detalle, name: imageAlt, widget: string, required: false }
       - label: Recursos (PDF, PnP)
         name: resources
         widget: list
