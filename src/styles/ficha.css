@@ -143,8 +143,7 @@ body.ficha-page[data-on-primary="tinta"] {
   font-weight: 900;
   letter-spacing: .12em;
   text-transform: uppercase;
-  background: var(--ficha-state-bg);
-  color: var(--ficha-state-text);
+  /* Colores: inline vía stateBadgeStyle (misma tabla que /portafolio/). */
 }
 
 .ficha h1 {

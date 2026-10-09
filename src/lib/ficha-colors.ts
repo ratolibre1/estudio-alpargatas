@@ -60,7 +60,6 @@ export function fichaColorVars(palette: string[], mode: FichaMode): Record<strin
   const bandBg = dark ? tinta : safeSurface(primary, base, .18);
   const awardBg = dark ? safeSurface(base, tinta, .14) : safeSurface(primary, base, .16);
   const cardBg = dark ? safeSurface(base, tinta, .12) : safeSurface(primary, base, .10);
-  const stateBg = safeSurface(apoyo, base, .82);
   const pageInk = bestText(pageBg), headerInk = bestText(headerBg);
   const fichaBg = dark ? tinta : mixColors(primary, base, .22);
   const heroStart = mixColors(fichaBg, pageBg, .28);
@@ -82,7 +81,6 @@ export function fichaColorVars(palette: string[], mode: FichaMode): Record<strin
     'award-link': readableColor(awardBg, apoyo),
     'link-on-light': readableColor(pageBg, apoyo),
     'card-text': bestText(cardBg), 'card-muted': secondary(cardBg, bestText(cardBg)),
-    'state-bg': stateBg, 'state-text': bestText(stateBg),
     accent, 'on-accent': bestText(accent),
   };
   return Object.fromEntries(Object.entries(values).map(([key, value]) => ['ficha-' + key, value]));

@@ -32,7 +32,7 @@ test('lectura, botones y navegación conservan contraste en ambos modos', () => 
     const pairs = [['page-bg', 'on-light-ink'], ['page-bg', 'on-light-tag'],
       ['band-bg', 'on-band-muted'], ['award-bg', 'award-title'], ['award-bg', 'award-link'],
       ['header-bg', 'header-text'], ['header-bg', 'header-muted'], ['header-bg', 'nav-hover'],
-      ['accent', 'on-accent'], ['state-bg', 'state-text'], ['card', 'card-muted']];
+      ['accent', 'on-accent'], ['card', 'card-muted']];
     for (const [bg, text] of pairs) {
       assert(contrastRatio(get(bg), get(text)) >= 4.5, `${game.keyword} ${mode}: ${text}`);
     }
