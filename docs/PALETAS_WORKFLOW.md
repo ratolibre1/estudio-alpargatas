@@ -11,9 +11,8 @@ Las paletas **no salen de teoría sola** (60-15-15, contrapunto, etc.). Salen de
    - opcional **base** clara y **tinta** oscura (con matiz, no gris puro).
 3. **Ordenar en CMS** sin cambiar el matiz:
    - `palette[0]` base · `[1]` primary · `[2]` apoyo (contrapunto) · `[3]` tinta
-   - `bg` = atmósfera de banda (cielo, pizarra, cueva…)
-   - `titleColor` = lo que quieres leer en héroe (a menudo primary o tinta)
-4. **Validar en portafolio** (4 swatches) + **una ficha** en dev. Ajustar un solo slot, no rehacer todo.
+   - La ficha **no** usa `bg` ni `titleColor` para pintar — solo estos cuatro slots + derivación automática ([PALETAS_FICHA.md](./PALETAS_FICHA.md)).
+4. **Validar en portafolio** (4 swatches) + **una ficha** en dev. Ajustar un solo slot, no rehacer todo. Comprobar si salió `data-band="light"` u `"dark"` y si cuadra con lo que quieres.
 
 ## Lo que no funciona (y por qué falló el agente)
 
@@ -27,8 +26,8 @@ Las paletas **no salen de teoría sola** (60-15-15, contrapunto, etc.). Salen de
 Paleta [keyword]:
 - Anclas: #______ principal, #______ contrapunto, (opcional base/tinta)
 - Referencia: [concepto / imagen / “como commit X”]
-- Modo ficha: banda clara | banda oscura
-- No tocar: [bg | titleColor | …]
+- Objetivo banda: clara (cajitas tipo celeste) | oscura (chrome tinta) — lograrlo con luminancia de primary/tinta, no con campos extra
+- No tocar: [copy | fotos | …]
 ```
 
 Si no tienes hex: “saca anclas del concepto en `games/ninive.md` y propón 4 slots; no inventes colores fuera del brief”.

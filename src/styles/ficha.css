@@ -1,31 +1,95 @@
 /* Plantilla compartida de ficha (mockup GPT). Breakpoints: 980 / 760 / 520. */
 
+/*
+ * Paleta: solo --ficha-c-{base,primary,apoyo,tinta} (inyectadas en body.ficha-page).
+ * Rama light|dark vía data-band; fórmulas documentadas en docs/PALETAS_FICHA.md.
+ */
+body.ficha-page {
+  --ficha-c-base: #f7f4eb;
+  --ficha-c-primary: #2d6a4f;
+  --ficha-c-apoyo: #c2b97f;
+  --ficha-c-tinta: #1b4332;
+  /* Fallbacks; el CMS sobreescribe título/tagline vía theme en <body style>. */
+  --ficha-title-font: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --ficha-tagline-font: "Cormorant Garamond", Georgia, serif;
+  --ficha-section-font: Nunito, sans-serif;
+  --ficha-body-font: var(--ficha-section-font);
+  /* Premios, facts, componentes: Nunito Medium Italic (Google 1,500). */
+  --ficha-caja-weight: 500;
+  --ficha-caja-style: italic;
+}
+
+body.ficha-page[data-band="light"] {
+  --ficha-page-bg: var(--ficha-c-base);
+  --ficha-bg: color-mix(in srgb, var(--ficha-c-primary) 22%, var(--ficha-c-base));
+  --ficha-band-bg: color-mix(in srgb, var(--ficha-c-primary) 18%, var(--ficha-c-base));
+  --ficha-on-light-title: var(--ficha-c-primary);
+  --ficha-on-light-ink: var(--ficha-c-tinta);
+  --ficha-on-light-tag: color-mix(in srgb, var(--ficha-c-tinta) 58%, var(--ficha-c-base));
+  --ficha-on-light-muted: color-mix(in srgb, var(--ficha-c-tinta) 42%, var(--ficha-c-base));
+  --ficha-on-band-title: var(--ficha-c-tinta);
+  --ficha-on-band-muted: color-mix(in srgb, var(--ficha-c-tinta) 52%, var(--ficha-c-primary));
+  --ficha-accent: var(--ficha-c-primary);
+  --ficha-link-on-light: var(--ficha-c-apoyo);
+  --ficha-line: color-mix(in srgb, var(--ficha-c-tinta) 16%, transparent);
+  --ficha-card: color-mix(in srgb, var(--ficha-c-primary) 10%, var(--ficha-c-base));
+  --ficha-award-bg: color-mix(in srgb, var(--ficha-c-primary) 16%, var(--ficha-c-base));
+  --ficha-award-bar: var(--ficha-c-apoyo);
+  --ficha-award-border: color-mix(in srgb, var(--ficha-c-apoyo) 45%, var(--ficha-c-base));
+  --ficha-award-title: var(--ficha-c-tinta);
+  --ficha-award-link: var(--ficha-c-apoyo);
+  --ficha-header-bg: var(--ficha-page-bg);
+  --ficha-header-text: var(--ficha-c-tinta);
+  --ficha-header-muted: color-mix(in srgb, var(--ficha-c-tinta) 50%, var(--ficha-c-base));
+  --ficha-footer-bg: var(--ficha-header-bg);
+  --ficha-footer-text: var(--ficha-header-text);
+  --ficha-footer-muted: var(--ficha-header-muted);
+}
+
+body.ficha-page[data-band="dark"] {
+  --ficha-page-bg: color-mix(in srgb, var(--ficha-c-base) 34%, var(--ficha-c-tinta));
+  --ficha-bg: var(--ficha-c-tinta);
+  --ficha-band-bg: var(--ficha-c-tinta);
+  --ficha-on-light-title: var(--ficha-c-base);
+  --ficha-on-light-ink: var(--ficha-c-base);
+  --ficha-on-light-tag: color-mix(in srgb, var(--ficha-c-base) 62%, var(--ficha-c-apoyo));
+  --ficha-on-light-muted: color-mix(in srgb, var(--ficha-c-base) 48%, var(--ficha-c-apoyo));
+  --ficha-on-band-title: var(--ficha-c-base);
+  --ficha-on-band-muted: color-mix(in srgb, var(--ficha-c-base) 55%, var(--ficha-c-apoyo));
+  --ficha-accent: var(--ficha-c-apoyo);
+  --ficha-link-on-light: var(--ficha-c-apoyo);
+  --ficha-line: color-mix(in srgb, var(--ficha-c-base) 22%, transparent);
+  --ficha-card: color-mix(in srgb, var(--ficha-c-base) 12%, var(--ficha-c-tinta));
+  --ficha-award-bg: color-mix(in srgb, var(--ficha-c-base) 14%, var(--ficha-c-tinta));
+  --ficha-award-bar: var(--ficha-c-apoyo);
+  --ficha-award-border: color-mix(in srgb, var(--ficha-c-apoyo) 38%, var(--ficha-c-tinta));
+  --ficha-award-title: var(--ficha-c-base);
+  --ficha-award-link: var(--ficha-c-apoyo);
+  --ficha-header-bg: var(--ficha-c-tinta);
+  --ficha-header-text: var(--ficha-c-base);
+  --ficha-header-muted: color-mix(in srgb, var(--ficha-c-base) 52%, var(--ficha-c-apoyo));
+  --ficha-footer-bg: var(--ficha-header-bg);
+  --ficha-footer-text: var(--ficha-header-text);
+  --ficha-footer-muted: var(--ficha-header-muted);
+}
+
+body.ficha-page[data-on-primary="base"] {
+  --ficha-on-accent: var(--ficha-c-base);
+}
+
+body.ficha-page[data-on-primary="tinta"] {
+  --ficha-on-accent: var(--ficha-c-tinta);
+}
+
 .ficha {
   width: 100%;
   max-width: none;
-  /* Fallbacks si la página no inyecta tema (ver ficha-theme.ts) */
-  --ficha-bg: #f7f4eb;
-  --ficha-on-light-ink: #1a2847;
-  --ficha-on-light-title: #1a2847;
-  --ficha-on-light-tag: rgba(26, 40, 71, .72);
-  --ficha-on-light-muted: rgba(26, 40, 71, .62);
-  --ficha-on-band-ink: #1a2847;
-  --ficha-on-band-title: #1a2847;
-  --ficha-on-band-muted: rgba(26, 40, 71, .62);
-  --ficha-ink: var(--ficha-on-light-ink, #1a2847);
-  --ficha-navy: var(--ficha-on-light-ink, #1a2847);
-  --ficha-dim: var(--ficha-on-light-muted, rgba(26, 40, 71, .62));
-  --ficha-muted: var(--ficha-on-light-tag, rgba(26, 40, 71, .48));
-  --ficha-line: rgba(26, 40, 71, .12);
-  --ficha-inspiration: rgba(37, 99, 235, .35);
-  --ficha-accent: #ea580c;
-  --ficha-title: #1a2847;
-  --ficha-tag: rgba(26, 40, 71, .72);
-  --ficha-title-font: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --ficha-body-font: "Helvetica Neue", Arial, sans-serif;
-  --ficha-studio-paper: #fffdf6;
-  --ficha-studio-paper-alt: #f7f4eb;
-  --ficha-card: var(--ficha-studio-paper);
+  --ficha-ink: var(--ficha-on-light-ink);
+  --ficha-navy: var(--ficha-on-light-ink);
+  --ficha-dim: var(--ficha-on-light-muted);
+  --ficha-muted: var(--ficha-on-light-tag);
+  --ficha-title: var(--ficha-on-light-title);
+  --ficha-tag: var(--ficha-on-light-tag);
   --ficha-max: 1320px;
   --ficha-gutter: clamp(1.25rem, 2.5vw, 2.75rem);
   /* Mobile / <980: shell centrado clásico */
@@ -37,7 +101,7 @@
   --ficha-media-max-h: min(85vh, 52rem);
   background: transparent;
   color: var(--ficha-ink);
-  font-family: var(--ficha-body-font);
+  font-family: var(--ficha-section-font);
   font-size: 15px;
   line-height: 1.55;
 }
@@ -78,6 +142,8 @@
   font-weight: 900;
   letter-spacing: .12em;
   text-transform: uppercase;
+  background: color-mix(in srgb, var(--ficha-c-apoyo) 82%, var(--ficha-c-base));
+  color: var(--ficha-c-tinta);
 }
 
 .ficha h1 {
@@ -94,7 +160,7 @@
   margin: 0 0 1.15rem;
   max-width: 34rem;
   color: var(--ficha-on-light-tag, var(--ficha-tag));
-  font-family: var(--ficha-body-font);
+  font-family: var(--ficha-tagline-font);
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   font-style: italic;
   line-height: 1.35;
@@ -108,7 +174,8 @@
   padding: 0;
   list-style: none;
   font-size: .86rem;
-  font-weight: 600;
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
 }
 
 .ficha-facts li {
@@ -118,10 +185,11 @@
   padding: .42rem .95rem;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: 999px;
-  background-color: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-studio-paper)));
+  background-color: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-c-base)));
   color: var(--ficha-award-title, var(--ficha-on-light-ink, var(--ficha-navy)));
-  font-family: var(--ficha-body-font);
-  font-style: italic;
+  font-family: var(--ficha-section-font);
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
   line-height: 1.2;
   box-shadow: 0 2px 0 color-mix(in srgb, var(--ficha-award-bar, var(--ficha-accent)) 18%, transparent);
 }
@@ -153,7 +221,7 @@
   padding: .6rem 1.25rem;
   border-radius: .45rem;
   background: var(--ficha-accent);
-  color: var(--ficha-on-accent, var(--ficha-studio-paper));
+  color: var(--ficha-on-accent, var(--ficha-c-base));
   font-size: .9rem;
   font-weight: 800;
   text-decoration: none;
@@ -285,7 +353,7 @@
 /* —— Secciones —— */
 .ficha-section {
   padding: clamp(1.15rem, 2.5vw, 1.75rem) 0;
-  background: var(--ficha-page-bg, #fafafa);
+  background: var(--ficha-page-bg, var(--ficha-c-base));
 }
 
 .ficha-section+.ficha-section {
@@ -374,9 +442,11 @@
   padding: 1.05rem 1.15rem;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: .5rem;
-  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-studio-paper)));
+  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-c-base)));
   color: var(--ficha-award-title, var(--ficha-on-light-ink));
-  font-family: var(--ficha-body-font);
+  font-family: var(--ficha-section-font);
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
   text-decoration: none;
   box-shadow: 0 2px 0 color-mix(in srgb, var(--ficha-award-bar, var(--ficha-accent)) 18%, transparent);
   transition: box-shadow .18s ease, border-color .18s ease;
@@ -406,20 +476,20 @@
   flex: 0 0 auto;
   object-fit: contain;
   padding: .35rem;
-  background: var(--ficha-studio-paper);
-  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-studio-paper));
+  background: var(--ficha-c-base);
+  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-c-base));
   border-radius: .35rem;
   box-shadow: 0 1px 3px rgba(26, 40, 71, .06);
 }
 
 .ficha-award-card strong {
   display: block;
-  font-family: var(--ficha-body-font);
-  font-size: 1.2rem;
+  font-family: var(--ficha-section-font);
+  font-size: 1.05rem;
   line-height: 1.35;
-  font-style: normal;
-  font-weight: 800;
-  letter-spacing: -.015em;
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
+  letter-spacing: 0;
   color: var(--ficha-award-title, var(--ficha-on-light-title));
 }
 
@@ -427,11 +497,11 @@
   display: inline-block;
   margin-top: .5rem;
   color: var(--ficha-award-link, var(--ficha-link-on-light));
-  font-family: var(--ficha-body-font);
+  font-family: var(--ficha-section-font);
   font-size: .8rem;
-  font-style: normal;
-  font-weight: 800;
-  letter-spacing: .03em;
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
+  letter-spacing: .02em;
   text-transform: uppercase;
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -513,7 +583,7 @@
   overflow: hidden;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: .5rem;
-  background: var(--ficha-award-bg, var(--ficha-page-bg, #fafafa));
+  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-c-base)));
   box-shadow: 0 2px 0 color-mix(in srgb, var(--ficha-award-bar, var(--ficha-accent)) 12%, transparent);
 }
 
@@ -569,9 +639,11 @@ a.ficha-comp-tile {
   padding: .75rem .95rem .75rem .7rem;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: .5rem;
-  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-studio-paper)));
+  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-c-base)));
   color: var(--ficha-award-title, var(--ficha-on-light-ink));
-  font-family: var(--ficha-body-font);
+  font-family: var(--ficha-section-font);
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
   text-align: left;
   cursor: pointer;
   box-shadow: 0 2px 0 color-mix(in srgb, var(--ficha-award-bar, var(--ficha-accent)) 18%, transparent);
@@ -615,8 +687,8 @@ a.ficha-comp-tile {
   height: 4.15rem;
   flex: 0 0 auto;
   border-radius: .35rem;
-  background: var(--ficha-studio-paper);
-  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-studio-paper));
+  background: var(--ficha-c-base);
+  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-c-base));
   box-shadow: 0 1px 3px rgba(26, 40, 71, .06);
   color: var(--ficha-award-link, var(--ficha-accent));
   font-size: 1.15rem;
@@ -635,20 +707,23 @@ a.ficha-comp-tile {
 }
 
 .ficha-comp-tile-qty {
+  font-family: var(--ficha-section-font);
   font-size: clamp(1.55rem, 3.5vw, 2rem);
-  font-weight: 900;
-  letter-spacing: -.04em;
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
+  letter-spacing: -.01em;
   line-height: 1;
   white-space: nowrap;
   color: var(--ficha-award-title, var(--ficha-on-light-title));
 }
 
 .ficha-comp-tile-name {
+  font-family: var(--ficha-section-font);
   font-size: clamp(1.05rem, 2.35vw, 1.5rem);
-  font-weight: 700;
-  letter-spacing: -.015em;
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
+  letter-spacing: 0;
   line-height: 1.2;
-  font-style: normal;
   text-transform: none;
   color: var(--ficha-award-link, var(--ficha-link-on-light));
 }
@@ -674,7 +749,7 @@ a.ficha-comp-tile {
   justify-content: center;
   margin: 0;
   border: 1px solid var(--ficha-line);
-  background: var(--ficha-page-bg, #fafafa);
+  background: var(--ficha-page-bg, var(--ficha-c-base));
   line-height: 0;
 }
 
@@ -698,9 +773,8 @@ a.ficha-comp-tile {
   padding: 0;
   border: 1px solid var(--ficha-line);
   border-radius: 50%;
-  background: rgba(255, 255, 255, .95);
-  /* Siempre oscuro: el botón es claro aunque --ficha-ink sea crema (ej. Letrados). */
-  color: #1a2847;
+  background: color-mix(in srgb, var(--ficha-c-base) 92%, transparent);
+  color: var(--ficha-c-tinta);
   cursor: pointer;
   transform: translateY(-50%);
   box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
@@ -741,7 +815,7 @@ a.ficha-comp-tile {
   padding: .2rem;
   border: 2px solid transparent;
   border-radius: .15rem;
-  background: var(--ficha-page-bg, #fafafa);
+  background: var(--ficha-page-bg, var(--ficha-c-base));
   cursor: pointer;
   overflow: hidden;
 }
@@ -823,8 +897,8 @@ a.ficha-comp-tile {
 /* Chrome del sitio cuando la página inyecta ficha-theme.ts en <body> */
 body.ficha-page {
   /* Tinte suave del juego; franja/header un tono más, sin blanco puro vs noche. */
-  background: var(--ficha-page-bg, #fafafa);
-  color: var(--ficha-on-light-ink, var(--ficha-ink, #1a2847));
+  background: var(--ficha-page-bg, var(--ficha-c-base));
+  color: var(--ficha-on-light-ink, var(--ficha-ink, var(--ficha-c-tinta)));
 }
 
 body.ficha-page article.ficha,
@@ -846,7 +920,7 @@ body.ficha-page .site-footer .shell {
 }
 
 body.ficha-page .brand b {
-  color: var(--ficha-header-text, var(--ficha-title, #1a2847));
+  color: var(--ficha-header-text, var(--ficha-title, var(--ficha-c-tinta)));
 }
 
 body.ficha-page .brand small {
@@ -869,11 +943,11 @@ body.ficha-page .nav-links .nav-instagram {
 body.ficha-page .nav-links .nav-instagram:hover {
   background: var(--ficha-header-text, var(--ficha-title));
   border-color: var(--ficha-header-text, var(--ficha-title));
-  color: var(--ficha-on-band-ink, var(--ficha-studio-paper-alt));
+  color: var(--ficha-on-band-ink, var(--ficha-c-base));
 }
 
 body.ficha-page .site-footer {
-  background-color: var(--ficha-footer-bg, var(--ficha-header-bg, #1a2847));
+  background-color: var(--ficha-footer-bg, var(--ficha-header-bg, var(--ficha-c-tinta)));
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-top: 1px solid var(--ficha-line, rgba(26, 40, 71, .12));
@@ -882,7 +956,7 @@ body.ficha-page .site-footer {
 
 body.ficha-page .site-footer b,
 body.ficha-page .site-footer a {
-  color: var(--ficha-footer-text, var(--ficha-header-text, var(--ficha-studio-paper)));
+  color: var(--ficha-footer-text, var(--ficha-header-text, var(--ficha-c-base)));
 }
 
 body.ficha-page .site-footer a:hover {

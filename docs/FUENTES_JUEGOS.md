@@ -49,5 +49,6 @@ No copiamos pareos de [Fontpair](https://fontpair.co/all) uno a uno: casi nunca 
 ## CMS y ficha
 
 - Campos opcionales en `src/content/games/<keyword>.md`: `titleFont`, `taglineFont`, `bodyFont`.
-- Héroe: título + tagline; secciones: `--ficha-body-font` = `bodyFont` ?? `taglineFont`.
+- Héroe: `--ficha-title-font` + `--ficha-tagline-font` (por juego).
+- Premios, componentes, facts y cuerpo de sección: **`--ficha-section-font`** = Nunito en todos salvo Amateurasu (Zen Maru Gothic).
 - Fuente nueva → sumar a `CAJA_FONTS_URL` en `caja-fonts.ts` y revisar `/juegos/<keyword>/`.

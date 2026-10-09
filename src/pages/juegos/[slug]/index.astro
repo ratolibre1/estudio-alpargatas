@@ -12,7 +12,12 @@ import path from 'node:path';
 import { getLocale } from '../../../i18n/locale';
 import { localizeGame, gameHref } from '../../../lib/games';
 import { buildLegacyFicha } from '../../../lib/ficha-overlays';
-import { fichaThemeVars } from '../../../lib/ficha-theme';
+import {
+  fichaBandMode,
+  fichaOnPrimary,
+  fichaThemeColor,
+  fichaThemeVars,
+} from '../../../lib/ficha-theme';
 import { CAJA_FONTS_URL } from '../../../lib/caja-fonts';
 export async function getStaticPaths() {
   const games = await getCollection('games');
@@ -51,7 +56,9 @@ const theme = fichaThemeVars(ficha);
   description={ficha.tagline}
   bodyClass="ficha-page"
   theme={theme}
-  themeColor={ficha.bg}
+  themeColor={fichaThemeColor(ficha)}
+  fichaBand={fichaBandMode(ficha)}
+  fichaOnPrimary={fichaOnPrimary(ficha)}
   fontUrl={CAJA_FONTS_URL}
 >
   <GameFicha ficha={ficha} locale={locale} />

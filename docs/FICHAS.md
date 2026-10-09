@@ -22,18 +22,21 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 
 **Reservado en rutas:** `old/`. No crear `src/pages/juegos/<keyword>/` salvo que quieras anular el catch-all a propósito.
 
-### Skin (tema por juego, no “modo oscuro”)
+### Skin (un sistema: 4 colores → light/dark)
 
 - `publicado` vs `proto` cambia **contenido** (comprar vs probar por IG, bloque “en qué estamos”), **no** una paleta alternativa.
-- Colores y fuentes vienen del CMS (`bg`, `titleColor`, `taglineColor`, `palette`, …). **`ficha-theme.ts` calcula texto legible** por superficie: cuerpo en papel de estudio (`--ficha-on-light-*`, sin `#fff`/`#000` puros), franja de inspiración (`--ficha-on-band-*`), header/footer (`--ficha-header-*`). `titleColor` sigue mandando en chrome del sitio cuando contrasta con `bg`.
-- Cuatro colores por juego: **familia del principal + apoyo contrapunto** (base / primary / apoyo / tinta) → [PALETAS_FICHA.md](./PALETAS_FICHA.md). Cómo pedirlas bien: [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md).
+- **Color en ficha:** solo los cuatro `palette` → `--ficha-c-{base,primary,apoyo,tinta}` en `<body>`. Todo lo demás es `color-mix` en `ficha.css` según **`data-band="light|dark"`** (automático vía `fichaBandMode()`). Mismas fórmulas para todos los juegos; ver tablas en [PALETAS_FICHA.md](./PALETAS_FICHA.md).
+- `bg` / `titleColor` / `taglineColor` del CMS **no** alimentan la ficha (portafolio / legacy).
+- Cuatro colores: **familia + apoyo contrapunto** — cómo pedirlos: [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md).
 - Página:
 
 ```astro
 <BaseLayout
   bodyClass="ficha-page"
   theme={fichaThemeVars(ficha)}
-  themeColor={ficha.bg}
+  themeColor={fichaThemeColor(ficha)}
+  fichaBand={fichaBandMode(ficha)}
+  fichaOnPrimary={fichaOnPrimary(ficha)}
   fontUrl={CAJA_FONTS_URL}
 >
   <GameFicha ficha={ficha} locale={locale} />

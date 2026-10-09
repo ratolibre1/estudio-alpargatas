@@ -15,6 +15,9 @@ interface Props {
   fontUrl?: string;
   /** Color para <meta name="theme-color"> */
   themeColor?: string;
+  /** Modo banda ficha (solo 4 colores de paleta en CSS). */
+  fichaBand?: 'light' | 'dark';
+  fichaOnPrimary?: 'base' | 'tinta';
 }
 
 const {
@@ -25,6 +28,8 @@ const {
   theme,
   fontUrl,
   themeColor = '#f4f0df',
+  fichaBand,
+  fichaOnPrimary,
 } = Astro.props;
 
 const cssVars = theme
@@ -51,7 +56,12 @@ const locale = getLocale(Astro);
       </>
     )}
   </head>
-  <body class={bodyClass} style={cssVars}>
+  <body
+    class={bodyClass}
+    style={cssVars}
+    data-band={fichaBand}
+    data-on-primary={fichaOnPrimary}
+  >
     <Header current={current} />
     <slot />
     <Footer />
