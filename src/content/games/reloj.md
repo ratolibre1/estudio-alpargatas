@@ -25,7 +25,7 @@ palette:
   - '#f5eedc'
   - '#8b3a10'
   - '#c4762a'
-  - '#1a1a1a'
+  - '#3d2914'
 titleFont: 'Fraunces, serif'
 taglineFont: 'Fraunces, serif'
 bodyFont: 'Nunito, sans-serif'

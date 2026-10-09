@@ -25,7 +25,8 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 ### Skin (tema por juego, no “modo oscuro”)
 
 - `publicado` vs `proto` cambia **contenido** (comprar vs probar por IG, bloque “en qué estamos”), **no** una paleta alternativa.
-- Colores y fuentes vienen del CMS (`bg`, `titleColor`, `taglineColor`, `palette`, …). **`ficha-theme.ts` calcula texto legible** por superficie: página blanca (`--ficha-on-light-*`), franja de inspiración (`--ficha-on-band-*`), header/footer (`--ficha-header-*`). `titleColor` sigue mandando en chrome del sitio cuando contrasta con `bg`.
+- Colores y fuentes vienen del CMS (`bg`, `titleColor`, `taglineColor`, `palette`, …). **`ficha-theme.ts` calcula texto legible** por superficie: cuerpo en papel de estudio (`--ficha-on-light-*`, sin `#fff`/`#000` puros), franja de inspiración (`--ficha-on-band-*`), header/footer (`--ficha-header-*`). `titleColor` sigue mandando en chrome del sitio cuando contrasta con `bg`.
+- Cuatro colores por juego: **familia del principal + apoyo contrapunto** (base / primary / apoyo / tinta) → [PALETAS_FICHA.md](./PALETAS_FICHA.md). Cómo pedirlas bien: [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md).
 - Página:
 
 ```astro
@@ -71,6 +72,8 @@ Viven en `src/styles/global.css` y se repiten en `ficha.css` donde aplique.
 ## Receta para un juego nuevo
 
 **Plantilla detallada (CMS + i18n + overlay + componentes):** [FICHA_ESTRUCTURA_EJEMPLO.md](./FICHA_ESTRUCTURA_EJEMPLO.md).
+
+**Montajes de mesa ya acordados (Canes, Mantas, Nínive):** [MONTAJES.md](./MONTAJES.md).
 
 Keyword = una palabra, igual al archivo CMS. Ejemplo: `almagesto` → `/juegos/almagesto` y `/en/juegos/almagesto`.
 

@@ -49,7 +49,7 @@ export const ficha = {
     devNext: 'Next playtests',
     awards: 'Awards and recognition',
     awardLink: 'See award',
-    howto: 'How it plays',
+    howto: 'How to play',
     componentsPub: 'In the box',
     componentsProto: 'Prototype components',
     galleryPub: 'The game in photos',

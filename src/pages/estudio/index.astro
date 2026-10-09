@@ -51,14 +51,23 @@ const t = copy[locale];
     .studio-mark {
       display: grid;
       place-items: center;
-      min-height: 20rem;
-      padding: clamp(2rem, 5vw, 4rem);
+      justify-self: center;
+      width: min(100%, 26rem);
+      aspect-ratio: 1;
+      padding: 0;
       border: 1.5px solid var(--ink);
-      background: var(--white);
+      border-radius: 50%;
+      background: #fff;
       box-shadow: 12px 12px 0 var(--blue);
+      overflow: hidden;
       transform: rotate(2deg);
     }
-    .studio-mark img { width: min(18rem, 100%); }
+    .studio-mark img {
+      width: 86%;
+      height: 86%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
     .studio-profiles {
       display: grid;
@@ -163,13 +172,12 @@ const t = copy[locale];
       .studio-hero-grid,
       .studio-profile,
       .studio-cats { grid-template-columns: minmax(0, 1fr); }
-      .studio-mark { min-height: 14rem; }
       .studio-profile:nth-child(even) .studio-photo { order: 0; justify-self: start; }
       .studio-photo { width: min(100%, 27rem); }
       .studio-cats-logo img { width: min(18rem, 100%); }
     }
     @media (max-width: 520px) {
-      .studio-mark { padding: 1.5rem; box-shadow: 7px 7px 0 var(--blue); }
+      .studio-mark { box-shadow: 7px 7px 0 var(--blue); }
       .studio-photo { box-shadow: 7px 7px 0 var(--blue); }
       .studio-profile:nth-child(even) .studio-photo { box-shadow: 7px 7px 0 var(--red); }
       .studio-cats { padding: 1.4rem; box-shadow: 6px 6px 0 var(--ink); }
@@ -197,7 +205,7 @@ const t = copy[locale];
           </div>
         </div>
         <div class="studio-mark">
-          <img src="/assets/estudio-alpargatas-logo-hd.webp" alt={t.logoAlt} />
+          <img src="/assets/estudio-alpargatas-logo-hd.webp?v=2" alt={t.logoAlt} />
         </div>
       </div>
     </header>

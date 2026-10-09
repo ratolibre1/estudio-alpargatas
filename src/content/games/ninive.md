@@ -51,7 +51,7 @@ palette:
   - '#f6efe4'
   - '#5aa3c8'
   - '#e07030'
-  - '#6a9a58'
+  - '#1e4a58'
 titleFont: '"Cormorant Garamond", serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

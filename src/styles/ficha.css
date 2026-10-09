@@ -23,7 +23,9 @@
   --ficha-tag: rgba(26, 40, 71, .72);
   --ficha-title-font: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --ficha-body-font: "Helvetica Neue", Arial, sans-serif;
-  --ficha-card: #fff;
+  --ficha-studio-paper: #fffdf6;
+  --ficha-studio-paper-alt: #f7f4eb;
+  --ficha-card: var(--ficha-studio-paper);
   --ficha-max: 1320px;
   --ficha-gutter: clamp(1.25rem, 2.5vw, 2.75rem);
   /* Mobile / <980: shell centrado clásico */
@@ -55,6 +57,11 @@
 
 .ficha-hero-copy {
   padding: clamp(2rem, 4.5vw, 3.5rem) 0 1.5rem;
+  background: linear-gradient(
+    105deg,
+    color-mix(in srgb, var(--ficha-bg) 28%, var(--ficha-page-bg)) 0%,
+    var(--ficha-page-bg) 72%
+  );
 }
 
 .ficha-hero-copy-inner {
@@ -111,7 +118,7 @@
   padding: .42rem .95rem;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: 999px;
-  background-color: var(--ficha-award-bg, var(--ficha-page-bg, #fff));
+  background-color: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-studio-paper)));
   color: var(--ficha-award-title, var(--ficha-on-light-ink, var(--ficha-navy)));
   font-family: var(--ficha-body-font);
   font-style: italic;
@@ -146,7 +153,7 @@
   padding: .6rem 1.25rem;
   border-radius: .45rem;
   background: var(--ficha-accent);
-  color: #fff;
+  color: var(--ficha-on-accent, var(--ficha-studio-paper));
   font-size: .9rem;
   font-weight: 800;
   text-decoration: none;
@@ -367,7 +374,7 @@
   padding: 1.05rem 1.15rem;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: .5rem;
-  background: var(--ficha-award-bg, var(--ficha-page-bg, #fff));
+  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-studio-paper)));
   color: var(--ficha-award-title, var(--ficha-on-light-ink));
   font-family: var(--ficha-body-font);
   text-decoration: none;
@@ -399,8 +406,8 @@
   flex: 0 0 auto;
   object-fit: contain;
   padding: .35rem;
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, #fff);
+  background: var(--ficha-studio-paper);
+  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-studio-paper));
   border-radius: .35rem;
   box-shadow: 0 1px 3px rgba(26, 40, 71, .06);
 }
@@ -562,7 +569,7 @@ a.ficha-comp-tile {
   padding: .75rem .95rem .75rem .7rem;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: .5rem;
-  background: var(--ficha-award-bg, var(--ficha-page-bg, #fff));
+  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-studio-paper)));
   color: var(--ficha-award-title, var(--ficha-on-light-ink));
   font-family: var(--ficha-body-font);
   text-align: left;
@@ -608,8 +615,8 @@ a.ficha-comp-tile {
   height: 4.15rem;
   flex: 0 0 auto;
   border-radius: .35rem;
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, #fff);
+  background: var(--ficha-studio-paper);
+  border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-studio-paper));
   box-shadow: 0 1px 3px rgba(26, 40, 71, .06);
   color: var(--ficha-award-link, var(--ficha-accent));
   font-size: 1.15rem;
@@ -862,7 +869,7 @@ body.ficha-page .nav-links .nav-instagram {
 body.ficha-page .nav-links .nav-instagram:hover {
   background: var(--ficha-header-text, var(--ficha-title));
   border-color: var(--ficha-header-text, var(--ficha-title));
-  color: var(--ficha-bg, #fff);
+  color: var(--ficha-on-band-ink, var(--ficha-studio-paper-alt));
 }
 
 body.ficha-page .site-footer {
@@ -875,7 +882,7 @@ body.ficha-page .site-footer {
 
 body.ficha-page .site-footer b,
 body.ficha-page .site-footer a {
-  color: var(--ficha-footer-text, var(--ficha-header-text, #fff));
+  color: var(--ficha-footer-text, var(--ficha-header-text, var(--ficha-studio-paper)));
 }
 
 body.ficha-page .site-footer a:hover {

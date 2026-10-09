@@ -18,7 +18,7 @@ imageAltEn: Impossibly colorful nudibranchs illustrated in scientific field guid
 bg: '#f8f5ef'
 titleColor: '#1e3a5f'
 taglineColor: '#5b6e8a'
-palette: ['#f8f5ef', '#1e3a5f', '#e84393', '#39d0c0']
+palette: ['#f8f5ef', '#1e3a5f', '#e84393', '#121f33']
 titleFont: 'Lora, serif'
 taglineFont: 'Lora, serif'
 bodyFont: 'Nunito, sans-serif'

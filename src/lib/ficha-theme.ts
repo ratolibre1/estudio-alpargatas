@@ -1,17 +1,17 @@
 import type { FichaContent } from './ficha';
+import { STUDIO_NEUTRAL, paletteRoles, studioSanitizeHex } from './studio-neutral';
 
 /** CSS custom properties (sin `--`) para body/article de una ficha. */
 export type FichaThemeVars = Record<string, string>;
 
-const PAGE_NEUTRAL = '#fafafa';
 const FALLBACK = {
-  ink: '#1a2847',
+  ink: STUDIO_NEUTRAL.ink,
   muted: 'rgba(26, 40, 71, .62)',
   line: 'rgba(26, 40, 71, .12)',
-  card: '#ffffff',
+  card: STUDIO_NEUTRAL.paper,
   ui: '"Helvetica Neue", Arial, sans-serif',
   accent: '#ea580c',
-  light: '#f7f3ea',
+  light: STUDIO_NEUTRAL.onDark,
 };
 
 type Rgb = { r: number; g: number; b: number };
@@ -102,12 +102,12 @@ function mix(a: string, b: string, aPercent: number): string {
   return `color-mix(in srgb, ${a} ${aPercent}%, ${b})`;
 }
 
-/** Fondo del cuerpo y secciones (contraste claro con la cinta --ficha-bg). */
-function pageBackground(g: FichaContent): string {
+/** Fondo del cuerpo: papel teñido por la banda (evita ficha “todo crema”). */
+function pageBackground(g: FichaContent, base: string): string {
   if (isLightBackground(g.bg)) {
-    return '#ffffff';
+    return mix(base, STUDIO_NEUTRAL.paper, '38%');
   }
-  return PAGE_NEUTRAL;
+  return mix(g.bg, STUDIO_NEUTRAL.paperAlt, '18%');
 }
 
 function mutedFrom(ink: string, bg: string, preferred?: string): string {
@@ -117,10 +117,11 @@ function mutedFrom(ink: string, bg: string, preferred?: string): string {
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.55)`;
 }
 
-/** Evita tinta casi negra sobre fondo claro (contraste > ~11). */
-function easeForeground(fg: string, bg: string): string {
+/** Suaviza solo tintas neutras hiper-oscuras; no lavar primary / titleColor de marca. */
+function easeForeground(fg: string, bg: string, keepVivid: Set<string>): string {
+  if (keepVivid.has(fg)) return fg;
   if (contrastRatio(bg, fg) > 10.5) {
-    return mix(fg, '#64748b', '28%');
+    return mix(fg, '#64748b', '18%');
   }
   return fg;
 }
@@ -136,14 +137,24 @@ function pickLinkOnAward(awardBg: string, candidates: string[]): string {
 }
 
 /** Chips de paleta aptos como fondo de premio (incluye azules medios tipo Letrados). */
-function awardFill(pageBg: string, bandBg: string, palette: string[]): string {
-  for (const c of palette) {
+function awardFill(
+  pageBg: string,
+  bandBg: string,
+  palette: string[],
+  roles: ReturnType<typeof paletteRoles>
+): string {
+  const tinted = mix(roles.base, roles.primary, '34%');
+  if (isLightBackground(pageBg) && contrastRatio(pageBg, roles.tinta) >= 4) {
+    const rgb = parseColor(tinted);
+    if (rgb && relLuminance(rgb) >= 0.42 && relLuminance(rgb) <= 0.94) return tinted;
+  }
+  for (const c of unique([roles.apoyo, roles.primary, ...palette.slice(1), ...palette])) {
     const rgb = parseColor(c);
     if (!rgb) continue;
     const lum = relLuminance(rgb);
     if (lum >= 0.38 && lum <= 0.93) return c;
   }
-  if (isLightBackground(bandBg)) return bandBg;
+  if (isLightBackground(bandBg)) return mix(bandBg, roles.primary, '22%');
   return mix(bandBg, pageBg, '86%');
 }
 
@@ -152,7 +163,8 @@ function awardTheme(
   g: FichaContent,
   pageBg: string,
   palette: string[],
-  accent: string
+  accent: string,
+  roles: ReturnType<typeof paletteRoles>
 ): {
   awardBg: string;
   onAwardTitle: string;
@@ -160,14 +172,14 @@ function awardTheme(
   awardBar: string;
   awardBorder: string;
 } {
-  const awardBg = g.surfaceColor ?? awardFill(pageBg, g.bg, palette);
+  const awardBg = g.surfaceColor ?? awardFill(pageBg, g.bg, palette, roles);
 
   /* titleColor suele ser crema para header oscuro — no reutilizar en cajitas claras */
   const titleCandidates = unique([
-    palette[2],
+    roles.tinta,
+    roles.primary,
     g.bodyColor,
     FALLBACK.ink,
-    palette[3],
     g.titleColor,
   ]);
   let onAwardTitle = pickOnBackground(awardBg, titleCandidates, 4.5);
@@ -176,11 +188,10 @@ function awardTheme(
   }
 
   const linkCandidates = unique([
-    palette[3],
-    palette[1],
+    roles.apoyo,
+    roles.primary,
     g.ctaColor,
     accent,
-    palette[2],
     FALLBACK.accent,
   ]);
   let onAwardLink = pickLinkOnAward(awardBg, linkCandidates);
@@ -191,7 +202,7 @@ function awardTheme(
     );
   }
 
-  const awardBar = palette[3] ?? palette[2] ?? accent;
+  const awardBar = roles.primary ?? roles.apoyo ?? accent;
   const awardBorder = mix(awardBar, awardBg, '58%');
 
   return { awardBg, onAwardTitle, onAwardLink, awardBar, awardBorder };
@@ -202,24 +213,47 @@ function awardTheme(
  * franja --ficha-bg, header/footer) para mantener contraste.
  */
 export function fichaThemeVars(g: FichaContent): FichaThemeVars {
-  const palette = g.palette ?? [];
-  const pageBg = pageBackground(g);
-  const bandBg = g.bg;
+  const rawPalette = g.palette ?? [];
+  const palette = rawPalette.map((c) => studioSanitizeHex(c, STUDIO_NEUTRAL.paperAlt));
+  const roles = paletteRoles(palette);
+  const bandBg = studioSanitizeHex(g.bg, STUDIO_NEUTRAL.paperAlt);
+  const pageBg = pageBackground(g, roles.base);
   const bandLight = isLightBackground(bandBg);
 
-  const darkPool = unique([g.bodyColor, palette[0], g.titleColor, FALLBACK.ink]);
-  const lightPool = unique([g.titleColor, palette[1], FALLBACK.light, '#ffffff']);
+  const darkPool = unique([
+    roles.tinta,
+    g.bodyColor,
+    g.titleColor,
+    roles.primary,
+    FALLBACK.ink,
+  ]);
+  const lightPool = unique([
+    g.titleColor,
+    roles.apoyo,
+    roles.primary,
+    FALLBACK.light,
+    STUDIO_NEUTRAL.paper,
+  ]);
 
-  let onLightTitle = pickOnBackground(pageBg, darkPool, 3.5);
-  onLightTitle = easeForeground(onLightTitle, pageBg);
-  let onLightInk = pickOnBackground(pageBg, [...darkPool, onLightTitle], 4.25);
-  onLightInk = easeForeground(onLightInk, pageBg);
+  const vividInk = new Set(
+    unique([g.titleColor, roles.primary, roles.apoyo, roles.tinta].filter(Boolean) as string[])
+  );
+  const lightTitlePool = unique([
+    g.titleColor,
+    roles.primary,
+    roles.tinta,
+    ...darkPool,
+  ]);
+  let onLightTitle = pickOnBackground(pageBg, lightTitlePool, 3.5);
+  onLightTitle = easeForeground(onLightTitle, pageBg, vividInk);
+  let onLightInk = pickOnBackground(pageBg, [...lightTitlePool, onLightTitle], 4.25);
+  onLightInk = easeForeground(onLightInk, pageBg, vividInk);
   const onLightTag = mutedFrom(onLightInk, pageBg, g.taglineColor);
   const onLightMuted = mutedFrom(onLightInk, pageBg);
 
   const bandTitlePool = bandLight
-    ? unique([palette[0], g.titleColor, onLightTitle, FALLBACK.ink])
-    : unique([g.titleColor, ...lightPool]);
+    ? unique([roles.tinta, g.titleColor, onLightTitle, FALLBACK.ink])
+    : unique([g.titleColor, roles.apoyo, ...lightPool]);
   const onBandTitle = pickOnBackground(bandBg, bandTitlePool, 3.5);
   const onBandMuted = mutedFrom(onBandTitle, bandBg, g.taglineColor);
 
@@ -236,11 +270,13 @@ export function fichaThemeVars(g: FichaContent): FichaThemeVars {
   const footerText = g.footerText ?? headerText;
   const footerMuted = g.footerMuted ?? headerMuted;
 
-  const accent = g.ctaColor ?? palette[2] ?? palette[1] ?? FALLBACK.accent;
+  const accent =
+    g.ctaColor ?? roles.primary ?? roles.apoyo ?? FALLBACK.accent;
+  const onAccent = pickOnBackground(accent, lightPool, 4.5);
 
   const linkOnLight = pickOnBackground(
     pageBg,
-    unique([g.ctaColor, g.titleColor, palette[1], palette[2], accent, FALLBACK.accent]),
+    unique([g.ctaColor, roles.apoyo, roles.primary, g.titleColor, accent, FALLBACK.accent]),
     4.5
   );
 
@@ -250,10 +286,12 @@ export function fichaThemeVars(g: FichaContent): FichaThemeVars {
     onAwardLink,
     awardBar,
     awardBorder,
-  } = awardTheme(g, pageBg, palette, accent);
+  } = awardTheme(g, pageBg, palette, accent, roles);
 
   return {
-    'ficha-bg': g.bg,
+    'ficha-bg': bandBg,
+    'ficha-studio-paper': STUDIO_NEUTRAL.paper,
+    'ficha-studio-paper-alt': STUDIO_NEUTRAL.paperAlt,
     'ficha-page-bg': pageBg,
     'ficha-band-bg': bandBg,
     'ficha-on-light-ink': onLightInk,
@@ -274,6 +312,7 @@ export function fichaThemeVars(g: FichaContent): FichaThemeVars {
     'ficha-title-font': g.titleFont,
     'ficha-body-font': g.bodyFont ?? g.taglineFont ?? FALLBACK.ui,
     'ficha-accent': accent,
+    'ficha-on-accent': onAccent,
     'ficha-link-on-light': linkOnLight,
     'ficha-award-bg': awardBg,
     'ficha-award-border': awardBorder,

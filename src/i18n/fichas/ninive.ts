@@ -93,6 +93,9 @@ export const ninive = {
     galH2: 'Así se ve<br />una partida.',
     galP:
       'El resultado final no es solo un puntaje: es una pequeña construcción que registra cada decisión tomada. Aunque un número quede tapado, las flores y los chorros de la ilustración siguen delatando la carta.',
+    montajeAlt: 'Montaje de Nínive en la mesa: palacio escalonado, carta de segundo jugador y dos manos de reversos',
+    compPalacioAlt: 'Mazo de Nínive y las cartas 2-4, 5-5, 3-1 y 4-3',
+    compSegundoAlt: 'Carta de segundo jugador de Nínive',
     gal1Alt: 'Palacio de Nínive armado sobre mantel rojo',
     gal1Cap: 'Una partida, un palacio',
     gal2Alt: 'Mano con cuatro cartas de Nínive',
@@ -203,6 +206,9 @@ export const ninive = {
     galH2: 'This is what<br />a play looks like.',
     galP:
       'The final result is not just a score: it is a small construction that records every decision. Even if a number gets covered, the flowers and jets in the illustration still give the card away.',
+    montajeAlt: 'Nínive layout on the table: a stepped palace, the second-player card, and two hands of card backs',
+    compPalacioAlt: 'Nínive deck and cards 2-4, 5-5, 3-1, and 4-3',
+    compSegundoAlt: 'Nínive second-player card',
     gal1Alt: 'Nínive palace built on a red tablecloth',
     gal1Cap: 'One play, one palace',
     gal2Alt: 'Hand with four Nínive cards',

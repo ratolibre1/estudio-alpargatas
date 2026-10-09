@@ -18,7 +18,7 @@ imageAltEn: Colorful hermit crabs with shells made from tropical marine trash
 bg: '#0e4f5c'
 titleColor: '#fde68a'
 taglineColor: '#7dd3fc'
-palette: ['#0e4f5c', '#f97316', '#7dd3fc', '#fde68a']
+palette: ['#bff0ea', '#0e7490', '#f97316', '#064e3b']
 titleFont: '"Baloo 2", sans-serif'
 taglineFont: 'Nunito, sans-serif'
 bodyFont: 'Nunito, sans-serif'

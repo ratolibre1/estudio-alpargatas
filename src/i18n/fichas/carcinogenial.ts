@@ -74,6 +74,11 @@ export const carcinogenial = {
     footer: 'Carcinogenial · Estudio Alpargatas',
     componentsPhotoAlt: 'Prototipo Carcinogenial en mesa',
     mutationCardAlt: 'Carta de mutación Caparazón',
+    montajeAlt: 'Partida de Carcinogenial: mutaciones con fichas, mazo, descarte y pocillos de acción e inyección',
+    compCartasAlt: 'Mazo de mutación y las cartas Tenazas, Antenas, Caminata Lateral, Caparazón y Regeneración',
+    compAccionAlt: 'Fichas de acción de los cinco tipos',
+    compInyeccionAlt: 'Fichas de inyección',
+    compAyudaAlt: 'Tarjetas de ayuda de Carcinogenial',
   },
   en: {
     title: 'Carcinogenial — Estudio Alpargatas',
@@ -148,5 +153,10 @@ export const carcinogenial = {
     footer: 'Carcinogenial · Estudio Alpargatas',
     componentsPhotoAlt: 'Carcinogenial prototype on the table',
     mutationCardAlt: 'Shell mutation card',
+    montajeAlt: 'Carcinogenial game: mutations with tokens, the deck, the discard, and bowls of action and injection tokens',
+    compCartasAlt: 'Mutation deck and the Tenazas, Antenas, Caminata Lateral, Caparazón, and Regeneración cards',
+    compAccionAlt: 'Action tokens of all five types',
+    compInyeccionAlt: 'Injection tokens',
+    compAyudaAlt: 'Carcinogenial help cards',
   },
 } as const satisfies Record<Lang, Record<string, string>>;

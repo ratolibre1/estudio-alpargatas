@@ -24,7 +24,7 @@ palette:
   - '#f5f0e8'
   - '#8b1c1c'
   - '#2d5a27'
-  - '#1a1a1a'
+  - '#3d1515'
 titleFont: '"IM Fell English", serif'
 taglineFont: '"Josefin Sans", sans-serif'
 bodyFont: 'Nunito, sans-serif'

@@ -18,7 +18,7 @@ imageAltEn: Starry night sky with golden constellations traced over deep indigo 
 bg: '#0f172a'
 titleColor: '#f0d060'
 taglineColor: '#a5b4fc'
-palette: ['#0f172a', '#f0d060', '#a5b4fc', '#e2e8f0']
+palette: ['#c8cce8', '#f0d060', '#a5b4fc', '#0f172a']
 titleFont: 'Spectral, serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

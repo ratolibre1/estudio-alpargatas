@@ -15,10 +15,10 @@ home: none
 image: /assets/concepto-palomas.webp
 imageAlt: Pandilla de palomas urbanas en póster de acción con alto contraste en blanco, negro y rojo
 imageAltEn: Urban pigeon gang on a high-contrast action poster in black, white and red
-bg: '#1c1c1e'
-titleColor: '#f5f5f5'
+bg: '#222028'
+titleColor: '#f7f3ea'
 taglineColor: '#e53e3e'
-palette: ['#1c1c1e', '#7a7a7a', '#e53e3e', '#f5f5f5']
+palette: ['#9890a0', '#5c5668', '#e53e3e', '#222028']
 titleFont: '"Bebas Neue", sans-serif'
 taglineFont: 'Oswald, sans-serif'
 bodyFont: 'Nunito, sans-serif'
