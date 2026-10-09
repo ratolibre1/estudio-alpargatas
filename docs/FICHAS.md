@@ -22,17 +22,21 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 
 **Reservado en rutas:** `old/`. No crear `src/pages/juegos/<keyword>/` salvo que quieras anular el catch-all a propósito.
 
-### Skin (tema por juego, no “modo oscuro”)
+### Skin (cuatro colores + modo explícito)
 
 - `publicado` vs `proto` cambia **contenido** (comprar vs probar por IG, bloque “en qué estamos”), **no** una paleta alternativa.
-- Colores y fuentes vienen del CMS (`bg`, `titleColor`, `taglineColor`, `palette`, …). **`ficha-theme.ts` calcula texto legible** por superficie: página blanca (`--ficha-on-light-*`), franja de inspiración (`--ficha-on-band-*`), header/footer (`--ficha-header-*`). `titleColor` sigue mandando en chrome del sitio cuando contrasta con `bg`.
+- **Color en ficha:** solo los cuatro `palette` → `--ficha-c-{base,primary,apoyo,tinta}` en `<body>`. Los tokens derivados se calculan en `ficha-colors.ts` y se aplican en `ficha.css` según **`data-band="light|dark"`**, elegido explícitamente mediante `fichaMode`. El debug permite comparar los dos modos sin modificar los colores; ver [PALETAS_FICHA.md](./PALETAS_FICHA.md).
+- `bg` / `titleColor` / `taglineColor` del CMS **no** alimentan la ficha (portafolio / legacy).
+- Cuatro colores: **familia + apoyo contrapunto** — cómo pedirlos: [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md).
 - Página:
 
 ```astro
 <BaseLayout
   bodyClass="ficha-page"
   theme={fichaThemeVars(ficha)}
-  themeColor={ficha.bg}
+  themeColor={fichaThemeColor(ficha)}
+  fichaBand={fichaBandMode(ficha)}
+  fichaOnPrimary={fichaOnPrimary(ficha)}
   fontUrl={CAJA_FONTS_URL}
 >
   <GameFicha ficha={ficha} locale={locale} />
@@ -71,6 +75,8 @@ Viven en `src/styles/global.css` y se repiten en `ficha.css` donde aplique.
 ## Receta para un juego nuevo
 
 **Plantilla detallada (CMS + i18n + overlay + componentes):** [FICHA_ESTRUCTURA_EJEMPLO.md](./FICHA_ESTRUCTURA_EJEMPLO.md).
+
+**Montajes de mesa ya acordados (Canes, Mantas, Nínive):** [MONTAJES.md](./MONTAJES.md).
 
 Keyword = una palabra, igual al archivo CMS. Ejemplo: `almagesto` → `/juegos/almagesto` y `/en/juegos/almagesto`.
 

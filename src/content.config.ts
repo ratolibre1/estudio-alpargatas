@@ -81,6 +81,8 @@ const games = defineCollection({
     titleColor: z.string(),
     taglineColor: z.string(),
     palette: z.array(z.string()).length(4),
+    /** Elección editorial por juego, independiente de la paleta. */
+    fichaMode: z.enum(['light', 'dark']).default('light'),
     titleFont: z.string(),
     /** Default para que un md a medias no tumbe toda la colección en el watcher. */
     taglineFont: z.string().default('Georgia, serif'),

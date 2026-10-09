@@ -3,9 +3,7 @@ import GameGallery from './GameGallery.astro';
 import GameComponents from './GameComponents.astro';
 import { ficha as copy } from '../i18n/fichas/ficha';
 import { bggHref } from '../lib/games';
-import { stateBadgeStyle } from '../lib/state-badge';
 import { IG_DM_ESTUDIO, instagramDmHref } from '../lib/instagram';
-import { fichaThemeStyle } from '../lib/ficha-theme';
 import type { Lang } from '../i18n/locale';
 import type { FichaContent } from '../lib/ficha';
 import '../styles/ficha.css';
@@ -55,11 +53,11 @@ const hasExt = Boolean(g.bggId || (g.publisherUrl && g.publisherLabel));
 const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
 ---
 
-<article class="ficha" data-ficha-variant={g.variant} style={fichaThemeStyle(g)}>
+<article class="ficha" data-ficha-variant={g.variant}>
   <header class="ficha-hero">
       <div class="ficha-hero-copy">
         <div class="ficha-hero-copy-inner">
-        <p class="ficha-badge" style={stateBadgeStyle(g.state)}>{g.stateLabel}</p>
+        <p class="ficha-badge">{g.stateLabel}</p>
         <h1>{g.name}</h1>
         <p class="ficha-tagline">{g.tagline}</p>
         {(g.players || g.duration) && (

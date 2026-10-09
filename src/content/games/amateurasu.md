@@ -32,10 +32,11 @@ bg: '#f5e6c8'
 titleColor: '#8b2500'
 taglineColor: '#5c3d1e'
 palette:
-  - '#f5e6c8'
-  - '#8b2500'
-  - '#c4762a'
-  - '#5c3d1e'
+  - "#FBE6D5"
+  - "#B82F32"
+  - "#256B6B"
+  - "#462022"
+fichaMode: light
 titleFont: '"Shippori Mincho", serif'
 taglineFont: '"Zen Maru Gothic", sans-serif'
 bodyFont: '"Zen Maru Gothic", sans-serif'

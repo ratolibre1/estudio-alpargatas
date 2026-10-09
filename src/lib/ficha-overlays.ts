@@ -169,24 +169,24 @@ const overlays: Record<string, OverlayFn> = {
         { title: t.step2Title, body: t.step2Body },
         { title: t.step3Title, body: t.step3Body },
       ],
-      componentsPhoto: '/assets/concepto-carcinogenial.webp',
-      componentsPhotoAlt: t.componentsPhotoAlt,
+      componentsPhoto: '/assets/carcinogenial-mesa-montaje.webp?v=5',
+      componentsPhotoAlt: t.montajeAlt,
       components: [
         comp(locale, '80', 'Mutation cards', 'Cartas de Mutación', 'deck-cards', {
-          image: '/assets/carcinogenial-caparazon.webp',
-          imageAlt: t.mutationCardAlt,
+          image: '/assets/carcinogenial-comp-cartas.webp?v=3',
+          imageAlt: t.compCartasAlt,
         }),
         comp(locale, '75', 'Action tokens', 'Fichas de Acción', 'tokens-stack', {
-          image: '/assets/carcinogenial-tenazas.webp',
-          imageAlt: t.tenazasName,
+          image: '/assets/carcinogenial-comp-accion.webp',
+          imageAlt: t.compAccionAlt,
         }),
-        comp(locale, '40', 'Injection tokens', 'fichas de Inyección', 'tokens-stack', {
-          image: '/assets/carcinogenial-tenazas.webp',
-          imageAlt: t.tenazasName,
+        comp(locale, '40', 'Injection tokens', 'Fichas de Inyección', 'tokens-stack', {
+          image: '/assets/carcinogenial-comp-inyeccion.webp',
+          imageAlt: t.compInyeccionAlt,
         }),
         comp(locale, '4', 'Help cards', 'Tarjetas de Ayuda', 'hand-cards', {
-          image: '/assets/carcinogenial-caparazon.webp',
-          imageAlt: t.mutationCardAlt,
+          image: '/assets/carcinogenial-comp-ayuda.webp',
+          imageAlt: t.compAyudaAlt,
         }),
       ],
       credits: t.footer,
@@ -224,6 +224,12 @@ const overlays: Record<string, OverlayFn> = {
         { title: joinParts(t.h2a, stripHtml(t.h2em)), body: joinParts(t.p1, t.p2) },
         { title: joinParts(t.playH2a, stripHtml(t.playH2em)), body: t.playP1 },
         { title: joinParts(t.statusH2a, stripHtml(t.statusH2em), t.statusH2b), body: joinParts(t.statusP1, t.statusP2) },
+      ],
+      components: [
+        comp(locale, '97', 'Evolution cards', 'Cartas de Evolución', 'deck-cards'),
+        comp(locale, '4', 'Joker Cards', 'Cartas de Comodín', 'hand-cards'),
+        comp(locale, '4', 'Fall Cards', 'Cartas de Caída', 'hand-cards'),
+        comp(locale, '2', 'Super Joker Cards', 'Cartas de Super Comodín', 'hand-cards'),
       ],
       photos: [
         { src: '/assets/evoluciona-pista.webp', alt: t.heroAlt, caption: t.heroCap },
@@ -270,12 +276,12 @@ const overlays: Record<string, OverlayFn> = {
         { title: t.rule2Title, body: t.rule2Body },
         { title: t.rule3Title, body: t.rule3Body },
       ],
-      componentsPhoto: '/assets/letrados-portada.webp',
-      componentsPhotoAlt: t.heroAlt,
+      componentsPhoto: '/assets/letrados-mesa-montaje.webp?v=3',
+      componentsPhotoAlt: t.montajeAlt,
       components: [
         comp(locale, '26', 'Letter cards', 'Cartas de Letra', 'deck-cards', {
-          image: '/assets/letrados-carta-editorial.webp',
-          imageAlt: t.cardEdAlt,
+          image: '/assets/letrados-comp-letras.webp?v=4',
+          imageAlt: t.compLetrasAlt,
         }),
       ],
       photos: [
@@ -309,16 +315,16 @@ const overlays: Record<string, OverlayFn> = {
         { title: t.rule2Title, body: t.rule2Body, image: '/assets/ninive-colocar.webp', imageAlt: t.rulePhotoAlt },
         { title: t.rule3Title, body: t.rule3Body, image: '/assets/ninive-partida.webp', imageAlt: t.gal1Alt },
       ],
-      componentsPhoto: '/assets/ninive-partida.webp',
-      componentsPhotoAlt: t.gal1Alt,
+      componentsPhoto: '/assets/ninive-mesa-montaje.webp?v=4',
+      componentsPhotoAlt: t.montajeAlt,
       components: [
         comp(locale, '25', 'Palace Cards', 'Cartas de Palacio', 'deck-cards', {
-          image: '/assets/ninive-mano.webp',
-          imageAlt: t.gal2Alt,
+          image: '/assets/ninive-comp-palacio.webp?v=2',
+          imageAlt: t.compPalacioAlt,
         }),
-        comp(locale, '2', 'Color cards', 'Cartas de Color', 'hand-cards', {
-          image: '/assets/ninive-colocar.webp',
-          imageAlt: t.rulePhotoAlt,
+        comp(locale, '1', 'Second Player Card', 'Carta de Segundo Jugador', 'hand-cards', {
+          image: '/assets/ninive-comp-segundo.webp?v=2',
+          imageAlt: t.compSegundoAlt,
         }),
       ],
       resources: [
@@ -380,7 +386,7 @@ const overlays: Record<string, OverlayFn> = {
         { title: t.step2Title, body: t.step2Body },
         { title: t.step3Title, body: t.step3Body },
       ],
-      componentsPhoto: '/assets/mantas-mesa-montaje.webp?v=10',
+      componentsPhoto: '/assets/mantas-mesa-montaje.webp?v=11',
       componentsPhotoAlt: t.montajeAlt,
       components: [
         comp(locale, '24', 'Manta Ray Tiles', 'Losetas de Manta Raya', 'terrain-tiles', {

@@ -31,12 +31,13 @@ imageAltEn: Illustration of the Great Canine Festival
 coverInitials: FC
 bg: '#e8f0e4'
 titleColor: '#2d6a4f'
-taglineColor: '#555'
+taglineColor: 'rgba(45, 106, 79, .62)'
 palette:
-  - '#2d6a4f'
-  - '#e8f0e4'
-  - '#c2b97f'
-  - '#8db87e'
+  - "#EEF1DB"
+  - "#476B32"
+  - "#9D5735"
+  - "#253521"
+fichaMode: light
 titleFont: 'Fredoka, sans-serif'
 taglineFont: 'Nunito, sans-serif'
 bodyFont: 'Nunito, sans-serif'

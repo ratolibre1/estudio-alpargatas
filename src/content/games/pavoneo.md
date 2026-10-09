@@ -32,10 +32,11 @@ bg: '#0d2a3a'
 titleColor: '#d4af37'
 taglineColor: 'rgba(212,175,55,.7)'
 palette:
-  - '#0d2a3a'
-  - '#1a6b5c'
-  - '#d4af37'
-  - '#4a9b8c'
+  - "#EEF0D8"
+  - "#596C18"
+  - "#933E7B"
+  - "#293316"
+fichaMode: light
 titleFont: '"Playfair Display", serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

@@ -31,10 +31,11 @@ bg: "#2c1c3c"
 titleColor: "#d4af37"
 taglineColor: rgba(212,175,55,.65)
 palette:
-  - "#2c1c3c"
-  - "#8b4513"
-  - "#d4af37"
-  - "#4a3060"
+  - "#EDE2FC"
+  - "#7E36B7"
+  - "#859524"
+  - "#24102F"
+fichaMode: light
 titleFont: 'Cinzel, serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

@@ -82,6 +82,8 @@ export type FichaContent = {
   titleColor: string;
   taglineColor: string;
   palette: string[];
+  /** Preferencia de diseño; no se infiere de los colores. */
+  fichaMode?: 'light' | 'dark';
   titleFont: string;
   /** Fuente cuerpo UI + párrafos de sección */
   taglineFont?: string;
@@ -147,6 +149,7 @@ export function toFicha(game: GameCard): FichaContent {
     titleColor: game.titleColor,
     taglineColor: game.taglineColor,
     palette: game.palette,
+    fichaMode: game.fichaMode,
     titleFont: game.titleFont,
     taglineFont: game.taglineFont,
     bodyFont: game.bodyFont,

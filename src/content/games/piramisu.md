@@ -33,10 +33,11 @@ bg: '#fef9f0'
 titleColor: '#6b3a20'
 taglineColor: '#8b5e3c'
 palette:
-  - '#fef9f0'
-  - '#6b3a20'
-  - '#c4a06a'
-  - '#2c1a10'
+  - "#F7E0C3"
+  - "#6F381B"
+  - "#28577A"
+  - "#382218"
+fichaMode: light
 titleFont: '"Yeseva One", serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

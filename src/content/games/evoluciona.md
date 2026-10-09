@@ -33,10 +33,11 @@ titleColor: '#3d2914'
 taglineColor: 'rgba(61, 41, 20, .62)'
 headerBg: '#1a4a72'
 palette:
-  - '#3d2914'
-  - '#ede4cf'
-  - '#2b6fd6'
-  - '#e07832'
+  - "#F3EAD1"
+  - "#806012"
+  - "#755698"
+  - "#393017"
+fichaMode: light
 titleFont: '"Shantell Sans", sans-serif'
 taglineFont: '"Patrick Hand", cursive'
 bodyFont: 'Nunito, sans-serif'

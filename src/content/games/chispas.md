@@ -34,14 +34,15 @@ coverTitleEn: |-
 coverStatus: VERSIÓN 0.3
 coverStatusEn: VERSION 0.3
 coverTheme: blue
-bg: "#1a1a1a"
+bg: "#221c14"
 titleColor: "#e8c41a"
 taglineColor: rgba(232,196,26,.65)
 palette:
-  - "#e84c1a"
-  - "#e8c41a"
-  - "#1a1a1a"
-  - "#5b9fd5"
+  - "#FFF0BE"
+  - "#BF3F1C"
+  - "#276C84"
+  - "#3B241A"
+fichaMode: light
 titleFont: 'Bungee, sans-serif'
 taglineFont: 'Oswald, sans-serif'
 bodyFont: 'Nunito, sans-serif'

@@ -18,7 +18,12 @@ imageAltEn: Cave paintings in a prehistoric cavern with bison silhouettes in och
 bg: '#2c1a0e'
 titleColor: '#f5e6c8'
 taglineColor: '#c17c4a'
-palette: ['#2c1a0e', '#c17c4a', '#8b1a1a', '#f5e6c8']
+palette:
+  - "#E9E2D3"
+  - "#504941"
+  - "#A04827"
+  - "#29241F"
+fichaMode: light
 titleFont: 'Cardo, serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

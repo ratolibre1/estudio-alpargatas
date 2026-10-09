@@ -40,10 +40,11 @@ bg: '#003d6b'
 titleColor: '#7fc8e8'
 taglineColor: 'rgba(127,200,232,.7)'
 palette:
-  - '#003d6b'
-  - '#0077b6'
-  - '#7fc8e8'
-  - '#c9e8f5'
+  - "#DCEFFA"
+  - "#136C99"
+  - "#AB3B25"
+  - "#10283B"
+fichaMode: light
 titleFont: '"Josefin Sans", sans-serif'
 taglineFont: 'Nunito, sans-serif'
 bodyFont: 'Nunito, sans-serif'
