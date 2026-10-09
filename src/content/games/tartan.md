@@ -21,10 +21,11 @@ bg: '#f5f0e8'
 titleColor: '#8b1c1c'
 taglineColor: '#2d5a27'
 palette:
-  - '#f5f0e8'
-  - '#8b1c1c'
-  - '#2d5a27'
-  - '#3d1515'
+  - "#E2EAE4"
+  - "#235C4B"
+  - "#A62B43"
+  - "#1A332C"
+fichaMode: light
 titleFont: '"IM Fell English", serif'
 taglineFont: '"Josefin Sans", sans-serif'
 bodyFont: 'Nunito, sans-serif'

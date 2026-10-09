@@ -130,7 +130,16 @@ collections:
         widget: list
         min: 4
         max: 4
+        hint: 'Orden: base clara, principal, contrapunto, tinta oscura. El modo de ficha se elige por separado.'
         field: { label: Color, name: color, widget: string }
+      - label: Modo de la ficha
+        name: fichaMode
+        widget: select
+        default: light
+        hint: 'Elección explícita por juego. El botón de debug permite comparar sin modificar este valor.'
+        options:
+          - { label: Claro, value: light }
+          - { label: Oscuro, value: dark }
       - { label: Fuente CSS del título, name: titleFont, widget: string, hint: 'Google Font + fallback, ej. "Cinzel, serif". Si es una familia nueva, sumarla a src/lib/caja-fonts.ts' }
       - { label: Fuente CSS del subtítulo, name: taglineFont, widget: string, hint: 'Google Font del tagline. Misma regla: si es nueva, caja-fonts.ts' }
       - { label: Fuente cuerpo (secciones), name: bodyFont, widget: string, required: false, hint: 'UI y párrafos. Si vacío: taglineFont o sans.' }

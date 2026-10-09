@@ -48,10 +48,11 @@ bg: '#d6eef6'
 titleColor: '#2b6f96'
 taglineColor: 'rgba(43,111,150,.62)'
 palette:
-  - '#f6efe4'
-  - '#5aa3c8'
-  - '#e07030'
-  - '#1e4a58'
+  - "#F3E3CA"
+  - "#1A6A77"
+  - "#9C4D23"
+  - "#15343A"
+fichaMode: light
 titleFont: '"Cormorant Garamond", serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

@@ -22,10 +22,11 @@ bg: '#f5eedc'
 titleColor: '#8b3a10'
 taglineColor: '#5c3820'
 palette:
-  - '#f5eedc'
-  - '#8b3a10'
-  - '#c4762a'
-  - '#3d2914'
+  - "#EEDFF0"
+  - "#6D416C"
+  - "#885316"
+  - "#302039"
+fichaMode: light
 titleFont: 'Fraunces, serif'
 taglineFont: 'Fraunces, serif'
 bodyFont: 'Nunito, sans-serif'

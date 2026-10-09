@@ -58,10 +58,11 @@ bg: '#1a1220'
 titleColor: '#e05a5a'
 taglineColor: 'rgba(224,90,90,.72)'
 palette:
-  - '#e6e4ec'
-  - '#e05a5a'
-  - '#9855c8'
-  - '#1a1220'
+  - "#F1F3DF"
+  - "#922D67"
+  - "#5F7214"
+  - "#2B1728"
+fichaMode: light
 titleFont: '"Bubblegum Sans", cursive'
 taglineFont: 'Nunito, sans-serif'
 bodyFont: 'Nunito, sans-serif'

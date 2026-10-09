@@ -33,10 +33,11 @@ bg: '#e8f0e4'
 titleColor: '#2d6a4f'
 taglineColor: 'rgba(45, 106, 79, .62)'
 palette:
-  - '#e8f0e4'
-  - '#2d6a4f'
-  - '#c2b97f'
-  - '#1b4332'
+  - "#EEF1DB"
+  - "#476B32"
+  - "#9D5735"
+  - "#253521"
+fichaMode: light
 titleFont: 'Fredoka, sans-serif'
 taglineFont: 'Nunito, sans-serif'
 bodyFont: 'Nunito, sans-serif'

@@ -38,10 +38,11 @@ bg: "#221c14"
 titleColor: "#e8c41a"
 taglineColor: rgba(232,196,26,.65)
 palette:
-  - "#3d3428"
-  - "#e8c41a"
-  - "#5b9fd5"
-  - "#2e261a"
+  - "#FFF0BE"
+  - "#BF3F1C"
+  - "#276C84"
+  - "#3B241A"
+fichaMode: light
 titleFont: 'Bungee, sans-serif'
 taglineFont: 'Oswald, sans-serif'
 bodyFont: 'Nunito, sans-serif'

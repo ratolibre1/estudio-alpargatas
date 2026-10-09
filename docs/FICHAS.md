@@ -22,10 +22,10 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 
 **Reservado en rutas:** `old/`. No crear `src/pages/juegos/<keyword>/` salvo que quieras anular el catch-all a propósito.
 
-### Skin (un sistema: 4 colores → light/dark)
+### Skin (cuatro colores + modo explícito)
 
 - `publicado` vs `proto` cambia **contenido** (comprar vs probar por IG, bloque “en qué estamos”), **no** una paleta alternativa.
-- **Color en ficha:** solo los cuatro `palette` → `--ficha-c-{base,primary,apoyo,tinta}` en `<body>`. Todo lo demás es `color-mix` en `ficha.css` según **`data-band="light|dark"`** (automático vía `fichaBandMode()`). Mismas fórmulas para todos los juegos; ver tablas en [PALETAS_FICHA.md](./PALETAS_FICHA.md).
+- **Color en ficha:** solo los cuatro `palette` → `--ficha-c-{base,primary,apoyo,tinta}` en `<body>`. Los tokens derivados se calculan en `ficha-colors.ts` y se aplican en `ficha.css` según **`data-band="light|dark"`**, elegido explícitamente mediante `fichaMode`. El debug permite comparar los dos modos sin modificar los colores; ver [PALETAS_FICHA.md](./PALETAS_FICHA.md).
 - `bg` / `titleColor` / `taglineColor` del CMS **no** alimentan la ficha (portafolio / legacy).
 - Cuatro colores: **familia + apoyo contrapunto** — cómo pedirlos: [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md).
 - Página:

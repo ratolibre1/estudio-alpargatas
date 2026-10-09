@@ -12,7 +12,7 @@ Las paletas **no salen de teoría sola** (60-15-15, contrapunto, etc.). Salen de
 3. **Ordenar en CMS** sin cambiar el matiz:
    - `palette[0]` base · `[1]` primary · `[2]` apoyo (contrapunto) · `[3]` tinta
    - La ficha **no** usa `bg` ni `titleColor` para pintar — solo estos cuatro slots + derivación automática ([PALETAS_FICHA.md](./PALETAS_FICHA.md)).
-4. **Validar en portafolio** (4 swatches) + **una ficha** en dev. Ajustar un solo slot, no rehacer todo. Comprobar si salió `data-band="light"` u `"dark"` y si cuadra con lo que quieres.
+4. **Validar en portafolio** (4 swatches) + **una ficha** en dev. Ajustar un solo slot, no rehacer todo. Comparar ambos modos con `?debug=paleta` y guardar la elección explícita en `fichaMode`.
 
 ## Lo que no funciona (y por qué falló el agente)
 
@@ -26,7 +26,7 @@ Las paletas **no salen de teoría sola** (60-15-15, contrapunto, etc.). Salen de
 Paleta [keyword]:
 - Anclas: #______ principal, #______ contrapunto, (opcional base/tinta)
 - Referencia: [concepto / imagen / “como commit X”]
-- Objetivo banda: clara (cajitas tipo celeste) | oscura (chrome tinta) — lograrlo con luminancia de primary/tinta, no con campos extra
+- Modo de ficha: fichaMode: light | dark — elección explícita, independiente de la paleta
 - No tocar: [copy | fotos | …]
 ```
 
@@ -34,6 +34,6 @@ Si no tienes hex: “saca anclas del concepto en `games/ninive.md` y propón 4 s
 
 ## Fuente de verdad histórica
 
-El último commit antes de experimentos masivos de paleta (`git show HEAD:src/content/games/<keyword>.md`) tiene colores **elegidos por juego**. Al migrar a base/apoyo/tinta, **conservar esos matices**, solo reordenar roles.
+La tabla aprobada el 9 de octubre de 2026 en [PALETAS_FICHA.md](./PALETAS_FICHA.md) y los archivos `src/content/games/*.md` contienen los colores finales de esta ronda. Al decidir el modo, **no cambiar los cuatro hex**: actualizar solo `fichaMode`.
 
 Ver [PALETAS_FICHA.md](./PALETAS_FICHA.md) para roles y restricciones (#fff/#000).

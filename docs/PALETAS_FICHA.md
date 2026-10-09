@@ -1,145 +1,100 @@
-# Paletas de ficha — familia + contrapunto
+# Paletas de ficha y modo explícito
 
-Reglas para los cuatro colores de cada juego (`palette` en `src/content/games/*.md`).
+Paletas aprobadas por Artur el 9 de octubre de 2026, tras comparar el catálogo completo. Esta ronda sustituye las propuestas anteriores. No regenerar los colores al decidir entre claro y oscuro.
 
-**Antes de tocar hex:** leer [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md). Los colores vienen de **conceptos / arte**, no de una tabla genérica.
+## Fuente de verdad
 
-## Estrategia de los cuatro slots
+Cada `src/content/games/<keyword>.md` contiene exactamente cuatro colores:
 
-Tres tonos de la **misma familia** que el principal + **apoyo** como **contrapunto** (complementario suave o segundo color icónico del juego — p. ej. naranja frente a azul en Nínive).
-
-| Rol CMS | Índice | Variable CSS | Qué es |
-|---|---|---|---|
-| **base** | `palette[0]` | `--ficha-c-base` | Claro teñido del principal (crema, marfil, gris-cartoon…). |
-| **primary** | `palette[1]` | `--ficha-c-primary` | Identidad del juego. |
-| **apoyo** | `palette[2]` | `--ficha-c-apoyo` | **Contrapunto** — el otro color que el arte ya usa (links, bordes de cajitas, acento en banda oscura). |
-| **tinta** | `palette[3]` | `--ficha-c-tinta` | Oscuro de la familia; texto en superficies claras. **No** es el CTA por sí solo. |
-
-### Reglas al elegir hex
-
-1. Base y tinta comparten matiz con el principal.
-2. Apoyo = contraste temático (no repetir el mismo coral en todo el catálogo).
-3. Sin `#fff` / `#000` puros; `studioSanitizeHex` los reemplaza por neutros de estudio (`src/lib/studio-neutral.ts`).
-4. **`bg` / `titleColor` / `taglineColor` del CMS no pintan la ficha** — solo portafolio u otros contextos. En ficha manda `palette` + derivación abajo.
-
----
-
-## Un solo sistema de color (no hay tema aparte)
-
-Flujo fijo:
-
-1. CMS → cuatro hex en `palette`.
-2. `ficha-theme.ts` → inyecta `--ficha-c-{base,primary,apoyo,tinta}` + fuentes en `<body class="ficha-page">`.
-3. `fichaBandMode()` elige **`data-band="light"`** o **`"dark"`** (una sola bifurcación).
-4. `ficha.css` aplica **las mismas fórmulas** en cada rama (`color-mix` en sRGB).
-5. `fichaOnPrimary()` elige **`data-on-primary="base|tinta"`** para texto del botón CTA (el que tenga mejor contraste sobre `--ficha-c-primary`).
-
-No existe un “modo oscuro” manual en CMS hoy: la rama **light/dark** sale **solo** de la paleta. Si quieres una ficha que se sienta oscura, diseña los cuatro slots para que disparen **dark** (ver abajo). Las transformaciones de superficies son **idénticas** en todos los juegos.
-
-Implementación:
-
-- `src/lib/ficha-theme.ts` — paleta, `fichaBandMode`, `fichaOnPrimary`, fuentes
-- `src/styles/ficha.css` — tablas `[data-band="light"]` / `[data-band="dark"]`
-- `src/layouts/BaseLayout.astro` — `data-band`, `data-on-primary`
-
----
-
-## Cómo se elige `data-band` (light vs dark)
-
-Función `fichaBandMode` en `ficha-theme.ts` (luminancia relativa WCAG):
-
-| Orden | Condición | Resultado |
+| Índice | Rol | Uso |
 |---|---|---|
-| 1 | `palette[3]` (tinta) tiene luminancia **&lt; 0,22** | **dark** |
-| 2 | `palette[1]` (primary) luminancia **&lt; 0,4** **y** `palette[0]` (base) es **≥ 0,12** más clara que el primary | **dark** |
-| 3 | Si no | **light** |
+| 0 | Base | Superficie clara teñida y texto en oscuro. |
+| 1 | Principal | Identidad del juego; CTA en claro. |
+| 2 | Contrapunto | Acentos, bordes y CTA en oscuro. |
+| 3 | Tinta | Oscuro de la familia; texto en claro y superficies en oscuro. |
 
-**Ejemplos:**
+La afinidad cromática interna debe coexistir con variedad entre juegos: no repetir el mismo verde/terracota o marrón/azul en todo el catálogo. El contrapunto tiene peso suficiente sobre superficies claras, sin volver a los pasteles anteriores. Los colores de arte, fotos, logo y banderas conservan sus propios colores.
 
-- **Nínive** (`base` crema + `primary` azul medio): entra en regla 2 → **dark** (página teñida, cajitas oscuras, apoyo naranja en links de componentes).
-- **Canes** (`primary` verde legible + base clara, tinta no ultra-oscura): suele quedar **light** (cajitas tipo celeste = mezcla primary + base).
-- **Chauvet / Palomas** (tinta muy oscura): regla 1 → **dark**.
+`bg`, `titleColor`, `taglineColor` y los overrides legacy del CMS no pintan la ficha unificada. Sus valores se mantienen para los otros contextos. Todos los colores derivados de ficha proceden exclusivamente de los cuatro slots, mediante mezclas sRGB o selección de uno de ellos.
 
-Para **forzar sensación “ficha clara”** (cajitas celestes, header = base): sube la luminancia del **primary** (≈ ≥ 0,4) o acerca base y primary para no cumplir la regla 2. No hace falta otro campo en CMS.
+## Modo como elección por juego
 
----
+```yaml
+palette:
+  - "#EEF1DB"
+  - "#476B32"
+  - "#9D5735"
+  - "#253521"
+fichaMode: light
+```
 
-## Derivación por token (antecedente para paletas finales)
+`fichaMode` acepta `light` o `dark`, también desde el CMS. El fallback es `light`. `fichaBandMode()` solo lee esta decisión: la luminancia, el sistema operativo y cambiar la paleta no cambian el modo. El HTML estático incluye `data-band` y el tema completo, por lo que funciona sin JavaScript.
 
-Notación: `mix(A p%, B)` = `color-mix(in srgb, A p%, B)`.
+Los 19 juegos parten explícitamente en **claro**, como en la última vista aprobada. Esta es la configuración inicial; los modos definitivos por juego se decidirán usando el debug. No se ha inferido ni aprobado un reparto automático de modos.
 
-### Rama `data-band="light"`
+## Superficies y lectura
 
-| Token semántico | Fórmula |
-|---|---|
-| `--ficha-page-bg` | `base` |
-| `--ficha-bg` | `mix(primary 22%, base)` |
-| `--ficha-band-bg` | `mix(primary 18%, base)` |
-| `--ficha-on-light-title` (h1 héroe) | `primary` |
-| `--ficha-on-light-ink` | `tinta` |
-| `--ficha-on-light-tag` | `mix(tinta 58%, base)` |
-| `--ficha-on-light-muted` | `mix(tinta 42%, base)` |
-| `--ficha-on-band-title` | `tinta` |
-| `--ficha-on-band-muted` | `mix(tinta 52%, primary)` |
-| `--ficha-accent` (nav hover, acentos UI) | `primary` |
-| `--ficha-link-on-light` | `apoyo` |
-| `--ficha-line` | `mix(tinta 16%, transparent)` |
-| `--ficha-card` | `mix(primary 10%, base)` |
-| **Cajitas** (`--ficha-award-bg`) | `mix(primary 16%, base)` |
-| `--ficha-award-bar` (sombra/borde activo) | `apoyo` |
-| `--ficha-award-border` | `mix(apoyo 45%, base)` |
-| `--ficha-award-title` (texto principal cajita) | `tinta` |
-| `--ficha-award-link` (nombre componente, link premio) | `apoyo` |
-| `--ficha-header-bg` | = `page-bg` |
-| `--ficha-header-text` | `tinta` |
-| `--ficha-header-muted` | `mix(tinta 50%, base)` |
+`src/lib/ficha-colors.ts` calcula los mismos tokens al compilar y al alternar el debug. `src/styles/ficha.css` aplica esos tokens y conserva las reglas estructurales.
 
-### Rama `data-band="dark"`
+| Elemento | Claro | Oscuro |
+|---|---|---|
+| Cuerpo | Base | 22% base + 78% tinta |
+| Header y footer | 30% principal + 70% base | Tinta |
+| Fondo del arte | 22% principal + 78% base | Tinta |
+| Banda de inspiración | 18% principal + 82% base | Tinta |
+| Cajitas | 16% principal + 84% base | 14% base + 86% tinta |
+| Paneles de recursos | 10% principal + 90% base | 12% base + 88% tinta |
+| CTA | Principal | Contrapunto |
+| Etiqueta de estado | 82% contrapunto + 18% base | La misma mezcla |
 
-| Token semántico | Fórmula |
-|---|---|
-| `--ficha-page-bg` | `mix(base 34%, tinta)` |
-| `--ficha-bg` | `tinta` |
-| `--ficha-band-bg` | `tinta` |
-| `--ficha-on-light-title` (h1 héroe) | `base` |
-| `--ficha-on-light-ink` | `base` |
-| `--ficha-on-light-tag` | `mix(base 62%, apoyo)` |
-| `--ficha-on-light-muted` | `mix(base 48%, apoyo)` |
-| `--ficha-on-band-title` | `base` |
-| `--ficha-on-band-muted` | `mix(base 55%, apoyo)` |
-| `--ficha-accent` | `apoyo` |
-| `--ficha-link-on-light` | `apoyo` |
-| `--ficha-line` | `mix(base 22%, transparent)` |
-| `--ficha-card` | `mix(base 12%, tinta)` |
-| **Cajitas** (`--ficha-award-bg`) | `mix(base 14%, tinta)` |
-| `--ficha-award-bar` | `apoyo` |
-| `--ficha-award-border` | `mix(apoyo 38%, tinta)` |
-| `--ficha-award-title` | `base` |
-| `--ficha-award-link` | `apoyo` |
-| `--ficha-header-bg` | `tinta` |
-| `--ficha-header-text` | `base` |
-| `--ficha-header-muted` | `mix(base 52%, apoyo)` |
+Estas son las mezclas de partida. Si una superficie no permite un contraste de 4,6:1 con ningún slot, se reduce su mezcla hacia base o tinta. El encabezado se distingue del cuerpo en ambos modos.
 
-Footer hereda `--ficha-header-*` en ambas ramas.
+El texto se elige contra **su fondo real**, no contra un color distinto al usado por el botón. Los textos secundarios se suavizan solo mientras conservan 4,6:1. Links y estados hover mezclan el contrapunto con un slot legible cuando hace falta. El título grande conserva el principal en claro si alcanza 3:1 en ambos extremos del degradado; de lo contrario usa el texto principal. Las cajitas usan su propio texto, sin opacidad añadida ni colores heredados del chrome general.
 
-### CTA primary (ambas ramas)
+No hay quinto color de origen. Las mezclas generan los tokens semánticos; no se guardan como nuevos colores en el CMS.
 
-| Token | Fórmula |
-|---|---|
-| Fondo botón | `--ficha-c-primary` (directo en `.ficha-cta`) |
-| Texto botón | `--ficha-on-accent` → `base` o `tinta` según `data-on-primary` (mejor contraste 4.5:1) |
+## Debug para revisar decisiones
 
-### Tipografía de cajitas (transversal)
+- En `npm run dev` y previews de Netlify se activa automáticamente.
+- En un build normal se abre cualquier ficha con `?debug=paleta`, por ejemplo `/juegos/canes?debug=paleta`.
+- **Ver oscuro / Ver claro** alterna el tema completo. Los cuatro colores y las fuentes no cambian.
+- Las elecciones se recuerdan por keyword en el navegador y se comparten entre ES/EN. Sin almacenamiento disponible, el botón sigue funcionando.
+- La URL incluye `modo=light|dark`, para compartir la misma vista.
+- **Restablecer** elimina la elección local del juego y recupera su `fichaMode` del CMS.
+- **Copiar decisiones** copia los modos de los 19 juegos. Donde no hay elección local, usa el modo del CMS. Si el portapapeles no está disponible, muestra texto seleccionable.
+- Fuera del debug se respeta siempre el CMS, aunque haya elecciones locales guardadas.
 
-Premios, facts y componentes: **Nunito Medium Italic 500** (`--ficha-caja-weight` / `--ficha-caja-style` en `ficha.css`). Excepción JP: `--ficha-section-font` = Zen Maru Gothic cuando el juego lo define en `bodyFont`.
+El debug es una vista local y **no modifica el CMS**. Para cerrar decisiones, pasar el texto copiado al agente y pedir que actualice únicamente `fichaMode` en cada archivo, sin tocar `palette`, y recompilar/desplegar. Ejemplo del formato:
 
----
+```yaml
+# fichaMode: decisiones locales de debug
+almagesto: dark
+amateurasu: light
+canes: light
+```
 
-## Checklist al cerrar una paleta
+## Paletas aprobadas
 
-1. Cuatro slots con roles correctos (base / primary / apoyo / tinta).
-2. Previsualizar en dev: ¿**light** o **dark** te da la atmósfera que buscas? Ajustar luminancia de primary/tinta si no.
-3. Cajitas: en **light**, fondo ≈ primary suave sobre base; texto título = tinta. En **dark**, fondo ≈ tinta suavizada; título = base; contrapunto = apoyo.
-4. Contraste: leer héroe y una cajita en móvil; apoyo debe distinguirse del fondo de cajita.
+| Juego | Base | Principal | Contrapunto | Tinta | Modo inicial |
+|---|---|---|---|---|---|
+| Almagesto | `#E7E4FA` | `#5146B5` | `#816019` | `#18142F` | `light` |
+| Amateurasu | `#FBE6D5` | `#B82F32` | `#256B6B` | `#462022` | `light` |
+| El Gran Festival de Canes | `#EEF1DB` | `#476B32` | `#9D5735` | `#253521` | `light` |
+| Carcinogenial | `#F1F3DF` | `#922D67` | `#5F7214` | `#2B1728` | `light` |
+| Chauvet | `#E9E2D3` | `#504941` | `#A04827` | `#29241F` | `light` |
+| Chispas | `#FFF0BE` | `#BF3F1C` | `#276C84` | `#3B241A` | `light` |
+| Ermitaños | `#DDF3EB` | `#006F73` | `#9F305A` | `#143D35` | `light` |
+| Evoluciona | `#F3EAD1` | `#806012` | `#755698` | `#393017` | `light` |
+| Gato Regalón | `#F8E8E5` | `#9A3D54` | `#4D6E44` | `#422934` | `light` |
+| Hubris | `#EDE2FC` | `#7E36B7` | `#859524` | `#24102F` | `light` |
+| Letrados | `#E8F0FF` | `#2351A8` | `#915409` | `#182844` | `light` |
+| Mantas a Raya | `#DCEFFA` | `#136C99` | `#AB3B25` | `#10283B` | `light` |
+| Nínive | `#F3E3CA` | `#1A6A77` | `#9C4D23` | `#15343A` | `light` |
+| Manda Nudis | `#F8E5F3` | `#AD287E` | `#17646F` | `#39213C` | `light` |
+| Palomas | `#ECE9E3` | `#4E5B77` | `#735913` | `#252B3A` | `light` |
+| Pavoneo | `#EEF0D8` | `#596C18` | `#933E7B` | `#293316` | `light` |
+| Piramisú | `#F7E0C3` | `#6F381B` | `#28577A` | `#382218` | `light` |
+| Hasta un Reloj Roto... | `#EEDFF0` | `#6D416C` | `#885316` | `#302039` | `light` |
+| Tartán | `#E2EAE4` | `#235C4B` | `#A62B43` | `#1A332C` | `light` |
 
-Ver también [FICHAS.md](./FICHAS.md) (skin y layout).
+Ver [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md) para futuras revisiones.

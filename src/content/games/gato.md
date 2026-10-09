@@ -18,7 +18,12 @@ imageAltEn: Domestic cat lounging in an apartment bathed in warm golden afternoo
 bg: '#fef3c7'
 titleColor: '#78350f'
 taglineColor: '#a16207'
-palette: ['#fef3c7', '#78350f', '#f97316', '#4a2510']
+palette:
+  - "#F8E8E5"
+  - "#9A3D54"
+  - "#4D6E44"
+  - "#422934"
+fichaMode: light
 titleFont: '"Quicksand", sans-serif'
 taglineFont: 'Quicksand, sans-serif'
 bodyFont: 'Nunito, sans-serif'

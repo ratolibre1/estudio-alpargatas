@@ -6,6 +6,7 @@
  */
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import GameFicha from '../../../components/GameFicha.astro';
+import FichaThemeDebug from '../../../components/FichaThemeDebug.astro';
 import { getCollection } from 'astro:content';
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -49,6 +50,10 @@ const card = localizeGame(
 );
 const ficha = buildLegacyFicha(card, locale, entry.id);
 const theme = fichaThemeVars(ficha);
+const modeDefaults = (await getCollection('games')).map((game) => ({
+  keyword: game.id,
+  mode: game.data.fichaMode,
+}));
 ---
 
 <BaseLayout
@@ -61,5 +66,6 @@ const theme = fichaThemeVars(ficha);
   fichaOnPrimary={fichaOnPrimary(ficha)}
   fontUrl={CAJA_FONTS_URL}
 >
+  <FichaThemeDebug keyword={entry.id} mode={fichaBandMode(ficha)} defaults={modeDefaults} />
   <GameFicha ficha={ficha} locale={locale} />
 </BaseLayout>

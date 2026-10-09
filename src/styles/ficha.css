@@ -2,7 +2,8 @@
 
 /*
  * Paleta: solo --ficha-c-{base,primary,apoyo,tinta} (inyectadas en body.ficha-page).
- * Rama light|dark vía data-band; fórmulas documentadas en docs/PALETAS_FICHA.md.
+ * Rama light|dark explícita vía data-band. ficha-colors.ts inyecta los tokens
+ * legibles para cada fondo; estas tablas son fallbacks y estructura de bordes.
  */
 body.ficha-page {
   --ficha-c-base: #f7f4eb;
@@ -38,7 +39,7 @@ body.ficha-page[data-band="light"] {
   --ficha-award-border: color-mix(in srgb, var(--ficha-c-apoyo) 45%, var(--ficha-c-base));
   --ficha-award-title: var(--ficha-c-tinta);
   --ficha-award-link: var(--ficha-c-apoyo);
-  --ficha-header-bg: var(--ficha-page-bg);
+  --ficha-header-bg: color-mix(in srgb, var(--ficha-c-primary) 30%, var(--ficha-c-base));
   --ficha-header-text: var(--ficha-c-tinta);
   --ficha-header-muted: color-mix(in srgb, var(--ficha-c-tinta) 50%, var(--ficha-c-base));
   --ficha-footer-bg: var(--ficha-header-bg);
@@ -47,7 +48,7 @@ body.ficha-page[data-band="light"] {
 }
 
 body.ficha-page[data-band="dark"] {
-  --ficha-page-bg: color-mix(in srgb, var(--ficha-c-base) 34%, var(--ficha-c-tinta));
+  --ficha-page-bg: color-mix(in srgb, var(--ficha-c-base) 22%, var(--ficha-c-tinta));
   --ficha-bg: var(--ficha-c-tinta);
   --ficha-band-bg: var(--ficha-c-tinta);
   --ficha-on-light-title: var(--ficha-c-base);
@@ -142,8 +143,8 @@ body.ficha-page[data-on-primary="tinta"] {
   font-weight: 900;
   letter-spacing: .12em;
   text-transform: uppercase;
-  background: color-mix(in srgb, var(--ficha-c-apoyo) 82%, var(--ficha-c-base));
-  color: var(--ficha-c-tinta);
+  background: var(--ficha-state-bg);
+  color: var(--ficha-state-text);
 }
 
 .ficha h1 {
@@ -225,7 +226,7 @@ body.ficha-page[data-on-primary="tinta"] {
   font-size: .9rem;
   font-weight: 800;
   text-decoration: none;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--ficha-c-tinta) 8%, transparent);
 }
 
 .ficha-cta:hover {
@@ -284,7 +285,7 @@ body.ficha-page[data-on-primary="tinta"] {
   margin: 0;
   border: 1px solid var(--ficha-line);
   background: var(--ficha-card);
-  box-shadow: 0 12px 32px rgba(26, 40, 71, .06);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--ficha-c-tinta) 6%, transparent);
 }
 
 @media (max-width: 979px) {
@@ -421,10 +422,10 @@ body.ficha-page[data-on-primary="tinta"] {
 
 .ficha-panel p {
   margin: 0;
-  color: var(--ficha-on-light-ink);
+  color: var(--ficha-award-title);
   font-size: .88rem;
   line-height: 1.45;
-  opacity: .88;
+  opacity: 1;
 }
 
 /* —— Premios —— */
@@ -456,7 +457,7 @@ body.ficha-page[data-on-primary="tinta"] {
   border-color: var(--ficha-award-bar, var(--ficha-accent));
   box-shadow:
     0 3px 0 var(--ficha-award-bar, var(--ficha-accent)),
-    0 10px 22px rgba(26, 40, 71, .1);
+    0 10px 22px color-mix(in srgb, var(--ficha-c-tinta) 10%, transparent);
 }
 
 .ficha-award-card-inner {
@@ -479,7 +480,7 @@ body.ficha-page[data-on-primary="tinta"] {
   background: var(--ficha-c-base);
   border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-c-base));
   border-radius: .35rem;
-  box-shadow: 0 1px 3px rgba(26, 40, 71, .06);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--ficha-c-tinta) 6%, transparent);
 }
 
 .ficha-award-card strong {
@@ -529,7 +530,7 @@ body.ficha-page[data-on-primary="tinta"] {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   margin-bottom: .9rem;
-  background: #eee;
+  background: var(--ficha-card);
   border: 1px solid var(--ficha-line);
   border-radius: .2rem;
 }
@@ -655,7 +656,7 @@ a.ficha-comp-tile {
   border-color: var(--ficha-award-bar, var(--ficha-accent));
   box-shadow:
     0 3px 0 var(--ficha-award-bar, var(--ficha-accent)),
-    0 10px 22px rgba(26, 40, 71, .1);
+    0 10px 22px color-mix(in srgb, var(--ficha-c-tinta) 10%, transparent);
 }
 
 .ficha-comp-tile.is-static {
@@ -689,7 +690,7 @@ a.ficha-comp-tile {
   border-radius: .35rem;
   background: var(--ficha-c-base);
   border: 1px solid color-mix(in srgb, var(--ficha-award-border, var(--ficha-line)) 65%, var(--ficha-c-base));
-  box-shadow: 0 1px 3px rgba(26, 40, 71, .06);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--ficha-c-tinta) 6%, transparent);
   color: var(--ficha-award-link, var(--ficha-accent));
   font-size: 1.15rem;
 }
@@ -777,7 +778,7 @@ a.ficha-comp-tile {
   color: var(--ficha-c-tinta);
   cursor: pointer;
   transform: translateY(-50%);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, .12);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--ficha-c-tinta) 12%, transparent);
 }
 
 .ficha-gallery-btn svg {
@@ -853,7 +854,7 @@ a.ficha-comp-tile {
 }
 
 .ficha-resource:hover {
-  border-color: rgba(26, 40, 71, .22);
+  border-color: color-mix(in srgb, var(--ficha-c-tinta) 22%, transparent);
 }
 
 .ficha-resource-lead {
@@ -870,26 +871,26 @@ a.ficha-comp-tile {
   display: grid;
   place-items: center;
   border-radius: .25rem;
-  background: rgba(26, 40, 71, .06);
+  background: color-mix(in srgb, var(--ficha-c-tinta) 6%, transparent);
   color: var(--ficha-navy);
 }
 
 .ficha-resource strong {
   display: block;
   font-size: .92rem;
-  color: var(--ficha-navy);
+  color: var(--ficha-card-text);
 }
 
 .ficha-resource small {
   display: block;
   margin-top: .2rem;
-  color: var(--ficha-muted);
+  color: var(--ficha-card-muted);
   font-size: .78rem;
 }
 
 .ficha-resource-dl {
   flex: 0 0 auto;
-  color: var(--ficha-dim);
+  color: var(--ficha-card-muted);
   font-size: 1.1rem;
   font-weight: 700;
 }
@@ -911,7 +912,7 @@ body.ficha-page .site-header {
   background-color: var(--ficha-header-bg, var(--ficha-bg, #f7f4eb));
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-bottom: 1px solid var(--ficha-line, rgba(26, 40, 71, .12));
+  border-bottom: 1px solid var(--ficha-line, color-mix(in srgb, var(--ficha-c-tinta) 12%, transparent));
 }
 
 body.ficha-page .site-header .shell,
@@ -924,34 +925,38 @@ body.ficha-page .brand b {
 }
 
 body.ficha-page .brand small {
-  color: var(--ficha-header-muted, var(--ficha-muted, rgba(26, 40, 71, .55)));
+  color: var(--ficha-header-muted, var(--ficha-muted, color-mix(in srgb, var(--ficha-c-tinta) 55%, transparent)));
 }
 
 body.ficha-page .nav-links a {
-  color: var(--ficha-header-muted, rgba(26, 40, 71, .55));
+  color: var(--ficha-header-muted, color-mix(in srgb, var(--ficha-c-tinta) 55%, transparent));
 }
 
 body.ficha-page .nav-links a:hover {
-  color: var(--ficha-accent, #ea580c);
+  color: var(--ficha-nav-hover);
 }
 
 body.ficha-page .nav-links .nav-instagram {
   border-color: color-mix(in srgb, var(--ficha-header-muted, #536273) 45%, transparent);
-  color: var(--ficha-header-muted, rgba(26, 40, 71, .55));
+  color: var(--ficha-header-muted, color-mix(in srgb, var(--ficha-c-tinta) 55%, transparent));
 }
 
 body.ficha-page .nav-links .nav-instagram:hover {
   background: var(--ficha-header-text, var(--ficha-title));
   border-color: var(--ficha-header-text, var(--ficha-title));
-  color: var(--ficha-on-band-ink, var(--ficha-c-base));
+  color: var(--ficha-on-header-ink);
 }
 
 body.ficha-page .site-footer {
   background-color: var(--ficha-footer-bg, var(--ficha-header-bg, var(--ficha-c-tinta)));
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border-top: 1px solid var(--ficha-line, rgba(26, 40, 71, .12));
+  border-top: 1px solid var(--ficha-line, color-mix(in srgb, var(--ficha-c-tinta) 12%, transparent));
   color: var(--ficha-footer-muted, rgba(255, 255, 255, .55));
+}
+
+body.ficha-page .footer-row span {
+  color: var(--ficha-footer-muted);
 }
 
 body.ficha-page .site-footer b,
@@ -960,7 +965,7 @@ body.ficha-page .site-footer a {
 }
 
 body.ficha-page .site-footer a:hover {
-  color: var(--ficha-accent, #ea580c);
+  color: var(--ficha-nav-hover);
 }
 
 @media (min-width: 980px) {
@@ -1082,8 +1087,8 @@ body.ficha-page .site-footer a:hover {
     margin: 0;
     padding: 2.25rem var(--ficha-gutter) .7rem 1rem;
     border: none;
-    color: rgba(255, 255, 255, .92);
-    background: linear-gradient(180deg, transparent 0%, rgba(26, 40, 71, .55) 100%);
+    color: var(--ficha-on-band-title);
+    background: var(--ficha-band-bg);
     pointer-events: none;
   }
 }

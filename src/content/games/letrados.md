@@ -45,10 +45,11 @@ bg: '#2d7eb0'
 titleColor: '#f7f3ea'
 taglineColor: 'rgba(247,243,234,.72)'
 palette:
-  - '#dcecf8'
-  - '#2d7eb0'
-  - '#d4a84b'
-  - '#24332a'
+  - "#E8F0FF"
+  - "#2351A8"
+  - "#915409"
+  - "#182844"
+fichaMode: light
 titleFont: '"Raleway", sans-serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

@@ -18,7 +18,12 @@ imageAltEn: Urban pigeon gang on a high-contrast action poster in black, white a
 bg: '#222028'
 titleColor: '#f7f3ea'
 taglineColor: '#e53e3e'
-palette: ['#9890a0', '#5c5668', '#e53e3e', '#222028']
+palette:
+  - "#ECE9E3"
+  - "#4E5B77"
+  - "#735913"
+  - "#252B3A"
+fichaMode: light
 titleFont: '"Bebas Neue", sans-serif'
 taglineFont: 'Oswald, sans-serif'
 bodyFont: 'Nunito, sans-serif'
