@@ -26,7 +26,7 @@ palette:
   - "#6D416C"
   - "#885316"
   - "#302039"
-fichaMode: light
+fichaMode: dark
 titleFont: 'Fraunces, serif'
 taglineFont: 'Fraunces, serif'
 bodyFont: 'Nunito, sans-serif'

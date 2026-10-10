@@ -37,7 +37,7 @@ palette:
   - "#806012"
   - "#755698"
   - "#393017"
-fichaMode: light
+fichaMode: dark
 titleFont: '"Shantell Sans", sans-serif'
 taglineFont: '"Patrick Hand", cursive'
 bodyFont: 'Nunito, sans-serif'

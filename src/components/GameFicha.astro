@@ -197,11 +197,7 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
     <section class="ficha-section">
       <div class="ficha-shell">
         <h2 class="ficha-section-title">{isPub ? t.componentsPub : t.componentsProto}</h2>
-        <GameComponents
-          defaultPhoto={g.componentsPhoto}
-          defaultAlt={g.componentsPhotoAlt ?? ''}
-          components={components}
-        />
+        <GameComponents defaultPhoto={g.componentsPhoto} components={components} />
       </div>
     </section>
   )}

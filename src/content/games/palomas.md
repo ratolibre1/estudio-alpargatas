@@ -23,7 +23,7 @@ palette:
   - "#4E5B77"
   - "#735913"
   - "#252B3A"
-fichaMode: light
+fichaMode: dark
 titleFont: '"Bebas Neue", sans-serif'
 taglineFont: 'Oswald, sans-serif'
 bodyFont: 'Nunito, sans-serif'

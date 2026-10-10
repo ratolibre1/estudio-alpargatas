@@ -128,8 +128,8 @@ const overlays: Record<string, OverlayFn> = {
         { title: t.step2Title, body: t.step2Body },
         { title: t.step3Title, body: t.step3Body },
       ],
-      componentsPhoto: '/assets/canes-mesa-montaje.webp',
-      componentsPhotoAlt: t.galMesaAlt,
+      componentsPhoto: '/assets/canes-mesa-montaje.webp?v=2',
+      componentsPhotoAlt: '',
       components: [
         comp(locale, '100', 'Discipline Cards', 'Cartas de Disciplina', 'deck-cards', {
           image: '/assets/canes-comp-disciplinas.webp?v=4',

@@ -36,7 +36,7 @@ palette:
   - "#596C18"
   - "#933E7B"
   - "#293316"
-fichaMode: light
+fichaMode: dark
 titleFont: '"Playfair Display", serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

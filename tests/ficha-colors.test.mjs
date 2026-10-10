@@ -12,17 +12,40 @@ const { fichaColorVars, contrastRatio, mixColors } = await load('src/lib/ficha-c
 const { fichaBandMode, fichaThemeVars } = await load('src/lib/ficha-theme.ts');
 const games = readdirSync('src/content/games').map((file) => yaml.load(readFileSync('src/content/games/' + file, 'utf8').split('---')[1]));
 
-test('los 19 juegos tienen cuatro colores y un modo explícito independiente', () => {
+/** Estándar aprobado oct 2026 — ver docs/PALETAS_FICHA.md */
+const APPROVED_FICHA_MODE = {
+  almagesto: 'dark',
+  amateurasu: 'light',
+  canes: 'light',
+  carcinogenial: 'light',
+  chauvet: 'dark',
+  chispas: 'light',
+  ermitanos: 'light',
+  evoluciona: 'dark',
+  gato: 'light',
+  hubris: 'dark',
+  letrados: 'light',
+  mantas: 'light',
+  ninive: 'light',
+  nudis: 'light',
+  palomas: 'dark',
+  pavoneo: 'dark',
+  piramisu: 'dark',
+  reloj: 'dark',
+  tartan: 'dark',
+};
+
+test('los 19 juegos tienen cuatro colores y fichaMode explícito aprobado', () => {
   assert.equal(games.length, 19);
   for (const game of games) {
     assert.equal(game.palette.length, 4);
     assert(game.palette.every((c) => /^#[\da-f]{6}$/i.test(c)));
-    assert.equal(game.fichaMode, 'light');
-    assert.equal(fichaBandMode(game), 'light');
+    assert(['light', 'dark'].includes(game.fichaMode), game.keyword);
+    assert.equal(APPROVED_FICHA_MODE[game.keyword], game.fichaMode, game.keyword);
+    assert.equal(fichaBandMode(game), game.fichaMode);
     assert.equal(fichaBandMode({ ...game, fichaMode: 'dark' }), 'dark');
-    assert.equal(fichaBandMode({ ...game, palette: ['#faf0e0', '#303040', '#ba7744', '#120b08'] }), 'light');
+    assert.equal(fichaBandMode({ ...game, fichaMode: 'light' }), 'light');
   }
-  assert.equal(fichaBandMode({ palette: games[0].palette }), 'light');
 });
 
 test('lectura, botones y navegación conservan contraste en ambos modos', () => {

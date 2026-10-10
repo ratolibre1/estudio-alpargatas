@@ -4,11 +4,10 @@ import { resolveComponentIcon } from '../lib/comp-icons';
 
 interface Props {
   defaultPhoto?: string;
-  defaultAlt?: string;
   components: FichaComponent[];
 }
 
-const { defaultPhoto, defaultAlt = '', components } = Astro.props;
+const { defaultPhoto, components } = Astro.props;
 const hasStage = Boolean(defaultPhoto || components.some((c) => c.image));
 const show = components.length > 0;
 ---
@@ -18,7 +17,6 @@ const show = components.length > 0;
     class:list={['ficha-comp-interactive', !hasStage && 'ficha-comp-interactive--tiles-only']}
     data-ficha-components={hasStage ? true : undefined}
     data-default-src={defaultPhoto ?? ''}
-    data-default-alt={defaultAlt}
   >
     {hasStage && (
       <div class="ficha-comp-stage-wrap">
@@ -27,16 +25,13 @@ const show = components.length > 0;
             <img
               data-comp-main
               src={defaultPhoto}
-              alt={defaultAlt}
+              alt=""
               loading="lazy"
             />
           ) : (
             <img data-comp-main src="" alt="" hidden />
           )}
         </div>
-        <p class="ficha-comp-stage-cap" data-comp-cap aria-live="polite">
-          {defaultAlt}
-        </p>
       </div>
     )}
 
@@ -52,7 +47,6 @@ const show = components.length > 0;
               role="listitem"
               data-comp-index={index}
               data-comp-src={item.image ?? ''}
-              data-comp-alt={item.imageAlt ?? item.name}
               aria-pressed="false"
             >
               <img class="ficha-comp-tile-icon" src={iconSrc} alt="" />
@@ -73,28 +67,23 @@ const show = components.length > 0;
 <script>
   function bindComponents(root: HTMLElement) {
     const main = root.querySelector<HTMLImageElement>('[data-comp-main]');
-    const cap = root.querySelector<HTMLElement>('[data-comp-cap]');
     const tiles = [
       ...root.querySelectorAll<HTMLButtonElement>('.ficha-comp-tile'),
     ].filter((tile) => Boolean(tile.dataset.compSrc));
     const defaultSrc = root.dataset.defaultSrc ?? '';
-    const defaultAlt = root.dataset.defaultAlt ?? '';
 
     if (!main) return;
 
     let pinned: HTMLButtonElement | null = null;
 
-    const setPhoto = (src: string, alt: string) => {
+    const setPhoto = (src: string) => {
       if (!src) {
         main.hidden = true;
         main.removeAttribute('src');
-        if (cap) cap.textContent = '';
         return;
       }
       main.hidden = false;
       main.src = src;
-      main.alt = alt;
-      if (cap) cap.textContent = alt;
     };
 
     const setActive = (active: HTMLButtonElement | null) => {
@@ -108,17 +97,16 @@ const show = components.length > 0;
     const showDefault = () => {
       pinned = null;
       setActive(null);
-      setPhoto(defaultSrc, defaultAlt);
+      setPhoto(defaultSrc);
     };
 
     const showTile = (tile: HTMLButtonElement) => {
       const src = tile.dataset.compSrc ?? '';
-      const alt = tile.dataset.compAlt ?? '';
       if (!src) {
         showDefault();
         return;
       }
-      setPhoto(src, alt);
+      setPhoto(src);
       setActive(tile);
     };
 

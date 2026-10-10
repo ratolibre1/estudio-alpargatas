@@ -12,7 +12,7 @@ Las paletas **no salen de teoría sola** (60-15-15, contrapunto, etc.). Salen de
 3. **Ordenar en CMS** sin cambiar el matiz:
    - `palette[0]` base · `[1]` primary · `[2]` apoyo (contrapunto) · `[3]` tinta
    - La ficha **no** usa `bg` ni `titleColor` para pintar — solo estos cuatro slots + derivación automática ([PALETAS_FICHA.md](./PALETAS_FICHA.md)).
-4. **Validar en portafolio** (4 swatches) + **una ficha** en dev. Ajustar un solo slot, no rehacer todo. Comparar ambos modos con `?debug=paleta` y guardar la elección explícita en `fichaMode`.
+4. **Validar en portafolio** (4 swatches) + **una ficha** en dev. Ajustar un solo slot o `fichaMode`, no rehacer todo.
 
 ## Lo que no funciona (y por qué falló el agente)
 

@@ -37,7 +37,7 @@ palette:
   - "#6F381B"
   - "#28577A"
   - "#382218"
-fichaMode: light
+fichaMode: dark
 titleFont: '"Yeseva One", serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

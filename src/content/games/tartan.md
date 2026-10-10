@@ -25,7 +25,7 @@ palette:
   - "#235C4B"
   - "#A62B43"
   - "#1A332C"
-fichaMode: light
+fichaMode: dark
 titleFont: '"IM Fell English", serif'
 taglineFont: '"Josefin Sans", sans-serif'
 bodyFont: 'Nunito, sans-serif'

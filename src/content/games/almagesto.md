@@ -23,7 +23,7 @@ palette:
   - "#5146B5"
   - "#816019"
   - "#18142F"
-fichaMode: light
+fichaMode: dark
 titleFont: 'Spectral, serif'
 taglineFont: '"Cormorant Garamond", serif'
 bodyFont: 'Nunito, sans-serif'

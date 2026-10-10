@@ -122,11 +122,6 @@ body.ficha-page[data-on-primary="tinta"] {
 
 .ficha-hero-copy {
   padding: clamp(2rem, 4.5vw, 3.5rem) 0 1.5rem;
-  background: linear-gradient(
-    105deg,
-    color-mix(in srgb, var(--ficha-bg) 28%, var(--ficha-page-bg)) 0%,
-    var(--ficha-page-bg) 72%
-  );
 }
 
 .ficha-hero-copy-inner {
@@ -289,9 +284,14 @@ body.ficha-page[data-on-primary="tinta"] {
 
 @media (max-width: 979px) {
   .ficha-concept-bleed {
+    position: relative;
     width: min(var(--ficha-max), calc(100% - 2 * var(--ficha-gutter)));
     margin-inline: auto;
   }
+}
+
+.ficha-hero .ficha-concept-bleed {
+  position: relative;
 }
 
 .ficha-concept-media {
@@ -308,12 +308,20 @@ body.ficha-page[data-on-primary="tinta"] {
   display: block;
 }
 
-.ficha-concept figcaption {
-  padding: .55rem .75rem .65rem;
-  color: var(--ficha-muted);
-  font-size: .78rem;
+/* Leyenda sobre el arte (héroe): sin barra debajo de la imagen. */
+.ficha-hero .ficha-concept-bleed figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  margin: 0;
+  padding: 2.25rem var(--ficha-gutter) .7rem 1rem;
+  border: none;
+  color: rgba(255, 255, 255, .92);
+  font-size: clamp(.88rem, 1.35vw, .98rem);
   font-style: italic;
-  border-top: 1px solid var(--ficha-line);
+  line-height: 1.35;
+  background: linear-gradient(180deg, transparent 0%, rgba(26, 40, 71, .55) 100%);
+  pointer-events: none;
 }
 
 /* —— Historia / inspiración (franja, distinta de las secciones) —— */
@@ -572,9 +580,6 @@ body.ficha-page[data-on-primary="tinta"] {
 }
 
 .ficha-comp-stage-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: .55rem;
   min-width: 0;
 }
 
@@ -599,15 +604,6 @@ body.ficha-page[data-on-primary="tinta"] {
   object-fit: cover;
   object-position: center center;
   display: block;
-}
-
-.ficha-comp-stage-cap {
-  margin: 0;
-  min-height: 1.25em;
-  color: var(--ficha-award-title, var(--ficha-dim));
-  font-size: .82rem;
-  font-style: italic;
-  line-height: 1.35;
 }
 
 .ficha-comp-side {
@@ -914,11 +910,6 @@ body.ficha-page .site-header {
   border-bottom: 1px solid var(--ficha-line, color-mix(in srgb, var(--ficha-c-tinta) 12%, transparent));
 }
 
-body.ficha-page .site-header .shell,
-body.ficha-page .site-footer .shell {
-  width: min(1320px, calc(100% - 2 * clamp(1.25rem, 2.5vw, 2.75rem)));
-}
-
 body.ficha-page .brand b {
   color: var(--ficha-header-text, var(--ficha-title, var(--ficha-c-tinta)));
 }
@@ -1077,18 +1068,6 @@ body.ficha-page .site-footer a:hover {
     object-fit: contain;
     object-position: center center;
     display: block;
-  }
-
-  .ficha-concept-bleed figcaption {
-    position: absolute;
-    inset: auto 0 0 0;
-    z-index: 1;
-    margin: 0;
-    padding: 2.25rem var(--ficha-gutter) .7rem 1rem;
-    border: none;
-    color: var(--ficha-on-band-title);
-    background: var(--ficha-band-bg);
-    pointer-events: none;
   }
 }
 

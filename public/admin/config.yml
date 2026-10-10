@@ -136,7 +136,7 @@ collections:
         name: fichaMode
         widget: select
         default: light
-        hint: 'Elección explícita por juego. El botón de debug permite comparar sin modificar este valor.'
+        hint: 'Claro u oscuro para la ficha unificada; independiente de la paleta.'
         options:
           - { label: Claro, value: light }
           - { label: Oscuro, value: dark }

@@ -17,6 +17,9 @@
   --white: #fffdf6;
   --shadow: 0 14px 35px rgba(44,45,40,.14);
   --shell: 1200px;
+  /* Header/footer: misma caja que fichas (1320 + gutter fluido). */
+  --site-chrome-max: 1320px;
+  --site-chrome-gutter: clamp(1.25rem, 2.5vw, 2.75rem);
 }
 
 * { box-sizing: border-box; }
@@ -46,6 +49,11 @@ a { color: inherit; }
 img { display: block; max-width: 100%; }
 h1, h2, h3, p, figure { margin-top: 0; }
 .shell { width: min(var(--shell), calc(100% - 3rem)); margin-inline: auto; }
+
+.site-header .shell,
+.site-footer .shell {
+  width: min(var(--site-chrome-max), calc(100% - 2 * var(--site-chrome-gutter)));
+}
 
 .site-header {
   position: sticky;

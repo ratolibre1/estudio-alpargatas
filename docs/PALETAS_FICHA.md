@@ -30,11 +30,18 @@ fichaMode: light
 
 `fichaMode` acepta `light` o `dark`, también desde el CMS. El fallback es `light`. `fichaBandMode()` solo lee esta decisión: la luminancia, el sistema operativo y cambiar la paleta no cambian el modo. El HTML estático incluye `data-band` y el tema completo, por lo que funciona sin JavaScript.
 
-Los 19 juegos parten explícitamente en **claro**, como en la última vista aprobada. Esta es la configuración inicial; los modos definitivos por juego se decidirán usando el debug. No se ha inferido ni aprobado un reparto automático de modos.
+**Modo estándar (oct 2026):** cada juego tiene `fichaMode: light | dark` en CMS. Reparto aprobado:
+
+| Modo | Juegos |
+|---|---|
+| **dark** | Almagesto, Chauvet, Evoluciona, Hubris, Palomas, Pavoneo, Piramisú, Reloj, Tartán |
+| **light** | Amateurasu, Canes, Carcinogenial, Chispas, Ermitaños, Gato, Letrados, Mantas, Nínive, Nudis |
+
+Para cambiar el reparto: editar solo `fichaMode` en el `.md` o en Decap (sin tocar `palette`).
 
 ## Superficies y lectura
 
-`src/lib/ficha-colors.ts` calcula los mismos tokens al compilar y al alternar el debug. `src/styles/ficha.css` aplica esos tokens y conserva las reglas estructurales.
+`src/lib/ficha-colors.ts` calcula los tokens al compilar; `src/styles/ficha.css` los aplica.
 
 | Elemento | Claro | Oscuro |
 |---|---|---|
@@ -45,7 +52,7 @@ Los 19 juegos parten explícitamente en **claro**, como en la última vista apro
 | Cajitas | 16% principal + 84% base | 14% base + 86% tinta |
 | Paneles de recursos | 10% principal + 90% base | 12% base + 88% tinta |
 | CTA | Principal | Contrapunto |
-| Etiqueta de estado | 82% contrapunto + 18% base | La misma mezcla |
+| Etiqueta de estado | Colores fijos del portafolio (`state-badge.ts`) | Igual |
 
 Estas son las mezclas de partida. Si una superficie no permite un contraste de 4,6:1 con ningún slot, se reduce su mezcla hacia base o tinta. El encabezado se distingue del cuerpo en ambos modos.
 
@@ -53,48 +60,28 @@ El texto se elige contra **su fondo real**, no contra un color distinto al usado
 
 No hay quinto color de origen. Las mezclas generan los tokens semánticos; no se guardan como nuevos colores en el CMS.
 
-## Debug para revisar decisiones
-
-- En `npm run dev` y previews de Netlify se activa automáticamente.
-- En un build normal se abre cualquier ficha con `?debug=paleta`, por ejemplo `/juegos/canes?debug=paleta`.
-- **Ver oscuro / Ver claro** alterna el tema completo. Los cuatro colores y las fuentes no cambian.
-- Las elecciones se recuerdan por keyword en el navegador y se comparten entre ES/EN. Sin almacenamiento disponible, el botón sigue funcionando.
-- La URL incluye `modo=light|dark`, para compartir la misma vista.
-- **Restablecer** elimina la elección local del juego y recupera su `fichaMode` del CMS.
-- **Copiar decisiones** copia los modos de los 19 juegos. Donde no hay elección local, usa el modo del CMS. Si el portapapeles no está disponible, muestra texto seleccionable.
-- Fuera del debug se respeta siempre el CMS, aunque haya elecciones locales guardadas.
-
-El debug es una vista local y **no modifica el CMS**. Para cerrar decisiones, pasar el texto copiado al agente y pedir que actualice únicamente `fichaMode` en cada archivo, sin tocar `palette`, y recompilar/desplegar. Ejemplo del formato:
-
-```yaml
-# fichaMode: decisiones locales de debug
-almagesto: dark
-amateurasu: light
-canes: light
-```
-
 ## Paletas aprobadas
 
-| Juego | Base | Principal | Contrapunto | Tinta | Modo inicial |
+| Juego | Base | Principal | Contrapunto | Tinta | `fichaMode` |
 |---|---|---|---|---|---|
-| Almagesto | `#E7E4FA` | `#5146B5` | `#816019` | `#18142F` | `light` |
-| Amateurasu | `#FBE6D5` | `#B82F32` | `#256B6B` | `#462022` | `light` |
-| El Gran Festival de Canes | `#EEF1DB` | `#476B32` | `#9D5735` | `#253521` | `light` |
-| Carcinogenial | `#F1F3DF` | `#922D67` | `#5F7214` | `#2B1728` | `light` |
-| Chauvet | `#E9E2D3` | `#504941` | `#A04827` | `#29241F` | `light` |
-| Chispas | `#FFF0BE` | `#BF3F1C` | `#276C84` | `#3B241A` | `light` |
-| Ermitaños | `#DDF3EB` | `#006F73` | `#9F305A` | `#143D35` | `light` |
-| Evoluciona | `#F3EAD1` | `#806012` | `#755698` | `#393017` | `light` |
-| Gato Regalón | `#F8E8E5` | `#9A3D54` | `#4D6E44` | `#422934` | `light` |
-| Hubris | `#EDE2FC` | `#7E36B7` | `#859524` | `#24102F` | `light` |
-| Letrados | `#E8F0FF` | `#2351A8` | `#915409` | `#182844` | `light` |
-| Mantas a Raya | `#DCEFFA` | `#136C99` | `#AB3B25` | `#10283B` | `light` |
-| Nínive | `#F3E3CA` | `#1A6A77` | `#9C4D23` | `#15343A` | `light` |
-| Manda Nudis | `#F8E5F3` | `#AD287E` | `#17646F` | `#39213C` | `light` |
-| Palomas | `#ECE9E3` | `#4E5B77` | `#735913` | `#252B3A` | `light` |
-| Pavoneo | `#EEF0D8` | `#596C18` | `#933E7B` | `#293316` | `light` |
-| Piramisú | `#F7E0C3` | `#6F381B` | `#28577A` | `#382218` | `light` |
-| Hasta un Reloj Roto... | `#EEDFF0` | `#6D416C` | `#885316` | `#302039` | `light` |
-| Tartán | `#E2EAE4` | `#235C4B` | `#A62B43` | `#1A332C` | `light` |
+| Almagesto | `#E7E4FA` | `#5146B5` | `#816019` | `#18142F` | **dark** |
+| Amateurasu | `#FBE6D5` | `#B82F32` | `#256B6B` | `#462022` | light |
+| El Gran Festival de Canes | `#EEF1DB` | `#476B32` | `#9D5735` | `#253521` | light |
+| Carcinogenial | `#F1F3DF` | `#922D67` | `#5F7214` | `#2B1728` | light |
+| Chauvet | `#E9E2D3` | `#504941` | `#A04827` | `#29241F` | **dark** |
+| Chispas | `#FFF0BE` | `#BF3F1C` | `#276C84` | `#3B241A` | light |
+| Ermitaños | `#DDF3EB` | `#006F73` | `#9F305A` | `#143D35` | light |
+| Evoluciona | `#F3EAD1` | `#806012` | `#755698` | `#393017` | **dark** |
+| Gato Regalón | `#F8E8E5` | `#9A3D54` | `#4D6E44` | `#422934` | light |
+| Hubris | `#EDE2FC` | `#7E36B7` | `#859524` | `#24102F` | **dark** |
+| Letrados | `#E8F0FF` | `#2351A8` | `#915409` | `#182844` | light |
+| Mantas a Raya | `#DCEFFA` | `#136C99` | `#AB3B25` | `#10283B` | light |
+| Nínive | `#F3E3CA` | `#1A6A77` | `#9C4D23` | `#15343A` | light |
+| Manda Nudis | `#F8E5F3` | `#AD287E` | `#17646F` | `#39213C` | light |
+| Palomas | `#ECE9E3` | `#4E5B77` | `#735913` | `#252B3A` | **dark** |
+| Pavoneo | `#EEF0D8` | `#596C18` | `#933E7B` | `#293316` | **dark** |
+| Piramisú | `#F7E0C3` | `#6F381B` | `#28577A` | `#382218` | **dark** |
+| Hasta un Reloj Roto... | `#EEDFF0` | `#6D416C` | `#885316` | `#302039` | **dark** |
+| Tartán | `#E2EAE4` | `#235C4B` | `#A62B43` | `#1A332C` | **dark** |
 
 Ver [PALETAS_WORKFLOW.md](./PALETAS_WORKFLOW.md) para futuras revisiones.

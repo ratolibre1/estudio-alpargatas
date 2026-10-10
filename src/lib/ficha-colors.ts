@@ -26,7 +26,7 @@ export function mixColors(a: string, b: string, weight: number): string {
     .toString(16).padStart(2, '0')).join('');
 }
 
-/** La misma derivación se usa en el HTML estático y en el botón de debug. */
+/** Derivación de tokens semánticos a partir de palette + modo (build estático). */
 export function fichaColorVars(palette: string[], mode: FichaMode): Record<string, string> {
   const { base, primary, apoyo, tinta } = paletteRoles(palette);
   const colors = [base, tinta, primary, apoyo];
