@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TarotReading from '../components/TarotReading.astro';
 import { getHomeAllGames, localizeGame } from '../lib/games';
 import { home } from '../i18n/home';
 import { getLocale, localizePath } from '../i18n/locale';
@@ -39,6 +40,8 @@ const stateBadge: Record<string, { bg: string; color: string }> = {
         <span>{t.photoNinive}</span>
       </a>
     </section>
+
+    <TarotReading locale={locale} />
 
     <section class="games-section" id="juegos" aria-labelledby="games-title">
       <div class="shell">

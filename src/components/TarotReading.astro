@@ -1,0 +1,78 @@
+---
+import type { Lang } from '../i18n/locale';
+import { tarot } from '../i18n/tarot';
+import { getGames, localizeGame } from '../lib/games';
+import { tarotImage } from '../lib/tarot';
+import '../styles/tarot.css';
+
+interface Props { locale: Lang }
+const { locale } = Astro.props;
+const t = tarot[locale];
+const games = (await getGames())
+  .filter((game) => game.state !== 'publicado')
+  .map((game) => localizeGame(game, locale))
+  .map(({ keyword, name, href, blurb }) => ({ keyword, name, href, blurb }));
+---
+
+<section class="tarot-section shell" data-tarot data-locale={locale} data-tarot-games={JSON.stringify(games)} aria-labelledby="tarot-title">
+  <div class="tarot-invitation">
+    <div class="tarot-invitation-copy">
+      <p class="tarot-eyebrow">✦ {t.overline}</p>
+      <h2 id="tarot-title">{t.title}</h2>
+      <p class="tarot-intro">{t.intro}</p>
+      <button type="button" class="tarot-primary" data-tarot-open aria-haspopup="dialog" aria-controls="tarot-dialog" disabled>{t.open} <span aria-hidden="true">↗</span></button>
+      <p class="tarot-meta">{t.meta}</p>
+      <noscript><p>{t.noScript}</p></noscript>
+    </div>
+    <div class="tarot-preview" aria-hidden="true">
+      <span class="tarot-orbit"></span>
+      {[2, 0, 21].map((id, index) => <img src={tarotImage(id)} alt="" loading="lazy" width="600" height="900" style={`--preview-index:${index}`} />)}
+      <span class="tarot-preview-star">✦</span>
+    </div>
+  </div>
+
+  <dialog id="tarot-dialog" class="tarot-dialog" aria-labelledby="tarot-dialog-title" aria-describedby="tarot-instructions">
+    <div class="tarot-dialog-body">
+      <header class="tarot-dialog-header">
+        <p class="tarot-eyebrow">✦ {t.overline}</p>
+        <button type="button" class="tarot-close" data-tarot-close aria-label={t.close} autofocus>×</button>
+        <h2 id="tarot-dialog-title">{t.dialogTitle}</h2>
+        <p id="tarot-instructions">{t.instructions}</p>
+        <p class="tarot-counter" data-tarot-status>0 / 3 {t.counter}</p>
+        <p class="tarot-sr-only" data-tarot-announcer role="status" aria-live="polite" aria-atomic="true"></p>
+      </header>
+
+      <div class="tarot-spread" role="group" aria-label={t.reading}>
+        {t.phases.map((phase, index) => <figure class="tarot-slot" data-tarot-slot>
+          <figcaption class="tarot-phase"><span>{String(index + 1).padStart(2, '0')}</span> {phase}</figcaption>
+          <div class="tarot-card-place" data-tarot-place><span class="tarot-empty-star" aria-hidden="true">✦</span></div>
+          <div class="tarot-card-reading" data-tarot-reading hidden><h3></h3><p></p></div>
+        </figure>)}
+      </div>
+
+      <div class="tarot-deck-area" data-tarot-deck-area>
+        <p class="tarot-deck-label">{t.choose} <span aria-hidden="true">↓</span></p>
+        <div class="tarot-fan-scroll" data-tarot-scroll>
+          <div class="tarot-fan" data-tarot-fan role="group" aria-label={t.instructions}></div>
+        </div>
+        <p class="tarot-scroll-hint">{t.scroll}</p>
+      </div>
+
+      <div class="tarot-result" data-tarot-result hidden>
+        <p class="tarot-eyebrow">✦ {t.recommendation}</p>
+        <p class="tarot-result-intro">{t.match}</p>
+        <h3 data-tarot-game-name></h3>
+        <p class="tarot-game-blurb" data-tarot-game-blurb></p>
+        <div class="tarot-result-actions">
+          <a class="tarot-primary" data-tarot-game-link>{t.discover} <span aria-hidden="true">→</span></a>
+          <button type="button" class="tarot-again" data-tarot-again>{t.again} ↻</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  import { initTarot } from '../lib/tarot-client';
+  document.querySelectorAll<HTMLElement>('[data-tarot]').forEach(initTarot);
+</script>
