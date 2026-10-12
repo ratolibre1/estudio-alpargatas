@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
+import { cacheBustAssets } from './src/integrations/cache-bust-assets.mjs';
 
 export default defineConfig({
+  integrations: [cacheBustAssets()],
   output: 'static',
   trailingSlash: 'never',
   i18n: {
