@@ -1,0 +1,26 @@
+export const tarot = {
+  es: {
+    overline: 'El tarot de Alpargatas', title: 'Tu próxima jugada está en las cartas.',
+    intro: 'Elige tres cartas, descubre qué te depara la mesa y encuentra un juego que todavía no conoces.',
+    open: 'Consultar las cartas', meta: '22 arcanos · 3 cartas · 1 juego por descubrir',
+    dialogTitle: '¿Qué te depara la mesa?', instructions: 'Elige tres cartas del abanico. Deja que la intuición haga su jugada.',
+    close: 'Cerrar la lectura', faceDown: 'Carta boca abajo', choose: 'Elige una carta',
+    chosen: 'Carta revelada', counter: 'cartas reveladas', scroll: 'Desliza el abanico para explorar las cartas.',
+    phases: ['Lo que te mueve', 'Lo que te espera', 'Tu próxima jugada'],
+    reading: 'Tu lectura', complete: 'Las tres cartas han hablado.',
+    recommendation: 'Tu próximo juego', match: 'Las cartas te llevan a',
+    discover: 'Descubrir', again: 'Volver a tirar', noScript: 'Activa JavaScript para consultar las cartas.',
+  },
+  en: {
+    overline: 'The Alpargatas tarot', title: 'Your next move is in the cards.',
+    intro: 'Choose three cards, discover what the table has in store, and find a game you have yet to meet.',
+    open: 'Read the cards', meta: '22 arcana · 3 cards · 1 game to discover',
+    dialogTitle: 'What does the table hold for you?', instructions: 'Choose three cards from the fan. Let your intuition make its move.',
+    close: 'Close the reading', faceDown: 'Face-down card', choose: 'Choose a card',
+    chosen: 'Revealed card', counter: 'cards revealed', scroll: 'Swipe the fan to explore the cards.',
+    phases: ['What moves you', 'What awaits you', 'Your next move'],
+    reading: 'Your reading', complete: 'All three cards have spoken.',
+    recommendation: 'Your next game', match: 'The cards lead you to',
+    discover: 'Discover', again: 'Draw again', noScript: 'Enable JavaScript to read the cards.',
+  },
+} as const;

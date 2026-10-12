@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900" viewBox="0 0 600 900">
+  <defs>
+    <pattern id="stars" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M30 25v10m-5-5h10" stroke="#c7a763" stroke-width="1" opacity=".24"/></pattern>
+  </defs>
+  <rect width="600" height="900" rx="22" fill="#192d42"/>
+  <rect x="18" y="18" width="564" height="864" rx="14" fill="url(#stars)" stroke="#c7a763" stroke-width="3"/>
+  <rect x="34" y="34" width="532" height="832" rx="8" fill="none" stroke="#c7a763"/>
+  <g fill="none" stroke="#c7a763" stroke-width="3">
+    <path d="M300 100 490 450 300 800 110 450Z"/>
+    <path d="M300 150 460 450 300 750 140 450Z"/>
+    <circle cx="300" cy="450" r="120"/><circle cx="300" cy="450" r="140" stroke-dasharray="2 12"/>
+    <path d="M180 450q120-115 240 0-120 115-240 0Z"/>
+  </g>
+  <path d="m300 350 21 70 69 30-69 30-21 70-21-70-69-30 69-30Z" fill="#e6bc66"/>
+  <circle cx="300" cy="450" r="15" fill="#192d42"/>
+  <g fill="#e6bc66"><path d="m300 62 6 16 16 6-16 6-6 16-6-16-16-6 16-6Zm0 732 6 16 16 6-16 6-6 16-6-16-16-6 16-6Z"/><circle cx="76" cy="450" r="5"/><circle cx="524" cy="450" r="5"/></g>
+</svg>
