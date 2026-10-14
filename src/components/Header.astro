@@ -3,7 +3,7 @@ import { chrome } from '../i18n/chrome';
 import { getLocale, localizePath, switchLocalePath } from '../i18n/locale';
 
 interface Props {
-  current?: 'home' | 'ninive' | 'portafolio' | 'estudio';
+  current?: 'home' | 'portafolio' | 'estudio';
 }
 
 const { current = 'home' } = Astro.props;
@@ -20,8 +20,7 @@ const nextLocale = locale === 'es' ? 'en' : 'es';
       <span><b>Estudio Alpargatas</b><small>{t.brandSmall}</small></span>
     </a>
     <div class="nav-links">
-      <a href={`${localizePath('/', locale)}#juegos`}>{t.navGames}</a>
-      <a href={localizePath('/juegos/ninive/', locale)} aria-current={current === 'ninive' ? 'page' : undefined}>{t.navNinive}</a>
+      <a href={`${localizePath('/', locale)}#juegos`}>{t.navTarot}</a>
       <a href={localizePath('/portafolio/', locale)} aria-current={current === 'portafolio' ? 'page' : undefined}>{t.navPortfolio}</a>
       <a href={localizePath('/estudio/', locale)} aria-current={current === 'estudio' ? 'page' : undefined}>{t.navEstudio}</a>
       <a class="nav-instagram" href="https://www.instagram.com/estudioalpargatas/" aria-label={t.navInstagram}>

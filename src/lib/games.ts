@@ -53,23 +53,9 @@ export async function getGames(): Promise<GameCard[]> {
     .sort((a, b) => b.date.localeCompare(a.date) || a.stateOrder - b.stateOrder);
 }
 
-export async function getHomeGames(section: 'featured' | 'proto'): Promise<GameCard[]> {
-  const games = await getGames();
-  return games
-    .filter((game) => game.home === section)
-    .sort((a, b) => a.homeOrder - b.homeOrder);
-}
-
 export async function getIdeaGames(): Promise<GameCard[]> {
   const games = await getGames();
   return games.filter((game) => game.state === 'idea');
-}
-
-export async function getHomeAllGames(): Promise<GameCard[]> {
-  const games = await getGames();
-  return games
-    .filter((game) => game.home !== 'none')
-    .sort((a, b) => b.date.localeCompare(a.date) || a.stateOrder - b.stateOrder || a.homeOrder - b.homeOrder);
 }
 
 export function localizeGame(game: GameCard, locale: Lang): GameCard {

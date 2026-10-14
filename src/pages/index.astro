@@ -1,22 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TarotReading from '../components/TarotReading.astro';
-import { getHomeAllGames, localizeGame } from '../lib/games';
 import { home } from '../i18n/home';
 import { getLocale, localizePath } from '../i18n/locale';
 
 const locale = getLocale(Astro);
 const t = home[locale];
-const homeGames = (await getHomeAllGames()).map((g) => localizeGame(g, locale));
-
-const stateBadge: Record<string, { bg: string; color: string }> = {
-  publicado:  { bg: '#7c3aed', color: '#fff' },
-  produccion: { bg: '#2563eb', color: '#fff' },
-  disponible: { bg: '#16a34a', color: '#fff' },
-  pruebas:    { bg: '#eab308', color: '#1a1205' },
-  boceto:     { bg: '#f97316', color: '#fff' },
-  idea:       { bg: '#dc2626', color: '#fff' },
-};
 ---
 
 <BaseLayout
@@ -42,40 +31,6 @@ const stateBadge: Record<string, { bg: string; color: string }> = {
     </section>
 
     <TarotReading locale={locale} />
-
-    <section class="games-section" id="juegos" aria-labelledby="games-title">
-      <div class="shell">
-        <header class="section-title-row">
-          <div><span class="section-number">01</span><p class="overline">{t.catOverline}</p></div>
-          <h2 id="games-title" set:html={t.catTitle} />
-          <p>{t.catLede}</p>
-        </header>
-        <div class="home-games-grid">
-          {homeGames.map((game) => {
-            const badge = stateBadge[game.state] ?? { bg: '#888', color: '#fff' };
-            return (
-              <a href={game.href} class="home-game-card">
-                {game.image
-                  ? <img src={game.image} alt={game.imageAlt ?? game.name} loading="lazy" />
-                  : game.coverTheme
-                    ? <div class={`home-game-cover sample-game-${game.coverTheme}`}>
-                        <span>{game.coverNumber}</span>
-                        <strong>{game.coverTitle ?? game.name}</strong>
-                        <small>{game.coverStatus}</small>
-                      </div>
-                    : <div class={`prototype-cover cover-${game.keyword}`}><b>{game.coverInitials}</b></div>
-                }
-                <div class="home-game-info">
-                  <span class="home-game-badge" style={`background:${badge.bg};color:${badge.color}`}>{game.stateLabel}</span>
-                  <h3>{game.name}</h3>
-                  <p>{game.blurb}</p>
-                </div>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-    </section>
 
     <section class="about-section">
       <div class="shell about-grid">

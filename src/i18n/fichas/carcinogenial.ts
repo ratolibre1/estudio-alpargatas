@@ -69,7 +69,7 @@ export const carcinogenial = {
     originP: 'Carcinogenial es el prototipo original que evolucionó hacia El Gran Festival de Canes. La mecánica de sets + fichas de acción es la misma; el universo canino llegó después.',
 
     backAria: 'Navegación de vuelta',
-    backPrompt: 'Ver el catálogo completo',
+    backPrompt: 'Mira el catálogo completo',
     backLink: '← Portafolio',
     footer: 'Carcinogenial · Estudio Alpargatas',
     componentsPhotoAlt: 'Prototipo Carcinogenial en mesa',

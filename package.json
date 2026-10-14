@@ -8,7 +8,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "assets:tarot-back": "npx --yes @resvg/resvg-js-cli --fit-width 1200 --shape-rendering 2 public/assets/tarot/back.svg public/assets/tarot/back.png && magick public/assets/tarot/back.png -quality 92 public/assets/tarot/back.webp && rm public/assets/tarot/back.png"
   },
   "dependencies": {
     "astro": "^6.0.0"

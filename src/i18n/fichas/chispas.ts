@@ -43,7 +43,7 @@ export const chispas = {
       'Duplicar',
       'Reducir',
       'Invertir',
-      'Explorar',
+      'Explora',
       'Proteger',
       'Activar',
       'Cancelar',
