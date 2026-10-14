@@ -33,7 +33,9 @@ export const TAROT_CARDS: readonly TarotCard[] = [
   { id: 21, name: { es: 'El Umbral', en: 'The Threshold' }, prediction: { es: 'Estás a una jugada de entrar en un mundo nuevo. Cruza el umbral: hay una historia esperando por ti.', en: 'You are one move away from a new world. Cross the threshold: a story is waiting for you.' }, games: ['amateurasu', 'ermitanos', 'chauvet'] },
 ];
 
-export const tarotImage = (id: number) => `/assets/tarot/${String(id).padStart(2, '0')}.webp`;
+/** Revised illustrations use a new URL so returning visitors receive the latest artwork. */
+const REVISED_TAROT_IDS = new Set([0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21]);
+export const tarotImage = (id: number) => `/assets/tarot/${String(id).padStart(2, '0')}${REVISED_TAROT_IDS.has(id) ? '-v2' : ''}.webp`;
 /** Reverso raster (1200×1800); fuente editable en `back.svg`. Regenerar: `npm run assets:tarot-back`. */
 export const tarotBackImage = () => '/assets/tarot/back.webp';
 
