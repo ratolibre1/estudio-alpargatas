@@ -47,8 +47,8 @@ export const sobre = {
     contactTitle: '¿Algo te dio curiosidad?',
     contactBody:
       'Si quieres conocer un juego, probar un prototipo o conversar sobre una posible publicación, puedes escribirnos por Instagram. Probablemente te responda Estefi.',
-    ctaIg: 'Abrir Instagram ↗',
-    ctaPortfolio: 'Ver el portafolio →',
+    ctaIg: 'Abre Instagram ↗',
+    ctaPortfolio: 'Mira el portafolio →',
     ctaNinive: 'La ficha de Nínive →',
   },
   en: {
@@ -98,7 +98,7 @@ export const sobre = {
     contactBody:
       'If you want to learn about a game, playtest a prototype, or discuss a possible publication, write to us on Instagram. Estefi will probably be the one to reply.',
     ctaIg: 'Open Instagram ↗',
-    ctaPortfolio: 'See the portfolio →',
+    ctaPortfolio: 'Check the portfolio →',
     ctaNinive: 'The Nínive page →',
   },
 } as const satisfies Record<Lang, Record<string, string>>;

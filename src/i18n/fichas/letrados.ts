@@ -81,7 +81,7 @@ export const letrados = {
     protoAlt: 'Dos torres de Letrados sobre la mesa, una carta por letra',
     protoCap: 'El proto en mesa. Dos torres, veintiséis cartas.',
     backPrompt: '¿Seguimos mirando?',
-    backLink: 'Ver el portafolio completo →',
+    backLink: 'Mira el portafolio completo →',
   },
   en: {
     title: 'Letrados — Estudio Alpargatas',

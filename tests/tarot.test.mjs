@@ -8,7 +8,16 @@ async function load(entryPoint) {
   const result = await build({ entryPoints: [entryPoint], bundle: true, write: false, format: 'esm', platform: 'node' });
   return import('data:text/javascript;base64,' + Buffer.from(result.outputFiles[0].text).toString('base64'));
 }
-const { TAROT_CARDS, shuffleTarot, selectTarotCard, recommendTarotGame, tarotImage } = await load('src/lib/tarot.ts');
+const {
+  TAROT_CARDS,
+  shuffleTarot,
+  selectTarotCard,
+  recommendTarotGame,
+  tarotArcanaLabel,
+  tarotCardHeading,
+  tarotBackImage,
+  tarotImage,
+} = await load('src/lib/tarot.ts');
 const { localizePath } = await load('src/i18n/locale.ts');
 const games = readdirSync('src/content/games').map((file) => yaml.load(readFileSync('src/content/games/' + file, 'utf8').split('---')[1]));
 const eligible = games.filter((game) => game.state !== 'publicado').map((game) => game.keyword);
@@ -16,7 +25,9 @@ const eligible = games.filter((game) => game.state !== 'publicado').map((game) =
 test('22 arcanos completos, imágenes locales y afinidades a prototipos reales', () => {
   assert.deepEqual(TAROT_CARDS.map((card) => card.id), Array.from({ length: 22 }, (_, i) => i));
   for (const card of TAROT_CARDS) {
-    assert(existsSync('public' + tarotImage(card.id)), card.name.es);
+    const assetPath = 'public' + tarotImage(card.id);
+    assert(existsSync(assetPath), card.name.es);
+    assert(readFileSync(assetPath).length > 512, `${card.name.es}: asset vacío o corrupto`);
     for (const locale of ['es', 'en']) {
       assert(card.name[locale]);
       assert(card.prediction[locale].length > 30);
@@ -25,6 +36,17 @@ test('22 arcanos completos, imágenes locales y afinidades a prototipos reales',
     assert.equal(new Set(card.games).size, 3);
     assert(card.games.every((slug) => eligible.includes(slug)), card.name.es);
   }
+  const backPath = 'public' + tarotBackImage();
+  assert(existsSync(backPath));
+  assert(readFileSync(backPath).length > 512, 'reverso WebP ausente o corrupto');
+});
+
+test('etiquetas de arcano: 0 arábigo y I–XXI en romano', () => {
+  assert.equal(tarotArcanaLabel(0), '0');
+  assert.equal(tarotArcanaLabel(21), 'XXI');
+  assert.equal(tarotArcanaLabel(18), 'XVIII');
+  const umbral = TAROT_CARDS.find((card) => card.id === 21);
+  assert.equal(tarotCardHeading(umbral, 'es'), 'XXI | El Umbral');
 });
 
 test('la mezcla cambia el orden sin perder ni repetir cartas', () => {

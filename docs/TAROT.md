@@ -14,7 +14,7 @@ La portada ES/EN incluye `TarotReading.astro`: invitación grande y diálogo nat
 
 Fuente: carpeta Drive **Juegos de Mesa / Tarot Web**, ID `1IS7gZr1v4Pvjz6snN1_hUYAEHxbT8zcZ`. Contiene 22 PNG numerados 00–21. Se conservaron completos, sin recortes, como WebP de 600×900 en `public/assets/tarot/`. Los originales siguen en Drive. Las predicciones son texto nuevo para esta funcionalidad.
 
-`back.svg` es un reverso vectorial común, con estrella y marco dorado sobre tinta azul. Las imágenes de la invitación son diferidas; dentro del diálogo solo se descarga el anverso de cada carta elegida.
+Reverso: `back.svg` es la fuente; `back.webp` (1200×1800, export con resvg) es lo que carga el abanico. Regenerar tras editar el SVG: `npm run assets:tarot-back`. Los anversos van en WebP 600×900. Las imágenes de la invitación son diferidas; dentro del diálogo solo se descarga el anverso de cada carta elegida.
 
 ## Accesibilidad y comprobación
 

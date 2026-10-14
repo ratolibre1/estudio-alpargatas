@@ -14,14 +14,13 @@ const games = (await getGames())
   .map(({ keyword, name, href, blurb }) => ({ keyword, name, href, blurb }));
 ---
 
-<section class="tarot-section shell" data-tarot data-locale={locale} data-tarot-games={JSON.stringify(games)} aria-labelledby="tarot-title">
+<section id="juegos" class="tarot-section shell" data-tarot data-locale={locale} data-tarot-games={JSON.stringify(games)} aria-labelledby="tarot-title">
   <div class="tarot-invitation">
     <div class="tarot-invitation-copy">
       <p class="tarot-eyebrow">✦ {t.overline}</p>
       <h2 id="tarot-title">{t.title}</h2>
       <p class="tarot-intro">{t.intro}</p>
-      <button type="button" class="tarot-primary" data-tarot-open aria-haspopup="dialog" aria-controls="tarot-dialog" disabled>{t.open} <span aria-hidden="true">↗</span></button>
-      <p class="tarot-meta">{t.meta}</p>
+      <button type="button" class="tarot-primary" data-tarot-open aria-haspopup="dialog" aria-controls="tarot-dialog" disabled>{t.open}</button>
       <noscript><p>{t.noScript}</p></noscript>
     </div>
     <div class="tarot-preview" aria-hidden="true">
@@ -37,35 +36,39 @@ const games = (await getGames())
         <p class="tarot-eyebrow">✦ {t.overline}</p>
         <button type="button" class="tarot-close" data-tarot-close aria-label={t.close} autofocus>×</button>
         <h2 id="tarot-dialog-title">{t.dialogTitle}</h2>
-        <p id="tarot-instructions">{t.instructions}</p>
-        <p class="tarot-counter" data-tarot-status>0 / 3 {t.counter}</p>
         <p class="tarot-sr-only" data-tarot-announcer role="status" aria-live="polite" aria-atomic="true"></p>
       </header>
 
-      <div class="tarot-spread" role="group" aria-label={t.reading}>
-        {t.phases.map((phase, index) => <figure class="tarot-slot" data-tarot-slot>
-          <figcaption class="tarot-phase"><span>{String(index + 1).padStart(2, '0')}</span> {phase}</figcaption>
-          <div class="tarot-card-place" data-tarot-place><span class="tarot-empty-star" aria-hidden="true">✦</span></div>
-          <div class="tarot-card-reading" data-tarot-reading hidden><h3></h3><p></p></div>
-        </figure>)}
-      </div>
-
-      <div class="tarot-deck-area" data-tarot-deck-area>
-        <p class="tarot-deck-label">{t.choose} <span aria-hidden="true">↓</span></p>
-        <div class="tarot-fan-scroll" data-tarot-scroll>
-          <div class="tarot-fan" data-tarot-fan role="group" aria-label={t.instructions}></div>
+      <div class="tarot-dialog-scroll-mask" data-tarot-scroll-mask>
+        <div class="tarot-dialog-scroll" data-tarot-scroll-region tabindex="-1">
+        <div class="tarot-deck-area" data-tarot-deck-area>
+          <p id="tarot-instructions" class="tarot-deck-label">{t.instructions}</p>
+          <div class="tarot-fan-mask" data-tarot-fan-mask>
+            <div class="tarot-fan-viewport" data-tarot-scroll>
+              <div class="tarot-fan" data-tarot-fan role="group" aria-label={t.instructions}></div>
+            </div>
+          </div>
+          <p class="tarot-scroll-hint" data-tarot-scroll-hint>{t.scroll}</p>
         </div>
-        <p class="tarot-scroll-hint">{t.scroll}</p>
-      </div>
 
-      <div class="tarot-result" data-tarot-result hidden>
-        <p class="tarot-eyebrow">✦ {t.recommendation}</p>
-        <p class="tarot-result-intro">{t.match}</p>
-        <h3 data-tarot-game-name></h3>
-        <p class="tarot-game-blurb" data-tarot-game-blurb></p>
-        <div class="tarot-result-actions">
-          <a class="tarot-primary" data-tarot-game-link>{t.discover} <span aria-hidden="true">→</span></a>
-          <button type="button" class="tarot-again" data-tarot-again>{t.again} ↻</button>
+        <div class="tarot-spread" data-tarot-spread role="group" aria-label={t.reading}>
+          {t.phases.map((phase) => <figure class="tarot-slot" data-tarot-slot>
+            <figcaption class="tarot-phase">{phase}</figcaption>
+            <div class="tarot-card-place" data-tarot-place><span class="tarot-empty-star" aria-hidden="true">✦</span></div>
+            <div class="tarot-card-reading" data-tarot-reading aria-hidden="true"><h3></h3><p></p></div>
+          </figure>)}
+        </div>
+
+        <div class="tarot-result" data-tarot-result hidden>
+          <p class="tarot-eyebrow">✦ {t.recommendation}</p>
+          <p class="tarot-result-intro">{t.match}</p>
+          <h3 data-tarot-game-name></h3>
+          <p class="tarot-game-blurb" data-tarot-game-blurb></p>
+          <div class="tarot-result-actions">
+            <a class="tarot-primary" data-tarot-game-link>{t.discover} <span aria-hidden="true">→</span></a>
+            <button type="button" class="tarot-again" data-tarot-again>{t.again} ↻</button>
+          </div>
+        </div>
         </div>
       </div>
     </div>

@@ -3,8 +3,7 @@ import type { Lang } from './locale';
 export const chrome = {
   es: {
     brandSmall: 'juegos de mesa · Chile',
-    navGames: 'Juegos',
-    navNinive: 'Nínive',
+    navTarot: 'Tienta a la Suerte',
     navPortfolio: 'Portafolio',
     navEstudio: 'Estudio',
     navInstagram: 'Instagram ↗',
@@ -19,8 +18,7 @@ export const chrome = {
   },
   en: {
     brandSmall: 'board games · Chile',
-    navGames: 'Games',
-    navNinive: 'Nínive',
+    navTarot: 'Try your Luck',
     navPortfolio: 'Portfolio',
     navEstudio: 'Studio',
     navInstagram: 'Instagram ↗',

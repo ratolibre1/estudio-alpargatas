@@ -34,6 +34,24 @@ export const TAROT_CARDS: readonly TarotCard[] = [
 ];
 
 export const tarotImage = (id: number) => `/assets/tarot/${String(id).padStart(2, '0')}.webp`;
+/** Reverso raster (1200×1800); fuente editable en `back.svg`. Regenerar: `npm run assets:tarot-back`. */
+export const tarotBackImage = () => '/assets/tarot/back.webp';
+
+const ROMAN_BY_ID: Record<number, string> = {
+  1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X',
+  11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII',
+  19: 'XIX', 20: 'XX', 21: 'XXI',
+};
+
+/** Arcano 0 → `0`; arcanos I–XXI en romano (según `id` del CMS). */
+export function tarotArcanaLabel(id: number): string {
+  if (id === 0) return '0';
+  return ROMAN_BY_ID[id] ?? String(id);
+}
+
+export function tarotCardHeading(card: Pick<TarotCard, 'id' | 'name'>, locale: Lang): string {
+  return `${tarotArcanaLabel(card.id)} | ${card.name[locale]}`;
+}
 
 /** Fisher–Yates: no repeated cards, and every position can receive any card. */
 export function shuffleTarot(random: () => number = Math.random): TarotCard[] {

@@ -91,7 +91,7 @@ export const canes = {
     galCloseCap: 'Agilidad y Rastreo. Las fichas se gastan de ahí.',
     originLabel: 'Origen',
     originP: 'El Gran Festival de Canes evolucionó desde Carcinogenial, un prototipo donde los jugadores eran cangrejos mutantes. La mecánica de sets + fichas de acción es la misma; solo cambió el universo.',
-    originLink: 'Ver Carcinogenial →',
+    originLink: 'Mira Carcinogenial →',
     dummyVersion: 'V0.2',
     dummyChange1: 'Texto de relleno. Acá va lo que se está ajustando en esta versión.',
     dummyChange2: 'Otro ajuste de muestra, para ver la tarjeta completa.',
