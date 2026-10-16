@@ -2,8 +2,8 @@
 keyword: nudis
 name: Manda Nudis
 emoji: 🐠
-tagline: Cada combinación de colores es un descubrimiento.
-taglineEn: Every color combination is a discovery.
+tagline: Hay mucho por descubrir en unos pocos centímetros.
+taglineEn: A few centimeters hold a world of discoveries.
 meta: Juego de cartas donde biólogos marinos coleccionan nudibranquios completando combinaciones de colores en una mano rotativa.
 metaEn: A card game where marine biologists collect nudibranchs by completing color combinations in a rotating hand.
 state: idea

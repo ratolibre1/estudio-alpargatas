@@ -2,8 +2,8 @@
 keyword: palomas
 name: Palomas
 emoji: 🕊️
-tagline: Las pandillas del asfalto.
-taglineEn: The gangs of the pavement.
+tagline: Hoy las migas. Mañana la ciudad.
+taglineEn: Today, the crumbs. Tomorrow, the city.
 meta: Juego de cartas de acción y defensa donde pandillas de palomas urbanas se enfrentan por el territorio de la ciudad.
 metaEn: An action-defense card game where urban pigeon gangs clash over city territory.
 state: idea
