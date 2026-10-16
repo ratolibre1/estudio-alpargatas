@@ -2,8 +2,8 @@
 keyword: piramisu
 name: Piramisú
 emoji: 🍰
-tagline: Construyan juntos el zigurat. Ningún ingrediente toca al mismo.
-taglineEn: Build the ziggurat together. No ingredient may touch its own kind.
+tagline: Un postre a la altura de los dioses.
+taglineEn: A dessert worthy of the gods.
 description: Cooperativo de 2 a 4. Veinticuatro cartas, cuatro ingredientes. La pirámide no admite dos iguales de vecinos.
 descriptionEn: Cooperative for 2 to 4. Twenty-four cards, four ingredients. The pyramid does not allow two matching neighbors.
 meta: Cooperativo · V2.0

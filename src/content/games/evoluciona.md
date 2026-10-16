@@ -2,8 +2,8 @@
 keyword: evoluciona
 name: Evoluciona
 emoji: 🐒
-tagline: Zapada Lúdica
-taglineEn: Zapada Lúdica
+tagline: Un pequeño paso para el mono, un gran salto para la humanidad.
+taglineEn: One small step for a monkey, one giant leap for mankind.
 meta: Card Shedding
 metaEn: Card Shedding
 state: boceto

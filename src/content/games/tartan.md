@@ -2,8 +2,8 @@
 keyword: tartan
 name: Tartán
 emoji: 🏴󠁧󠁢󠁳󠁣󠁴󠁿
-tagline: Teje el telar y entrega diseños a los clientes.
-taglineEn: Weave the loom and deliver designs to the clients.
+tagline: El orgullo de un clan se teje a mano.
+taglineEn: A clan's pride is woven by hand.
 description: Gestionas hilos y tinturas, tejes una urdimbre lineal y cumples encargos. Un rondel, un telar, varios clientes. 2 a 5 jugadores.
 descriptionEn: You manage threads and dyes, weave a linear warp, and fill commissions. A rondel, a loom, several clients. 2 to 5 players.
 meta: Clanes · Telar · 2–5

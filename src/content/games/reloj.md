@@ -2,8 +2,8 @@
 keyword: reloj
 name: Hasta un Reloj Roto...
 emoji: ⏰
-tagline: Ordena el día antes que los demás.
-taglineEn: Sort the day before everyone else.
+tagline: Las horas están contadas. Y todas desordenadas.
+taglineEn: The hours are numbered. And all out of order.
 description: Tres desafíos rápidos para ordenar el día, reconocer horas equivalentes y reaccionar antes que los demás.
 descriptionEn: Three quick challenges to sort the day, spot equivalent hours, and react before the others.
 meta: Rapidez · 3 modos · 48 cartas

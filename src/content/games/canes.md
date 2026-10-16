@@ -2,8 +2,8 @@
 keyword: canes
 name: El Gran Festival de Canes
 emoji: 🐕
-tagline: Completa las cinco disciplinas. El festival se gana por puntos.
-taglineEn: Complete the five disciplines. The festival is won on points.
+tagline: Todos son buenos perros. Uno se lleva la copa.
+taglineEn: They're all good dogs. One takes the trophy.
 description: Cada turno robas, bajas sets de 3 a 5 cartas iguales y gastas fichas de Acción. El primero en las cinco disciplinas cierra la ronda.
 descriptionEn: Each turn you draw, play sets of 3 to 5 matching cards, and spend Action tokens. The first to finish all five disciplines closes the round.
 meta: Sets · Fichas · V0.2

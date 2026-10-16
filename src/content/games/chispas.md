@@ -2,8 +2,8 @@
 keyword: chispas
 name: Chispas
 emoji: 🕯️
-tagline: El riesgo es de todos.
-taglineEn: The risk belongs to everyone.
+tagline: La mecha es corta. La amistad, veremos.
+taglineEn: The fuse is short. The friendship? We'll see.
 description: Un único mazo, tres acciones visibles y una mecha que obliga a medir cuánto consume cada jugada.
 descriptionEn: One shared deck, three visible actions, and a fuse that forces you to measure how much each play consumes.
 meta: Riesgo compartido · V0.3

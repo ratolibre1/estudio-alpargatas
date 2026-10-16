@@ -2,8 +2,8 @@
 keyword: letrados
 name: Letrados
 emoji: 🏗️
-tagline: Construye una torre de letras. Elige bien qué le dejas al otro.
-taglineEn: Build a tower of letters. Choose carefully what you leave the other player.
+tagline: Letra a letra, crece la rivalidad.
+taglineEn: Letter by letter, the rivalry grows.
 description: Duelo de dos. Cada turno el Capataz elige carta y el Obrero se queda con la otra. Se puntúa con la tabla de la carta cubierta.
 descriptionEn: A two-player duel. Each turn the Foreman picks a card and the Worker keeps the other. You score with the covered card's table.
 meta: Lighthouse · 2025

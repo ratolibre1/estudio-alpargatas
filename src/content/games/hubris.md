@@ -2,8 +2,8 @@
 keyword: hubris
 name: Hubris
 emoji: ⚡
-tagline: La mayor proclama única se lleva la Hazaña. Némesis espera al más soberbio.
-taglineEn: The highest unique boast takes the Feat. Nemesis waits for the most arrogant.
+tagline: La gloria se gana. La soberbia se paga.
+taglineEn: Glory is earned. Hubris has a price.
 description: Cada era declaras en secreto un Alarde sobre un patrono del Panteón. Los valores repetidos se cancelan. Ganar Hazañas da Gloria; al cerrar, Némesis castiga al máximo de Hubris si llegó a 6.
 descriptionEn: Each era you secretly declare a Boast on a patron of the Pantheon. Repeated values cancel. Winning Feats scores Glory; at the close, Nemesis punishes the Hubris maximum if it reached 6.
 meta: Proclamas · V0.2
