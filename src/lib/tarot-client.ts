@@ -28,6 +28,7 @@ export function initTarot(root: HTMLElement) {
   const scrollRegion = find<HTMLElement>('[data-tarot-scroll-region]');
   const scrollMask = find<HTMLElement>('[data-tarot-scroll-mask]');
   const fanMask = find<HTMLElement>('[data-tarot-fan-mask]');
+  const fanStage = find<HTMLElement>('[data-tarot-fan-stage]');
   const spread = find<HTMLElement>('[data-tarot-spread]');
   const deckArea = find<HTMLDivElement>('[data-tarot-deck-area]');
   const result = find<HTMLDivElement>('[data-tarot-result]');
@@ -39,6 +40,108 @@ export function initTarot(root: HTMLElement) {
   let session = 0;
   let previousOverflow = '';
   const animations = new Set<Animation>();
+  /** Mismo corte que tablet/phone del sitio (980px). */
+  const narrowViewport = () => window.matchMedia('(max-width: 980px)').matches;
+
+  function syncCompactFanUi() {
+    if (!dialog.open) {
+      dialog.classList.remove('tarot-dialog--compact-fan');
+      return;
+    }
+    const compact =
+      narrowViewport() || fanStage.classList.contains('is-scrollable');
+    dialog.classList.toggle('tarot-dialog--compact-fan', compact);
+    if (!compact) fanStage.classList.remove('is-scrolled');
+  }
+  const fanDropScale = () => (narrowViewport() ? 0.32 : 0.52);
+  /** Desktop: 2.7°. Móvil pivot: ~7° entre cartas en el mismo arco. */
+  const fanAngleStep = () => (pivotFanEnabled() ? 7 : 2.7);
+  let touchPanStart: { x: number; y: number } | null = null;
+  /** Posición al centrar el abanico (solo desktop con scroll horizontal). */
+  let fanScrollAnchor = 0;
+  let fanPivotDeg = 0;
+  let pivotDrag: { x: number; pivot: number; moved: boolean } | null = null;
+  let suppressFanClick = false;
+
+  const pivotFanEnabled = () => narrowViewport() && dialog.open;
+
+  function fanPivotLimits() {
+    const step = fanAngleStep();
+    const half = 10.5 * step;
+    return { min: -half, max: half };
+  }
+
+  /** Fija el centro del arco en el viewport; las cartas orbitan, el escenario no rota. */
+  function syncFanOrbitGeometry() {
+    if (!pivotFanEnabled()) {
+      fan.style.removeProperty('--fan-orbit-y');
+      fan.style.removeProperty('--fan-orbit-r');
+      fan.style.removeProperty('--fan-orbit-clip-h');
+      fan.style.removeProperty('--fan-orbit-pad-b');
+      fan.style.removeProperty('--fan-orbit-lift');
+      scroll.style.removeProperty('--fan-orbit-clip-h');
+      return;
+    }
+    const styles = getComputedStyle(fan);
+    const cardW =
+      Number.parseFloat(styles.getPropertyValue('--fan-card-w')) ||
+      fan.querySelector<HTMLButtonElement>('button')?.offsetWidth ||
+      100;
+    const viewW = scroll.clientWidth || 320;
+    const measureH = Math.max(scroll.clientHeight, 220);
+    const cardH = cardW * 1.5;
+    const halfAngleRad = (10.5 * fanAngleStep() * Math.PI) / 180;
+    const sinHalf = Math.max(Math.sin(halfAngleRad), 0.4);
+    const cosHalf = Math.cos(halfAngleRad);
+    // Cuerda del arco ~ ancho útil (spread tipo desktop).
+    const spreadR = (viewW * 0.98) / (2 * sinHalf);
+    const edgeLift = spreadR * (1 - cosHalf) * 0.68;
+    const minTop = 10;
+    // Pivote bajo el canvas visible (clipeado por overflow del viewport).
+    const pivotDepth = Math.max(measureH * 0.48, cardW * 1.05, 80);
+    let orbitY = measureH + pivotDepth;
+    const maxR = Math.max(orbitY - cardH - minTop, cardW * 2.05);
+    const radius = Math.min(
+      Math.max(spreadR, cardW * 2.65, measureH * 0.54),
+      maxR,
+    );
+    const arcTop = orbitY - cardH - radius - edgeLift * 0.25;
+    if (arcTop < minTop) {
+      orbitY += minTop - arcTop;
+    }
+    const padB = orbitY - measureH;
+    const centerBottom = orbitY - radius;
+    const centerTop = centerBottom - cardH;
+    const maxLift = Math.max(0, centerTop - minTop);
+    const lift = Math.max(0, Math.min(maxLift, centerTop + cardH * 0.08) - 14);
+    const displayH = Math.min(
+      measureH,
+      Math.ceil(cardH + radius * 0.34 + 36),
+    );
+    fan.style.setProperty('--fan-orbit-y', `${orbitY}px`);
+    fan.style.setProperty('--fan-orbit-r', `${radius}px`);
+    fan.style.setProperty('--fan-orbit-lift', `${lift}px`);
+    fan.style.setProperty('--fan-orbit-clip-h', `${displayH}px`);
+    fan.style.setProperty('--fan-orbit-pad-b', `${padB}px`);
+    scroll.style.setProperty('--fan-orbit-clip-h', `${displayH}px`);
+  }
+
+  function setFanPivot(deg: number) {
+    const { min, max } = fanPivotLimits();
+    fanPivotDeg = Math.max(min, Math.min(max, deg));
+    fan.style.setProperty('--fan-pivot', `${fanPivotDeg}deg`);
+    updateFanPanMask();
+  }
+
+  function focusFanCard(button: HTMLButtonElement) {
+    if (!pivotFanEnabled()) {
+      button.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+      return;
+    }
+    const index = Number(button.style.getPropertyValue('--fan-index'));
+    if (!Number.isFinite(index)) return;
+    setFanPivot(-(index - 10.5) * fanAngleStep());
+  }
 
   async function animate(element: HTMLElement, keyframes: Keyframe[], duration: number) {
     if (reducedMotion.matches) return;
@@ -67,11 +170,13 @@ export function initTarot(root: HTMLElement) {
     if (!options?.preserveDeckFade) {
       deckArea.classList.remove('is-fading-out');
     }
+    fanPivotDeg = 0;
+    fan.style.setProperty('--fan-pivot', '0deg');
     announcer.textContent = '';
     slots.forEach((slot) => {
       slot.querySelector('.tarot-card')?.remove();
       const reading = slot.querySelector<HTMLElement>('[data-tarot-reading]')!;
-      reading.classList.remove('is-shown');
+      reading.classList.remove('is-shown', 'is-text-overflow');
       reading.setAttribute('aria-hidden', 'true');
       reading.querySelector('h3')!.textContent = '';
       reading.querySelector('p')!.textContent = '';
@@ -82,8 +187,8 @@ export function initTarot(root: HTMLElement) {
       button.type = 'button';
       button.className = 'tarot-card';
       button.style.setProperty('--fan-index', String(index));
-      button.style.setProperty('--fan-drop', `${Math.pow(index - 10.5, 2) * .52}px`);
-      button.style.setProperty('--fan-angle', `${(index - 10.5) * 2.7}deg`);
+      button.style.setProperty('--fan-drop', `${Math.pow(index - 10.5, 2) * fanDropScale()}px`);
+      button.style.setProperty('--fan-angle', `${(index - 10.5) * fanAngleStep()}deg`);
       button.style.zIndex = String(index + 1);
       button.setAttribute('aria-label', `${t.faceDown} ${index + 1}`);
       const inner = document.createElement('span');
@@ -111,7 +216,7 @@ export function initTarot(root: HTMLElement) {
         const next = event.key === 'Home' ? 0 : event.key === 'End' ? remaining.length - 1 :
           (current + (event.key === 'ArrowRight' ? 1 : -1) + remaining.length) % remaining.length;
         remaining[next]?.focus({ preventScroll: true });
-        remaining[next]?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+        focusFanCard(remaining[next]!);
       });
       fan.append(button);
     });
@@ -119,21 +224,65 @@ export function initTarot(root: HTMLElement) {
     updatePanMasks();
   }
 
+  function updateFanGeometry() {
+    const pivot = pivotFanEnabled();
+    const scale = pivot ? 0 : fanDropScale();
+    const angleStep = fanAngleStep();
+    fan.querySelectorAll<HTMLButtonElement>('button').forEach((button) => {
+      const index = Number(button.style.getPropertyValue('--fan-index'));
+      if (!Number.isFinite(index)) return;
+      button.style.setProperty('--fan-drop', pivot ? '0px' : `${Math.pow(index - 10.5, 2) * scale}px`);
+      button.style.setProperty('--fan-angle', `${(index - 10.5) * angleStep}deg`);
+    });
+  }
+
   function layoutFan() {
+    updateFanGeometry();
+    const pivot = pivotFanEnabled();
+    scroll.classList.toggle('is-pivot-fan', pivot);
+    fan.classList.toggle('is-pivot-fan', pivot);
+    fanStage.classList.toggle('is-pivot-fan', pivot);
+
     const fanWidth = fan.scrollWidth;
     const viewportWidth = scroll.clientWidth;
-    const needsScroll = fanWidth > viewportWidth + 8;
+    const needsScroll = pivot || fanWidth > viewportWidth + 8;
     scroll.classList.toggle('is-scrollable', needsScroll);
-    scrollHint?.classList.toggle('is-visible', needsScroll);
-    if (needsScroll) {
-      scroll.scrollLeft = (scroll.scrollWidth - scroll.clientWidth) / 2;
+    fanStage.classList.toggle('is-scrollable', needsScroll);
+    scrollHint?.classList.toggle('is-visible', needsScroll && !narrowViewport());
+    syncCompactFanUi();
+
+    if (pivot) {
+      scroll.scrollLeft = 0;
+      syncFanOrbitGeometry();
+      setFanPivot(fanPivotDeg);
+      requestAnimationFrame(() => {
+        syncFanOrbitGeometry();
+        setFanPivot(fanPivotDeg);
+        requestAnimationFrame(() => {
+          syncFanOrbitGeometry();
+          setFanPivot(fanPivotDeg);
+        });
+      });
     } else {
+      syncFanOrbitGeometry();
+    }
+    if (!pivot && needsScroll) {
+      fanScrollAnchor = (scroll.scrollWidth - scroll.clientWidth) / 2;
+      scroll.scrollLeft = fanScrollAnchor;
+    } else {
+      fanScrollAnchor = 0;
       scroll.scrollLeft = 0;
     }
     updateFanPanMask();
   }
 
   function updateFanPanMask() {
+    if (pivotFanEnabled()) {
+      const { min, max } = fanPivotLimits();
+      fanMask.classList.toggle('is-pan-left', fanPivotDeg > min + 1.5);
+      fanMask.classList.toggle('is-pan-right', fanPivotDeg < max - 1.5);
+      return;
+    }
     const max = scroll.scrollWidth - scroll.clientWidth;
     fanMask.classList.toggle('is-pan-left', scroll.scrollLeft > 6);
     fanMask.classList.toggle('is-pan-right', max > 6 && scroll.scrollLeft < max - 6);
@@ -145,6 +294,36 @@ export function initTarot(root: HTMLElement) {
     scrollMask.classList.toggle('is-pan-bottom', max > 6 && scrollRegion.scrollTop < max - 6);
   }
 
+  const readingTextMaxEm = 8.25;
+
+  function syncReadingTextOverflow(reading: HTMLElement) {
+    const p = reading.querySelector('p');
+    if (!p) return;
+    reading.classList.remove('is-text-overflow');
+    const width = p.clientWidth;
+    if (width <= 0) return;
+    const probe = p.cloneNode(true) as HTMLParagraphElement;
+    probe.removeAttribute('style');
+    probe.style.cssText =
+      'position:absolute;visibility:hidden;pointer-events:none;max-height:none;overflow:visible;margin:0;';
+    probe.style.width = `${width}px`;
+    probe.style.maskImage = 'none';
+    probe.style.webkitMaskImage = 'none';
+    p.after(probe);
+    const natural = probe.offsetHeight;
+    probe.remove();
+    const lineHeight = Number.parseFloat(getComputedStyle(p).lineHeight) || 21;
+    const cap = lineHeight * readingTextMaxEm;
+    reading.classList.toggle('is-text-overflow', natural > cap + 1);
+  }
+
+  function syncAllReadingTextOverflow() {
+    slots.forEach((slot) => {
+      const reading = slot.querySelector<HTMLElement>('[data-tarot-reading]');
+      if (reading?.querySelector('p')?.textContent) syncReadingTextOverflow(reading);
+    });
+  }
+
   function updatePanMasks() {
     updateVerticalPanMask();
     updateFanPanMask();
@@ -152,9 +331,23 @@ export function initTarot(root: HTMLElement) {
 
   function scrollModalTo(target: HTMLElement, behavior: ScrollBehavior = 'smooth') {
     const motion = reducedMotion.matches ? 'instant' : behavior;
-    const regionTop = scrollRegion.getBoundingClientRect().top;
-    const targetTop = target.getBoundingClientRect().top;
-    const nextTop = scrollRegion.scrollTop + (targetTop - regionTop) - 6;
+    const regionRect = scrollRegion.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    if (narrowViewport()) {
+      const margin = 18;
+      let delta = 0;
+      if (targetRect.bottom > regionRect.bottom - margin) {
+        delta = targetRect.bottom - regionRect.bottom + margin;
+      } else if (targetRect.top < regionRect.top + margin) {
+        delta = targetRect.top - regionRect.top - margin;
+      }
+      if (delta !== 0) scrollRegion.scrollBy({ top: delta, behavior: motion });
+      window.setTimeout(updateVerticalPanMask, motion === 'instant' ? 0 : 420);
+      return;
+    }
+
+    const nextTop = scrollRegion.scrollTop + (targetRect.top - regionRect.top) - 6;
     scrollRegion.scrollTo({ top: Math.max(0, nextTop), behavior: motion });
     window.setTimeout(updateVerticalPanMask, motion === 'instant' ? 0 : 420);
   }
@@ -244,12 +437,65 @@ export function initTarot(root: HTMLElement) {
   }
 
   scrollRegion.addEventListener('scroll', updateVerticalPanMask, { passive: true });
-  scroll.addEventListener('scroll', updateFanPanMask, { passive: true });
+  scroll.addEventListener('scroll', () => {
+    if (pivotFanEnabled()) return;
+    updateFanPanMask();
+  }, { passive: true });
+
+  const PIVOT_DEG_PER_PX = 0.14;
+
+  scroll.addEventListener('pointerdown', (event) => {
+    if (!pivotFanEnabled() || busy || event.button !== 0) return;
+    pivotDrag = { x: event.clientX, pivot: fanPivotDeg, moved: false };
+    fan.classList.add('is-pivot-dragging');
+    scroll.setPointerCapture(event.pointerId);
+  });
+
+  const endPivotDrag = (event: PointerEvent) => {
+    if (!pivotDrag) return;
+    if (pivotDrag.moved) suppressFanClick = true;
+    pivotDrag = null;
+    fan.classList.remove('is-pivot-dragging');
+    if (scroll.hasPointerCapture(event.pointerId)) scroll.releasePointerCapture(event.pointerId);
+  };
+  scroll.addEventListener('pointerup', endPivotDrag);
+  scroll.addEventListener('pointercancel', endPivotDrag);
+  scroll.addEventListener('pointermove', (event) => {
+    if (!pivotDrag) return;
+    const dx = event.clientX - pivotDrag.x;
+    if (Math.abs(dx) > 4) {
+      pivotDrag.moved = true;
+      event.preventDefault();
+      setFanPivot(pivotDrag.pivot + dx * PIVOT_DEG_PER_PX);
+    }
+  }, { passive: false });
+
+  scroll.addEventListener(
+    'click',
+    (event) => {
+      if (!suppressFanClick) return;
+      suppressFanClick = false;
+      event.preventDefault();
+      event.stopPropagation();
+    },
+    true,
+  );
 
   const SCROLL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End']);
 
   function blockManualPan(event: Event) {
     if (!dialog.open) return;
+    const target = event.target;
+    if (target instanceof Element && target.closest('[data-tarot-scroll]')) return;
+
+    if (event instanceof TouchEvent && event.touches.length === 1 && touchPanStart) {
+      const dx = Math.abs(event.touches[0].clientX - touchPanStart.x);
+      const dy = Math.abs(event.touches[0].clientY - touchPanStart.y);
+      if (dx > dy + 4) return;
+    }
+
+    if (event instanceof WheelEvent && Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
     event.preventDefault();
   }
 
@@ -259,6 +505,20 @@ export function initTarot(root: HTMLElement) {
     if (target instanceof HTMLButtonElement && target.classList.contains('tarot-card')) return;
     event.preventDefault();
   }
+
+  scrollRegion.addEventListener(
+    'touchstart',
+    (event) => {
+      if (event.touches.length !== 1) {
+        touchPanStart = null;
+        return;
+      }
+      touchPanStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    },
+    { passive: true },
+  );
+  scrollRegion.addEventListener('touchend', () => { touchPanStart = null; }, { passive: true });
+  scrollRegion.addEventListener('touchcancel', () => { touchPanStart = null; }, { passive: true });
 
   dialog.addEventListener('wheel', blockManualPan, { passive: false });
   scrollRegion.addEventListener('touchmove', blockManualPan, { passive: false });
@@ -274,7 +534,8 @@ export function initTarot(root: HTMLElement) {
     const before = button.getBoundingClientRect();
     const sourceWidth = button.offsetWidth;
     const sourceHeight = button.offsetHeight;
-    const angle = button.style.getPropertyValue('--fan-angle');
+    const baseAngle = parseFloat(button.style.getPropertyValue('--fan-angle')) || 0;
+    const angle = `${baseAngle + fanPivotDeg}deg`;
     // Only the chosen images are downloaded; opening does not load all 22 fronts.
     front.src = tarotImage(card.id);
     const imageReady = front.decode().catch(() => { /* The textual reading remains available if an image fails. */ });
@@ -295,6 +556,12 @@ export function initTarot(root: HTMLElement) {
     const reading = slots[index].querySelector<HTMLElement>('[data-tarot-reading]')!;
     reading.querySelector('h3')!.textContent = tarotCardHeading(card, locale);
     reading.querySelector('p')!.textContent = card.prediction[locale];
+    syncReadingTextOverflow(reading);
+    updateVerticalPanMask();
+    requestAnimationFrame(() => {
+      syncReadingTextOverflow(reading);
+      updateVerticalPanMask();
+    });
     reading.classList.add('is-shown');
     reading.setAttribute('aria-hidden', 'false');
     await animate(inner, [{ transform: 'rotateY(180deg)' }, { transform: 'rotateY(0deg)' }], 460);
@@ -304,7 +571,6 @@ export function initTarot(root: HTMLElement) {
     const progress = locale === 'en' ? `${selected.length} of 3.` : `${selected.length} de 3.`;
     announcer.textContent = `${progress} ${card.name[locale]}. ${card.prediction[locale]}`;
     setBusy(false);
-    requestAnimationFrame(() => scrollModalTo(slots[index]));
     if (selected.length === 3) {
       deckArea.classList.add('is-complete');
       fan.querySelectorAll<HTMLButtonElement>('button:not(.is-selected)').forEach((btn) => { btn.disabled = true; });
@@ -323,15 +589,22 @@ export function initTarot(root: HTMLElement) {
         });
         link.focus({ preventScroll: true });
       }
-    } else if (nextFocus !== button) {
+    } else if (!narrowViewport()) {
+      requestAnimationFrame(() => scrollModalTo(slots[index]));
+    } else {
+      updateVerticalPanMask();
+    }
+    if (selected.length < 3 && nextFocus !== button) {
       nextFocus.focus({ preventScroll: true });
     }
   }
 
   const onResize = () => {
+    syncCompactFanUi();
     if (!dialog.open) return;
     layoutFan();
     updatePanMasks();
+    syncAllReadingTextOverflow();
   };
   window.addEventListener('resize', onResize);
 
@@ -341,9 +614,12 @@ export function initTarot(root: HTMLElement) {
     reset();
     previousOverflow = document.documentElement.style.overflow;
     dialog.showModal();
+    syncCompactFanUi();
     document.documentElement.style.overflow = 'hidden';
     close.focus({ preventScroll: true });
     scrollModalToTop('instant');
+    layoutFan();
+    updatePanMasks();
     requestAnimationFrame(() => {
       layoutFan();
       updatePanMasks();
@@ -361,6 +637,7 @@ export function initTarot(root: HTMLElement) {
     session++;
     animations.forEach((animation) => animation.cancel());
     animations.clear();
+    dialog.classList.remove('tarot-dialog--compact-fan');
     document.documentElement.style.overflow = previousOverflow;
     open.focus({ preventScroll: true });
   });

@@ -2,8 +2,8 @@
 keyword: amateurasu
 name: Amateurasu
 emoji: ☀️
-tagline: Amaterasu se tomó el día libre. Los aprendices pintan el amanecer.
-taglineEn: Amaterasu took the day off. The apprentices paint the dawn.
+tagline: La diosa no vino hoy. El cielo queda en tus manos.
+taglineEn: The goddess skipped today. The sky is in your hands.
 description: Aportas Luz a cinco Paisajes compartidos, ganas Favor por mayorías y evitas —o fuerzas— el Eclipse cuando la reserva no alcanza. Cuatro Amaneceres.
 descriptionEn: You add Light to five shared Landscapes, score Favor on majorities, and dodge —or force— the Eclipse when the reserve runs short. Four Dawns.
 meta: Luz · Favor · Paisajes

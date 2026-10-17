@@ -2,8 +2,8 @@
 keyword: gato
 name: Gato Regalón
 emoji: 🐱
-tagline: El sol avanza. Tú decides dónde echarte.
-taglineEn: The sun moves. You decide where to nap.
+tagline: El sol avanza y los gatitos no se quedan atrás.
+taglineEn: The sun moves on, and the kittens aren't far behind.
 meta: Juego de tablero cozy donde los gatos maximizan el placer del día mientras el sol se desplaza y otorga bonos a distintas zonas del departamento.
 metaEn: A cozy board game where cats maximize their day as the sun moves and grants bonuses to different rooms in the apartment.
 state: idea

@@ -2,8 +2,8 @@
 keyword: ninive
 name: Nínive
 emoji: 🕌
-tagline: Construir juntos. Ganar por separado.
-taglineEn: Build together. Score apart.
+tagline: ¿Qué es un jardín sin flores ni agua?
+taglineEn: What's a garden without flowers or water?
 description: Dos jugadores levantan un palacio jardín compartido. Uno puntúa las flores naranjas, el otro las fuentes azules.
 descriptionEn: Two players raise a shared garden palace. One scores orange flowers, the other blue fountains.
 meta: Ludoísmo · 2025
