@@ -176,7 +176,7 @@ export function initTarot(root: HTMLElement) {
     slots.forEach((slot) => {
       slot.querySelector('.tarot-card')?.remove();
       const reading = slot.querySelector<HTMLElement>('[data-tarot-reading]')!;
-      reading.classList.remove('is-shown', 'is-text-overflow');
+      reading.classList.remove('is-shown');
       reading.setAttribute('aria-hidden', 'true');
       reading.querySelector('h3')!.textContent = '';
       reading.querySelector('p')!.textContent = '';
@@ -289,39 +289,8 @@ export function initTarot(root: HTMLElement) {
   }
 
   function updateVerticalPanMask() {
-    const max = scrollRegion.scrollHeight - scrollRegion.clientHeight;
-    scrollMask.classList.toggle('is-pan-top', scrollRegion.scrollTop > 6);
-    scrollMask.classList.toggle('is-pan-bottom', max > 6 && scrollRegion.scrollTop < max - 6);
-  }
-
-  const readingTextMaxEm = 8.25;
-
-  function syncReadingTextOverflow(reading: HTMLElement) {
-    const p = reading.querySelector('p');
-    if (!p) return;
-    reading.classList.remove('is-text-overflow');
-    const width = p.clientWidth;
-    if (width <= 0) return;
-    const probe = p.cloneNode(true) as HTMLParagraphElement;
-    probe.removeAttribute('style');
-    probe.style.cssText =
-      'position:absolute;visibility:hidden;pointer-events:none;max-height:none;overflow:visible;margin:0;';
-    probe.style.width = `${width}px`;
-    probe.style.maskImage = 'none';
-    probe.style.webkitMaskImage = 'none';
-    p.after(probe);
-    const natural = probe.offsetHeight;
-    probe.remove();
-    const lineHeight = Number.parseFloat(getComputedStyle(p).lineHeight) || 21;
-    const cap = lineHeight * readingTextMaxEm;
-    reading.classList.toggle('is-text-overflow', natural > cap + 1);
-  }
-
-  function syncAllReadingTextOverflow() {
-    slots.forEach((slot) => {
-      const reading = slot.querySelector<HTMLElement>('[data-tarot-reading]');
-      if (reading?.querySelector('p')?.textContent) syncReadingTextOverflow(reading);
-    });
+    // Sin degradés fijos al viewport: al scrollear tapaban lecturas y resultado.
+    scrollMask.classList.remove('is-pan-top', 'is-pan-bottom');
   }
 
   function updatePanMasks() {
@@ -556,14 +525,9 @@ export function initTarot(root: HTMLElement) {
     const reading = slots[index].querySelector<HTMLElement>('[data-tarot-reading]')!;
     reading.querySelector('h3')!.textContent = tarotCardHeading(card, locale);
     reading.querySelector('p')!.textContent = card.prediction[locale];
-    syncReadingTextOverflow(reading);
-    updateVerticalPanMask();
-    requestAnimationFrame(() => {
-      syncReadingTextOverflow(reading);
-      updateVerticalPanMask();
-    });
     reading.classList.add('is-shown');
     reading.setAttribute('aria-hidden', 'false');
+    updateVerticalPanMask();
     await animate(inner, [{ transform: 'rotateY(180deg)' }, { transform: 'rotateY(0deg)' }], 460);
     if (session !== currentSession || !dialog.open) return;
     button.classList.add('is-revealed');
@@ -604,7 +568,6 @@ export function initTarot(root: HTMLElement) {
     if (!dialog.open) return;
     layoutFan();
     updatePanMasks();
-    syncAllReadingTextOverflow();
   };
   window.addEventListener('resize', onResize);
 

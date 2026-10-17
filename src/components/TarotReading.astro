@@ -11,7 +11,7 @@ const t = tarot[locale];
 const games = (await getGames())
   .filter((game) => game.state !== 'publicado')
   .map((game) => localizeGame(game, locale))
-  .map(({ keyword, name, href, blurb }) => ({ keyword, name, href, blurb }));
+  .map(({ keyword, name, href, tagline }) => ({ keyword, name, href, blurb: tagline }));
 ---
 
 <section id="tarot" class="tarot-section shell" data-tarot data-locale={locale} data-tarot-games={JSON.stringify(games)} aria-labelledby="tarot-title">
