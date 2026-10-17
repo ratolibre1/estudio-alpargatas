@@ -185,7 +185,7 @@
 .tarot-fan-swipe-cue {
   display: none;
   width: min(88%, 17.5rem);
-  margin: .15rem auto 0;
+  margin: -0.2rem auto 0;
   pointer-events: none;
 }
 .tarot-fan-swipe-arrow { display: block; width: 100%; height: auto; }
@@ -329,7 +329,7 @@
 .tarot-dialog--compact-fan .tarot-fan-stage {
   position: relative;
   margin-top: 0.55rem;
-  margin-bottom: -0.65rem;
+  margin-bottom: -0.95rem;
 }
 .tarot-dialog--compact-fan .tarot-deck-label {
   margin-bottom: 0.55rem;
@@ -338,7 +338,7 @@
   position: relative;
   z-index: 4;
   width: min(70%, 13rem);
-  margin: 0.1rem auto 0;
+  margin: -0.65rem auto 0;
 }
 .tarot-dialog--compact-fan .tarot-scroll-hint {
   margin: 0.05rem auto 0;
