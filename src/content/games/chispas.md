@@ -2,7 +2,7 @@
 keyword: chispas
 name: Chispas
 emoji: 🕯️
-tagline: La mecha es corta. La amistad, veremos.
+tagline: La mecha es corta. La amistad? Ya veremos.
 taglineEn: The fuse is short. The friendship? We'll see.
 description: Un único mazo, tres acciones visibles y una mecha que obliga a medir cuánto consume cada jugada.
 descriptionEn: One shared deck, three visible actions, and a fuse that forces you to measure how much each play consumes.

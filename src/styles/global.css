@@ -20,7 +20,10 @@
   /* Header/footer: misma caja que fichas (1320 + gutter fluido). */
   --site-chrome-max: 1320px;
   --site-chrome-gutter: clamp(1.25rem, 2.5vw, 2.75rem);
+  --site-header-scroll-offset: calc(5rem + env(safe-area-inset-top, 0px) + 1rem);
 }
+
+html { scroll-padding-top: var(--site-header-scroll-offset); }
 
 * { box-sizing: border-box; }
 html {
@@ -367,6 +370,7 @@ a.map-node { display: block; text-decoration: none; color: inherit; }
 
 @media (max-width: 760px) {
   .shell { width: min(var(--shell), calc(100% - 1.5rem)); }
+  :root { --site-header-scroll-offset: calc(4.8rem + env(safe-area-inset-top, 0px) + 1.35rem); }
   .nav { min-height: 4.8rem; }
   .brand > span:last-child { display: none; }
   .nav-links { gap: .1rem; }

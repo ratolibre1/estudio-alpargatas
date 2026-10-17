@@ -1,4 +1,7 @@
-.tarot-section { margin-block: .5rem 4rem; }
+.tarot-section {
+  margin-block: clamp(1rem, 3vw, 1.5rem) 4rem;
+  scroll-margin-top: var(--site-header-scroll-offset);
+}
 .tarot-invitation {
   position: relative; display: grid; grid-template-columns: 1.1fr 1fr; align-items: center;
   gap: 2rem; overflow: hidden; padding: clamp(1.5rem, 4vw, 3.5rem);
@@ -70,28 +73,11 @@
   min-height: 0;
   overflow: hidden;
 }
+/* Sin degradés fijos al scroll del modal. */
 .tarot-dialog-scroll-mask::before,
 .tarot-dialog-scroll-mask::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  height: 2rem;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 180ms ease;
+  content: none;
 }
-.tarot-dialog-scroll-mask::before {
-  top: 0;
-  background: linear-gradient(180deg, #192d42 0%, #192d42cc 45%, #192d4200 100%);
-}
-.tarot-dialog-scroll-mask::after {
-  bottom: 0;
-  background: linear-gradient(0deg, #192d42 0%, #192d42cc 45%, #192d4200 100%);
-}
-.tarot-dialog-scroll-mask.is-pan-top::before { opacity: 1; }
-.tarot-dialog-scroll-mask.is-pan-bottom::after { opacity: 1; }
 
 .tarot-dialog-scroll {
   height: 100%;
@@ -100,7 +86,6 @@
   overscroll-behavior: none;
   scroll-behavior: smooth;
   padding: 0 clamp(1.25rem, 3vw, 2.25rem) 1.75rem;
-  touch-action: none;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -113,6 +98,7 @@
 .tarot-deck-area {
   padding-top: .25rem;
   padding-bottom: .5rem;
+  overflow: visible;
   transition: opacity 420ms ease;
 }
 .tarot-deck-area.is-complete {
@@ -132,9 +118,15 @@
   font: italic clamp(.92rem, 2.1vw, 1.05rem)/1.2 Georgia, serif;
   white-space: nowrap;
 }
+.tarot-fan-stage {
+  position: relative;
+  width: 100%;
+}
+
 .tarot-fan-mask {
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 .tarot-fan-mask::before,
 .tarot-fan-mask::after {
@@ -161,17 +153,18 @@
 
 .tarot-fan-viewport {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-end;
   width: 100%;
   min-height: var(--tarot-fan-h);
-  padding: 1.25rem 0 .35rem;
+  padding: 1.25rem 0 .15rem;
   overflow-x: auto;
-  overflow-y: visible;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
+  touch-action: pan-x pinch-zoom;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
 }
 .tarot-fan-viewport::-webkit-scrollbar {
   width: 0;
@@ -179,6 +172,8 @@
   display: none;
 }
 .tarot-fan-viewport:not(.is-scrollable) { overflow-x: hidden; }
+.tarot-fan .tarot-card-back,
+.tarot-fan .tarot-card-front { object-fit: contain; background: #192d42; }
 .tarot-fan {
   --fan-step: 34px;
   --fan-card-w: 106px;
@@ -187,14 +182,36 @@
   width: max(100%, calc(var(--fan-card-w) + (21 * var(--fan-step))));
   height: calc(var(--tarot-fan-h) - 1.5rem);
 }
+.tarot-fan-swipe-cue {
+  display: none;
+  width: min(88%, 17.5rem);
+  margin: .15rem auto 0;
+  pointer-events: none;
+}
+.tarot-fan-swipe-arrow { display: block; width: 100%; height: auto; }
+
+/* Desktop: flecha si hay scroll horizontal. */
+.tarot-deck-area:not(.is-complete) .tarot-fan-stage.is-scrollable:not(.is-pivot-fan) .tarot-fan-swipe-cue {
+  display: block;
+}
+/* Compacto: flecha + hint siempre visibles mientras eliges cartas. */
+.tarot-dialog.tarot-dialog--compact-fan .tarot-deck-area:not(.is-complete) .tarot-fan-swipe-cue,
+.tarot-dialog.tarot-dialog--compact-fan .tarot-deck-area:not(.is-complete) .tarot-scroll-hint {
+  display: block;
+}
+
 .tarot-scroll-hint {
   display: none;
-  margin: .15rem 0 0;
+  margin: .2rem 0 0;
   text-align: center;
   color: #e3d8c3;
   font-size: .72rem;
+  transition: opacity 280ms ease;
 }
 .tarot-scroll-hint.is-visible { display: block; }
+
+.tarot-deck-area.is-complete .tarot-fan-swipe-cue,
+.tarot-deck-area.is-complete .tarot-scroll-hint { display: none !important; }
 
 .tarot-spread {
   display: grid;
@@ -266,6 +283,70 @@
 }
 .tarot-fan .tarot-card:hover, .tarot-fan .tarot-card:focus-visible { z-index: 25 !important; translate: 0 -12px; }
 .tarot-fan .tarot-card:disabled { cursor: wait; translate: 0; }
+
+/* Móvil/tablet: abanico gira desde el pivote inferior (no scroll horizontal). */
+.tarot-fan-viewport.is-pivot-fan {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  padding-top: 0;
+  height: var(--fan-orbit-clip-h, calc(var(--tarot-fan-h) - 0.5rem));
+  max-height: none;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+  cursor: grab;
+}
+.tarot-fan-stage.is-pivot-fan .tarot-fan-mask {
+  overflow: hidden;
+  height: 100%;
+}
+.tarot-fan-viewport.is-pivot-fan:active { cursor: grabbing; }
+.tarot-fan.is-pivot-fan {
+  --fan-pivot: 0deg;
+  --fan-orbit-x: 50%;
+  --fan-card-h: calc(var(--fan-card-w) * 1.5);
+  position: relative;
+  width: 100%;
+  height: calc(var(--fan-orbit-clip-h, 100%) + var(--fan-orbit-pad-b, 8rem));
+  min-height: calc(var(--tarot-fan-h) - 0.75rem);
+  margin-inline: auto;
+  pointer-events: none;
+  transform: translateY(calc(-1 * var(--fan-orbit-lift, 0px)));
+}
+.tarot-fan.is-pivot-fan .tarot-card {
+  pointer-events: auto;
+  top: calc(var(--fan-orbit-y, 220px) - var(--fan-card-h));
+  left: var(--fan-orbit-x);
+  right: auto;
+  margin-left: calc(var(--fan-card-w, 106px) / -2);
+  transform-origin: 50% 100%;
+  transform: rotate(calc(var(--fan-angle) + var(--fan-pivot, 0deg))) translateY(calc(-1 * var(--fan-orbit-r, 9.5rem)));
+}
+.tarot-fan.is-pivot-fan:not(.is-pivot-dragging) .tarot-card {
+  transition: transform 100ms linear;
+}
+/* Cada carta recorre el arco; el centro del círculo queda fijo en el viewport. */
+.tarot-dialog--compact-fan .tarot-fan-stage {
+  position: relative;
+  margin-top: 0.55rem;
+  margin-bottom: -0.65rem;
+}
+.tarot-dialog--compact-fan .tarot-deck-label {
+  margin-bottom: 0.55rem;
+}
+.tarot-dialog--compact-fan .tarot-fan-swipe-cue {
+  position: relative;
+  z-index: 4;
+  width: min(70%, 13rem);
+  margin: 0.1rem auto 0;
+}
+.tarot-dialog--compact-fan .tarot-scroll-hint {
+  margin: 0.05rem auto 0;
+  padding-bottom: 0;
+}
+.tarot-dialog--compact-fan .tarot-spread {
+  margin-top: 0.45rem;
+}
 .tarot-card.is-selected { inset: 0; width: 100%; height: 100%; cursor: default; transform: none; }
 .tarot-card.is-revealed .tarot-card-inner { transform: rotateY(0deg); }
 .tarot-card-reading {
@@ -284,8 +365,12 @@
   font: 400 clamp(.92rem, 2.1vw, 1.12rem)/1.22 Georgia, serif;
   text-wrap: balance;
 }
-.tarot-card-reading p { margin: 0; color: #e3d8c3; font-size: .86rem; line-height: 1.5; }
-
+.tarot-card-reading p {
+  margin: 0;
+  color: #e3d8c3;
+  font-size: .86rem;
+  line-height: 1.5;
+}
 .tarot-result {
   margin: .5rem auto 0;
   padding: 1.75rem .5rem 1rem;
@@ -301,7 +386,7 @@
 }
 .tarot-result-intro { margin: 0 0 .25rem; color: #e3d8c3; }
 .tarot-result h3 { margin: 0 0 .7rem; color: #e6bc66; font: 400 clamp(1.6rem, 3vw, 2.35rem)/1.1 Georgia, serif; text-wrap: balance; }
-.tarot-game-blurb { margin: 0 0 1.25rem; color: #e3d8c3; font-size: .92rem; line-height: 1.55; }
+.tarot-game-blurb { margin: 0 0 1.25rem; color: #e3d8c3; font: italic .92rem/1.55 Georgia, serif; }
 .tarot-result-actions { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem 1.5rem; padding-bottom: .25rem; }
 .tarot-again { min-height: 44px; padding: .5rem; border: none; background: transparent; color: #fff2d7; font: inherit; font-size: .9rem; text-decoration: underline; text-underline-offset: .3rem; cursor: pointer; }
 
@@ -313,6 +398,34 @@
 @media (max-width: 980px) {
   .tarot-invitation { grid-template-columns: 1.2fr 1fr; gap: 1rem; }
   .tarot-preview { transform: scale(.8); }
+  .tarot-dialog {
+    --card-width: 112px;
+    --tarot-fan-h: 318px;
+    --fan-step: clamp(9px, 2.35vw, 18px);
+    --fan-card-w: clamp(68px, 18vw, 88px);
+  }
+  .tarot-fan-viewport:not(.is-pivot-fan) {
+    padding: 1.85rem .5rem .25rem;
+    min-height: calc(var(--tarot-fan-h) + .5rem);
+    overflow-x: auto;
+  }
+  .tarot-fan-viewport.is-pivot-fan {
+    padding: 0 .15rem 0;
+    min-height: 0;
+    overflow-y: hidden;
+  }
+  .tarot-dialog.tarot-dialog--compact-fan .tarot-fan.is-pivot-fan {
+    --fan-card-w: clamp(92px, 27.5vw, 118px);
+  }
+  .tarot-fan:not(.is-pivot-fan) {
+    width: max(100%, calc(var(--fan-card-w) + (21 * var(--fan-step)) + 2.5rem));
+    margin-inline: auto;
+  }
+  .tarot-scroll-hint { font-size: .68rem; max-width: 16rem; margin-inline: auto; }
+  .tarot-scroll-hint.is-visible { display: none; }
+  .tarot-spread { gap: .85rem; margin-top: 1rem; }
+  .tarot-dialog.tarot-dialog--compact-fan .tarot-spread { margin-top: 0.45rem; }
+  .tarot-phase { font-size: clamp(.62rem, 2.8vw, .72rem); }
 }
 
 @media (max-width: 760px) {
@@ -322,25 +435,21 @@
   .tarot-preview img { width: 140px; height: 210px; left: calc(50% - 70px); top: 18px; transform: translateX(calc((var(--preview-index) - 1) * 70px)) rotate(calc((var(--preview-index) - 1) * 15deg)); }
   .tarot-orbit { width: 240px; height: 240px; left: calc(50% - 120px); }
   .tarot-preview-star { right: 10%; top: 0; font-size: 2rem; }
-  .tarot-dialog {
-    --card-width: 112px;
-    --tarot-fan-h: 268px;
-    --fan-step: clamp(14px, 2.85vw, 28px);
-    --fan-card-w: clamp(72px, 19vw, 92px);
-  }
-  .tarot-spread { gap: .85rem; margin-top: 1rem; }
-  .tarot-phase { font-size: clamp(.62rem, 2.8vw, .72rem); }
 }
 
 @media (max-width: 520px) {
-  .tarot-section { margin-bottom: 2.5rem; }
+  .tarot-section { margin-block-start: 1.15rem; margin-bottom: 2.5rem; }
   .tarot-dialog {
     --card-width: clamp(88px, 28vw, 108px);
-    --tarot-fan-h: 250px;
-    --fan-step: clamp(11px, 3vw, 20px);
-    --fan-card-w: clamp(62px, 16.5vw, 78px);
+    --tarot-fan-h: 300px;
+    --fan-step: clamp(8px, 2.15vw, 14px);
+    --fan-card-w: clamp(64px, 17vw, 82px);
     width: calc(100vw - .75rem);
     border-radius: .7rem;
+  }
+  .tarot-dialog.tarot-dialog--compact-fan .tarot-fan.is-pivot-fan {
+    --fan-step: 34px;
+    --fan-card-w: clamp(88px, 28.5vw, 114px);
   }
   .tarot-dialog-scroll { padding-inline: 1rem; padding-bottom: 1.35rem; }
   .tarot-dialog-header { padding-inline: 1rem; }
@@ -355,8 +464,9 @@
 
 @media (max-height: 680px) {
   .tarot-dialog {
-    --tarot-fan-h: 230px;
+    --tarot-fan-h: 268px;
   }
+  .tarot-fan-viewport { padding-top: 1.5rem; }
   .tarot-dialog-header { padding-top: 1rem; padding-bottom: .65rem; }
   .tarot-dialog-header h2 { font-size: 1.35rem; margin-bottom: .35rem; }
   .tarot-dialog-header > p:not(.tarot-eyebrow):not(.tarot-sr-only) { margin-bottom: .35rem; font-size: .8rem; }

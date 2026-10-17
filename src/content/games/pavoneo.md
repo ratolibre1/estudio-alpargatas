@@ -2,8 +2,8 @@
 keyword: pavoneo
 name: Pavoneo
 emoji: 🦚
-tagline: Mostrar lo justo. Nunca de menos, nunca de más.
-taglineEn: Show just enough — never too little, never too much.
+tagline: Muestra lo justo. Nunca de menos, nunca de más.
+taglineEn: Show just enough. Never too little, never too much.
 description: Duelo de dos. COLA sostiene el abanico; CABEZA decide cuánto abrir. Cada revelación suma estrellas y calaveras. Si te pasas de calaveras, caes.
 descriptionEn: Two-player duel. TAIL holds the fan; HEAD decides how far to open it. Each reveal adds stars and skulls. Too many skulls and you fall.
 meta: Abanico · v1.0

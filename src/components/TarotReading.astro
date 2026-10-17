@@ -11,10 +11,10 @@ const t = tarot[locale];
 const games = (await getGames())
   .filter((game) => game.state !== 'publicado')
   .map((game) => localizeGame(game, locale))
-  .map(({ keyword, name, href, blurb }) => ({ keyword, name, href, blurb }));
+  .map(({ keyword, name, href, tagline }) => ({ keyword, name, href, blurb: tagline }));
 ---
 
-<section id="juegos" class="tarot-section shell" data-tarot data-locale={locale} data-tarot-games={JSON.stringify(games)} aria-labelledby="tarot-title">
+<section id="tarot" class="tarot-section shell" data-tarot data-locale={locale} data-tarot-games={JSON.stringify(games)} aria-labelledby="tarot-title">
   <div class="tarot-invitation">
     <div class="tarot-invitation-copy">
       <p class="tarot-eyebrow">✦ {t.overline}</p>
@@ -43,12 +43,33 @@ const games = (await getGames())
         <div class="tarot-dialog-scroll" data-tarot-scroll-region tabindex="-1">
         <div class="tarot-deck-area" data-tarot-deck-area>
           <p id="tarot-instructions" class="tarot-deck-label">{t.instructions}</p>
-          <div class="tarot-fan-mask" data-tarot-fan-mask>
-            <div class="tarot-fan-viewport" data-tarot-scroll>
-              <div class="tarot-fan" data-tarot-fan role="group" aria-label={t.instructions}></div>
+          <div class="tarot-fan-stage" data-tarot-fan-stage>
+            <div class="tarot-fan-mask" data-tarot-fan-mask>
+              <div class="tarot-fan-viewport" data-tarot-scroll>
+                <div class="tarot-fan" data-tarot-fan role="group" aria-label={t.instructions}></div>
+              </div>
             </div>
+            <div class="tarot-fan-swipe-cue" data-tarot-swipe-cue aria-hidden="true">
+              <svg class="tarot-fan-swipe-arrow" viewBox="0 0 280 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <marker id="tarot-fan-arrowhead" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+                    <path d="M0 0 L7 3.5 L0 7 Z" fill="#e6bc66" />
+                  </marker>
+                </defs>
+                <circle cx="22" cy="34" r="3.5" fill="#e6bc66" opacity=".9" />
+                <path
+                  d="M 26 34 Q 140 6 254 34"
+                  stroke="#e6bc66"
+                  stroke-width="1.75"
+                  stroke-dasharray="5 4"
+                  stroke-linecap="round"
+                  marker-end="url(#tarot-fan-arrowhead)"
+                  opacity=".88"
+                />
+              </svg>
+            </div>
+            <p class="tarot-scroll-hint" data-tarot-scroll-hint>{t.scroll}</p>
           </div>
-          <p class="tarot-scroll-hint" data-tarot-scroll-hint>{t.scroll}</p>
         </div>
 
         <div class="tarot-spread" data-tarot-spread role="group" aria-label={t.reading}>

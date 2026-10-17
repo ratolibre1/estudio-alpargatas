@@ -3,7 +3,7 @@ keyword: mantas
 name: Mantas a Raya
 emoji: 🌊
 tagline: Bajo la superficie, todo da vueltas.
-taglineEn: Beneath the surface, everything takes a turn.
+taglineEn: Beneath the surface, everything takes turns.
 description: Dos acuaristas mueven su meeple por una grilla 5×5. Giran o voltean losetas para formar líneas de tres mantarrayas del color de las cartas.
 descriptionEn: Two aquarists move their meeple on a 5×5 grid. They rotate or flip tiles to form lines of three stingrays matching the color of the cards.
 meta: Área · Misiones · V0.4

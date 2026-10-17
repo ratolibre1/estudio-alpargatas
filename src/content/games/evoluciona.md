@@ -3,7 +3,7 @@ keyword: evoluciona
 name: Evoluciona
 emoji: 🐒
 tagline: Un pequeño paso para el mono, un gran salto para la humanidad.
-taglineEn: One small step for a monkey, one giant leap for mankind.
+taglineEn: That's one small step for a monkey, one giant leap for mankind.
 meta: Card Shedding
 metaEn: Card Shedding
 state: boceto

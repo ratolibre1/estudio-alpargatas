@@ -2,7 +2,7 @@
 keyword: carcinogenial
 name: Carcinogenial
 emoji: 🦀
-tagline: La evolución se fue de las pinzas.
+tagline: La evolución se nos fue de las pinzas.
 taglineEn: Evolution has gone clawfully wrong.
 description: Juega sets de cartas iguales para desbloquear las cinco mutaciones de cangrejo. Acumula fichas de acción y puntúa mejor que los demás en varias rondas.
 descriptionEn: Play matching card sets to unlock five crab mutations. Stack action tokens and outscore everyone else across multiple rounds.
