@@ -895,6 +895,13 @@ body.ficha-page {
   /* Tinte suave del juego; franja/header un tono más, sin blanco puro vs noche. */
   background: var(--ficha-page-bg, var(--ficha-c-base));
   color: var(--ficha-on-light-ink, var(--ficha-ink, var(--ficha-c-tinta)));
+  --nav-mobile-bg: var(--ficha-header-bg);
+  --nav-mobile-text: var(--ficha-header-text);
+  --nav-mobile-text-hover: var(--ficha-nav-hover, var(--ficha-accent));
+  --nav-mobile-border: var(--ficha-line);
+  --nav-mobile-backdrop: color-mix(in srgb, var(--ficha-c-tinta) 52%, transparent);
+  --nav-mobile-shadow: 0 16px 36px color-mix(in srgb, var(--ficha-c-tinta) 24%, transparent);
+  --nav-mobile-blur: none;
 }
 
 body.ficha-page article.ficha,
@@ -918,23 +925,33 @@ body.ficha-page .brand small {
   color: var(--ficha-header-muted, var(--ficha-muted, color-mix(in srgb, var(--ficha-c-tinta) 55%, transparent)));
 }
 
-body.ficha-page .nav-links a {
+body.ficha-page .nav-page,
+body.ficha-page .nav-lang {
   color: var(--ficha-header-muted, color-mix(in srgb, var(--ficha-c-tinta) 55%, transparent));
 }
 
-body.ficha-page .nav-links a:hover {
+body.ficha-page .nav-page:hover,
+body.ficha-page .nav-lang:hover,
+body.ficha-page .nav-page[aria-current="page"] {
   color: var(--ficha-nav-hover);
 }
 
-body.ficha-page .nav-links .nav-instagram {
+body.ficha-page .nav-instagram {
   border-color: color-mix(in srgb, var(--ficha-header-muted, #536273) 45%, transparent);
   color: var(--ficha-header-muted, color-mix(in srgb, var(--ficha-c-tinta) 55%, transparent));
 }
 
-body.ficha-page .nav-links .nav-instagram:hover {
+body.ficha-page .nav-instagram:hover {
   background: var(--ficha-header-text, var(--ficha-title));
   border-color: var(--ficha-header-text, var(--ficha-title));
   color: var(--ficha-on-header-ink);
+}
+
+body.ficha-page .nav-menu-toggle {
+  border-color: color-mix(in srgb, var(--ficha-header-muted, #536273) 55%, transparent);
+  background: color-mix(in srgb, var(--ficha-header-bg, #f4f0df) 88%, transparent);
+  color: var(--ficha-header-text, var(--ficha-title));
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--ficha-header-text, #18314f) 35%, transparent);
 }
 
 body.ficha-page .site-footer {

@@ -304,6 +304,14 @@ export function initTarot(root: HTMLElement) {
     const targetRect = target.getBoundingClientRect();
 
     if (narrowViewport()) {
+      if (target === result) {
+        // Solo asoma el resultado; no empujar tanto que las cartas queden cortadas arriba.
+        const anchorTop = regionRect.top + regionRect.height * 0.4;
+        const delta = targetRect.top - anchorTop;
+        if (delta > 4) scrollRegion.scrollBy({ top: delta, behavior: motion });
+        window.setTimeout(updateVerticalPanMask, motion === 'instant' ? 0 : 420);
+        return;
+      }
       const margin = 18;
       let delta = 0;
       if (targetRect.bottom > regionRect.bottom - margin) {
