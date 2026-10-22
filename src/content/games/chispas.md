@@ -18,11 +18,11 @@ homeOrder: 4
 facts:
   - 12 acciones
   - Potencias 1–3
-  - En playtest
+  - Primer testeo pendiente
 factsEn:
   - 12 actions
   - Power 1–3
-  - Playtesting
+  - First playtest pending
 coverNumber: JUEGO 04
 coverNumberEn: GAME 04
 coverTitle: |-
