@@ -1,4 +1,6 @@
 import type { FichaContent } from './ficha';
+import { ficha as fichaCopy } from '../i18n/fichas/ficha';
+import type { Lang } from '../i18n/locale';
 import { loremDraft, loremFlag, showFichaLorem } from './ficha-lorem';
 
 export type ReviewMark = 'ok' | 'partial' | 'review' | 'pending' | 'missing' | 'dummy' | 'na';
@@ -57,11 +59,37 @@ export type ReviewRow = {
 
 type Slot = Array<string | number>;
 
-function slotState(keyword: string, slots: Slot[]): 'ok' | 'review' | 'partial' | 'pending' {
+function slotText(ficha: FichaContent, parts: Slot, locale: Lang): string | undefined {
+  const ui = fichaCopy[locale];
+  const [kind, index, field] = parts;
+  if (kind === 'devVersionTitle') return ficha.version ? `${ui.devVersion} ${ficha.version}` : ui.devAdjusting;
+  if (kind === 'devAdjusting') return ficha.adjusting;
+  if (kind === 'devNextTitle') return ui.devNext;
+  if (kind === 'devNextBody') return ficha.nextPlaytests;
+  if (kind === 'inspirationTitle') return ficha.inspirationTitle;
+  if (kind === 'inspirationBody') return ficha.inspiration;
+  if (kind === 'component') return ficha.components?.[Number(index)]?.name;
+  if (kind === 'howto' && field === 'title') return ficha.howTo?.[Number(index)]?.title;
+  if (kind === 'howto' && field === 'body') return ficha.howTo?.[Number(index)]?.body;
+  if (kind === 'gallery') return ficha.photos?.[Number(index)]?.caption;
+  if (kind === 'resource') return ficha.resources?.[Number(index)]?.label;
+  return undefined;
+}
+
+function slotState(
+  keyword: string,
+  slots: Slot[],
+  es: FichaContent,
+  en: FichaContent,
+): 'ok' | 'review' | 'partial' | 'pending' {
   const perLocale = (['es', 'en'] as const).map((locale) => {
-    const flags = slots.map((parts) => loremFlag(locale, keyword, ...parts));
-    const off = flags.every((flag) => !showFichaLorem(flag));
-    const draft = flags.some((flag) => loremDraft.has(flag));
+    const ficha = locale === 'es' ? es : en;
+    const views = slots.map((parts) => ({
+      flag: loremFlag(locale, keyword, ...parts),
+      text: slotText(ficha, parts, locale),
+    }));
+    const off = views.every((view) => !showFichaLorem(view.flag, view.text));
+    const draft = views.some((view) => loremDraft.has(view.flag));
     if (!off) return 'pending' as const;
     if (draft) return 'review' as const;
     return 'ok' as const;
@@ -108,10 +136,11 @@ function devSlots(ficha: FichaContent): Slot[] {
 
 export function reviewRow(input: {
   es: FichaContent;
+  en: FichaContent;
   state: string;
   href: string;
 }): ReviewRow {
-  const { es, state, href } = input;
+  const { es, en, state, href } = input;
   const keyword = es.keyword;
   const cells: Record<string, ReviewCell> = {};
 
@@ -124,7 +153,7 @@ export function reviewRow(input: {
   cells.awards = { mark: 'ok', note: String(awardCount) };
 
   if (es.inspirationTitle && es.inspiration) {
-    const mark = slotState(keyword, [['inspirationTitle'], ['inspirationBody']]);
+    const mark = slotState(keyword, [['inspirationTitle'], ['inspirationBody']], es, en);
     cells.inspiration = { mark, note: slotNote(mark, '') };
   } else {
     cells.inspiration = pending();
@@ -134,7 +163,7 @@ export function reviewRow(input: {
   if (dev.length === 0) {
     cells.dev = pending();
   } else {
-    const mark = slotState(keyword, dev);
+    const mark = slotState(keyword, dev, es, en);
     cells.dev = { mark, note: slotNote(mark, '') };
   }
 
@@ -143,7 +172,7 @@ export function reviewRow(input: {
     cells.componentsText = pending();
   } else {
     const slots = Array.from({ length: componentCount }, (_, index) => ['component', index] as Slot);
-    const mark = slotState(keyword, slots);
+    const mark = slotState(keyword, slots, es, en);
     cells.componentsText = { mark, note: slotNote(mark, String(componentCount)) };
   }
 
@@ -156,7 +185,7 @@ export function reviewRow(input: {
       ['howto', index, 'title'] as Slot,
       ['howto', index, 'body'] as Slot,
     ]);
-    const mark = slotState(keyword, slots);
+    const mark = slotState(keyword, slots, es, en);
     cells.howtoText = { mark, note: slotNote(mark, `${steps} pasos`) };
     const withImage = es.howTo!.filter((step) => step.image).length;
     cells.howtoImages = pending(withImage === 0 ? 'sin fotos' : `${withImage}/${steps}`);
@@ -168,7 +197,7 @@ export function reviewRow(input: {
     cells.protoPhotos = pending('sin fotos');
   } else {
     const slots = Array.from({ length: photos }, (_, index) => ['gallery', index] as Slot);
-    const mark = slotState(keyword, slots);
+    const mark = slotState(keyword, slots, es, en);
     const captions = es.photos!.filter((photo) => photo.caption).length;
     cells.galleryText = { mark, note: slotNote(mark, `${captions}/${photos} con pie`) };
     cells.protoPhotos = pending(String(photos));

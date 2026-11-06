@@ -10,8 +10,10 @@ const games = await getGames();
 const rows = sortReviewRows(
   games.map((game) => {
     const es = applyFichaChrome(toFicha(localizeGame(game, 'es')), 'es');
+    const en = applyFichaChrome(toFicha(localizeGame(game, 'en')), 'en');
     return reviewRow({
       es,
+      en,
       state: game.state,
       href: `/juegos/${game.keyword}`,
     });
@@ -102,7 +104,7 @@ const LABELS: Record<ReviewMark, string> = {
       <h1>Revisión de fichas</h1>
       <p>
         {done} de {countable.length} celdas están listas.
-        Esta página no está en el menú. Lo que no marcaste a mano queda pendiente.
+        Esta página no está en el menú. Un texto sigue pendiente hasta que lo apruebes o lo cambies en el CMS.
       </p>
       <ul class="legend">
         <li data-mark="ok" style="background: var(--ok)">Listo</li>

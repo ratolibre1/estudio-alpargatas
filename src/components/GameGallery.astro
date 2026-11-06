@@ -14,7 +14,7 @@ const { photos, locale, id } = Astro.props;
 const t = copy[locale];
 const slides = photos.map((photo, index) => {
   const flag = loremFlag(locale, id, 'gallery', index);
-  return { ...photo, flag, lorem: showFichaLorem(flag) };
+  return { ...photo, flag, lorem: showFichaLorem(flag, photo.caption) };
 });
 const first = slides[0];
 ---

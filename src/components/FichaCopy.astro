@@ -11,7 +11,7 @@ interface Props {
 
 const { flag, text, as: Tag = 'p', class: className } = Astro.props;
 const prior = text?.trim();
-const show = showFichaLorem(flag);
+const show = showFichaLorem(flag, text);
 ---
 
 {

@@ -1,6 +1,15 @@
+import { loremBaseline } from './ficha-lorem-baseline';
+
 /** Texto de revisión. Mismo parrafito en cada hueco, con el tono del slot. */
 export const FICHA_LOREM =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+
+const baseline = new Map(Object.entries(loremBaseline));
+
+/** El mismo texto que compara la ficha contra la foto congelada. */
+export function loremText(text: string | undefined): string {
+  return (text ?? '').replace(/\s+/g, ' ').trim();
+}
 
 export function loremFlag(locale: string, keyword: string, ...parts: Array<string | number>): string {
   return [locale, keyword, ...parts].join(':');
@@ -58,6 +67,14 @@ export const loremOff = new Set<string>([
   ...reviewedSlots,
 ]);
 
-export function showFichaLorem(flag: string): boolean {
-  return !loremOff.has(flag);
+/**
+ * Tapa el hueco si nadie lo aprobó y el CMS sigue con el mismo texto.
+ * Un guardado que cambia el texto, o un hueco que no estaba en la foto, se muestra.
+ */
+export function showFichaLorem(flag: string, text?: string): boolean {
+  if (loremOff.has(flag)) return false;
+  const current = loremText(text);
+  const previous = baseline.get(flag);
+  if (previous === undefined) return current.length === 0;
+  return current === previous;
 }
