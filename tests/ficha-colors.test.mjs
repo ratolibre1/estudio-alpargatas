@@ -28,6 +28,7 @@ const APPROVED_FICHA_MODE = {
   mantas: 'light',
   ninive: 'light',
   nudis: 'light',
+  oxido: 'light',
   palomas: 'dark',
   pavoneo: 'dark',
   piramisu: 'dark',
@@ -35,8 +36,8 @@ const APPROVED_FICHA_MODE = {
   tartan: 'dark',
 };
 
-test('los 19 juegos tienen cuatro colores y fichaMode explícito aprobado', () => {
-  assert.equal(games.length, 19);
+test('todos los juegos tienen cuatro colores y fichaMode explícito aprobado', () => {
+  assert.deepEqual(games.map((g) => g.keyword).sort(), Object.keys(APPROVED_FICHA_MODE).sort());
   for (const game of games) {
     assert.equal(game.palette.length, 4);
     assert(game.palette.every((c) => /^#[\da-f]{6}$/i.test(c)));

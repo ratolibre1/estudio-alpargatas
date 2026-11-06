@@ -17,6 +17,7 @@ const reviewedComponents: Record<string, number> = {
   reloj: 1,
   evoluciona: 4,
   pavoneo: 2,
+  oxido: 3,
 };
 
 /**
@@ -25,6 +26,12 @@ const reviewedComponents: Record<string, number> = {
  * Apagar un flag no borra este módulo: se limpia cuando los 19 juegos queden sin Lorem.
  */
 const reviewedSlots = [
+  // Ficha nueva de Óxido: copy completo en ambos idiomas, sin placeholders.
+  ...(['es', 'en'] as const).flatMap((locale) => [
+    ...['devVersionTitle', 'devAdjusting', 'devNextTitle', 'devNextBody', 'inspirationTitle', 'inspirationBody'].map((slot) => loremFlag(locale, 'oxido', slot)),
+    ...Array.from({ length: 3 }, (_, i) => ['title', 'body'].map((part) => loremFlag(locale, 'oxido', 'howto', i, part))).flat(),
+    ...Array.from({ length: 5 }, (_, i) => loremFlag(locale, 'oxido', 'gallery', i)),
+  ]),
   loremFlag('es', 'ninive', 'inspirationTitle'),
   loremFlag('es', 'ninive', 'inspirationBody'),
   loremFlag('en', 'ninive', 'inspirationTitle'),

@@ -238,6 +238,11 @@ body.ficha-page[data-on-primary="tinta"] {
   box-shadow: 0 1px 0 color-mix(in srgb, var(--ficha-c-tinta) 8%, transparent);
 }
 
+.ficha[data-ficha-keyword="oxido"] .ficha-cta {
+  background: var(--ficha-c-apoyo);
+  color: var(--ficha-c-base);
+}
+
 .ficha-cta:hover {
   filter: brightness(1.06);
 }
@@ -660,6 +665,16 @@ body.ficha-page[data-on-primary="tinta"] {
   object-fit: cover;
   object-position: center center;
   display: block;
+}
+
+/* Óxido muestra láminas conceptuales completas, incluida la carta de cuatro eras. */
+.ficha[data-ficha-keyword="oxido"] .ficha-comp-stage {
+  position: relative;
+}
+.ficha[data-ficha-keyword="oxido"] .ficha-comp-photo img {
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
 }
 
 .ficha-comp-side {
