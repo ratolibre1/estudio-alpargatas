@@ -238,6 +238,11 @@ body.ficha-page[data-on-primary="tinta"] {
   box-shadow: 0 1px 0 color-mix(in srgb, var(--ficha-c-tinta) 8%, transparent);
 }
 
+.ficha[data-ficha-keyword="oxido"] .ficha-cta {
+  background: var(--ficha-c-apoyo);
+  color: var(--ficha-c-base);
+}
+
 .ficha-cta:hover {
   filter: brightness(1.06);
 }

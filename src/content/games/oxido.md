@@ -25,25 +25,25 @@ factsEn:
   - Shared orders
   - First playtests pending
 image: /assets/concepto-oxido.webp
-imageAlt: Artesanos y visitantes entre piezas de cobre brillante y pátina turquesa en un patio de Santa Clara del Cobre.
-imageAltEn: Artisans and visitors among polished copper pieces and turquoise patina in a courtyard in Santa Clara del Cobre.
-imageCaption: Arte conceptual · Santa Clara del Cobre
-imageCaptionEn: Concept art · Santa Clara del Cobre
-bg: '#F6EADB'
-titleColor: '#A74C2C'
-taglineColor: '#243F43'
+imageAlt: Una mina a tajo abierto se transforma gradualmente en un cuenco de cobre labrado con pátina turquesa; un camión avanza por el borde y hay oficinas de containers a lo lejos.
+imageAltEn: An open-pit mine gradually transforms into a chased copper bowl with turquoise patina; a truck drives along the rim and container offices stand in the distance.
+imageCaption: Arte conceptual · Del mineral al oficio
+imageCaptionEn: Concept art · From ore to craft
+bg: '#E1EBE1'
+titleColor: '#276F61'
+taglineColor: '#1C3831'
 palette:
-  - '#F6EADB'
-  - '#A74C2C'
-  - '#23746F'
-  - '#243F43'
+  - '#E1EBE1'
+  - '#276F61'
+  - '#A7461E'
+  - '#1C3831'
 fichaMode: light
 titleFont: 'Fredoka, sans-serif'
 taglineFont: 'Nunito, sans-serif'
 bodyFont: 'Nunito, sans-serif'
 conceptos:
   - Talleres de cobre y pátina inspirados en Santa Clara del Cobre, México; artesanos, visitantes y un mercado vivo.
-  - Humor gráfico de tinta expresiva; cobre naranja, pátina turquesa y marfil; personajes de vestuario consistente y gestos amables.
+  - Portada de surrealismo fotográfico donde una mina se convierte en cuenco; web en verdes de pátina con acentos naranja cobre. El prototipo conserva humor gráfico de tinta expresiva y personajes consistentes de gestos amables.
   - Construcción de bolsa, extracción táctil por tamaño, combinación de valores para encargos compartidos y mejora de muestras entre períodos.
 pitchTitle: Un taller entre el brillo y la pátina
 pitchTitleEn: A workshop between shine and patina
