@@ -161,6 +161,21 @@ body.ficha-page[data-on-primary="tinta"] {
   line-height: 1.35;
 }
 
+/* Texto vigente, debajo del lorem de revisión. Hereda color y familia del hueco. */
+.ficha-prior {
+  display: block;
+  margin-top: .35rem;
+  font-size: .78rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.ficha-prior:empty {
+  display: none;
+}
+
 .ficha-facts {
   display: flex;
   flex-wrap: wrap;
@@ -250,6 +265,36 @@ body.ficha-page[data-on-primary="tinta"] {
   color: var(--ficha-muted);
   font-size: .82rem;
   line-height: 1.45;
+}
+
+.ficha-facts:has(+ .ficha-cocreator) {
+  margin-bottom: .55rem;
+}
+
+.ficha-cocreator {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 1.35rem;
+}
+
+.ficha-cocreator a {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .42rem .95rem;
+  border: 2px solid var(--ficha-award-border, var(--ficha-line));
+  border-radius: 999px;
+  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-c-base)));
+  color: var(--ficha-award-title, var(--ficha-on-light-ink, var(--ficha-navy)));
+  font-family: var(--ficha-section-font);
+  font-size: .86rem;
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
+  text-decoration: none;
+}
+
+.ficha-cocreator a:hover {
+  border-color: var(--ficha-award-bar, var(--ficha-accent));
 }
 
 .ficha-ext {
@@ -342,7 +387,7 @@ body.ficha-page[data-on-primary="tinta"] {
 .ficha-inspiration h2 {
   margin: 0;
   font-family: var(--ficha-title-font);
-  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-size: clamp(1.22rem, 2.1vw, 1.48rem);
   font-weight: 600;
   font-style: italic;
   letter-spacing: -.02em;
@@ -382,34 +427,37 @@ body.ficha-page[data-on-primary="tinta"] {
 .ficha-dev-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  align-items: start;
+  gap: 1.1rem;
 }
 
 .ficha-panel {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  column-gap: 1.15rem;
-  padding: 1.15rem 1.2rem 1.25rem;
+  display: block;
+  min-width: 0;
+  padding: .85rem 1rem .95rem;
   border: 2px solid var(--ficha-award-border, var(--ficha-line));
   border-radius: .5rem;
-  background: var(--ficha-award-bg, var(--ficha-card));
-  box-shadow: 0 2px 0 color-mix(in srgb, var(--ficha-award-bar, var(--ficha-accent)) 12%, transparent);
+  background: var(--ficha-award-bg, var(--ficha-page-bg, var(--ficha-c-base)));
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--ficha-award-bar, var(--ficha-accent)) 18%, transparent);
+  font-family: var(--ficha-section-font);
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
+}
+
+.ficha-panel-head {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  min-width: 0;
+  margin-bottom: .55rem;
 }
 
 .ficha-panel-icon {
-  grid-column: 1;
-  grid-row: 1 / -1;
-  width: 6.25rem;
-  height: 6.25rem;
+  width: 4.15rem;
+  height: 4.15rem;
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
-  color: var(--ficha-accent);
-}
-
-.ficha-panel h3,
-.ficha-panel p {
-  grid-column: 2;
 }
 
 .ficha-panel-icon img {
@@ -420,19 +468,27 @@ body.ficha-page[data-on-primary="tinta"] {
 }
 
 .ficha-panel h3 {
-  margin: 0 0 .35rem;
-  font-size: 1rem;
-  font-weight: 800;
+  margin: 0;
+  min-width: 0;
+  font-family: var(--ficha-section-font);
+  font-size: clamp(1.55rem, 3.5vw, 2rem);
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
   letter-spacing: -.01em;
+  line-height: 1;
   color: var(--ficha-award-title, var(--ficha-on-light-title));
 }
 
 .ficha-panel p {
   margin: 0;
-  color: var(--ficha-award-title);
-  font-size: .88rem;
-  line-height: 1.45;
-  opacity: 1;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  color: var(--ficha-award-link, var(--ficha-link-on-light));
+  font-family: var(--ficha-section-font);
+  font-size: .92rem;
+  font-weight: var(--ficha-caja-weight);
+  font-style: var(--ficha-caja-style);
+  line-height: 1.4;
 }
 
 /* —— Premios —— */
@@ -724,6 +780,11 @@ a.ficha-comp-tile {
   color: var(--ficha-award-link, var(--ficha-link-on-light));
 }
 
+.ficha-comp-tile-name:has(.ficha-prior) {
+  flex: 1 0 100%;
+  min-width: 0;
+}
+
 .ficha-file-dl {
   margin-left: auto;
   flex: 0 0 auto;
@@ -792,10 +853,16 @@ a.ficha-comp-tile {
 .ficha-gallery-cap {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 1rem;
   margin: .65rem 0 .75rem;
   color: var(--ficha-dim);
   font-size: .82rem;
+}
+
+.ficha-gallery-cap-text {
+  flex: 1;
+  min-width: 0;
 }
 
 .ficha-thumbs {
@@ -1041,6 +1108,10 @@ body.ficha-page .site-footer a:hover {
     justify-content: flex-end;
   }
 
+  .ficha-hero-copy .ficha-cocreator {
+    justify-content: flex-end;
+  }
+
   .ficha-hero-copy .ficha-ext {
     justify-content: flex-end;
   }
@@ -1110,7 +1181,7 @@ body.ficha-page .site-footer a:hover {
   }
 
   .ficha-dev-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

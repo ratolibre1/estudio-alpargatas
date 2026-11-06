@@ -19,9 +19,10 @@ export const ninive = {
     award3: '4º lugar en Juegos chilenos · Diluvio Lúdico',
     award4: '2º lugar del jurado · 54-Card Game Design Contest 2024',
     s01: 'La idea',
-    introH2: 'Un mismo palacio.<br /><em>Dos jardines.</em>',
+    introH2:
+      'Nínive nació como Phtalo, un enfrentamiento para determinar si era superior el color Azul Phtalo, o el tono Verde Phtalo.',
     introP1:
-      'Hay quien dice que los Jardines Colgantes no estaban en Babilonia, sino en Nínive, capital del Imperio Asirio. En la mesa, dos jugadores levantan ese palacio jardín: una estructura compartida, llena de flores y fuentes.',
+      'Al buscar una temática para rediseñar el prototipo y llevarlo a eventos, surgió naturalmente la idea de los Jardines Colgantes de Babilonia a partir de la forma en que se apilaban las cartas durante la partida. Al investigar un poco la temática descubrí que la evidencia histórica y arqueológica apunta a que es más probable que los Jardines hayan estado ubicados en Nínive que en Babilonia. El nombre del juego es un homenaje a esta idea.',
     introP2:
       'La tensión está en construir algo común mientras cada carta cambia lo que ambos podrán puntuar. A veces la mejor jugada para el palacio es una pésima jugada para ti.',
     roleOrange: 'Naranja',
@@ -132,9 +133,10 @@ export const ninive = {
     award3: '4th place in Chilean games · Diluvio Lúdico',
     award4: '2nd place, judges · 54-Card Game Design Contest 2024',
     s01: 'The idea',
-    introH2: 'One palace.<br /><em>Two gardens.</em>',
+    introH2:
+      'Nínive started out as Phtalo, a showdown to decide whether the color Phtalo Blue, or the shade Phtalo Green, was superior.',
     introP1:
-      'Some people say the Hanging Gardens were not in Babylon, but in Nínive, capital of the Assyrian Empire. At the table, two players raise that garden palace: a shared structure, full of flowers and fountains.',
+      'While looking for a theme to redesign the prototype and take it to events, the Hanging Gardens of Babylon came up naturally, from the way the cards stacked during a game. Digging into the theme a little, I found that the historical and archaeological evidence suggests the Gardens were more likely located in Nineveh than in Babylon. The name of the game is a tribute to that idea.',
     introP2:
       'The tension is building something together while each card changes what both of you can score. Sometimes the best play for the palace is a terrible play for you.',
     roleOrange: 'Orange',

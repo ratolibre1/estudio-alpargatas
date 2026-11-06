@@ -1,0 +1,145 @@
+---
+/**
+ * Tablero de revisión de fichas. No está enlazado desde el sitio.
+ */
+import { getGames, localizeGame } from '../lib/games';
+import { buildLegacyFicha } from '../lib/ficha-overlays';
+import { REVIEW_COLUMNS, columnGroups, reviewRow, sortReviewRows, type ReviewMark } from '../lib/ficha-review';
+
+const games = await getGames();
+const rows = sortReviewRows(
+  games.map((game) => {
+    const es = buildLegacyFicha(localizeGame(game, 'es'), 'es', game.keyword);
+    return reviewRow({
+      es,
+      state: game.state,
+      href: `/juegos/${game.keyword}`,
+    });
+  }),
+);
+const groups = columnGroups(REVIEW_COLUMNS);
+const marks = rows.flatMap((row) => REVIEW_COLUMNS.map((column) => row.cells[column.id].mark));
+const countable = marks.filter((mark) => mark !== 'na');
+const done = countable.filter((mark) => mark === 'ok').length;
+
+const LABELS: Record<ReviewMark, string> = {
+  ok: 'Listo',
+  partial: 'A medias',
+  review: 'Por validar',
+  pending: 'Pendiente',
+  missing: 'Falta',
+  dummy: 'De muestra',
+  na: '—',
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Revisión de fichas — Estudio Alpargatas</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #243026;
+        --muted: #5c675c;
+        --line: #d5d8cc;
+        --bg: #f6f4ec;
+        --ok: #e5f0df;
+        --ok-ink: #2a5a28;
+        --partial: #f3ead0;
+        --partial-ink: #6a4e12;
+        --review: #e7eef8;
+        --review-ink: #24406e;
+        --pending: #fff;
+        --missing: #f8e4e0;
+        --missing-ink: #7a2e24;
+        --dummy: #f6e6d4;
+        --dummy-ink: #6d4314;
+        --na: #eef0ea;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 15px/1.4 "Nunito", "Segoe UI", sans-serif;
+      }
+      main { padding: 1.25rem 1rem 2.5rem; }
+      h1 { margin: 0 0 .35rem; font-size: 1.45rem; }
+      p { margin: 0 0 .85rem; color: var(--muted); max-width: 46rem; }
+      .legend { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 .9rem; padding: 0; list-style: none; }
+      .legend li { padding: .15rem .45rem; border-radius: .25rem; font-size: .78rem; }
+      .wrap { overflow: auto; border: 1px solid var(--line); border-radius: .4rem; background: #fff; }
+      table { border-collapse: collapse; min-width: 72rem; width: 100%; }
+      th, td { border: 1px solid var(--line); padding: .4rem .45rem; vertical-align: top; text-align: left; }
+      thead th { position: sticky; top: 0; background: #e7ebe2; z-index: 1; font-size: .78rem; }
+      thead tr:first-child th { top: 0; }
+      tbody th { position: sticky; left: 0; background: #fff; z-index: 1; min-width: 11rem; }
+      tbody th a { color: inherit; }
+      .state { display: block; color: var(--muted); font-weight: 500; font-size: .75rem; }
+      td { font-size: .78rem; min-width: 6.5rem; }
+      td strong { display: block; font-size: .72rem; letter-spacing: .01em; }
+      td span { color: var(--muted); }
+      td[data-mark="ok"] { background: var(--ok); }
+      td[data-mark="ok"] strong { color: var(--ok-ink); }
+      td[data-mark="partial"] { background: var(--partial); }
+      td[data-mark="partial"] strong { color: var(--partial-ink); }
+      td[data-mark="review"] { background: var(--review); }
+      td[data-mark="review"] strong { color: var(--review-ink); }
+      td[data-mark="pending"] { background: var(--pending); }
+      td[data-mark="missing"] { background: var(--missing); }
+      td[data-mark="missing"] strong { color: var(--missing-ink); }
+      td[data-mark="dummy"] { background: var(--dummy); }
+      td[data-mark="dummy"] strong { color: var(--dummy-ink); }
+      td[data-mark="na"] { background: var(--na); color: var(--muted); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Revisión de fichas</h1>
+      <p>
+        {done} de {countable.length} celdas están listas.
+        Esta página no está en el menú. Lo que no marcaste a mano queda pendiente.
+      </p>
+      <ul class="legend">
+        <li data-mark="ok" style="background: var(--ok)">Listo</li>
+        <li style="background: #fff; border: 1px solid var(--line)">Pendiente</li>
+      </ul>
+      <div class="wrap">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2">Juego</th>
+              {groups.map((group) => <th colspan={group.span}>{group.group}</th>)}
+            </tr>
+            <tr>
+              {REVIEW_COLUMNS.map((column) => <th>{column.label}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                <th>
+                  <a href={row.href}>{row.name}</a>
+                  <span class="state">{row.state}</span>
+                </th>
+                {REVIEW_COLUMNS.map((column) => {
+                  const cell = row.cells[column.id];
+                  return (
+                    <td data-mark={cell.mark}>
+                      <strong>{LABELS[cell.mark]}</strong>
+                      {cell.note && <span>{cell.note}</span>}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>

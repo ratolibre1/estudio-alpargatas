@@ -1,0 +1,26 @@
+---
+import { FICHA_LOREM, showFichaLorem } from '../lib/ficha-lorem';
+
+interface Props {
+  /** `locale:keyword:hueco`. Apagado en `loremOff` restaura el texto. */
+  flag: string;
+  text?: string;
+  as?: 'p' | 'h2' | 'h3' | 'span' | 'strong';
+  class?: string;
+}
+
+const { flag, text, as: Tag = 'p', class: className } = Astro.props;
+const prior = text?.trim();
+const show = showFichaLorem(flag);
+---
+
+{
+  show ? (
+    <Tag class={className} data-lorem-flag={flag}>
+      {FICHA_LOREM}
+      {prior && <span class="ficha-prior">{prior}</span>}
+    </Tag>
+  ) : (
+    <Tag class={className}>{text}</Tag>
+  )
+}

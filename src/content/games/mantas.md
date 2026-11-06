@@ -18,12 +18,10 @@ homeOrder: 3
 facts:
   - 2 jugadores
   - 20–30 minutos
-  - 8+
   - 5 misiones
 factsEn:
   - 2 players
   - 20–30 minutes
-  - 8+
   - 5 missions
 coverNumber: JUEGO 03
 coverNumberEn: GAME 03

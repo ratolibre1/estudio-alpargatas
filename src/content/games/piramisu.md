@@ -19,12 +19,10 @@ facts:
   - 2–4 jugadores
   - 10–20 minutos
   - 24 cartas
-  - 10+
 factsEn:
   - 2–4 players
   - 10–20 minutes
   - 24 cards
-  - 10+
 image: /assets/piramisu-maqueta.webp
 imageAlt: Maqueta digital de una pirámide de Piramisú
 imageAltEn: Digital mockup of a Piramisú pyramid

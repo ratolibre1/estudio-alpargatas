@@ -22,9 +22,10 @@ export const mantas = {
     boardAlt: 'Grilla 5×5 de losetas de mantarraya con el bote en el centro',
     boardCap: '24 losetas + el bote al centro. Ahí empiezan los dos meeples.',
     ideaLabel: '01 — La idea',
-    ideaH2: 'Un acuario<br />compartido.',
+    ideaH2:
+      'Mantas a Raya era el juego de palabras perfecto. Sólo faltaba encontrar una jugabilidad que le hiciera justicia.',
     ideaP1:
-      'En el Gran Acuario Oceánico las mantarrayas nadan siguiendo las corrientes. Hoy, dos acuaristas se disputan el título de Acuarista Principal.',
+      'Las exploraciones iniciales llevaron a un prototipo muy complejo, con cartas que regulaban el movimiento como en Onitama. Una potente lluvia de ideas con Estefi llevó a un sistema de movimiento más destilado, y los primeros testeos evidenciaron que la guinda de la torta era incorporar la ficha de Salvavidas.',
     ideaP2:
       'El tablero es de ambos: una grilla 5×5 de losetas cuadradas. Cada loseta tiene dos caras de distinto color y una dirección. En el centro va el bote. Los meeples salen de ahí. Tres cartas de misión quedan a la vista.',
     ideaP3: 'No hay puntaje escondido. Gana quien completa cinco cartas.',
@@ -132,9 +133,10 @@ export const mantas = {
     boardAlt: '5×5 grid of manta ray tiles with the boat in the center',
     boardCap: '24 tiles + the boat in the center. That is where both meeples start.',
     ideaLabel: '01 — The idea',
-    ideaH2: 'A shared<br />aquarium.',
+    ideaH2:
+      'Mantas a Raya was the perfect play on words. All that was missing was a gameplay that did it justice.',
     ideaP1:
-      'In the Great Oceanic Aquarium, manta rays swim with the currents. Today, two aquarists are fighting over the Head Aquarist title.',
+      'The first explorations led to a very complex prototype, with cards that governed movement the way they do in Onitama. A lively brainstorm with Estefi led to a leaner movement system, and the early playtests showed that the cherry on top was adding the Lifebuoy token.',
     ideaP2:
       'The board belongs to both: a 5×5 grid of square tiles. Each tile has two faces of different colors and a direction. The boat goes in the center. Meeples start there. Three mission cards stay face up.',
     ideaP3: 'There is no hidden score. Whoever completes five cards wins.',

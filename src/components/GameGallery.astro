@@ -2,6 +2,7 @@
 import { ficha as copy } from '../i18n/fichas/ficha';
 import type { Lang } from '../i18n/locale';
 import type { FichaPhoto } from '../lib/ficha';
+import { FICHA_LOREM, loremFlag, showFichaLorem } from '../lib/ficha-lorem';
 
 interface Props {
   photos: FichaPhoto[];
@@ -11,7 +12,11 @@ interface Props {
 
 const { photos, locale, id } = Astro.props;
 const t = copy[locale];
-const first = photos[0];
+const slides = photos.map((photo, index) => {
+  const flag = loremFlag(locale, id, 'gallery', index);
+  return { ...photo, flag, lorem: showFichaLorem(flag) };
+});
+const first = slides[0];
 ---
 
 {photos.length > 0 && first && (
@@ -30,7 +35,10 @@ const first = photos[0];
       )}
     </figure>
     <div class="ficha-gallery-cap">
-      <span data-cap>{first.caption ?? ''}</span>
+      <span class="ficha-gallery-cap-text">
+        <span data-lorem data-lorem-flag={first.flag} hidden={!first.lorem}>{FICHA_LOREM}</span>
+        <span data-cap class:list={[first.lorem && first.caption && 'ficha-prior']}>{first.caption ?? ''}</span>
+      </span>
       <span data-count>1 / {photos.length}</span>
     </div>
     {photos.length > 1 && (
@@ -42,7 +50,7 @@ const first = photos[0];
         ))}
       </div>
     )}
-    <script type="application/json" data-photos set:html={JSON.stringify(photos)} />
+    <script type="application/json" data-photos set:html={JSON.stringify(slides)} />
   </div>
 )}
 
@@ -50,10 +58,11 @@ const first = photos[0];
   function bindGallery(root: HTMLElement) {
     const raw = root.querySelector('[data-photos]')?.textContent;
     if (!raw) return;
-    const photos = JSON.parse(raw) as { src: string; alt: string; caption?: string }[];
+    const photos = JSON.parse(raw) as { src: string; alt: string; caption?: string; lorem?: boolean; flag?: string }[];
     if (photos.length < 2) return;
     let index = 0;
     const img = root.querySelector<HTMLImageElement>('[data-main]');
+    const lorem = root.querySelector<HTMLElement>('[data-lorem]');
     const cap = root.querySelector('[data-cap]');
     const count = root.querySelector('[data-count]');
     const thumbs = [...root.querySelectorAll<HTMLButtonElement>('[data-thumb]')];
@@ -63,7 +72,15 @@ const first = photos[0];
       if (!photo || !img) return;
       img.src = photo.src;
       img.alt = photo.alt;
-      if (cap) cap.textContent = photo.caption ?? '';
+      const showLorem = photo.lorem !== false;
+      if (lorem) {
+        lorem.hidden = !showLorem;
+        if (photo.flag) lorem.dataset.loremFlag = photo.flag;
+      }
+      if (cap) {
+        cap.textContent = photo.caption ?? '';
+        cap.classList.toggle('ficha-prior', showLorem && Boolean(photo.caption));
+      }
       if (count) count.textContent = `${index + 1} / ${photos.length}`;
       thumbs.forEach((thumb, i) => thumb.classList.toggle('is-on', i === index));
     };
