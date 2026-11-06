@@ -18,12 +18,10 @@ homeOrder: 4
 facts:
   - 2–5 jugadores
   - 30 minutos
-  - 8+
   - 5 disciplinas
 factsEn:
   - 2–5 players
   - 30 minutes
-  - 8+
   - 5 disciplines
 image: /assets/canes-hero.webp
 imageAlt: Ilustración del Gran Festival de Canes

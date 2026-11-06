@@ -1,4 +1,4 @@
-import type { Lang } from '../i18n/locale';
+import { localizePath, type Lang } from '../i18n/locale';
 import { amateurasu as amateurasuCopy } from '../i18n/fichas/amateurasu';
 import { canes as canesCopy } from '../i18n/fichas/canes';
 import { carcinogenial as carcinogenialCopy } from '../i18n/fichas/carcinogenial';
@@ -111,18 +111,10 @@ const overlays: Record<string, OverlayFn> = {
       inspirationTitle: stripHtml(t.ideaH2),
       inspiration: t.heroP,
       ctaHref: IG_DM_ESTUDIO,
-      manualUrl: 'https://example.com/canes-manual',
-      manualUpdated: '2026-10-07',
-      pnpUrl: 'https://example.com/canes-pnp',
-      pnpUpdated: '2026-10-07',
-      publisherUrl: 'https://example.com/canes',
-      publisherLabel: t.dummyPublisher,
-      bggId: 1,
+      manualUrl: 'https://drive.google.com/file/d/16b8oZYp1tE6UNqRKbkYKkCY_1w-Ba3zp/view?usp=drive_link',
+      manualUrlEn: 'https://drive.google.com/file/d/1LBIXk3rQixbAHOcZBgA7P4LgQPfjY-Ja/view?usp=drive_link',
+      manualUpdated: '2026-10-29',
       ...protoDev(t, 'dummyVersion', 'dummyChange1', 'dummyChange2', 'dummyChange3', 'dummyChange4'),
-      awards: [
-        { title: t.dummyAward1, href: 'https://example.com/canes-premio' },
-        { title: t.dummyAward2 },
-      ],
       howTo: [
         { title: t.step1Title, body: t.step1Body },
         { title: t.step2Title, body: t.step2Body },
@@ -161,6 +153,7 @@ const overlays: Record<string, OverlayFn> = {
     const t = carcinogenialCopy[locale];
     return {
       players: '2–4',
+      duration: '30 min',
       inspirationTitle: joinParts(t.mutH2a, stripHtml(t.mutH2em)),
       inspiration: t.heroTag,
       ctaHref: IG_DM_ESTUDIO,
@@ -273,8 +266,14 @@ const overlays: Record<string, OverlayFn> = {
     return {
       players: '2',
       duration: '15 min',
-      inspirationTitle: stripHtml(t.ideaH2),
-      inspiration: t.heroSub,
+      inspirationTitle:
+        locale === 'es'
+          ? 'Letrados se creó dándole segunda vida a las cartas de un viejo prototipo, Lejos Letras!'
+          : 'Letrados was created by giving a second life to the cards of an old prototype, Lejos Letras!',
+      inspiration:
+        locale === 'es'
+          ? 'El concepto de montar las cartas de letras en columnas venía de antes, pero la versión original implicaba construir torres entre pares de jugadores y puntuar con la más débil. Letrados recortó la cantidad de jugadores a 2, pero integró la complejidad de decidir si quieres quedarte o no con tu carta.'
+          : 'The idea of stacking the letter cards into columns was already there, but the original version meant building towers between pairs of players and scoring with the weaker one. Letrados cut the player count down to 2, but brought in the complexity of deciding whether you want to keep your card or not.',
       publisherUrl: 'https://www.lighthousegms.com/es',
       publisherLabel: 'Lighthouse Games',
       howTo: [
@@ -307,6 +306,7 @@ const overlays: Record<string, OverlayFn> = {
     return {
       players: '2',
       duration: '15 min',
+      age: '8+',
       imageAlt: t.fichaConceptAlt,
       inspirationTitle: stripHtml(t.introH2),
       inspiration: t.introP1,
@@ -384,6 +384,8 @@ const overlays: Record<string, OverlayFn> = {
     return {
       players: '2',
       duration: '20–30 min',
+      cocreator: 'Estefi Lynch',
+      cocreatorUrl: localizePath('/estudio#studio-estefi', locale),
       inspirationTitle: stripHtml(t.ideaH2),
       inspiration: t.ideaP1,
       ctaHref: IG_DM_ESTUDIO,
@@ -404,7 +406,7 @@ const overlays: Record<string, OverlayFn> = {
           imageAlt: t.comp2Alt,
         }),
         comp(locale, '24', 'Objective Cards', 'Cartas de Objetivo', 'deck-cards', {
-          image: '/assets/mantas-comp-cartas.webp?v=5',
+          image: '/assets/mantas-comp-cartas.webp?v=8',
           imageAlt: t.compCartasAlt,
         }),
         comp(locale, '2', 'Diver Tokens', 'Fichas de Buzo', 'meeples', {
@@ -441,7 +443,10 @@ const overlays: Record<string, OverlayFn> = {
       ],
       componentsPhoto: '/assets/pavoneo-abanico.webp',
       componentsPhotoAlt: t.fanAlt,
-      components: [comp(locale, '13', 'Cards (12 + cover)', 'Cartas (12 + cover)', 'deck-cards')],
+      components: [
+        comp(locale, '12', 'Tail Cards', 'Cartas de Cola', 'deck-cards'),
+        comp(locale, '1', 'Face Card', 'Carta de Cara', 'hand-cards'),
+      ],
       photos: [{ src: '/assets/pavoneo-abanico.webp', alt: t.fanAlt, caption: t.fanCap }],
       credits: t.footer,
     };
@@ -452,6 +457,8 @@ const overlays: Record<string, OverlayFn> = {
     return {
       players: '2–4',
       duration: '10–20 min',
+      cocreator: 'Rodrigo Morales',
+      cocreatorUrl: 'https://www.instagram.com/loicaestudio/',
       inspirationTitle: joinParts(t.h2a, t.h2b),
       inspiration: t.heroDesc,
       ctaHref: IG_DM_ESTUDIO,
@@ -462,7 +469,11 @@ const overlays: Record<string, OverlayFn> = {
       ],
       componentsPhoto: '/assets/piramisu-maqueta.webp',
       componentsPhotoAlt: t.heroAlt,
-      components: [comp(locale, '24', 'Ingredient cards', 'Cartas de Ingrediente', 'deck-cards')],
+      components: [
+        comp(locale, '24', 'Ingredient Cards', 'Cartas de Ingrediente', 'deck-cards'),
+        comp(locale, '1', 'Mint Card', 'Carta de Menta', 'hand-cards'),
+        comp(locale, '12', 'Ingredient Tokens', 'Fichas de Ingrediente', 'tokens-stack'),
+      ],
       photos: [
         { src: '/assets/piramisu-maqueta.webp', alt: t.heroAlt, caption: t.heroCap },
         { src: '/assets/piramisu-ronda.webp', alt: t.protoAlt, caption: t.protoCap },

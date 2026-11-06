@@ -1,6 +1,8 @@
 ---
 import GameGallery from './GameGallery.astro';
 import GameComponents from './GameComponents.astro';
+import FichaCopy from './FichaCopy.astro';
+import { loremFlag } from '../lib/ficha-lorem';
 import { ficha as copy } from '../i18n/fichas/ficha';
 import { bggHref } from '../lib/games';
 import { IG_DM_ESTUDIO, instagramDmHref } from '../lib/instagram';
@@ -40,12 +42,14 @@ function formatFileDate(iso: string | undefined): string | undefined {
   return `${match[3]} ${month}, ${match[1]}`;
 }
 
+const manualHref = locale === 'en' ? g.manualUrlEn : g.manualUrl;
+const pnpHref = locale === 'en' ? g.pnpUrlEn : g.pnpUrl;
 const fileLinks = [
-  g.manualUrl
-    ? { href: g.manualUrl, label: t.fileManual, icon: '/assets/ficha-icons/manual.png', updated: formatFileDate(g.manualUpdated) }
+  manualHref
+    ? { href: manualHref, label: t.fileManual, icon: '/assets/ficha-icons/manual.png', updated: formatFileDate(g.manualUpdated) }
     : null,
-  g.pnpUrl
-    ? { href: g.pnpUrl, label: t.filePnp, icon: '/assets/ficha-icons/pnp.png', updated: formatFileDate(g.pnpUpdated) }
+  pnpHref
+    ? { href: pnpHref, label: t.filePnp, icon: '/assets/ficha-icons/pnp.png', updated: formatFileDate(g.pnpUpdated) }
     : null,
 ].filter((item): item is { href: string; label: string; icon: string; updated?: string } => item !== null);
 const hasFiles = fileLinks.length > 0;
@@ -61,7 +65,7 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
         <p class="ficha-badge" style={stateBadgeStyle(g.state)}>{g.stateLabel}</p>
         <h1>{g.name}</h1>
         <p class="ficha-tagline">{g.tagline}</p>
-        {(g.players || g.duration) && (
+        {(g.players || g.duration || g.age) && (
           <ul class="ficha-facts">
             {g.players && (
               <li>
@@ -75,7 +79,22 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
                 {g.duration}
               </li>
             )}
+            {g.age && (
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg>
+                {g.age}
+              </li>
+            )}
           </ul>
+        )}
+        {g.cocreator && g.cocreatorUrl && (
+          <p class="ficha-cocreator">
+            <a
+              href={g.cocreatorUrl}
+              target={g.cocreatorUrl.startsWith('http') ? '_blank' : undefined}
+              rel={g.cocreatorUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
+            >{t.cocreatedWith} {g.cocreator} →</a>
+          </p>
         )}
         {ctaHref && (
           <div class="ficha-cta-block">
@@ -163,20 +182,24 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
         <div class="ficha-dev-cards">
           {(g.version || g.adjusting) && (
             <article class="ficha-panel">
-              <div class="ficha-panel-icon" aria-hidden="true">
-                <img src="/assets/ficha-icons/version.png" alt="" />
+              <div class="ficha-panel-head">
+                <div class="ficha-panel-icon" aria-hidden="true">
+                  <img src="/assets/ficha-icons/version.png?v=2" alt="" />
+                </div>
+                <FichaCopy as="h3" flag={loremFlag(locale, g.keyword, 'devVersionTitle')} text={g.version ? `${t.devVersion} ${g.version}` : t.devAdjusting} />
               </div>
-              <h3>{g.version ? `${t.devVersion} ${g.version}` : t.devAdjusting}</h3>
-              <p>{g.adjusting ?? ''}</p>
+              {g.adjusting && <FichaCopy flag={loremFlag(locale, g.keyword, 'devAdjusting')} text={g.adjusting} />}
             </article>
           )}
           {g.nextPlaytests && (
             <article class="ficha-panel">
-              <div class="ficha-panel-icon" aria-hidden="true">
-                <img src="/assets/ficha-icons/experimentos.png" alt="" />
+              <div class="ficha-panel-head">
+                <div class="ficha-panel-icon" aria-hidden="true">
+                  <img src="/assets/ficha-icons/experimentos.png" alt="" />
+                </div>
+                <FichaCopy as="h3" flag={loremFlag(locale, g.keyword, 'devNextTitle')} text={t.devNext} />
               </div>
-              <h3>{t.devNext}</h3>
-              <p>{g.nextPlaytests}</p>
+              <FichaCopy flag={loremFlag(locale, g.keyword, 'devNextBody')} text={g.nextPlaytests} />
             </article>
           )}
         </div>
@@ -187,8 +210,8 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
   {showInspiration && (
     <section class="ficha-inspiration" aria-label={g.inspirationTitle}>
       <div class="ficha-shell ficha-inspiration-inner">
-        <h2>{g.inspirationTitle}</h2>
-        <p class="ficha-inspiration-body">{g.inspiration}</p>
+        <FichaCopy as="h2" flag={loremFlag(locale, g.keyword, 'inspirationTitle')} text={g.inspirationTitle} />
+        <FichaCopy as="p" class="ficha-inspiration-body" flag={loremFlag(locale, g.keyword, 'inspirationBody')} text={g.inspiration} />
       </div>
     </section>
   )}
@@ -197,7 +220,7 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
     <section class="ficha-section">
       <div class="ficha-shell">
         <h2 class="ficha-section-title">{isPub ? t.componentsPub : t.componentsProto}</h2>
-        <GameComponents defaultPhoto={g.componentsPhoto} components={components} />
+        <GameComponents keyword={g.keyword} locale={locale} defaultPhoto={g.componentsPhoto} components={components} />
       </div>
     </section>
   )}
@@ -211,8 +234,8 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
             <figure class="ficha-step">
               {step.image && <img src={step.image} alt={step.imageAlt ?? step.title} loading="lazy" />}
               <span class="ficha-step-num">{index + 1}.</span>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
+              <FichaCopy as="h3" flag={loremFlag(locale, g.keyword, 'howto', index, 'title')} text={step.title} />
+              <FichaCopy flag={loremFlag(locale, g.keyword, 'howto', index, 'body')} text={step.body} />
             </figure>
           ))}
         </div>
@@ -250,14 +273,14 @@ const showInspiration = Boolean(g.inspirationTitle && g.inspiration);
               </span>
             </a>
           ))}
-          {resources.map((resource) => (
+          {resources.map((resource, index) => (
             <a class="ficha-resource" href={resource.href} target="_blank" rel="noopener noreferrer">
               <span class="ficha-resource-lead">
                 <span class="ficha-resource-icon" aria-hidden="true">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
                 </span>
                 <span>
-                  <strong>{resource.label}</strong>
+                  <FichaCopy as="strong" flag={loremFlag(locale, g.keyword, 'resource', index)} text={resource.label} />
                   {resource.meta && <small>{resource.meta}</small>}
                 </span>
               </span>

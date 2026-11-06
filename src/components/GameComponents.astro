@@ -1,13 +1,18 @@
 ---
 import type { FichaComponent } from '../lib/ficha';
+import type { Lang } from '../i18n/locale';
 import { resolveComponentIcon } from '../lib/comp-icons';
+import FichaCopy from './FichaCopy.astro';
+import { loremFlag } from '../lib/ficha-lorem';
 
 interface Props {
+  keyword: string;
+  locale: Lang;
   defaultPhoto?: string;
   components: FichaComponent[];
 }
 
-const { defaultPhoto, components } = Astro.props;
+const { keyword, locale, defaultPhoto, components } = Astro.props;
 const hasStage = Boolean(defaultPhoto || components.some((c) => c.image));
 const show = components.length > 0;
 ---
@@ -52,7 +57,7 @@ const show = components.length > 0;
               <img class="ficha-comp-tile-icon" src={iconSrc} alt="" />
               <span class="ficha-comp-tile-body">
                 <span class="ficha-comp-tile-qty">{item.qty}</span>
-                <span class="ficha-comp-tile-name">{item.name}</span>
+                <FichaCopy as="span" class="ficha-comp-tile-name" flag={loremFlag(locale, keyword, 'component', index)} text={item.name} />
               </span>
             </button>
           );

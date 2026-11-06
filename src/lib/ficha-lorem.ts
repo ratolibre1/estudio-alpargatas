@@ -1,0 +1,56 @@
+/** Texto de revisión. Mismo parrafito en cada hueco, con el tono del slot. */
+export const FICHA_LOREM =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+
+export function loremFlag(locale: string, keyword: string, ...parts: Array<string | number>): string {
+  return [locale, keyword, ...parts].join(':');
+}
+
+/** Cajitas de componentes ya revisadas, en es y en. El índice sigue el orden del overlay. */
+const reviewedComponents: Record<string, number> = {
+  ninive: 2,
+  mantas: 5,
+  canes: 4,
+  letrados: 1,
+  carcinogenial: 4,
+  piramisu: 3,
+  reloj: 1,
+  evoluciona: 4,
+  pavoneo: 2,
+};
+
+/**
+ * Textos que ya volvieron al original.
+ * Clave: `locale:keyword:hueco` (`howto:0:title`, `component:1`, `gallery:2`, …).
+ * Apagar un flag no borra este módulo: se limpia cuando los 19 juegos queden sin Lorem.
+ */
+const reviewedSlots = [
+  loremFlag('es', 'ninive', 'inspirationTitle'),
+  loremFlag('es', 'ninive', 'inspirationBody'),
+  loremFlag('en', 'ninive', 'inspirationTitle'),
+  loremFlag('en', 'ninive', 'inspirationBody'),
+  loremFlag('es', 'mantas', 'inspirationTitle'),
+  loremFlag('es', 'mantas', 'inspirationBody'),
+  loremFlag('en', 'mantas', 'inspirationTitle'),
+  loremFlag('en', 'mantas', 'inspirationBody'),
+  loremFlag('es', 'letrados', 'inspirationTitle'),
+  loremFlag('es', 'letrados', 'inspirationBody'),
+  loremFlag('en', 'letrados', 'inspirationTitle'),
+  loremFlag('en', 'letrados', 'inspirationBody'),
+];
+
+/** Está en la ficha, pero el autor todavía no dio el ok. */
+export const loremDraft = new Set<string>([]);
+
+export const loremOff = new Set<string>([
+  ...(['es', 'en'] as const).flatMap((locale) =>
+    Object.entries(reviewedComponents).flatMap(([keyword, count]) =>
+      Array.from({ length: count }, (_, index) => loremFlag(locale, keyword, 'component', index)),
+    ),
+  ),
+  ...reviewedSlots,
+]);
+
+export function showFichaLorem(flag: string): boolean {
+  return !loremOff.has(flag);
+}

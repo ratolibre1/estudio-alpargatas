@@ -46,6 +46,8 @@ export type FichaContent = {
   stateLabel: string;
   players?: string;
   duration?: string;
+  /** Edad mínima, por ejemplo `8+`. Si falta, la ficha no la muestra. */
+  age?: string;
   image?: string;
   imageAlt?: string;
   imageCaption?: string;
@@ -55,16 +57,23 @@ export type FichaContent = {
   ctaHref?: string;
   rulesUrl?: string;
   rulesLabel?: string;
-  /** PDF del manual. Si falta junto con `pnpUrl`, se esconde «Ver archivos». */
+  /** PDF del manual en español. Si falta junto con el resto de archivos, se esconde «Ver archivos». */
   manualUrl?: string;
+  /** PDF del manual en inglés. La ficha en inglés no reutiliza el de español. */
+  manualUrlEn?: string;
   /** Última actualización del manual, `YYYY-MM-DD`. */
   manualUpdated?: string;
-  /** Archivo print-and-play. */
+  /** Archivo print-and-play en español. */
   pnpUrl?: string;
+  /** Archivo print-and-play en inglés. */
+  pnpUrlEn?: string;
   /** Última actualización del PnP, `YYYY-MM-DD`. */
   pnpUpdated?: string;
   publisherUrl?: string;
   publisherLabel?: string;
+  /** Nombre de quien cocreó el juego. El pill solo aparece si también hay `cocreatorUrl`. */
+  cocreator?: string;
+  cocreatorUrl?: string;
   bggId?: number;
   version?: string;
   adjusting?: string;
