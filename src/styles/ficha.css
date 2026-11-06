@@ -662,6 +662,16 @@ body.ficha-page[data-on-primary="tinta"] {
   display: block;
 }
 
+/* Óxido muestra láminas conceptuales completas, incluida la carta de cuatro eras. */
+.ficha[data-ficha-keyword="oxido"] .ficha-comp-stage {
+  position: relative;
+}
+.ficha[data-ficha-keyword="oxido"] .ficha-comp-photo img {
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+}
+
 .ficha-comp-side {
   display: flex;
   flex-direction: column;
