@@ -8,10 +8,10 @@ description: Combina muestras de cobre, atiende encargos antes que los demás y 
 descriptionEn: Combine copper samples, fill orders before your rivals, and improve what comes out of your bag. Precision pays better, but an imperfect delivery can still be a good decision.
 meta: Cobre · Encargos · Construcción de bolsa
 metaEn: Copper · Orders · Bag building
-state: boceto
-stateLabel: Boceto
-stateLabelEn: Sketch
-stateOrder: 5
+state: pruebas
+stateLabel: En pruebas
+stateLabelEn: In testing
+stateOrder: 4
 date: '2026-11'
 home: proto
 homeOrder: 8
