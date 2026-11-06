@@ -40,6 +40,7 @@ No copiamos pareos de [Fontpair](https://fontpair.co/all) uno a uno: casi nunca 
 | mantas | Josefin Sans | Nunito | Nunito |
 | ninive | Cormorant Garamond | Cormorant Garamond | Nunito |
 | nudis | Lora | Lora | Nunito |
+| oxido | Fredoka | Nunito | Nunito |
 | palomas | Bebas Neue | Oswald | Nunito |
 | pavoneo | Playfair Display | Cormorant Garamond | Nunito |
 | piramisu | Yeseva One | Cormorant Garamond | Nunito |
