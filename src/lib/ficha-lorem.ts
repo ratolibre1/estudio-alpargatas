@@ -26,7 +26,7 @@ const reviewedComponents: Record<string, number> = {
   reloj: 1,
   evoluciona: 4,
   pavoneo: 2,
-  oxido: 3,
+  oxido: 6,
 };
 
 /**

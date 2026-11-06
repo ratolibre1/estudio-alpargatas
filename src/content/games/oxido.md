@@ -111,45 +111,56 @@ howTo:
     imageAlt: ''
     bodyEn: Spent samples wait outside your bag until the next period. Pay to replace them with others in the same category and prepare better combinations. Decide how much to improve and how much money to keep for the end.
     titleEn: Invest in the next period
-componentsPhoto: /assets/oxido-tablero.webp
-componentsPhotoAlt: Montaje conceptual del tablero central con encargos horizontales, mercado de mejoras y cuatro mazos de era.
+componentsPhoto: /assets/oxido-comp-tablero.webp
+componentsPhotoAlt: Tablero central de Óxido sin piezas, con espacios para pedidos y mejoras, sobre fondo verde pátina claro.
 componentsNote: ''
 components:
   - qty: '1'
     name: Tablero Central (c)
     icon: map
-    image: /assets/oxido-tablero.webp
-    imageAlt: Propuesta de la zona central compartida de Óxido.
-    imageAltEn: Proposed shared central play area for Óxido.
+    image: /assets/oxido-comp-tablero.webp
+    imageAlt: Tablero central sin piezas, con espacios para pedidos, mejoras y marcadores de período y vuelta.
+    imageAltEn: Bare central board with spaces for orders, upgrades, and period and turn markers.
     nameEn: central board · concept proposal
   - qty: '4'
     name: Cartas de Pedido (c)
     icon: deck-cards
-    image: /assets/oxido-cartas-eras.webp
-    imageAlt: Frentes y reversos de cartas horizontales; los reversos llevan los números I a IV grandes y centrados.
-    imageAltEn: Landscape card fronts and backs; backs carry large centered numerals I through IV.
-    nameEn: era decks · from morning to night
+    image: /assets/oxido-comp-pedidos.webp
+    imageAlt: Cuatro cartas de pedido horizontales; dos anversos ilustrados y dos reversos de era con números romanos.
+    imageAltEn: Four landscape order cards, showing two illustrated fronts and two era backs with Roman numerals.
+    nameEn: Order cards (concept)
   - qty: '36'
     name: Fichas de Cobre Iniciales (c)
     icon: tokens-stack
-    image: /assets/oxido-muestras-monedas.webp
-    imageAlt: Propuesta de muestras geométricas y monedas redondas de Óxido.
-    imageAltEn: Proposed geometric sample tokens and round coins for Óxido.
-    nameEn: sample shapes · triangle, rhombus, and hexagon
+    image: /assets/oxido-comp-iniciales.webp
+    imageAlt: Fichas iniciales en cobre naranja sin pátina, con valores 5, 15 y 30, junto a los reversos ornamentales de las tres formas.
+    imageAltEn: Starting tokens in clean orange copper, with values 5, 15, and 30 alongside the ornamental backs of all three shapes.
+    nameEn: Initial copper tokens (concept)
   - qty: '72'
     name: Fichas de Cobre Mejoradas (c)
     icon: tokens-stack
-    image: /assets/oxido-muestras-monedas.webp
-    imageAlt: Propuesta de muestras geométricas y monedas redondas de Óxido.
+    image: /assets/oxido-comp-mejoradas.webp
+    imageAlt: Fichas mejoradas con cobre y pátina turquesa; anversos numerados y reversos florales en triángulo, rombo y hexágono.
+    imageAltEn: Upgraded copper and turquoise-patina tokens, showing numbered fronts and floral backs in triangular, rhombus, and hexagonal shapes.
+    nameEn: Upgraded copper tokens (concept)
   - qty: '50'
     name: Fichas de Dinero
     icon: coins
-    image: /assets/oxido-muestras-monedas.webp
-    imageAlt: Propuesta de muestras geométricas y monedas redondas de Óxido.
+    image: /assets/oxido-comp-dinero.webp
+    imageAlt: Fichas de dinero redondas de color dorado, con valores 1, 5 y 10.
+    imageAltEn: Round gold-colored money tokens with values 1, 5, and 10.
+    nameEn: Money tokens
+  - qty: '2'
+    name: Marcadores de Período y Vuelta (c)
+    nameEn: Period and turn markers (concept)
+    icon: cylinders
+    image: /assets/oxido-comp-marcadores.webp
+    imageAlt: Dos marcadores circulares lisos, naranja cobre para período y turquesa para vuelta.
+    imageAltEn: Two plain round markers, copper orange for period and turquoise for turn.
 resources: []
 credits: Óxido · Diseño de juego y dirección visual · Estudio Alpargatas
 adjustingEn: The core rules are defined and the visual identity has a clear direction. We are refining the relationship between sample values, payments, and upgrades. The scenes and components shown here are concept proposals; the final component list remains open.
-componentsPhotoAltEn: Concept setup of the central board with landscape orders, an upgrade market, and four era decks.
+componentsPhotoAltEn: Bare Óxido central board with order and upgrade spaces, on a pale patina-green background.
 creditsEn: Óxido · Game design and visual direction · Estudio Alpargatas
 descriptionEn: Combine copper samples, fill orders before your rivals, and improve what comes out of your bag. Precision pays better, but an imperfect delivery can still be a good decision.
 factsEn:
