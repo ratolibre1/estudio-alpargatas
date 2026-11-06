@@ -84,6 +84,9 @@ collections:
       - { label: Orden en la home, name: homeOrder, widget: number, value_type: int, required: false, hint: '1, 2, 3… dentro de la sección. 0 si no va en home.' }
       - { label: Jugadores, name: players, widget: string, required: false, hint: 'Ej: 2–4' }
       - { label: Duración, name: duration, widget: string, required: false, hint: 'Ej: 20–30 min' }
+      - { label: Edad, name: age, widget: string, required: false, hint: 'Ej: 8+. Vacío = la ficha no muestra edad.' }
+      - { label: Cocreado con, name: cocreator, widget: string, required: false, hint: 'Nombre. El pill solo aparece si también hay URL.' }
+      - { label: URL del cocreador, name: cocreatorUrl, widget: string, required: false, hint: 'https://… o una ruta interna, ej. /estudio#studio-estefi' }
       - label: Facts (home destacados)
         name: facts
         widget: list
@@ -170,7 +173,14 @@ collections:
       - { label: Etiqueta de reglas, name: rulesLabel, widget: string, required: false }
       - { label: URL editorial, name: publisherUrl, widget: string, required: false }
       - { label: Nombre editorial, name: publisherLabel, widget: string, required: false }
+      - { label: Manual (ES), name: manualUrl, widget: string, required: false, hint: 'URL del PDF en español. No se reutiliza en la ficha en inglés.' }
+      - { label: Manual (EN), name: manualUrlEn, widget: string, required: false }
+      - { label: Manual actualizado, name: manualUpdated, widget: string, required: false, hint: 'YYYY-MM-DD' }
+      - { label: Imprimibles (ES), name: pnpUrl, widget: string, required: false }
+      - { label: Imprimibles (EN), name: pnpUrlEn, widget: string, required: false }
+      - { label: Imprimibles actualizados, name: pnpUpdated, widget: string, required: false, hint: 'YYYY-MM-DD' }
       - { label: Versión (proto), name: version, widget: string, required: false, hint: 'Ej: 0.4' }
+      - { label: Versión (EN), name: versionEn, widget: string, required: false, hint: 'Si vacío, la ficha en inglés usa la versión en español.' }
       - { label: Qué se está ajustando, name: adjusting, widget: text, required: false }
       - { label: Próximas pruebas, name: nextPlaytests, widget: text, required: false }
       - label: Cómo se juega (máx. 3)

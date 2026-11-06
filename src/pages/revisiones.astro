@@ -3,13 +3,13 @@
  * Tablero de revisión de fichas. No está enlazado desde el sitio.
  */
 import { getGames, localizeGame } from '../lib/games';
-import { buildLegacyFicha } from '../lib/ficha-overlays';
+import { applyFichaChrome, toFicha } from '../lib/ficha';
 import { REVIEW_COLUMNS, columnGroups, reviewRow, sortReviewRows, type ReviewMark } from '../lib/ficha-review';
 
 const games = await getGames();
 const rows = sortReviewRows(
   games.map((game) => {
-    const es = buildLegacyFicha(localizeGame(game, 'es'), 'es', game.keyword);
+    const es = applyFichaChrome(toFicha(localizeGame(game, 'es')), 'es');
     return reviewRow({
       es,
       state: game.state,

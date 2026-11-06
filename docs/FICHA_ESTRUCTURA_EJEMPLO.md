@@ -8,13 +8,11 @@ Referencias: [FICHAS.md](./FICHAS.md) (arquitectura), [FUENTES_JUEGOS.md](./FUEN
 
 ## 1. Orden de trabajo
 
-1. **CMS** — `src/content/games/ejemplo.md` (o `/admin/`).
+1. **CMS** — `src/content/games/ejemplo.md` (o `/admin/`). ES en el campo base, EN en `*En`.
 2. **Asset héroe** — `public/assets/concepto-ejemplo.webp` (3:2, mismo arte que portafolio).
-3. **Copy largo** (opcional pero habitual) — `src/i18n/fichas/ejemplo.ts` (`es` + `en`).
-4. **Overlay** — entrada `ejemplo:` en `src/lib/ficha-overlays.ts` (import del copy + bloque como abajo).
-5. **`npm run build`** — deben generarse `/juegos/ejemplo/` y `/en/juegos/ejemplo/` sin carpeta en `src/pages/juegos/ejemplo/`.
+3. **`npm run build`** — deben generarse `/juegos/ejemplo/` y `/en/juegos/ejemplo/` sin carpeta en `src/pages/juegos/ejemplo/`.
 
-Si todo el contenido cabe en el markdown (howTo, componentes, fotos), puedes **omitir el overlay** y usar solo CMS. El overlay sirve para mezclar copy de `i18n/fichas/*` y assets fijos sin inflar el YAML.
+`src/i18n/fichas/<keyword>.ts` queda solo para `/juegos/old/`. No se crea un overlay para la ficha nueva.
 
 ---
 
@@ -59,7 +57,7 @@ conceptos:
 ---
 ```
 
-### Campos de ficha (opcionales, CMS o overlay)
+### Campos de ficha (opcionales, en el CMS)
 
 | Campo | Uso |
 |--------|-----|
@@ -78,7 +76,9 @@ conceptos:
 
 ---
 
-## 3. i18n — `src/i18n/fichas/ejemplo.ts`
+## 3. i18n — solo `/juegos/old/`
+
+`src/i18n/fichas/ejemplo.ts` no alimenta la ficha nueva. Sigue existiendo para las páginas archivadas. El ejemplo de abajo es ese archivo histórico, no un paso para un juego nuevo.
 
 Misma forma en todos los juegos con overlay: export nombrado = keyword, claves `es` y `en`. Textos de secciones van aquí; el overlay solo **ensambla** y apunta a assets.
 
@@ -131,133 +131,28 @@ export const ejemplo = {
 } as const;
 ```
 
-Convención **protoDev**: en el diccionario, `version` + `change1`…`change4`. En overlay: `...protoDev(t, 'version', 'change1', 'change2', 'change3', 'change4')` → une `change1–2` en «Ajustando» y `change3+` en «Próximas pruebas».
+En las páginas viejas, `version` + `change1`…`change4` armaban «Ajustando» y «Próximas pruebas». En la ficha nueva esos textos van directo en `adjusting` / `nextPlaytests` del markdown.
 
 ---
 
-## 4. Overlay — proto completo (referencia: Canes)
+## 4. Componentes en el CMS
 
-Añadir import y entrada en `src/lib/ficha-overlays.ts`. **No** duplicar arrays por locale: usar `comp()` y claves `t.*`.
+El copy largo (pitch, how-to, ajustes, créditos, componentes, fotos) va en el markdown, con el inglés en `*En`. No hay overlay.
 
-```typescript
-import { ejemplo as ejemploCopy } from '../i18n/fichas/ejemplo';
-
-// dentro de overlays: Record<string, OverlayFn>
-ejemplo: (_g, locale) => {
-  const t = ejemploCopy[locale];
-  return {
-    players: '2–4',
-    duration: '30 min',
-    inspirationTitle: stripHtml(t.ideaH2),
-    inspiration: t.ideaP2,
-    ctaHref: IG_DM_ESTUDIO,
-    ...protoDev(t, 'version', 'change1', 'change2', 'change3'),
-    howTo: [
-      { title: t.step1Title, body: t.step1Body },
-      { title: t.step2Title, body: t.step2Body },
-      { title: t.step3Title, body: t.step3Body },
-    ],
-    componentsPhoto: '/assets/ejemplo-mesa.webp',
-    componentsPhotoAlt: t.galMesaAlt,
-    components: [
-      comp(locale, '54', 'cards', 'cartas', 'deck-cards', {
-        image: '/assets/ejemplo-cartas.webp',
-        imageAlt: t.galMesaAlt,
-      }),
-      comp(locale, '12', 'tokens', 'fichas', 'tokens-stack'),
-    ],
-    photos: [
-      { src: '/assets/ejemplo-mesa.webp', alt: t.galMesaAlt, caption: t.galMesaCap },
-    ],
-    credits: t.footer,
-  };
-},
-```
-
-### Componentes — tres modos UI
+### Tres modos de UI
 
 | Modo | Qué pones | UI |
 |------|-----------|-----|
-| **Solo cintas** | `components: [ comp(...), … ]` sin `componentsPhoto` ni `image` en ítems | Cintas apiladas (`--tiles-only`) |
+| **Solo cintas** | `components` sin `componentsPhoto` ni `image` en ítems | Cintas apiladas (`--tiles-only`) |
 | **Mesa + cintas** | `componentsPhoto` + `components` (sin `image` por ítem) | Mesa fija; cintas informativas |
 | **Interactivo** | `componentsPhoto` y/o `image` en ítems | Hover/click cambia foto de mesa |
 
-Helper obligatorio (ya definido en el mismo archivo):
-
-```typescript
-comp(locale, qty, nameEn, nameEs, iconSlug, { image?, imageAlt? }?)
-```
-
-Iconos: slugs en `COMP_ICON_SLUGS` (`deck-cards`, `meeples`, …). En Decap: select «Icono» en la lista de componentes.
-
----
-
-## 5. Overlay — publicado (referencia: Nínive)
-
-```typescript
-ninive: (game, locale) => {
-  const t = niniveCopy[locale];
-  const ui = fichaCopy[locale];
-  return {
-    players: '2',
-    duration: '15 min',
-    imageAlt: t.fichaConceptAlt,
-    inspirationTitle: stripHtml(t.introH2),
-    inspiration: t.introP2,
-    buyUrl: 'https://…',
-    rulesUrl: 'https://…',
-    rulesLabel: ui.rules,
-    publisherUrl: 'https://…',
-    publisherLabel: 'Editorial',
-    bggId: game.bggId,
-    howTo: [
-      { title: t.rule1Title, body: t.rule1Body, image: '/assets/…', imageAlt: t.gal2Alt },
-    ],
-    componentsPhoto: '/assets/…',
-    componentsPhotoAlt: t.gal1Alt,
-    components: [
-      comp(locale, '27', 'Cards', 'Cartas', 'deck-cards', {
-        image: '/assets/…',
-        imageAlt: t.gal2Alt,
-      }),
-    ],
-    resources: [
-      { label: t.resourceRulebookLabel, href: 'https://…', meta: t.resourceRulebookMeta },
-    ],
-    photos: [
-      { src: '/assets/…', alt: t.heroAlt, caption: t.heroCaption },
-    ],
-    awards: game.awards,
-    credits: t.fichaCredits,
-  };
-},
-```
-
----
-
-## 6. Overlay — mínimo (solo franja + créditos)
-
-```typescript
-ejemplo: (_g, locale) => {
-  const t = ejemploCopy[locale];
-  return {
-    inspirationTitle: stripHtml(t.ideaH2),
-    inspiration: t.ideaP2,
-    ctaHref: IG_DM_ESTUDIO,
-    credits: t.footer,
-  };
-},
-```
-
----
-
-## 7. CMS-only — componentes en markdown
-
-Si no hay overlay, puedes definir componentes en el frontmatter (mismo shape que el schema):
+Iconos: slugs en `COMP_ICON_SLUGS` (`deck-cards`, `meeples`, …). En el CMS: select «Icono».
 
 ```yaml
 componentsPhoto: /assets/ejemplo-mesa.webp
 componentsPhotoAlt: Partida en mesa
+componentsPhotoAltEn: Table setup
 components:
   - qty: '48'
     name: cartas
@@ -271,25 +166,39 @@ howTo:
     titleEn: Goal
     body: Texto ES…
     bodyEn: EN text…
+pitchTitle: De dónde salió
+pitchTitleEn: Where it came from
+pitch: Párrafo ES…
+pitchEn: EN paragraph…
+version: v0.1
+adjusting: Qué se está afinando.
+adjustingEn: What is being tuned.
+nextPlaytests: Próxima mesa.
+nextPlaytestsEn: Next table.
+credits: Diseño · Estudio Alpargatas
+creditsEn: Design · Estudio Alpargatas
 ```
+
+Campos que el CMS también guarda y la ficha muestra: `age`, `cocreator`, `cocreatorUrl`, `manualUrl` / `manualUrlEn`, `pnpUrl` / `pnpUrlEn`. Un vacío (`''` o `null`) es ausencia: no publica un valor y no tira el build.
 
 ---
 
-## 8. Anti-patrones (no hacer)
+## 5. Anti-patrones (no hacer)
 
 - Dos arrays `locale === 'en' ? […] : […]` para componentes o recursos.
 - `componentsNote` (ya no se renderiza).
 - Carpetas `src/pages/juegos/<keyword>/` (choca con `[slug]` salvo `old/`).
-- Iconos adivinados por nombre: usar slug explícito en CMS u overlay.
+- Iconos adivinados por nombre: el slug va en el CMS.
 - `palette[3]` como fondo de tarjetas: el tema usa `awardFill`; no forzar `#1a1a1a` como “card”.
+- Volver a leer `src/i18n/fichas/<keyword>.ts` desde la ficha nueva. Eso es archivo de `/juegos/old/`.
 
 ---
 
-## 9. Checklist antes de merge
+## 6. Checklist antes de merge
 
 - [ ] `keyword` = nombre del archivo `.md` = slug URL.
 - [ ] `concepto-<keyword>.webp` existe.
-- [ ] Overlay (si aplica) usa `comp()` + `t.footer` / claves i18n.
+- [ ] El copy de la ficha está en el markdown, ES y `*En`.
 - [ ] Cada ítem de `components` tiene `icon`.
 - [ ] Build: ES + EN sin errores de content schema.
 - [ ] DevTools: 1200 / 980 / 760 — héroe, cintas y galería legibles.

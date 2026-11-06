@@ -8,9 +8,9 @@ La galería de la ficha sigue siendo foto o arte existente. El montaje vive solo
 
 | Qué | Dónde |
 |---|---|
-| Mesa general | `componentsPhoto` en `src/lib/ficha-overlays.ts` |
-| Detalle al hacer click en un componente | `components[].image` vía `comp(...)` |
-| Alt ES / EN | `src/i18n/fichas/<juego>.ts` |
+| Mesa general | `componentsPhoto` en `src/content/games/<juego>.md` |
+| Detalle al hacer click en un componente | `components[].image` en el mismo markdown |
+| Alt ES / EN | `imageAlt` / `imageAltEn` (y `alt` / `altEn` en fotos) |
 | Archivo | `public/assets/<juego>-mesa-montaje.webp` y `<juego>-comp-<pieza>.webp` |
 
 El stage es 16:9 con `object-fit: cover` (`.ficha-comp-stage` en `src/styles/ficha.css`). Exportar **1600×900**.

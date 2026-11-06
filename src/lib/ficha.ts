@@ -1,3 +1,6 @@
+import type { Lang } from '../i18n/locale';
+import { localizePath } from '../i18n/locale';
+import { ficha as fichaCopy } from '../i18n/fichas/ficha';
 import type { GameCard } from './games';
 
 export type FichaVariant = 'publicado' | 'proto';
@@ -120,6 +123,28 @@ export function fichaConceptArtUrl(keyword: string): string {
   return `/assets/concepto-${keyword}.webp`;
 }
 
+/** Arte de portafolio y pie común. El copy de cada juego viene del CMS. */
+export function applyFichaChrome(ficha: FichaContent, locale: Lang): FichaContent {
+  const ui = fichaCopy[locale];
+  const cocreatorUrl = ficha.cocreatorUrl?.startsWith('http')
+    ? ficha.cocreatorUrl
+    : ficha.cocreatorUrl
+      ? localizePath(ficha.cocreatorUrl, locale)
+      : undefined;
+  return {
+    ...ficha,
+    image: fichaConceptArtUrl(ficha.keyword),
+    imageAlt: ficha.imageAlt || ficha.name,
+    imageCaption: ui.conceptCaption,
+    cocreatorUrl,
+  };
+}
+
+function filled(value: string | undefined): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+}
+
 export function toFicha(game: GameCard): FichaContent {
   return {
     keyword: game.keyword,
@@ -130,17 +155,26 @@ export function toFicha(game: GameCard): FichaContent {
     stateLabel: game.stateLabel,
     players: game.players,
     duration: game.duration,
+    age: game.age,
     image: game.image,
     imageAlt: game.imageAlt,
     imageCaption: game.imageCaption,
     inspirationTitle: game.pitchTitle,
     inspiration: game.pitch ?? game.description,
-    buyUrl: game.buyUrl,
-    ctaHref: game.ctaHref,
-    rulesUrl: game.rulesUrl,
-    rulesLabel: game.rulesLabel,
-    publisherUrl: game.publisherUrl,
-    publisherLabel: game.publisherLabel,
+    ctaHref: filled(game.ctaHref),
+    rulesUrl: filled(game.rulesUrl),
+    rulesLabel: filled(game.rulesLabel),
+    manualUrl: filled(game.manualUrl),
+    manualUrlEn: filled(game.manualUrlEn),
+    manualUpdated: filled(game.manualUpdated),
+    pnpUrl: filled(game.pnpUrl),
+    pnpUrlEn: filled(game.pnpUrlEn),
+    pnpUpdated: filled(game.pnpUpdated),
+    publisherUrl: filled(game.publisherUrl),
+    publisherLabel: filled(game.publisherLabel),
+    cocreator: filled(game.cocreator),
+    cocreatorUrl: filled(game.cocreatorUrl),
+    buyUrl: filled(game.buyUrl),
     bggId: game.bggId,
     version: game.version,
     adjusting: game.adjusting,

@@ -6,6 +6,12 @@ const compIconSlug = z.enum(
   COMP_ICON_SLUGS as unknown as [string, ...string[]]
 );
 
+/** Sveltia guarda los campos vacíos como `''` o `null`. Eso no es un valor: es ausencia. */
+function blankToUndefined(value: unknown): unknown {
+  if (value === '' || value === null) return undefined;
+  return value;
+}
+
 const keyword = z
   .string()
   .regex(
@@ -40,6 +46,8 @@ const games = defineCollection({
     homeOrder: z.number().int().default(0),
     players: z.string().optional(),
     duration: z.string().optional(),
+    /** Edad mínima, por ejemplo `8+`. Si falta, la ficha no la muestra. */
+    age: z.string().optional(),
     facts: z.array(z.string()).optional(),
     factsEn: z.array(z.string()).optional(),
     image: z.string().optional(),
@@ -63,10 +71,13 @@ const games = defineCollection({
     coverTitleEn: z.string().optional(),
     coverStatus: z.string().optional(),
     coverStatusEn: z.string().optional(),
-    coverTheme: z.enum(['red', 'green', 'blue']).optional(),
+    coverTheme: z.preprocess(
+      blankToUndefined,
+      z.enum(['red', 'green', 'blue']).optional()
+    ),
     coverInitials: z.string().optional(),
     /** ID numérico de BoardGameGeek. La URL se deriva. */
-    bggId: z.number().int().positive().optional(),
+    bggId: z.preprocess(blankToUndefined, z.number().int().positive().optional()),
     awards: z
       .array(
         z.object({
@@ -118,7 +129,22 @@ const games = defineCollection({
     publisherUrl: z.string().optional(),
     publisherLabel: z.string().optional(),
     publisherLabelEn: z.string().optional(),
+    /** Nombre de quien cocreó el juego. El pill solo aparece si también hay `cocreatorUrl`. */
+    cocreator: z.string().optional(),
+    /** URL absoluta, o ruta interna (`/estudio#studio-estefi`) que la ficha localiza. */
+    cocreatorUrl: z.string().optional(),
+    /** PDF del manual en español. La ficha en inglés no reutiliza este enlace. */
+    manualUrl: z.string().optional(),
+    manualUrlEn: z.string().optional(),
+    /** Última actualización del manual, `YYYY-MM-DD`. */
+    manualUpdated: z.string().optional(),
+    /** Archivo print-and-play en español. */
+    pnpUrl: z.string().optional(),
+    pnpUrlEn: z.string().optional(),
+    /** Última actualización del PnP, `YYYY-MM-DD`. */
+    pnpUpdated: z.string().optional(),
     version: z.string().optional(),
+    versionEn: z.string().optional(),
     adjusting: z.string().optional(),
     adjustingEn: z.string().optional(),
     nextPlaytests: z.string().optional(),
@@ -147,7 +173,7 @@ const games = defineCollection({
           qty: z.string(),
           name: z.string(),
           nameEn: z.string().optional(),
-          icon: compIconSlug.optional(),
+          icon: z.preprocess(blankToUndefined, compIconSlug.optional()),
           image: z.string().optional(),
           imageAlt: z.string().optional(),
           imageAltEn: z.string().optional(),

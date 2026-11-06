@@ -12,13 +12,13 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 | `src/components/GameFicha.astro` | Markup compartido: héroe, franjas, galería, CTA, bloque dev (proto). |
 | `src/components/GameComponents.astro` | Mesa general + tiles (icono, cantidad grande); hover/click cambia foto si hay `image`. |
 | `public/assets/comp-icons/` | 25 iconos (`rulebook` … `score-pad`). **Fuente:** recortes en `scripts/source/comp-icons-selected/` (`part-6` = rulebook … `part-30` = score-pad). Importar: `./scripts/import-comp-icons.sh`. Fallback auto-slice: `./scripts/rename-comp-icons.sh` + `scripts/source/ICONOS.png`. |
-| `src/lib/comp-icons.ts` | `COMP_ICON_SLUGS` + `resolveComponentIcon`: slug en `components[].icon` (CMS select o overlay). Sin icono → `tokens-stack`. |
+| `src/lib/comp-icons.ts` | `COMP_ICON_SLUGS` + `resolveComponentIcon`: slug en `components[].icon` (CMS). Sin icono → `tokens-stack`. |
 | `src/styles/ficha.css` | Grid 12 col, héroe full-bleed, shell 8/12 (`cols 3–10`). |
-| `src/lib/ficha.ts` | Tipos + `toFicha()` desde `GameCard`. |
+| `src/lib/ficha.ts` | Tipos + `toFicha()` / `applyFichaChrome()`. El copy sale del CMS. El cromo (arte `concepto-<keyword>` y pie común) lo pone la plantilla. |
 | `src/lib/ficha-theme.ts` | Skin por juego → CSS vars (`fichaThemeVars`, `fichaThemeStyle`). |
-| `src/lib/ficha-overlays.ts` | `buildLegacyFicha`: CMS + `i18n/fichas/*`. Componentes vía helper `comp(locale, qty, nameEn, nameEs, icon, detail?)`. Bloque dev proto: `protoDev(t, …)`. |
-| `src/content/games/<keyword>.md` | Fuente de verdad: copy, estado, paleta, fotos, `howTo`, premios, etc. |
-| `src/pages/juegos/old/<keyword>/` | Fichas Astro legacy (13), deprecadas. URL: `/juegos/old/<keyword>/`. |
+| `src/content/games/<keyword>.md` | Única fuente de la ficha nueva: copy, estado, paleta, fotos, componentes, archivos. |
+| `src/i18n/fichas/<keyword>.ts` | Solo alimenta `/juegos/old/`. No entra en la ficha nueva. |
+| `src/pages/juegos/old/<keyword>/` | Fichas Astro legacy, archivo histórico. URL: `/juegos/old/<keyword>/`. |
 
 **Reservado en rutas:** `old/`. No crear `src/pages/juegos/<keyword>/` salvo que quieras anular el catch-all a propósito.
 
@@ -53,8 +53,7 @@ Si este archivo choca con un diseño puntual acordado en CMS, gana el **contenid
 ### Héroe e imagen
 
 - Grid desktop: col 1 vacía; copy cols **2–4**; imagen cols **5–12** (arte a la derecha, copy alineado a la derecha dentro de su columna).
-- Imagen por defecto: **`/assets/concepto-<keyword>.webp`** (`fichaConceptArtUrl`) — mismo arte que el portafolio.
-- Nínive / Reloj: overlays en `ficha-overlays.ts` (reglas, galería, URLs Ludoísmo, bloque dev en Reloj, etc.).
+- Imagen del héroe: **`/assets/concepto-<keyword>.webp`** (`fichaConceptArtUrl`). El campo `image` del CMS sigue siendo el del portafolio; la ficha no lo usa como arte principal.
 
 ### CTA proto
 
@@ -74,16 +73,15 @@ Viven en `src/styles/global.css` y se repiten en `ficha.css` donde aplique.
 
 ## Receta para un juego nuevo
 
-**Plantilla detallada (CMS + i18n + overlay + componentes):** [FICHA_ESTRUCTURA_EJEMPLO.md](./FICHA_ESTRUCTURA_EJEMPLO.md).
+**Plantilla detallada (CMS + componentes):** [FICHA_ESTRUCTURA_EJEMPLO.md](./FICHA_ESTRUCTURA_EJEMPLO.md).
 
 **Montajes de mesa ya acordados (Canes, Mantas, Nínive):** [MONTAJES.md](./MONTAJES.md).
 
 Keyword = una palabra, igual al archivo CMS. Ejemplo: `almagesto` → `/juegos/almagesto` y `/en/juegos/almagesto`.
 
-1. **CMS** — `src/content/games/<keyword>.md` (o `/admin/`). Frontmatter ES + campos `*En`. Obligatorio: `conceptos` (tuple de 3 strings: temática, estilo visual, mecánicas). Brief para imágenes; no se pinta en la web.
+1. **CMS** — `src/content/games/<keyword>.md` (o `/admin/`). Frontmatter ES + campos `*En`. Obligatorio: `conceptos` (tuple de 3 strings: temática, estilo visual, mecánicas). Brief para imágenes; no se pinta en la web. Ahí también van pitch, how-to, componentes, fotos, edad, cocreador y archivos.
 2. **Asset** — `public/assets/concepto-<keyword>.webp` para portafolio y héroe de ficha.
 3. **Build** — `npm run build`. Deben salir ES + EN sin crear carpeta en `src/pages/juegos/<keyword>/`.
-4. **Contenido extra** (opcional): campos opcionales del schema (`howTo`, `fotos`, `pitchTitle`, …) o entrada en `ficha-overlays.ts` si hace falta lógica que no cabe en YAML.
 
 ### Wrapper EN
 
@@ -91,7 +89,7 @@ Ya centralizado: `src/pages/en/juegos/[slug]/index.astro` reexporta la página E
 
 ### Diccionarios `src/i18n/fichas/<keyword>.ts`
 
-Siguen existiendo para las fichas archivadas y como referencia de copy. La ficha unificada lee **CMS** y mezcla diccionario vía `ficha-overlays.ts` cuando hay overlay. Si migras secciones de un juego archivado, mueve el texto al markdown CMS o a un overlay explícito.
+Solo los lee `/juegos/old/`. La ficha nueva no los importa. Si un texto de una página vieja tiene que verse en `/juegos/<keyword>/`, se copia al markdown.
 
 ## Qué no hacer
 

@@ -92,6 +92,7 @@ export function localizeGame(game: GameCard, locale: Lang): GameCard {
     publisherLabel: game.publisherLabelEn ?? game.publisherLabel,
     adjusting: game.adjustingEn ?? game.adjusting,
     nextPlaytests: game.nextPlaytestsEn ?? game.nextPlaytests,
+    version: game.versionEn ?? game.version,
     howTo: game.howTo?.map((step) => ({
       ...step,
       title: step.titleEn ?? step.title,

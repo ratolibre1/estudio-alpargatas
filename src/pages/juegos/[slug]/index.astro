@@ -11,7 +11,7 @@ import { readdirSync } from 'node:fs';
 import path from 'node:path';
 import { getLocale } from '../../../i18n/locale';
 import { localizeGame, gameHref } from '../../../lib/games';
-import { buildLegacyFicha } from '../../../lib/ficha-overlays';
+import { applyFichaChrome, toFicha } from '../../../lib/ficha';
 import {
   fichaBandMode,
   fichaOnPrimary,
@@ -47,7 +47,7 @@ const card = localizeGame(
   },
   locale
 );
-const ficha = buildLegacyFicha(card, locale, entry.id);
+const ficha = applyFichaChrome(toFicha(card), locale);
 const theme = fichaThemeVars(ficha);
 ---
 
