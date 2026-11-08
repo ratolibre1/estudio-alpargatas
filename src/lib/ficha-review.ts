@@ -37,8 +37,8 @@ export const REVIEW_COLUMNS: ReviewColumn[] = [
 const MANUALS_OK = new Set(['canes']);
 const FACTS_OK = new Set(['ninive', 'letrados', 'canes', 'mantas', 'piramisu', 'carcinogenial']);
 
-/** Los cinco primeros de la tabla: mismos juegos con el texto de componentes ya revisado. */
-const COMPONENT_IMAGES_OK = new Set(['ninive', 'letrados', 'carcinogenial', 'canes', 'mantas']);
+/** Mesa y detalle ya montados. El (c) del nombre marca arte conceptual, no un hueco pendiente. */
+const COMPONENT_IMAGES_OK = new Set(['ninive', 'letrados', 'carcinogenial', 'canes', 'mantas', 'oxido']);
 
 const STATE_RANK: Record<string, number> = {
   publicado: 0,

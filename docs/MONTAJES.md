@@ -48,6 +48,7 @@ Fieltros ya usados:
 | Mantas | celeste `radial-gradient(ellipse at 50% 42%, #1b86b8 0%, #0e628f 54%, #08486c 100%)` |
 | Nínive | burdeo `radial-gradient(ellipse at 50% 42%, #8a2e3c 0%, #641c28 54%, #3e1018 100%)` |
 | Letrados | pizarra `radial-gradient(ellipse at 50% 42%, #3d86b0 0%, #226080 54%, #14384c 100%)` |
+| Óxido | violeta `radial-gradient(ellipse at 50% 42%, #7c4096 0%, #522470 54%, #2a103a 100%)` |
 
 En Mantas no hay plato celeste plano detrás de la grilla. La separación entre losetas es 4px.
 
@@ -94,5 +95,8 @@ Misma gramática y mismo fieltro que Canes: cuatro jugadores, mazo, descarte en 
 | Nínive | `ninive-mesa-montaje.webp?v=4` | palacio, segundo jugador |
 | Letrados | `letrados-mesa-montaje.webp?v=3` | letras `?v=4`; torres de 4, manos de 2, esquinas redondas; el detalle va sin riel |
 | Carcinogenial | `carcinogenial-mesa-montaje.webp?v=5` | cartas `?v=3`, acción, inyección, ayuda |
+| Óxido | `oxido-mesa-montaje.webp?v=5` | tablero `?v=3`, pedidos, iniciales, mejoradas, dinero, marcadores `?v=2` |
 
 Evoluciona tiene conteos en el overlay (97 / 4 / 4 / 2) y todavía no tiene montaje.
+
+Óxido salió de PNG ya recortados (`~/Downloads/oxido-componentes-sin-fondo-1600x900`). La mesa usa el tablero ancho: los huecos de pedido y los rombos calzan con la pieza. Pedidos I y II ocupan el hueco, el mercado va a medias y la columna de reserva oculta muestra los reversos con pátina. Marcador de período en el 2 y el de vuelta en el 3. Dinero y muestras 5 y 15 a los costados. El detalle de cada componente va sobre el mismo violeta, sin riel.

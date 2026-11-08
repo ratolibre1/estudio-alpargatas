@@ -111,56 +111,56 @@ howTo:
     imageAlt: ''
     bodyEn: Spent samples wait outside your bag until the next period. Pay to replace them with others in the same category and prepare better combinations. Decide how much to improve and how much money to keep for the end.
     titleEn: Invest in the next period
-componentsPhoto: /assets/oxido-comp-tablero.webp
-componentsPhotoAlt: Tablero central de Óxido sin piezas, con espacios para pedidos y mejoras, sobre fondo verde pátina claro.
+componentsPhoto: /assets/oxido-mesa-montaje.webp?v=5
+componentsPhotoAlt: 'Partida de Óxido sobre paño violeta: dos pedidos en el tablero, mejoras en el mercado y marcadores en el período 2 y la vuelta 3.'
 componentsNote: ''
 components:
   - qty: '1'
     name: Tablero Central (c)
     icon: map
-    image: /assets/oxido-comp-tablero.webp
-    imageAlt: Tablero central sin piezas, con espacios para pedidos, mejoras y marcadores de período y vuelta.
-    imageAltEn: Bare central board with spaces for orders, upgrades, and period and turn markers.
-    nameEn: central board · concept proposal
-  - qty: '4'
+    image: /assets/oxido-comp-tablero.webp?v=3
+    imageAlt: Tablero central de Óxido, sin piezas, sobre paño violeta.
+    imageAltEn: Bare Óxido central board on violet felt.
+    nameEn: Central Board (c)
+  - qty: '48'
     name: Cartas de Pedido (c)
     icon: deck-cards
-    image: /assets/oxido-comp-pedidos.webp
-    imageAlt: Cuatro cartas de pedido horizontales; dos anversos ilustrados y dos reversos de era con números romanos.
-    imageAltEn: Four landscape order cards, showing two illustrated fronts and two era backs with Roman numerals.
-    nameEn: Order cards (concept)
+    image: /assets/oxido-comp-pedidos.webp?v=2
+    imageAlt: 'Cartas de pedido de Óxido sobre paño violeta: encargos I y II boca arriba, y reversos de era III y IV.'
+    imageAltEn: 'Óxido order cards on violet felt: face-up orders I and II, and era backs III and IV.'
+    nameEn: Order Cards (c)
   - qty: '36'
     name: Fichas de Cobre Iniciales (c)
     icon: tokens-stack
-    image: /assets/oxido-comp-iniciales.webp
-    imageAlt: Fichas iniciales en cobre naranja sin pátina, con valores 5, 15 y 30, junto a los reversos ornamentales de las tres formas.
-    imageAltEn: Starting tokens in clean orange copper, with values 5, 15, and 30 alongside the ornamental backs of all three shapes.
-    nameEn: Initial copper tokens (concept)
+    image: /assets/oxido-comp-iniciales.webp?v=2
+    imageAlt: 'Fichas de cobre iniciales sobre paño violeta: triángulos de 5, rombos de 15 y hexágonos de 30, con sus reversos.'
+    imageAltEn: 'Starting copper tokens on violet felt: triangles of 5, diamonds of 15, and hexagons of 30, with their backs.'
+    nameEn: Initial Copper Tokens (c)
   - qty: '72'
     name: Fichas de Cobre Mejoradas (c)
     icon: tokens-stack
-    image: /assets/oxido-comp-mejoradas.webp
-    imageAlt: Fichas mejoradas con cobre y pátina turquesa; anversos numerados y reversos florales en triángulo, rombo y hexágono.
-    imageAltEn: Upgraded copper and turquoise-patina tokens, showing numbered fronts and floral backs in triangular, rhombus, and hexagonal shapes.
-    nameEn: Upgraded copper tokens (concept)
+    image: /assets/oxido-comp-mejoradas.webp?v=2
+    imageAlt: Fichas de cobre mejoradas con pátina sobre paño violeta, de 1 a 30, y el reverso floral de cada forma.
+    imageAltEn: Upgraded patina copper tokens on violet felt, from 1 to 30, and the floral back of each shape.
+    nameEn: Upgraded Copper Tokens (c)
   - qty: '50'
-    name: Fichas de Dinero
+    name: Fichas de Dinero (c)
     icon: coins
-    image: /assets/oxido-comp-dinero.webp
-    imageAlt: Fichas de dinero redondas de color dorado, con valores 1, 5 y 10.
-    imageAltEn: Round gold-colored money tokens with values 1, 5, and 10.
-    nameEn: Money tokens
+    image: /assets/oxido-comp-dinero.webp?v=2
+    imageAlt: Fichas de dinero de Óxido sobre paño violeta, valores 1, 5 y 10, en pilas y sueltas.
+    imageAltEn: Óxido money tokens on violet felt, values 1, 5, and 10, stacked and loose.
+    nameEn: Money Tokens (c)
   - qty: '2'
     name: Marcadores de Período y Vuelta (c)
-    nameEn: Period and turn markers (concept)
+    nameEn: Period and Turn Markers (c)
     icon: cylinders
-    image: /assets/oxido-comp-marcadores.webp
-    imageAlt: Dos marcadores circulares lisos, naranja cobre para período y turquesa para vuelta.
-    imageAltEn: Two plain round markers, copper orange for period and turquoise for turn.
+    image: /assets/oxido-comp-marcadores.webp?v=2
+    imageAlt: 'Marcadores de período y vuelta de Óxido sobre paño violeta: uno de cobre y uno turquesa.'
+    imageAltEn: 'Óxido period and turn markers on violet felt: one copper and one turquoise.'
 resources: []
 credits: Óxido · Diseño de juego y dirección visual · Estudio Alpargatas
 adjustingEn: The core rules are defined and the visual identity has a clear direction. We are refining the relationship between sample values, payments, and upgrades. The scenes and components shown here are concept proposals; the final component list remains open.
-componentsPhotoAltEn: Bare Óxido central board with order and upgrade spaces, on a pale patina-green background.
+componentsPhotoAltEn: 'Óxido game on violet felt: two orders on the board, upgrades in the market, and markers on period 2 and turn 3.'
 creditsEn: Óxido · Game design and visual direction · Estudio Alpargatas
 descriptionEn: Combine copper samples, fill orders before your rivals, and improve what comes out of your bag. Precision pays better, but an imperfect delivery can still be a good decision.
 factsEn:
