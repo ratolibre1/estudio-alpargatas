@@ -4,23 +4,24 @@ No copiamos pareos de [Fontpair](https://fontpair.co/all) uno a uno: casi nunca 
 
 ## Reglas de pareo
 
-1. **Cuerpo (`bodyFont`)** — casi siempre **Nunito** (legible, neutral). Excepciones: juego JP → **Zen Maru Gothic** (Amateurasu).
-2. **Display / cartoon / condensed** (Bungee, Bubblegum, Fredoka, Baloo 2, Bebas)  
+1. **El título no repite la familia de otro juego.** Antes de elegir, mirar la tabla de abajo. El tagline puede compartir Nunito o Cormorant; el título, no.
+2. **Cuerpo (`bodyFont`)** — casi siempre **Nunito** (legible, neutral). Excepciones: juego JP → **Zen Maru Gothic** (Amateurasu).
+3. **Display / cartoon / condensed** (Bungee, Bubblegum, Fredoka, Baloo 2, Bebas)  
    - Tagline: **Oswald** si el título es apretado/impacto; si no, **Nunito**.  
    - Cuerpo: Nunito.
-3. **Serif display / editorial** (Playfair, Yeseva, Cinzel, Cormorant título)  
+4. **Serif display / editorial** (Playfair, Yeseva, Cinzel, Cormorant título)  
    - Tagline: **Cormorant Garamond** (misma vibra editorial, más fino).  
    - Cuerpo: Nunito.
-4. **Serif texto** (Spectral, Lora, Cardo, Fraunces)  
+5. **Serif texto** (Spectral, Lora, Cardo, Fraunces)  
    - Tagline: misma familia **o** Cormorant si el título ya es “text serif” (Spectral, Cardo).  
    - Cuerpo: Nunito.
-5. **Sans geométrico / humanista título** (Raleway, Josefin, Quicksand)  
+6. **Sans geométrico / humanista título** (Raleway, Josefin, Quicksand)  
    - Tagline: Cormorant (contraste serif) o Nunito (stack limpio).  
    - Cuerpo: Nunito.
-6. **Heritage / manuscrito** (IM Fell, Shantell)  
+7. **Heritage / manuscrito** (IM Fell, Shantell)  
    - Tagline: **Josefin Sans** (Fell) o **Patrick Hand** (doodle / Evoluciona).  
    - Cuerpo: Nunito.
-7. **JP** — Shippori Mincho + Zen Maru (tagline y cuerpo).
+8. **JP** — Shippori Mincho + Zen Maru (tagline y cuerpo).
 
 ## Tabla por keyword
 
@@ -40,7 +41,7 @@ No copiamos pareos de [Fontpair](https://fontpair.co/all) uno a uno: casi nunca 
 | mantas | Josefin Sans | Nunito | Nunito |
 | ninive | Cormorant Garamond | Cormorant Garamond | Nunito |
 | nudis | Lora | Lora | Nunito |
-| oxido | Fredoka | Nunito | Nunito |
+| oxido | Rufina | Literata | Nunito |
 | palomas | Bebas Neue | Oswald | Nunito |
 | pavoneo | Playfair Display | Cormorant Garamond | Nunito |
 | piramisu | Yeseva One | Cormorant Garamond | Nunito |

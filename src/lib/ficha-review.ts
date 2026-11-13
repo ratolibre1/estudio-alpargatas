@@ -62,7 +62,7 @@ type Slot = Array<string | number>;
 function slotText(ficha: FichaContent, parts: Slot, locale: Lang): string | undefined {
   const ui = fichaCopy[locale];
   const [kind, index, field] = parts;
-  if (kind === 'devVersionTitle') return ficha.version ? `${ui.devVersion} ${ficha.version}` : ui.devAdjusting;
+  if (kind === 'devVersionTitle') return ui.devVersion;
   if (kind === 'devAdjusting') return ficha.adjusting;
   if (kind === 'devNextTitle') return ui.devNext;
   if (kind === 'devNextBody') return ficha.nextPlaytests;

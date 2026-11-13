@@ -62,8 +62,8 @@ palette:
   - '#A7461E'
   - '#1C3831'
 fichaMode: light
-titleFont: Fredoka, sans-serif
-taglineFont: Nunito, sans-serif
+titleFont: Rufina, serif
+taglineFont: Literata, serif
 bodyFont: Nunito, sans-serif
 bodyColor: ''
 mutedColor: ''
@@ -81,8 +81,8 @@ conceptos:
   - Portada de surrealismo fotográfico donde una mina se convierte en cuenco; web en verdes de pátina con acentos naranja cobre. El prototipo conserva humor gráfico de tinta expresiva y personajes consistentes de gestos amables.
   - Construcción de bolsa, extracción táctil por tamaño, combinación de valores para encargos compartidos y mejora de muestras entre períodos.
 imageCaption: Arte conceptual · Del mineral al oficio
-pitchTitle: Un taller entre el brillo y la pátina
-pitch: Óxido se inspira en los patios, talleres y comercios de Santa Clara del Cobre. Cada persona lleva su propio taller, pero los clientes están a la vista de todos. Durante cuatro eras, representadas por la mañana, el mediodía, el atardecer y la noche, decides qué muestras preparar, qué encargos entregar y cuánto reinvertir. Al cierre, gana quien haya reunido más dinero.
+pitchTitle: El juego Óxido nace porque me llamó la atención la palabra, y comencé a explorar la forma en que los metales generan pátinas y cómo este proceso funciona como mecánica.
+pitch: Naturalmente, quise mostrar el proceso artesanal de trabajar el cobre y crear diseños usando la pátina como elemento visual. El mercado de compradores y pedidos es una forma sencilla de explicar la competencia entre los jugadores y la decisión de refinar el producto pero quizás perder una venta, o vender rápido pero sacrificando calidad.
 buyUrl: ''
 ctaHref: ''
 rulesUrl: ''
@@ -95,24 +95,27 @@ nextPlaytests: La primera configuración de prueba está preparada para dos pers
 howTo:
   - title: Prepara tus muestras
     body: Elige al tacto un tamaño de ficha dentro de tu bolsa y revela su valor. Los triángulos, rombos y hexágonos distinguen las tres categorías. Las muestras extraídas quedan disponibles en tu taller para combinarlas después.
-    image: ''
-    imageAlt: ''
+    image: /assets/oxido-paso-muestras.webp?v=1
+    imageAlt: Una mano saca un triángulo 5 de la bolsa de Óxido; al lado quedan un 2, un rombo 15 y un hexágono 24.
+    imageAltEn: A hand draws a triangle 5 from the Óxido bag; a 2, a diamond 15, and a hexagon 24 sit beside it.
     bodyEn: Choose a token size by touch inside your bag and reveal its value. Triangles, rhombuses, and hexagons distinguish the three categories. Drawn samples stay available in your workshop to combine later.
     titleEn: Prepare your samples
   - title: Encuentra la combinación
     body: Suma los valores de las muestras que quieras usar para un encargo visible. Cuanto más te acerques al objetivo, mejor cobras. Puedes entregar sin acertar exactamente, pero otro taller puede atender al cliente antes que tú.
-    image: ''
-    imageAlt: ''
+    image: /assets/oxido-paso-combinacion.webp?v=2
+    imageAlt: Encargo de objetivo 18 junto a un rombo 15 y un triángulo 3, con monedas de 1, 5 y 10.
+    imageAltEn: An order with a target of 18 beside a diamond 15 and a triangle 3, with coins of 1, 5, and 10.
     bodyEn: Add the values of whichever samples you want to use for a visible order. The closer you get to the target, the more you earn. You can deliver without an exact match, but another workshop may serve the customer first.
     titleEn: Find your combination
   - title: Invierte en el próximo período
     body: Las muestras gastadas esperan fuera de la bolsa hasta el próximo período. Paga para sustituirlas por otras de la misma categoría y preparar mejores combinaciones. Decide cuánto mejorar y cuánto dinero conservar para el final.
-    image: ''
-    imageAlt: ''
+    image: /assets/oxido-paso-periodo.webp?v=2
+    imageAlt: Una mano deja un triángulo 3 en el mercado de mejoras; la otra sostiene monedas de 1, y en la mesa hay un 5 y monedas de 1, 5 y 10.
+    imageAltEn: A hand places a triangle 3 on the upgrade market; the other holds coins of 1, with a 5 and coins of 1, 5, and 10 on the table.
     bodyEn: Spent samples wait outside your bag until the next period. Pay to replace them with others in the same category and prepare better combinations. Decide how much to improve and how much money to keep for the end.
     titleEn: Invest in the next period
-componentsPhoto: /assets/oxido-mesa-montaje.webp?v=5
-componentsPhotoAlt: 'Partida de Óxido sobre paño violeta: dos pedidos en el tablero, mejoras en el mercado y marcadores en el período 2 y la vuelta 3.'
+componentsPhoto: /assets/oxido-mesa-montaje.webp?v=7
+componentsPhotoAlt: 'Partida de Óxido sobre paño violeta: el tablero al centro y tres bolsas de jugador, con cartas y fichas sueltas.'
 componentsNote: ''
 components:
   - qty: '1'
@@ -157,10 +160,17 @@ components:
     image: /assets/oxido-comp-marcadores.webp?v=2
     imageAlt: 'Marcadores de período y vuelta de Óxido sobre paño violeta: uno de cobre y uno turquesa.'
     imageAltEn: 'Óxido period and turn markers on violet felt: one copper and one turquoise.'
+  - qty: '4'
+    name: Bolsas de Terciopelo (c)
+    nameEn: Velvet Bags (c)
+    icon: token-bag
+    image: /assets/oxido-comp-bolsas.webp?v=2
+    imageAlt: 'Cuatro bolsas de terciopelo negro de Óxido sobre paño violeta: dos vacías y dos con fichas asomando.'
+    imageAltEn: 'Four black Óxido velvet bags on violet felt: two empty, and two with tokens peeking out.'
 resources: []
 credits: Óxido · Diseño de juego y dirección visual · Estudio Alpargatas
 adjustingEn: The core rules are defined and the visual identity has a clear direction. We are refining the relationship between sample values, payments, and upgrades. The scenes and components shown here are concept proposals; the final component list remains open.
-componentsPhotoAltEn: 'Óxido game on violet felt: two orders on the board, upgrades in the market, and markers on period 2 and turn 3.'
+componentsPhotoAltEn: 'Óxido game on violet felt: the board in the center and three player bags, with cards and loose tokens.'
 creditsEn: Óxido · Game design and visual direction · Estudio Alpargatas
 descriptionEn: Combine copper samples, fill orders before your rivals, and improve what comes out of your bag. Precision pays better, but an imperfect delivery can still be a good decision.
 factsEn:
@@ -171,7 +181,7 @@ imageAltEn: An open-pit mine gradually transforms into a chased copper bowl with
 imageCaptionEn: Concept art · From ore to craft
 metaEn: Copper · Orders · Bag building
 nextPlaytestsEn: The first test configuration is prepared for two players. We want to observe competition for orders, the pace of upgrades, and the value of delivering without an exact match. The goal is 2–4 players and 30–45 minute games; both parameters still need validation.
-pitchEn: Óxido draws inspiration from the courtyards, workshops, and shops of Santa Clara del Cobre. Each player runs a workshop, while customers are shared by everyone. Across four eras, represented by morning, midday, sunset, and night, you decide which samples to prepare, which orders to deliver, and how much to reinvest. At the end, the player with the most money wins.
-pitchTitleEn: A workshop between shine and patina
+pitchEn: Naturally, I wanted to show the craft of working copper and of making designs that use patina as a visual element. A market of buyers and orders is a simple way to explain the competition between players, and the choice to refine the product and maybe lose a sale, or to sell fast while sacrificing quality.
+pitchTitleEn: Óxido was born because the word caught my attention, and I started exploring how metals grow a patina and how that process works as a mechanic.
 taglineEn: Copper changes. So does your workshop.
 ---

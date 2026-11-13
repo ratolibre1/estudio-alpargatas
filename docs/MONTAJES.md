@@ -95,8 +95,8 @@ Misma gramática y mismo fieltro que Canes: cuatro jugadores, mazo, descarte en 
 | Nínive | `ninive-mesa-montaje.webp?v=4` | palacio, segundo jugador |
 | Letrados | `letrados-mesa-montaje.webp?v=3` | letras `?v=4`; torres de 4, manos de 2, esquinas redondas; el detalle va sin riel |
 | Carcinogenial | `carcinogenial-mesa-montaje.webp?v=5` | cartas `?v=3`, acción, inyección, ayuda |
-| Óxido | `oxido-mesa-montaje.webp?v=5` | tablero `?v=3`, pedidos, iniciales, mejoradas, dinero, marcadores `?v=2` |
+| Óxido | `oxido-mesa-montaje.webp?v=7` | tablero `?v=3`, pedidos, iniciales, mejoradas, dinero, marcadores `?v=2`, bolsas `?v=2` |
 
 Evoluciona tiene conteos en el overlay (97 / 4 / 4 / 2) y todavía no tiene montaje.
 
-Óxido salió de PNG ya recortados (`~/Downloads/oxido-componentes-sin-fondo-1600x900`). La mesa usa el tablero ancho: los huecos de pedido y los rombos calzan con la pieza. Pedidos I y II ocupan el hueco, el mercado va a medias y la columna de reserva oculta muestra los reversos con pátina. Marcador de período en el 2 y el de vuelta en el 3. Dinero y muestras 5 y 15 a los costados. El detalle de cada componente va sobre el mismo violeta, sin riel.
+Óxido salió de PNG ya recortados (`~/Downloads/oxido-componentes-sin-fondo-1600x900`). La mesa usa el tablero ancho: los huecos de pedido y los rombos calzan con la pieza. Pedidos I y II ocupan el hueco, el mercado va a medias y la columna de reserva oculta muestra los reversos con pátina. Marcador de período en el 2 y el de vuelta en el 3. Alrededor van tres bolsas surtidas, cada una con carta o fichas sueltas, como zona de jugador. El detalle de las bolsas muestra las cuatro, dos vacías y dos con fichas. El resto de los detalles va sobre el mismo violeta, sin riel.

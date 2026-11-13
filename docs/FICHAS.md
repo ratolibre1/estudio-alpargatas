@@ -73,6 +73,8 @@ Viven en `src/styles/global.css` y se repiten en `ficha.css` donde aplique.
 
 ## Receta para un juego nuevo
 
+**Protocolo de un proto nuevo** (mínimo, imágenes, lorem, revisiones, tarot): [PROTOCOLO_PROTO.md](./PROTOCOLO_PROTO.md).
+
 **Plantilla detallada (CMS + componentes):** [FICHA_ESTRUCTURA_EJEMPLO.md](./FICHA_ESTRUCTURA_EJEMPLO.md).
 
 **Montajes de mesa ya acordados (Canes, Mantas, Nínive):** [MONTAJES.md](./MONTAJES.md).

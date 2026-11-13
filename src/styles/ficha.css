@@ -604,26 +604,23 @@ body.ficha-page[data-on-primary="tinta"] {
 }
 
 .ficha-step-num {
-  display: block;
-  margin-bottom: .25rem;
-  color: var(--ficha-muted);
-  font-size: .78rem;
-  font-weight: 800;
+  margin-right: .35em;
 }
 
 .ficha-step h3 {
-  margin: 0 0 .4rem;
+  margin: 0 0 .45rem;
   font-family: var(--ficha-title-font);
-  font-size: 1.08rem;
+  font-size: 1.22rem;
   font-weight: 700;
   letter-spacing: -.02em;
+  line-height: 1.2;
   color: var(--ficha-navy);
 }
 
 .ficha-step p {
   margin: 0;
   color: var(--ficha-dim);
-  font-size: .86rem;
+  font-size: .98rem;
   line-height: 1.5;
 }
 
